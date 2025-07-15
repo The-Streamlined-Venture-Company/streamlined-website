@@ -1,0 +1,151 @@
+body.talent {
+    --accent-color: var(--talent-color);
+}
+
+body.interfaces {
+    --accent-color: var(--interfaces-color);
+}
+
+body.resources {
+    --accent-color: var(--resources-color);
+}
+
+.page-nav {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid #eee;
+    padding-top: 1rem;
+}
+
+.page-nav a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color var(--transition-speed) ease;
+    position: relative;
+}
+
+.page-nav a:hover {
+    color: var(--text-primary);
+}
+
+.page-nav a.active {
+    color: var(--accent-color, var(--text-primary));
+}
+
+.page-nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--accent-color, var(--text-primary));
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6rem;
+}
+
+.logo {
+    transition: opacity var(--transition-speed) ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.page-content {
+    max-width: 800px;
+}
+
+.page-title {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.page-intro {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 4rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s 0.2s ease forwards;
+}
+
+.content-section {
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s 0.4s ease forwards;
+}
+
+.content-section h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+}
+
+.content-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.services-list {
+    list-style: none;
+    font-size: 1.1rem;
+    line-height: 2;
+}
+
+.services-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    color: #333;
+}
+
+.services-list li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--text-secondary);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        margin-bottom: 3rem;
+    }
+    
+    .page-nav {
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .page-title {
+        font-size: 2.5rem;
+    }
+    
+    .page-intro {
+        font-size: 1.2rem;
+    }
+}
