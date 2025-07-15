@@ -6,6 +6,11 @@ body.page-home {
     color: var(--color-black);
 }
 
+/* Ensure clean transitions */
+body {
+    transition: background-color 0.3s ease;
+}
+
 /* Talent Theme */
 body.page-talent {
     background-color: var(--color-talent);
@@ -57,17 +62,22 @@ body.page-resources .nav a:hover {
 }
 
 .page-content h2 {
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
     letter-spacing: -0.02em;
 }
 
-.page-content p,
+.page-content p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.95);
+}
+
 .page-content li {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
 }
 
 .page-content ul {
@@ -87,15 +97,24 @@ body.page-resources .nav a:hover {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Navigation Hover Colors */
-.nav-main a:nth-child(1):hover h2 {
+/* Navigation Default Colors */
+.nav-main a:nth-child(1) h2 {
     color: var(--color-talent);
 }
 
-.nav-main a:nth-child(2):hover h2 {
+.nav-main a:nth-child(2) h2 {
     color: var(--color-interfaces);
 }
 
-.nav-main a:nth-child(3):hover h2 {
+.nav-main a:nth-child(3) h2 {
     color: var(--color-resources);
+}
+
+/* Navigation Hover Effect - handled by Rough Notation */
+.nav-main a h2 {
+    transition: opacity 0.2s ease;
+}
+
+.nav-main a:hover h2 {
+    opacity: 0.9;
 }

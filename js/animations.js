@@ -21,9 +21,12 @@ class AnimationController {
             this.playIntroSequence();
             sessionStorage.setItem(CONFIG.storage.hasVisited, 'true');
         } else {
-            // Return visit - skip intro
+            // Return visit - skip intro with fade
             document.body.classList.add('skip-intro');
-            this.addBreathingAnimation();
+            this.fadeInPage();
+            setTimeout(() => {
+                this.addBreathingAnimation();
+            }, 500);
         }
     }
     
@@ -51,10 +54,23 @@ class AnimationController {
         }
     }
     
-    // Simple fade in for sub-pages
+    // Fade in for sub-pages with color overlay
     fadeInPage() {
-        // Page content will fade in via CSS animations
-        document.body.style.opacity = '1';
+        // Create color overlay that matches the page color
+        const pageColor = window.getComputedStyle(document.body).backgroundColor;
+        const overlay = document.createElement('div');
+        overlay.className = 'color-overlay';
+        overlay.style.backgroundColor = pageColor;
+        document.body.appendChild(overlay);
+        
+        // Start fade out after a brief moment
+        setTimeout(() => {
+            overlay.classList.add('fade-out');
+            // Remove after transition
+            setTimeout(() => {
+                overlay.remove();
+            }, 1500);
+        }, 200);
     }
     
     // Split text into animated words

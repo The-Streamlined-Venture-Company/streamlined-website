@@ -42,10 +42,18 @@ class PageTransitions {
     
     // Create transition effect
     createTransition(targetColor, href) {
-        // Create overlay
-        const overlay = document.createElement('div');
-        overlay.className = 'page-transition';
-        overlay.style.backgroundColor = targetColor;
+        // Get current page color
+        const currentColor = window.getComputedStyle(document.body).backgroundColor;
+        
+        // Create white intermediate overlay
+        const whiteOverlay = document.createElement('div');
+        whiteOverlay.className = 'page-transition white-layer';
+        whiteOverlay.style.backgroundColor = '#ffffff';
+        
+        // Create color overlay
+        const colorOverlay = document.createElement('div');
+        colorOverlay.className = 'page-transition color-layer';
+        colorOverlay.style.backgroundColor = targetColor;
         
         // Create logo
         const logo = document.createElement('img');
@@ -53,13 +61,24 @@ class PageTransitions {
         logo.className = 'logo-loader transition';
         
         // Add to page
-        document.body.appendChild(overlay);
+        document.body.appendChild(whiteOverlay);
+        document.body.appendChild(colorOverlay);
         document.body.appendChild(logo);
         
-        // Animate
+        // Animate sequence
         requestAnimationFrame(() => {
-            overlay.classList.add('active');
-            logo.style.opacity = '1';
+            // First fade to white
+            whiteOverlay.classList.add('active');
+            
+            // Then show logo
+            setTimeout(() => {
+                logo.style.opacity = '1';
+            }, 300);
+            
+            // Then fade in target color
+            setTimeout(() => {
+                colorOverlay.classList.add('active');
+            }, 500);
             
             // Fade out current content
             const container = document.querySelector('.container');
@@ -72,7 +91,7 @@ class PageTransitions {
         // Navigate after transition
         setTimeout(() => {
             window.location.href = href;
-        }, CONFIG.transitions.colorFade);
+        }, 1200);
     }
     
     // Get correct logo path based on current location
