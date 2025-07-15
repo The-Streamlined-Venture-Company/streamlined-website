@@ -16,10 +16,17 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    background-color: var(--bg-primary);
+    background-color: #fff;
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    animation: fadeBackground 3s ease forwards;
+}
+
+@keyframes fadeBackground {
+    to {
+        background-color: var(--bg-primary);
+    }
 }
 
 .container {
@@ -89,16 +96,44 @@ main {
     animation: fadeIn 1s ease 3s forwards;
 }
 
+.divider {
+    width: 60px;
+    height: 1px;
+    background-color: #ddd;
+    margin: 2rem 0;
+    opacity: 0;
+    animation: fadeIn 0.8s ease 11s forwards;
+}
+
 .logo {
     width: 100px;
     height: 150px;
     flex-shrink: 0;
+    cursor: pointer;
+    transition: opacity var(--transition-speed) ease;
+}
+
+.logo:hover {
+    opacity: 0.8;
 }
 
 .logo img {
     width: 100%;
     height: 100%;
     object-fit: contain;
+}
+
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.01);
+    }
+}
+
+.logo.breathing {
+    animation: breathe 4s ease-in-out infinite;
 }
 
 .intro-text {
@@ -115,9 +150,35 @@ main {
 .intro-light {
     color: var(--text-secondary);
     font-weight: 300;
-    opacity: 0;
-    animation: fadeIn 1s ease 2s forwards;
 }
+
+.word {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(8px);
+    animation: blurIn 1s ease forwards;
+}
+
+@keyframes blurIn {
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* Timing for each word - much slower, more elegant */
+.word:nth-child(1) { animation-delay: 5s; }
+.word:nth-child(2) { animation-delay: 5.4s; }
+.word:nth-child(3) { animation-delay: 5.8s; }
+.word:nth-child(4) { animation-delay: 6.4s; }
+.word:nth-child(5) { animation-delay: 6.8s; }
+.word:nth-child(6) { animation-delay: 7.2s; }
+.word:nth-child(7) { animation-delay: 7.8s; }
+.word:nth-child(8) { animation-delay: 8.2s; }
+.word:nth-child(9) { animation-delay: 8.6s; }
+.word:nth-child(10) { animation-delay: 9.0s; }
+.word:nth-child(11) { animation-delay: 9.4s; }
+.word:nth-child(12) { animation-delay: 9.8s; }
 
 @keyframes fadeIn {
     to {
@@ -142,15 +203,15 @@ main {
 }
 
 .nav-item:nth-child(1) {
-    animation: fadeIn 0.8s ease 5.5s forwards;
+    animation: fadeIn 0.8s ease 11.5s forwards;
 }
 
 .nav-item:nth-child(2) {
-    animation: fadeIn 0.8s ease 6.3s forwards;
+    animation: fadeIn 0.8s ease 12s forwards;
 }
 
 .nav-item:nth-child(3) {
-    animation: fadeIn 0.8s ease 7.1s forwards;
+    animation: fadeIn 0.8s ease 12.5s forwards;
 }
 
 .nav-item h2 {
