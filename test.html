@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Version Comparison</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            margin-bottom: 2rem;
+        }
+        .version {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .version h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .version ul {
+            list-style: none;
+            padding: 0;
+        }
+        .version li {
+            padding: 0.5rem 0;
+        }
+        .version a {
+            color: #0039A6;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .version a:hover {
+            text-decoration: underline;
+        }
+        .metrics {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Streamlined Site - Version Comparison</h1>
+        
+        <div class="version">
+            <h2>🆕 New Clean Architecture</h2>
+            <ul>
+                <li><a href="index-new.html">Homepage</a></li>
+                <li><a href="pages/talent-new.html">Talent</a></li>
+                <li><a href="pages/interfaces-new.html">Interfaces</a></li>
+                <li><a href="pages/resources-new.html">Resources</a></li>
+            </ul>
+            <div class="metrics">
+                <strong>Benefits:</strong> Modular CSS, Clean JS architecture, Consistent animations, Easy to maintain
+            </div>
+        </div>
+        
+        <div class="version">
+            <h2>📦 Original Version</h2>
+            <ul>
+                <li><a href="index.html">Homepage</a></li>
+                <li><a href="pages/talent.html">Talent</a></li>
+                <li><a href="pages/interfaces.html">Interfaces</a></li>
+                <li><a href="pages/resources.html">Resources</a></li>
+            </ul>
+            <div class="metrics">
+                <strong>Issues:</strong> Complex overlapping animations, Scattered transition logic, Hard to maintain
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,59 @@
+/* CSS Variables */
+:root {
+    /* Colors */
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray-light: #f5f5f5;
+    --color-gray: #999999;
+    --color-gray-dark: #333333;
+    
+    /* Brand Colors */
+    --color-talent: #FF6319;
+    --color-interfaces: #0039A6;
+    --color-resources: #00933C;
+    
+    /* Typography */
+    --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-size-base: 16px;
+    --font-size-large: 2.5rem;
+    --font-size-xlarge: 4rem;
+    --font-size-hero: 5.5rem;
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+    --spacing-xxl: 8rem;
+    
+    /* Transitions */
+    --transition-fast: 0.3s ease;
+    --transition-base: 0.5s ease;
+    --transition-slow: 0.8s ease;
+    --transition-slower: 1s ease;
+    
+    /* Layout */
+    --container-width: 1400px;
+    --container-padding: 4rem;
+    
+    /* Logo */
+    --logo-width: 100px;
+    --logo-height: 150px;
+    --logo-width-large: 200px;
+    --logo-height-large: 300px;
+}
+
+/* Mobile Variables */
+@media (max-width: 768px) {
+    :root {
+        --font-size-large: 1.5rem;
+        --font-size-xlarge: 2.5rem;
+        --font-size-hero: 3rem;
+        --container-padding: 1.5rem;
+        --spacing-xl: 4rem;
+        --spacing-xxl: 4rem;
+        --logo-width: 60px;
+        --logo-height: 90px;
+    }
+}

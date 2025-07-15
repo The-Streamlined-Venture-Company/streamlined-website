@@ -1,0 +1,101 @@
+/* Theme Styles */
+
+/* Homepage Theme */
+body.page-home {
+    background-color: var(--color-gray-light);
+    color: var(--color-black);
+}
+
+/* Talent Theme */
+body.page-talent {
+    background-color: var(--color-talent);
+    color: var(--color-white);
+}
+
+body.page-talent .nav a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.page-talent .nav a:hover {
+    color: var(--color-white);
+}
+
+/* Interfaces Theme */
+body.page-interfaces {
+    background-color: var(--color-interfaces);
+    color: var(--color-white);
+}
+
+body.page-interfaces .nav a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.page-interfaces .nav a:hover {
+    color: var(--color-white);
+}
+
+/* Resources Theme */
+body.page-resources {
+    background-color: var(--color-resources);
+    color: var(--color-white);
+}
+
+body.page-resources .nav a {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+body.page-resources .nav a:hover {
+    color: var(--color-white);
+}
+
+/* Subpage Specific Styles */
+.page-content {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+}
+
+.page-content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    letter-spacing: -0.02em;
+}
+
+.page-content p,
+.page-content li {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.page-content ul {
+    margin-top: var(--spacing-sm);
+}
+
+.page-content li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.page-content li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Navigation Hover Colors */
+.nav-main a:nth-child(1):hover h2 {
+    color: var(--color-talent);
+}
+
+.nav-main a:nth-child(2):hover h2 {
+    color: var(--color-interfaces);
+}
+
+.nav-main a:nth-child(3):hover h2 {
+    color: var(--color-resources);
+}
