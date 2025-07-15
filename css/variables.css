@@ -14,10 +14,10 @@
     
     /* Typography */
     --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    --font-size-base: 18px;
-    --font-size-large: 3.2rem;
-    --font-size-xlarge: 5rem;
-    --font-size-hero: 7rem;
+    --font-size-base: 22px;
+    --font-size-large: 4.5rem;
+    --font-size-xlarge: 6.5rem;
+    --font-size-hero: 9rem;
     
     /* Spacing */
     --spacing-xs: 0.5rem;
@@ -47,9 +47,9 @@
 /* Mobile Variables */
 @media (max-width: 768px) {
     :root {
-        --font-size-large: 2rem;
-        --font-size-xlarge: 3.2rem;
-        --font-size-hero: 4rem;
+        --font-size-large: 2.5rem;
+        --font-size-xlarge: 4rem;
+        --font-size-hero: 5rem;
         --container-padding: 1.5rem;
         --spacing-xl: 4rem;
         --spacing-xxl: 4rem;

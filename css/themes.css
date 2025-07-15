@@ -97,24 +97,4 @@ body.page-resources .nav a:hover {
     color: rgba(255, 255, 255, 0.5);
 }
 
-/* Navigation Default Colors */
-.nav-main a:nth-child(1) h2 {
-    color: var(--color-talent);
-}
-
-.nav-main a:nth-child(2) h2 {
-    color: var(--color-interfaces);
-}
-
-.nav-main a:nth-child(3) h2 {
-    color: var(--color-resources);
-}
-
-/* Navigation Hover Effect - handled by Rough Notation */
-.nav-main a h2 {
-    transition: opacity 0.2s ease;
-}
-
-.nav-main a:hover h2 {
-    opacity: 0.9;
-}
+/* Tagline link hover effects are handled by Rough Notation */

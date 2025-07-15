@@ -41,7 +41,7 @@ header {
 
 .nav a {
     color: var(--color-gray);
-    font-size: 1.1rem;
+    font-size: 1.3rem;
     transition: color var(--transition-fast);
     position: relative;
 }
@@ -81,9 +81,14 @@ body:not(.page-home) .tagline {
     max-width: 1200px;
 }
 
+.tagline p {
+    margin: 0;
+}
+
 .tagline-bold {
     font-weight: 500;
     color: var(--color-black);
+    margin-bottom: 1rem !important;
 }
 
 body:not(.page-home) .tagline-bold {
@@ -124,10 +129,40 @@ body:not(.page-home) .tagline-bold {
     transition: color var(--transition-fast);
 }
 
-/* For Rough Notation annotations */
-.nav-main h2 .annotation-target {
+/* Tagline Links */
+.tagline-link {
+    text-decoration: none;
+    position: relative;
+    font-weight: 600;
+    transition: all 0.3s ease;
     display: inline-block;
+    cursor: pointer;
 }
+
+.tagline-link.talent-link {
+    color: var(--color-talent);
+}
+
+.tagline-link.interfaces-link {
+    color: var(--color-interfaces);
+}
+
+.tagline-link.resources-link {
+    color: var(--color-resources);
+    /* Adjust vertical positioning for highlight */
+    position: relative;
+    top: -2px;
+}
+
+.tagline-link {
+    cursor: pointer;
+}
+
+.tagline-link:hover {
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Remove text shadows - handled by Rough Notation */
 
 /* Mobile Layout */
 @media (max-width: 768px) {

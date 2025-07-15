@@ -73,17 +73,49 @@ class AnimationController {
         }, 200);
     }
     
-    // Split text into animated words
+    // Split text into animated words while preserving links
     static prepareAnimatedText() {
         const animatedText = document.querySelector('.tagline-animated');
         if (!animatedText) return;
         
-        const text = animatedText.textContent;
-        const words = text.split(' ').map(word => {
-            return `<span class="word">${word}</span>`;
-        });
+        // Get all nodes including text and elements
+        const processNode = (node) => {
+            const result = [];
+            
+            node.childNodes.forEach(child => {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    // Split text into words
+                    const words = child.textContent.split(/(\s+)/);
+                    words.forEach(word => {
+                        if (word.trim()) {
+                            result.push(`<span class="word">${word}</span>`);
+                        } else if (word) {
+                            result.push(word); // Keep whitespace
+                        }
+                    });
+                } else if (child.nodeType === Node.ELEMENT_NODE && child.tagName === 'A') {
+                    // For links, wrap the entire link as a word
+                    const linkClone = child.cloneNode(true);
+                    result.push(`<span class="word">${linkClone.outerHTML}</span>`);
+                } else if (child.nodeType === Node.ELEMENT_NODE) {
+                    // Handle other elements recursively
+                    result.push(processNode(child));
+                }
+            });
+            
+            return result.join('');
+        };
         
-        animatedText.innerHTML = words.join(' ');
+        // Process and update
+        const processedHTML = processNode(animatedText);
+        animatedText.innerHTML = processedHTML;
+        
+        // Debug: count words
+        const wordCount = animatedText.querySelectorAll('.word').length;
+        console.log('Total words in tagline:', wordCount);
+        animatedText.querySelectorAll('.word').forEach((word, index) => {
+            console.log(`Word ${index + 1}:`, word.textContent);
+        });
     }
 }
 

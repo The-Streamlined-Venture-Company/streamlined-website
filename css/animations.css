@@ -56,19 +56,33 @@
     animation: blurIn 1s ease forwards;
 }
 
-/* Word Animation Delays */
-.intro-active .word:nth-child(1) { animation-delay: 4.5s; }
-.intro-active .word:nth-child(2) { animation-delay: 4.7s; }
-.intro-active .word:nth-child(3) { animation-delay: 4.9s; }
-.intro-active .word:nth-child(4) { animation-delay: 5.2s; }
-.intro-active .word:nth-child(5) { animation-delay: 5.4s; }
-.intro-active .word:nth-child(6) { animation-delay: 5.6s; }
-.intro-active .word:nth-child(7) { animation-delay: 5.9s; }
-.intro-active .word:nth-child(8) { animation-delay: 6.1s; }
-.intro-active .word:nth-child(9) { animation-delay: 6.3s; }
-.intro-active .word:nth-child(10) { animation-delay: 6.5s; }
-.intro-active .word:nth-child(11) { animation-delay: 6.7s; }
-.intro-active .word:nth-child(12) { animation-delay: 6.9s; }
+/* Ensure wrapped links maintain their properties */
+.word .tagline-link {
+    display: inline;
+    position: relative;
+}
+
+/* Word Animation Delays - Extended for all words including links */
+.intro-active .tagline-animated .word:nth-child(1) { animation-delay: 4.5s; }
+.intro-active .tagline-animated .word:nth-child(2) { animation-delay: 4.7s; }
+.intro-active .tagline-animated .word:nth-child(3) { animation-delay: 4.9s; }
+.intro-active .tagline-animated .word:nth-child(4) { animation-delay: 5.1s; }
+.intro-active .tagline-animated .word:nth-child(5) { animation-delay: 5.3s; }
+.intro-active .tagline-animated .word:nth-child(6) { animation-delay: 5.5s; }
+.intro-active .tagline-animated .word:nth-child(7) { animation-delay: 5.7s; }
+.intro-active .tagline-animated .word:nth-child(8) { animation-delay: 5.9s; }
+.intro-active .tagline-animated .word:nth-child(9) { animation-delay: 6.1s; }
+.intro-active .tagline-animated .word:nth-child(10) { animation-delay: 6.3s; }
+.intro-active .tagline-animated .word:nth-child(11) { animation-delay: 6.5s; }
+.intro-active .tagline-animated .word:nth-child(12) { animation-delay: 6.7s; }
+.intro-active .tagline-animated .word:nth-child(13) { animation-delay: 6.9s; }
+.intro-active .tagline-animated .word:nth-child(14) { animation-delay: 7.1s; }
+.intro-active .tagline-animated .word:nth-child(15) { animation-delay: 7.3s; }
+.intro-active .tagline-animated .word:nth-child(16) { animation-delay: 7.5s; }
+.intro-active .tagline-animated .word:nth-child(17) { animation-delay: 7.7s; }
+.intro-active .tagline-animated .word:nth-child(18) { animation-delay: 7.9s; }
+.intro-active .tagline-animated .word:nth-child(19) { animation-delay: 8.1s; }
+.intro-active .tagline-animated .word:nth-child(20) { animation-delay: 8.3s; }
 
 .intro-active .divider {
     opacity: 0;
@@ -109,8 +123,13 @@
 }
 
 .logo-loader.transition {
-    width: 150px;
-    height: 225px;
+    width: var(--logo-width);
+    height: var(--logo-height);
+}
+
+/* Ensure loader image maintains aspect ratio */
+.logo-loader {
+    object-fit: contain;
 }
 
 /* Breathing Logo */
