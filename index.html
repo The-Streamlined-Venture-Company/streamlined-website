@@ -15,7 +15,7 @@
                         <img src="assets/images/logo.gif" alt="Streamlined">
                     </div>
                     <div class="tagline">
-                        <p class="tagline-bold">We are Streamlined.</p>
+                        <p class="tagline-bold">We are <span class="streamlined-animated"><span style="--i: 0">S</span><span style="--i: 1">t</span><span style="--i: 2">r</span><span style="--i: 3">e</span><span style="--i: 4">a</span><span style="--i: 5">m</span><span style="--i: 6">l</span><span style="--i: 7">i</span><span style="--i: 8">n</span><span style="--i: 9">e</span><span style="--i: 10">d</span></span>.</p>
                         <p class="tagline-light tagline-animated">We help design-conscious, nimble minds streamline how they live and work, with 
                             <a href="pages/talent.html" class="tagline-link talent-link">talent</a>, 
                             <a href="pages/interfaces.html" class="tagline-link interfaces-link">interfaces</a>, and 
@@ -26,6 +26,21 @@
             </section>
         </main>
     </div>
+    
+    <!-- SVG Filter for Morph Effect -->
+    <svg width="0" height="0" style="position: absolute;">
+        <defs>
+            <filter id="extremeMorph">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="turbulence" seed="10"/>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="70" xChannelSelector="R" yChannelSelector="G">
+                    <animate id="morphScale" attributeName="scale" dur="2s" values="70;50;30;10;0" fill="freeze" begin="indefinite"/>
+                </feDisplacementMap>
+                <feColorMatrix type="hueRotate">
+                    <animate id="morphColor" attributeName="values" dur="2s" values="180;90;0" fill="freeze" begin="indefinite"/>
+                </feColorMatrix>
+            </filter>
+        </defs>
+    </svg>
     
     <script src="https://unpkg.com/rough-notation@0.5.1/lib/rough-notation.iife.js"></script>
     <script src="js/config.js"></script>

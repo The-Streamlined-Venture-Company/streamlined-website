@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - 10 Text Animation Effects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+        }
+        
+        .variation {
+            margin-bottom: 6rem;
+            text-align: center;
+            position: relative;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .text-wrapper {
+            font-size: 4rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            position: relative;
+        }
+        
+        /* Version 1: Glitch Effect */
+        .v1 .streamlined {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .v1 .streamlined::before,
+        .v1 .streamlined::after {
+            content: 'STREAMLINED';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .v1 .streamlined::before {
+            animation: glitch1 2s infinite;
+            color: #00ffff;
+            z-index: -1;
+        }
+        
+        .v1 .streamlined::after {
+            animation: glitch2 2s infinite;
+            color: #ff00ff;
+            z-index: -2;
+        }
+        
+        @keyframes glitch1 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(20% 0 30% 0); transform: translate(-2px, 2px); }
+            40% { clip-path: inset(50% 0 20% 0); transform: translate(2px, -2px); }
+            60% { clip-path: inset(10% 0 60% 0); transform: translate(0, 1px); }
+            80% { clip-path: inset(80% 0 5% 0); transform: translate(1px, 0); }
+        }
+        
+        @keyframes glitch2 {
+            0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            20% { clip-path: inset(60% 0 10% 0); transform: translate(2px, -1px); }
+            40% { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 1px); }
+            60% { clip-path: inset(30% 0 40% 0); transform: translate(1px, 2px); }
+            80% { clip-path: inset(10% 0 80% 0); transform: translate(-1px, -2px); }
+        }
+        
+        /* Version 2: Wave Distortion */
+        .v2 .streamlined {
+            display: inline-block;
+            animation: waveDistort 3s ease-in-out infinite;
+        }
+        
+        .v2 .streamlined span {
+            display: inline-block;
+            animation: letterWave 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+        
+        @keyframes waveDistort {
+            0%, 100% { transform: rotateY(0); }
+            50% { transform: rotateY(10deg); }
+        }
+        
+        @keyframes letterWave {
+            0%, 100% { transform: translateY(0) rotateX(0); }
+            25% { transform: translateY(-10px) rotateX(-10deg); }
+            75% { transform: translateY(10px) rotateX(10deg); }
+        }
+        
+        /* Version 3: Neon Glow Pulse */
+        .v3 .streamlined {
+            animation: neonPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 10px #fff,
+                         0 0 20px #fff,
+                         0 0 30px #0ff,
+                         0 0 40px #0ff;
+        }
+        
+        @keyframes neonPulse {
+            0%, 100% { 
+                opacity: 1;
+                text-shadow: 0 0 10px #fff,
+                             0 0 20px #fff,
+                             0 0 30px #0ff,
+                             0 0 40px #0ff;
+            }
+            50% { 
+                opacity: 0.8;
+                text-shadow: 0 0 20px #fff,
+                             0 0 30px #fff,
+                             0 0 40px #0ff,
+                             0 0 50px #0ff,
+                             0 0 60px #0ff;
+            }
+        }
+        
+        /* Version 4: 3D Rotate */
+        .v4 .streamlined {
+            display: inline-block;
+            animation: rotate3D 4s linear infinite;
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes rotate3D {
+            0% { transform: rotateX(0) rotateY(0); }
+            25% { transform: rotateX(20deg) rotateY(180deg); }
+            50% { transform: rotateX(0) rotateY(360deg); }
+            75% { transform: rotateX(-20deg) rotateY(540deg); }
+            100% { transform: rotateX(0) rotateY(720deg); }
+        }
+        
+        /* Version 5: Particle Dispersion */
+        .v5 .streamlined span {
+            display: inline-block;
+            animation: particleDisperse 3s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.05s);
+        }
+        
+        @keyframes particleDisperse {
+            0%, 100% { 
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+                filter: blur(0);
+            }
+            50% { 
+                transform: translate(calc(var(--i) * 5px - 25px), calc(var(--i) * -3px + 15px)) scale(1.2);
+                opacity: 0.7;
+                filter: blur(1px);
+            }
+        }
+        
+        /* Version 6: Morph and Stretch */
+        .v6 .streamlined {
+            display: inline-block;
+            animation: morphStretch 3s ease-in-out infinite;
+        }
+        
+        @keyframes morphStretch {
+            0%, 100% { 
+                transform: scaleX(1) scaleY(1);
+                letter-spacing: 0.05em;
+            }
+            25% { 
+                transform: scaleX(1.3) scaleY(0.8);
+                letter-spacing: 0.2em;
+            }
+            50% { 
+                transform: scaleX(0.8) scaleY(1.2);
+                letter-spacing: -0.05em;
+            }
+            75% { 
+                transform: scaleX(1.1) scaleY(0.9);
+                letter-spacing: 0.1em;
+            }
+        }
+        
+        /* Version 7: Scramble Effect */
+        .v7 .streamlined span {
+            display: inline-block;
+            position: relative;
+        }
+        
+        .v7 .streamlined span::before {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: scramble 3s steps(10) infinite;
+        }
+        
+        @keyframes scramble {
+            0%, 100% { content: attr(data-text); opacity: 1; }
+            10% { content: '#'; opacity: 0.8; }
+            20% { content: '@'; opacity: 0.8; }
+            30% { content: '*'; opacity: 0.8; }
+            40% { content: '&'; opacity: 0.8; }
+            50% { content: '%'; opacity: 0.8; }
+            60% { content: '$'; opacity: 0.8; }
+            70% { content: '!'; opacity: 0.8; }
+            80% { content: '?'; opacity: 0.8; }
+            90% { content: '~'; opacity: 0.8; }
+        }
+        
+        /* Version 8: Liquid Motion */
+        .v8 .streamlined {
+            display: inline-block;
+            animation: liquidMotion 4s ease-in-out infinite;
+            filter: url('#liquid');
+        }
+        
+        @keyframes liquidMotion {
+            0%, 100% { transform: skewY(0deg) scaleY(1); }
+            25% { transform: skewY(3deg) scaleY(1.1); }
+            50% { transform: skewY(-3deg) scaleY(0.9); }
+            75% { transform: skewY(1deg) scaleY(1.05); }
+        }
+        
+        /* Version 9: Electric Shock */
+        .v9 .streamlined {
+            display: inline-block;
+            animation: electricShock 0.1s ease-in-out infinite;
+            text-shadow: 0 0 5px #0ff;
+        }
+        
+        @keyframes electricShock {
+            0%, 100% { transform: translate(0); }
+            10% { transform: translate(-1px, 1px); }
+            20% { transform: translate(1px, -1px); }
+            30% { transform: translate(-1px, -1px); }
+            40% { transform: translate(1px, 1px); }
+            50% { transform: translate(-2px, 0); }
+            60% { transform: translate(2px, 0); }
+            70% { transform: translate(0, -2px); }
+            80% { transform: translate(0, 2px); }
+            90% { transform: translate(-1px, 0); }
+        }
+        
+        /* Version 10: Perspective Shift */
+        .v10 .streamlined {
+            display: inline-block;
+            animation: perspectiveShift 5s ease-in-out infinite;
+            transform-origin: center center;
+            perspective: 1000px;
+        }
+        
+        .v10 .streamlined span {
+            display: inline-block;
+            animation: letterPerspective 5s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes perspectiveShift {
+            0%, 100% { transform: perspective(1000px) rotateX(0); }
+            50% { transform: perspective(1000px) rotateX(20deg); }
+        }
+        
+        @keyframes letterPerspective {
+            0%, 100% { transform: translateZ(0); }
+            50% { transform: translateZ(calc(var(--i) * 10px - 50px)); }
+        }
+        
+        /* Labels */
+        .label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        
+        /* SVG Filter for Liquid Effect */
+        svg {
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>STREAMLINED - Text Animation Effects</h1>
+        
+        <!-- Version 1: Glitch -->
+        <div class="variation v1">
+            <span class="label">01. GLITCH</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 2: Wave Distortion -->
+        <div class="variation v2">
+            <span class="label">02. WAVE DISTORTION</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">
+                    <span style="--i: 0">S</span><span style="--i: 1">T</span><span style="--i: 2">R</span><span style="--i: 3">E</span><span style="--i: 4">A</span><span style="--i: 5">M</span><span style="--i: 6">L</span><span style="--i: 7">I</span><span style="--i: 8">N</span><span style="--i: 9">E</span><span style="--i: 10">D</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 3: Neon Glow -->
+        <div class="variation v3">
+            <span class="label">03. NEON GLOW PULSE</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 4: 3D Rotate -->
+        <div class="variation v4">
+            <span class="label">04. 3D ROTATE</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 5: Particle Dispersion -->
+        <div class="variation v5">
+            <span class="label">05. PARTICLE DISPERSION</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">
+                    <span style="--i: 0">S</span><span style="--i: 1">T</span><span style="--i: 2">R</span><span style="--i: 3">E</span><span style="--i: 4">A</span><span style="--i: 5">M</span><span style="--i: 6">L</span><span style="--i: 7">I</span><span style="--i: 8">N</span><span style="--i: 9">E</span><span style="--i: 10">D</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 6: Morph and Stretch -->
+        <div class="variation v6">
+            <span class="label">06. MORPH AND STRETCH</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 7: Scramble -->
+        <div class="variation v7">
+            <span class="label">07. SCRAMBLE</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">
+                    <span data-text="S">S</span><span data-text="T">T</span><span data-text="R">R</span><span data-text="E">E</span><span data-text="A">A</span><span data-text="M">M</span><span data-text="L">L</span><span data-text="I">I</span><span data-text="N">N</span><span data-text="E">E</span><span data-text="D">D</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 8: Liquid Motion -->
+        <div class="variation v8">
+            <span class="label">08. LIQUID MOTION</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 9: Electric Shock -->
+        <div class="variation v9">
+            <span class="label">09. ELECTRIC SHOCK</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">STREAMLINED</span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 10: Perspective Shift -->
+        <div class="variation v10">
+            <span class="label">10. PERSPECTIVE SHIFT</span>
+            <div class="text-wrapper">
+                <span class="static-text">WE ARE </span>
+                <span class="streamlined">
+                    <span style="--i: 0">S</span><span style="--i: 1">T</span><span style="--i: 2">R</span><span style="--i: 3">E</span><span style="--i: 4">A</span><span style="--i: 5">M</span><span style="--i: 6">L</span><span style="--i: 7">I</span><span style="--i: 8">N</span><span style="--i: 9">E</span><span style="--i: 10">D</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SVG Filter for Liquid Effect -->
+    <svg>
+        <defs>
+            <filter id="liquid">
+                <feTurbulence baseFrequency="0.02" numOctaves="3" result="turbulence"/>
+                <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>

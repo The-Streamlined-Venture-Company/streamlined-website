@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Animation Test - Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Streamlined Text Animation */
+        .streamlined-text {
+            font-size: 6rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .streamlined-text span {
+            display: inline-block;
+            animation: streamToLine 3s ease-in-out forwards;
+            transform-origin: center bottom;
+        }
+        
+        /* Initial wavy positions for each letter */
+        .streamlined-text span:nth-child(1) { animation-delay: 0s; }
+        .streamlined-text span:nth-child(2) { animation-delay: 0.1s; }
+        .streamlined-text span:nth-child(3) { animation-delay: 0.2s; }
+        .streamlined-text span:nth-child(4) { animation-delay: 0.3s; }
+        .streamlined-text span:nth-child(5) { animation-delay: 0.4s; }
+        .streamlined-text span:nth-child(6) { animation-delay: 0.5s; }
+        .streamlined-text span:nth-child(7) { animation-delay: 0.6s; }
+        .streamlined-text span:nth-child(8) { animation-delay: 0.7s; }
+        .streamlined-text span:nth-child(9) { animation-delay: 0.8s; }
+        .streamlined-text span:nth-child(10) { animation-delay: 0.9s; }
+        .streamlined-text span:nth-child(11) { animation-delay: 1.0s; }
+        
+        @keyframes streamToLine {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            20%, 50% {
+                /* Wavy motion */
+                transform: translateY(calc(sin(var(--wave)) * 30px)) rotate(calc(sin(var(--wave)) * 5deg));
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+        }
+        
+        /* Alternative version with CSS variables for wave effect */
+        .wave-text {
+            font-size: 5rem;
+            font-weight: 600;
+            margin-top: 4rem;
+        }
+        
+        .wave-text span {
+            display: inline-block;
+            animation: waveMotion 4s ease-in-out infinite;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+        
+        @keyframes waveMotion {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-20px);
+            }
+            75% {
+                transform: translateY(20px);
+            }
+        }
+        
+        /* Stream effect with path animation */
+        .stream-effect {
+            margin-top: 4rem;
+            position: relative;
+            height: 200px;
+        }
+        
+        .stream-path {
+            font-size: 4rem;
+            font-weight: 700;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .stream-path span {
+            display: inline-block;
+            opacity: 0;
+            animation: streamFlow 3s ease forwards;
+            animation-delay: calc(var(--i) * 0.15s);
+        }
+        
+        @keyframes streamFlow {
+            0% {
+                opacity: 0;
+                transform: translateY(-40px) translateX(calc(sin(var(--i) * 0.5) * 20px));
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(calc(sin(var(--i) * 0.5) * 30px)) translateX(calc(cos(var(--i) * 0.5) * 15px));
+            }
+            50% {
+                transform: translateY(calc(sin(var(--i) * 0.8) * 20px)) translateX(calc(cos(var(--i) * 0.8) * 10px));
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) translateX(0);
+            }
+        }
+        
+        /* Controls */
+        .controls {
+            margin-top: 4rem;
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="streamlined-text" id="animatedText">
+            <span>S</span><span>t</span><span>r</span><span>e</span><span>a</span><span>m</span><span>l</span><span>i</span><span>n</span><span>e</span><span>d</span>
+        </h1>
+        
+        <div class="wave-text">
+            <span style="--i: 0">W</span><span style="--i: 1">a</span><span style="--i: 2">v</span><span style="--i: 3">e</span>
+            <span style="--i: 4"> </span>
+            <span style="--i: 5">E</span><span style="--i: 6">f</span><span style="--i: 7">f</span><span style="--i: 8">e</span><span style="--i: 9">c</span><span style="--i: 10">t</span>
+        </div>
+        
+        <div class="stream-effect">
+            <div class="stream-path" id="streamPath">
+                <span style="--i: 0">F</span><span style="--i: 1">l</span><span style="--i: 2">o</span><span style="--i: 3">w</span>
+                <span style="--i: 4"> </span>
+                <span style="--i: 5">t</span><span style="--i: 6">o</span>
+                <span style="--i: 7"> </span>
+                <span style="--i: 8">L</span><span style="--i: 9">i</span><span style="--i: 10">n</span><span style="--i: 11">e</span>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button onclick="restartAnimation()">Restart Animation</button>
+            <button onclick="toggleWave()">Toggle Wave</button>
+        </div>
+    </div>
+    
+    <script>
+        // More complex wave animation with JavaScript
+        function createAdvancedWave() {
+            const text = document.getElementById('animatedText');
+            const letters = text.querySelectorAll('span');
+            
+            letters.forEach((letter, index) => {
+                // Create custom wave properties
+                const waveHeight = 30;
+                const waveSpeed = 0.5;
+                const delay = index * 0.1;
+                
+                letter.style.setProperty('--wave', index);
+                
+                // Animate using JavaScript for more control
+                let time = 0;
+                const animate = () => {
+                    time += 0.016; // ~60fps
+                    
+                    if (time < 2) {
+                        // Wave phase
+                        const y = Math.sin((time * waveSpeed + delay) * Math.PI) * waveHeight;
+                        const rotation = Math.sin((time * waveSpeed + delay) * Math.PI) * 5;
+                        letter.style.transform = `translateY(${y}px) rotate(${rotation}deg)`;
+                    } else if (time < 3) {
+                        // Straightening phase
+                        const progress = (time - 2);
+                        const y = Math.sin((2 * waveSpeed + delay) * Math.PI) * waveHeight * (1 - progress);
+                        const rotation = Math.sin((2 * waveSpeed + delay) * Math.PI) * 5 * (1 - progress);
+                        letter.style.transform = `translateY(${y}px) rotate(${rotation}deg)`;
+                    } else {
+                        // Final straight position
+                        letter.style.transform = `translateY(0) rotate(0deg)`;
+                    }
+                    
+                    if (time < 3) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                setTimeout(() => {
+                    requestAnimationFrame(animate);
+                }, delay * 1000);
+            });
+        }
+        
+        function restartAnimation() {
+            // Remove and re-add classes to restart CSS animations
+            const elements = document.querySelectorAll('.streamlined-text span, .stream-path span');
+            elements.forEach(el => {
+                const parent = el.parentNode;
+                const next = el.nextSibling;
+                parent.removeChild(el);
+                parent.insertBefore(el, next);
+            });
+            
+            // Restart JavaScript animation
+            createAdvancedWave();
+        }
+        
+        function toggleWave() {
+            const waveText = document.querySelector('.wave-text');
+            waveText.style.animationPlayState = 
+                waveText.style.animationPlayState === 'paused' ? 'running' : 'paused';
+        }
+        
+        // Start advanced animation on load
+        window.addEventListener('load', () => {
+            setTimeout(createAdvancedWave, 500);
+        });
+    </script>
+</body>
+</html>

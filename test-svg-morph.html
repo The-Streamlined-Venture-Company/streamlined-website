@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line Morphs to Streamlined - SVG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1200px;
+        }
+        
+        .text-wrapper {
+            font-size: 4.5rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .static-text {
+            margin-right: 0.3em;
+        }
+        
+        /* SVG Animation */
+        .morph-svg {
+            width: 600px;
+            height: 100px;
+            margin: 0 0.2em;
+        }
+        
+        .morph-path {
+            fill: none;
+            stroke: #000;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        
+        /* Version 1: Simple line to text morph */
+        .v1 .morph-path {
+            animation: morphToText 3s ease-in-out forwards;
+        }
+        
+        @keyframes morphToText {
+            0% {
+                d: path("M 50 50 L 550 50");
+            }
+            100% {
+                d: path("M 50 30 Q 60 20 70 30 L 70 70 M 90 30 L 90 70 L 100 70 M 110 50 Q 110 30 125 30 Q 140 30 140 50 M 150 30 Q 160 20 170 30 Q 180 40 170 50 Q 160 60 170 70 M 190 50 Q 200 30 210 50 Q 220 70 230 50 M 240 30 L 240 70 M 260 30 L 260 70 M 280 30 L 280 70 Q 280 50 300 50 Q 320 50 320 70 M 340 30 Q 350 20 360 30 Q 370 40 360 50 Q 350 60 360 70 M 380 70 Q 380 30 400 30 Q 420 30 420 70");
+            }
+        }
+        
+        /* Version 2: Write-on effect */
+        .v2 .line-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 1s ease-out forwards;
+        }
+        
+        .v2 .text-path {
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawText 2s ease-out 0.8s forwards;
+            opacity: 0;
+            animation-fill-mode: both;
+        }
+        
+        @keyframes drawLine {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes drawText {
+            0% {
+                opacity: 1;
+                stroke-dashoffset: 2000;
+            }
+            100% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        /* Version 3: Particle morph effect */
+        .v3-wrapper {
+            position: relative;
+            width: 600px;
+            height: 100px;
+            margin: 2rem auto;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #000;
+            border-radius: 50%;
+            animation: particleMove 2s ease-in-out forwards;
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Line Morphing to "Streamlined"</h1>
+        <p style="margin-bottom: 3rem; color: #666;">SVG animations where a line transforms into text</p>
+        
+        <!-- Version 1: Path Morph (doesn't work well in all browsers) -->
+        <div class="text-wrapper">
+            <span class="static-text">We are</span>
+            <svg class="morph-svg v1" viewBox="0 0 600 100">
+                <path class="morph-path" d="M 50 50 L 550 50" />
+            </svg>
+            <span class="static-text">.</span>
+        </div>
+        
+        <!-- Version 2: Write-on Effect -->
+        <div class="text-wrapper">
+            <span class="static-text">We are</span>
+            <svg class="morph-svg v2" viewBox="0 0 600 100">
+                <!-- Line -->
+                <path class="line-path" d="M 50 50 L 550 50" />
+                <!-- Text paths -->
+                <path class="text-path" d="
+                    M 50 30 Q 65 15 80 30 L 80 70 Q 65 85 50 70 Q 35 55 50 40 Q 65 25 80 40
+                    M 100 30 L 100 70 L 110 60 L 120 70 L 120 30
+                    M 140 50 L 140 70 M 140 40 Q 140 30 150 30 Q 160 30 160 40 L 160 70
+                    M 180 50 Q 180 30 195 30 Q 210 30 210 50 Q 210 70 195 70 Q 180 70 180 50
+                    M 230 50 Q 240 30 250 50 Q 260 70 270 50
+                    M 290 30 L 290 70
+                    M 310 30 L 310 70
+                    M 330 30 L 330 70 Q 330 50 345 50 Q 360 50 360 70 L 360 30
+                    M 380 50 Q 380 30 395 30 Q 410 30 410 50 Q 410 70 395 70 Q 380 70 380 50
+                    M 430 70 Q 430 30 445 30 Q 460 30 460 70 L 460 30
+                " />
+            </svg>
+            <span class="static-text">.</span>
+        </div>
+        
+        <!-- Version 3: JavaScript Particle Effect -->
+        <div class="text-wrapper">
+            <span class="static-text">We are</span>
+            <div class="v3-wrapper" id="particleContainer"></div>
+            <span class="static-text">.</span>
+        </div>
+        
+        <button onclick="replayAll()">Replay All</button>
+    </div>
+    
+    <script>
+        // Create particle effect
+        function createParticleEffect() {
+            const container = document.getElementById('particleContainer');
+            container.innerHTML = ''; // Clear existing particles
+            
+            // Create particles along a line
+            const particleCount = 50;
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Start position (line)
+                const startX = (i / particleCount) * 500 + 50;
+                const startY = 50;
+                
+                // End position (forming letters - simplified)
+                const letterPositions = getLetterPosition(i);
+                
+                particle.style.left = startX + 'px';
+                particle.style.top = startY + 'px';
+                particle.style.setProperty('--endX', letterPositions.x + 'px');
+                particle.style.setProperty('--endY', letterPositions.y + 'px');
+                particle.style.animationDelay = (i * 0.02) + 's';
+                
+                container.appendChild(particle);
+            }
+        }
+        
+        function getLetterPosition(index) {
+            // Simplified letter positions for "Streamlined"
+            const positions = [];
+            
+            // S
+            if (index < 5) return { x: 50 + (index * 5), y: 30 + (index * 8) };
+            // t
+            if (index < 10) return { x: 90 + ((index - 5) * 3), y: 30 + ((index - 5) * 8) };
+            // r
+            if (index < 15) return { x: 130 + ((index - 10) * 4), y: 40 + ((index - 10) * 6) };
+            // ... and so on
+            
+            // Default
+            return { x: 50 + (index * 10), y: 50 };
+        }
+        
+        // Update particle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particleMove {
+                0% {
+                    transform: translate(0, 0);
+                }
+                50% {
+                    transform: translate(
+                        calc((var(--endX) - 100%) / 2),
+                        calc((var(--endY) - 100%) / 2 - 20px)
+                    );
+                }
+                100% {
+                    left: var(--endX);
+                    top: var(--endY);
+                    transform: translate(0, 0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Initialize particle effect
+        createParticleEffect();
+        
+        function replayAll() {
+            // Replay SVG animations
+            const svgs = document.querySelectorAll('.morph-svg');
+            svgs.forEach(svg => {
+                const newSvg = svg.cloneNode(true);
+                svg.parentNode.replaceChild(newSvg, svg);
+            });
+            
+            // Replay particle effect
+            createParticleEffect();
+        }
+    </script>
+</body>
+</html>

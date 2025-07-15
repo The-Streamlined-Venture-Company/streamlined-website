@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Line to Streamlined Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 1200px;
+        }
+        
+        .variation {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h3 {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+        
+        .text-wrapper {
+            font-size: 4.5rem;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            position: relative;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Version 1: Line expands and morphs into text */
+        .v1 .line-to-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .v1 .line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #000;
+            animation: expandLine 1s ease-out forwards;
+        }
+        
+        .v1 .streamlined-text {
+            opacity: 0;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            animation: revealText 1s ease-out 0.8s forwards;
+        }
+        
+        @keyframes expandLine {
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes revealText {
+            to {
+                opacity: 1;
+                transform: scaleY(1);
+            }
+        }
+        
+        /* Version 2: Line draws then letters rise from it */
+        .v2 .line-to-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .v2 .line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000;
+            animation: drawLine 1.2s ease-out forwards;
+            transform-origin: left center;
+        }
+        
+        .v2 .streamlined-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%) scaleY(0);
+            transform-origin: bottom;
+            animation: riseFromLine 0.6s ease-out forwards;
+            animation-delay: calc(0.8s + var(--i) * 0.05s);
+        }
+        
+        @keyframes drawLine {
+            to {
+                width: 100%;
+            }
+        }
+        
+        @keyframes riseFromLine {
+            to {
+                opacity: 1;
+                transform: translateY(0) scaleY(1);
+            }
+        }
+        
+        /* Version 3: Line becomes letters with rotation */
+        .v3 .line-to-text {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+        
+        .v3 .streamlined-text span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(100%) rotateX(90deg);
+            transform-origin: bottom;
+            animation: flipUp 0.8s ease-out forwards;
+            animation-delay: calc(0.5s + var(--i) * 0.08s);
+        }
+        
+        .v3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            animation: slideLine 1s ease-out;
+        }
+        
+        @keyframes flipUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+        
+        @keyframes slideLine {
+            to {
+                left: 100%;
+            }
+        }
+        
+        /* Version 4: Multiple lines converge to form text */
+        .v4 .line-to-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .v4 .streamlined-text span {
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .v4 .streamlined-text span::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #000;
+            animation: lineToLetter 1s ease-out forwards;
+            animation-delay: calc(var(--i) * 0.1s);
+        }
+        
+        .v4 .streamlined-text span::after {
+            content: attr(data-char);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            animation: fadeInChar 0.5s ease-out forwards;
+            animation-delay: calc(0.5s + var(--i) * 0.1s);
+        }
+        
+        @keyframes lineToLetter {
+            50% {
+                left: 0;
+                top: 50%;
+                transform: scaleY(1);
+            }
+            100% {
+                left: 0;
+                top: 0;
+                transform: scaleY(30);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeInChar {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Version 5: Smooth morph from line to text */
+        .v5 .line-to-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .v5 .line-mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .v5 .line {
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: #000;
+            animation: slideIn 0.8s ease-out forwards;
+        }
+        
+        .v5 .streamlined-text {
+            opacity: 0;
+            clip-path: polygon(0 45%, 100% 45%, 100% 55%, 0 55%);
+            animation: expandClipPath 1s ease-out 0.6s forwards;
+        }
+        
+        @keyframes slideIn {
+            to {
+                left: 0;
+            }
+        }
+        
+        @keyframes expandClipPath {
+            to {
+                opacity: 1;
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            margin-top: 2rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Line to "Streamlined" Animations</h1>
+        <p style="margin-bottom: 3rem; color: #666;">Different ways a line can transform into the word "Streamlined"</p>
+        
+        <!-- Version 1 -->
+        <div class="variation">
+            <h3>1. Line Expands & Morphs</h3>
+            <div class="text-wrapper">
+                <span class="static-text">We are </span>
+                <span class="v1 line-to-text">
+                    <span class="line"></span>
+                    <span class="streamlined-text">Streamlined</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 2 -->
+        <div class="variation">
+            <h3>2. Letters Rise from Line</h3>
+            <div class="text-wrapper">
+                <span class="static-text">We are </span>
+                <span class="v2 line-to-text">
+                    <span class="line"></span>
+                    <span class="streamlined-text">
+                        <span style="--i: 0">S</span><span style="--i: 1">t</span><span style="--i: 2">r</span><span style="--i: 3">e</span><span style="--i: 4">a</span><span style="--i: 5">m</span><span style="--i: 6">l</span><span style="--i: 7">i</span><span style="--i: 8">n</span><span style="--i: 9">e</span><span style="--i: 10">d</span>
+                    </span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 3 -->
+        <div class="variation">
+            <h3>3. Line Slides & Letters Flip Up</h3>
+            <div class="text-wrapper">
+                <span class="static-text">We are </span>
+                <span class="v3 line-to-text">
+                    <span class="streamlined-text">
+                        <span style="--i: 0">S</span><span style="--i: 1">t</span><span style="--i: 2">r</span><span style="--i: 3">e</span><span style="--i: 4">a</span><span style="--i: 5">m</span><span style="--i: 6">l</span><span style="--i: 7">i</span><span style="--i: 8">n</span><span style="--i: 9">e</span><span style="--i: 10">d</span>
+                    </span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 4 -->
+        <div class="variation">
+            <h3>4. Lines Converge to Letters</h3>
+            <div class="text-wrapper">
+                <span class="static-text">We are </span>
+                <span class="v4 line-to-text">
+                    <span class="streamlined-text">
+                        <span style="--i: 0" data-char="S">S</span><span style="--i: 1" data-char="t">t</span><span style="--i: 2" data-char="r">r</span><span style="--i: 3" data-char="e">e</span><span style="--i: 4" data-char="a">a</span><span style="--i: 5" data-char="m">m</span><span style="--i: 6" data-char="l">l</span><span style="--i: 7" data-char="i">i</span><span style="--i: 8" data-char="n">n</span><span style="--i: 9" data-char="e">e</span><span style="--i: 10" data-char="d">d</span>
+                    </span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <!-- Version 5 -->
+        <div class="variation">
+            <h3>5. Line Morphs via Clip Path</h3>
+            <div class="text-wrapper">
+                <span class="static-text">We are </span>
+                <span class="v5 line-to-text">
+                    <span class="line-mask">
+                        <span class="line"></span>
+                    </span>
+                    <span class="streamlined-text">Streamlined</span>
+                </span>
+                <span class="static-text">.</span>
+            </div>
+        </div>
+        
+        <button onclick="replayAll()">Replay All</button>
+    </div>
+    
+    <script>
+        function replayAll() {
+            // Get all variations
+            const variations = document.querySelectorAll('.line-to-text');
+            
+            variations.forEach(el => {
+                // Clone and replace to restart animation
+                const newEl = el.cloneNode(true);
+                el.parentNode.replaceChild(newEl, el);
+            });
+        }
+    </script>
+</body>
+</html>

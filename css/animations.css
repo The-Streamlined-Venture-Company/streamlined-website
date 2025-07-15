@@ -46,7 +46,14 @@
 
 .intro-active .tagline-bold {
     opacity: 0;
-    animation: fadeIn 1s ease 3s forwards;
+    animation: fadeInPartial 1s ease 3s forwards;
+}
+
+/* Special animation for "We are" text to appear before Streamlined */
+@keyframes fadeInPartial {
+    to {
+        opacity: 1;
+    }
 }
 
 .intro-active .word {
@@ -61,6 +68,60 @@
     display: inline;
     position: relative;
 }
+
+/* Streamlined word animation - Extreme Morph Effect */
+.streamlined-animated {
+    display: inline-block;
+    filter: url(#extremeMorph);
+}
+
+/* First time visitors - animate */
+.intro-active .streamlined-animated {
+    opacity: 0;
+    animation: fadeIn 0.5s ease 4.3s forwards;
+}
+
+/* Returning visitors - animate immediately */
+body.skip-intro .streamlined-animated {
+    opacity: 0;
+    animation: fadeIn 0.3s ease 0.5s forwards;
+}
+
+/* Individual letter spans for proper rendering */
+.streamlined-animated span {
+    display: inline-block;
+    position: relative;
+}
+
+/* Version 5: Gentle Rise (commented out - uncomment to use) */
+/*
+.streamlined-animated span {
+    display: inline-block;
+    position: relative;
+    opacity: 0;
+    animation: gentleRise 3.5s ease-out forwards;
+    animation-delay: calc(4.3s + var(--i) * 0.07s);
+}
+
+@keyframes gentleRise {
+    0% {
+        transform: translateY(50px);
+        opacity: 0;
+        filter: blur(5px);
+    }
+    30% {
+        filter: blur(0);
+    }
+    50% {
+        transform: translateY(calc(sin(var(--i) * 0.6) * -20px));
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+*/
 
 /* Word Animation Delays - Extended for all words including links */
 .intro-active .tagline-animated .word:nth-child(1) { animation-delay: 4.5s; }

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Morphing Text Effects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #000;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        
+        .variation {
+            margin-bottom: 6rem;
+            text-align: center;
+            position: relative;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+        }
+        
+        /* Base morphing text styles */
+        .morph-text {
+            font-size: 5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+        
+        .morph-text span {
+            display: inline-block;
+            position: relative;
+        }
+        
+        /* Version 1: Classic Morph */
+        .v1 .morph-text {
+            filter: url(#morph1);
+        }
+        
+        /* Version 2: Liquid Morph */
+        .v2 .morph-text {
+            filter: url(#morph2);
+        }
+        
+        /* Version 3: Twist Morph */
+        .v3 .morph-text {
+            filter: url(#morph3);
+        }
+        
+        /* Version 4: Bubble Morph */
+        .v4 .morph-text {
+            filter: url(#morph4);
+        }
+        
+        /* Version 5: Glitch Morph */
+        .v5 .morph-text {
+            filter: url(#morph5);
+        }
+        
+        /* Version 6: Wave Morph */
+        .v6 .morph-text {
+            filter: url(#morph6);
+        }
+        
+        /* Version 7: Elastic Morph */
+        .v7 .morph-text {
+            filter: url(#morph7);
+        }
+        
+        /* Version 8: Ripple Morph */
+        .v8 .morph-text {
+            filter: url(#morph8);
+        }
+        
+        /* Version 9: Turbulent Morph */
+        .v9 .morph-text {
+            filter: url(#morph9);
+        }
+        
+        /* Version 10: Extreme Morph */
+        .v10 .morph-text {
+            filter: url(#morph10);
+        }
+        
+        /* Hover effects for interactivity */
+        .morph-text:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>STREAMLINED - Morphing Text Effects</h1>
+        
+        <!-- Version 1: Classic Morph -->
+        <div class="variation v1">
+            <div class="label">01. CLASSIC MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 2: Liquid Morph -->
+        <div class="variation v2">
+            <div class="label">02. LIQUID MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 3: Twist Morph -->
+        <div class="variation v3">
+            <div class="label">03. TWIST MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 4: Bubble Morph -->
+        <div class="variation v4">
+            <div class="label">04. BUBBLE MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 5: Glitch Morph -->
+        <div class="variation v5">
+            <div class="label">05. GLITCH MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 6: Wave Morph -->
+        <div class="variation v6">
+            <div class="label">06. WAVE MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 7: Elastic Morph -->
+        <div class="variation v7">
+            <div class="label">07. ELASTIC MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 8: Ripple Morph -->
+        <div class="variation v8">
+            <div class="label">08. RIPPLE MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 9: Turbulent Morph -->
+        <div class="variation v9">
+            <div class="label">09. TURBULENT MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+        
+        <!-- Version 10: Extreme Morph -->
+        <div class="variation v10">
+            <div class="label">10. EXTREME MORPH</div>
+            <div class="morph-text">
+                <span>S</span><span>T</span><span>R</span><span>E</span><span>A</span><span>M</span><span>L</span><span>I</span><span>N</span><span>E</span><span>D</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SVG Filters -->
+    <svg width="0" height="0">
+        <defs>
+            <!-- Version 1: Classic Morph -->
+            <filter id="morph1">
+                <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" result="turbulence" seed="1">
+                    <animate attributeName="baseFrequency" dur="3s" values="0.02;0.05;0.02" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="3s" values="10;20;10" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 2: Liquid Morph -->
+            <filter id="morph2">
+                <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="1" result="turbulence" seed="2">
+                    <animate attributeName="baseFrequency" dur="4s" values="0.015;0.03;0.015" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="4s" values="15;30;15" repeatCount="indefinite"/>
+                </feDisplacementMap>
+                <feGaussianBlur stdDeviation="0.5">
+                    <animate attributeName="stdDeviation" dur="4s" values="0.5;1;0.5" repeatCount="indefinite"/>
+                </feGaussianBlur>
+            </filter>
+            
+            <!-- Version 3: Twist Morph -->
+            <filter id="morph3">
+                <feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" result="turbulence" seed="3">
+                    <animate attributeName="baseFrequency" dur="5s" values="0.01 0.04;0.04 0.01;0.01 0.04" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="25" xChannelSelector="R" yChannelSelector="B">
+                    <animate attributeName="scale" dur="5s" values="25;-25;25" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 4: Bubble Morph -->
+            <filter id="morph4">
+                <feTurbulence type="turbulence" baseFrequency="0.025" numOctaves="4" result="turbulence" seed="4">
+                    <animate attributeName="seed" dur="2s" values="4;8;4" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="12" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="2s" values="12;24;12" repeatCount="indefinite"/>
+                </feDisplacementMap>
+                <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+            </filter>
+            
+            <!-- Version 5: Glitch Morph -->
+            <filter id="morph5">
+                <feTurbulence type="fractalNoise" baseFrequency="0.05 0.01" numOctaves="1" result="turbulence" seed="5">
+                    <animate attributeName="baseFrequency" dur="0.5s" values="0.05 0.01;0.01 0.05;0.05 0.01" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="0.5s" values="0;40;0" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 6: Wave Morph -->
+            <filter id="morph6">
+                <feTurbulence type="turbulence" baseFrequency="0.02 0.002" numOctaves="2" result="turbulence" seed="6">
+                    <animate attributeName="baseFrequency" dur="6s" values="0.02 0.002;0.002 0.02;0.02 0.002" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="20" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="6s" values="20;40;20" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 7: Elastic Morph -->
+            <filter id="morph7">
+                <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="1" result="turbulence" seed="7">
+                    <animate attributeName="baseFrequency" dur="3s" values="0.03;0.06;0.03" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="15" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="3s" values="0;30;0" repeatCount="indefinite" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 8: Ripple Morph -->
+            <filter id="morph8">
+                <feTurbulence type="turbulence" baseFrequency="0.01" numOctaves="2" result="turbulence" seed="8">
+                    <animate attributeName="seed" dur="4s" values="8;16;8" repeatCount="indefinite"/>
+                    <animate attributeName="baseFrequency" dur="4s" values="0.01;0.02;0.01" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="4s" values="18;36;18" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 9: Turbulent Morph -->
+            <filter id="morph9">
+                <feTurbulence type="turbulence" baseFrequency="0.008" numOctaves="5" result="turbulence" seed="9">
+                    <animate attributeName="baseFrequency" dur="7s" values="0.008;0.015;0.008" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="25" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="7s" values="25;50;25" repeatCount="indefinite"/>
+                </feDisplacementMap>
+            </filter>
+            
+            <!-- Version 10: Extreme Morph -->
+            <filter id="morph10">
+                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="turbulence" seed="10">
+                    <animate attributeName="baseFrequency" dur="2s" values="0.04;0.08;0.04" repeatCount="indefinite"/>
+                </feTurbulence>
+                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="30" xChannelSelector="R" yChannelSelector="G">
+                    <animate attributeName="scale" dur="2s" values="30;60;30" repeatCount="indefinite"/>
+                </feDisplacementMap>
+                <feColorMatrix type="hueRotate">
+                    <animate attributeName="values" dur="2s" values="0;360;0" repeatCount="indefinite"/>
+                </feColorMatrix>
+            </filter>
+        </defs>
+    </svg>
+</body>
+</html>

@@ -24,6 +24,10 @@ class AnimationController {
             // Return visit - skip intro with fade
             document.body.classList.add('skip-intro');
             this.fadeInPage();
+            
+            // Start morph animation for returning visitors
+            this.startMorphAnimation(500); // 0.5s delay
+            
             setTimeout(() => {
                 this.addBreathingAnimation();
             }, 500);
@@ -40,6 +44,9 @@ class AnimationController {
         introLogo.className = 'logo-loader intro';
         document.body.appendChild(introLogo);
         
+        // Start morph animation when Streamlined appears
+        this.startMorphAnimation(4300); // 4.3s delay
+        
         // Add breathing animation after sequence completes
         setTimeout(() => {
             this.addBreathingAnimation();
@@ -51,6 +58,19 @@ class AnimationController {
         const logo = document.querySelector('.hero-content .logo');
         if (logo) {
             logo.classList.add('breathing');
+        }
+    }
+    
+    // Start SVG morph animation
+    startMorphAnimation(delay) {
+        const morphScale = document.getElementById('morphScale');
+        const morphColor = document.getElementById('morphColor');
+        
+        if (morphScale && morphColor) {
+            setTimeout(() => {
+                morphScale.beginElement();
+                morphColor.beginElement();
+            }, delay);
         }
     }
     
