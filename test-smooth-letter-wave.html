@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Smooth Letter Wave Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .variation {
+            height: 200px;
+            margin-bottom: 6rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #222;
+            padding-bottom: 4rem;
+        }
+
+        .label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .text-wrapper {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            position: relative;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5em;
+        }
+
+        .we-are {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .streamlined {
+            display: inline-flex;
+            position: absolute;
+            left: calc(100% + 0.5em);
+            white-space: nowrap;
+        }
+
+        .letter {
+            display: inline-block;
+            will-change: transform;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Version 1: Silk Smooth Wave */
+        .v1 .letter {
+            animation: silkWave 4s cubic-bezier(0.45, 0, 0.55, 1) forwards;
+            animation-delay: calc(var(--index) * 0.04s);
+        }
+
+        @keyframes silkWave {
+            0% {
+                transform: translateX(800px) translateY(0);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            15% {
+                transform: translateX(600px) translateY(calc(sin(var(--index) * 0.3) * 30px));
+            }
+            25% {
+                transform: translateX(450px) translateY(calc(sin(var(--index) * 0.3 + 0.5) * -35px));
+            }
+            35% {
+                transform: translateX(330px) translateY(calc(sin(var(--index) * 0.3 + 1) * 30px));
+            }
+            45% {
+                transform: translateX(240px) translateY(calc(sin(var(--index) * 0.3 + 1.5) * -25px));
+            }
+            55% {
+                transform: translateX(160px) translateY(calc(sin(var(--index) * 0.3 + 2) * 20px));
+            }
+            65% {
+                transform: translateX(100px) translateY(calc(sin(var(--index) * 0.3 + 2.5) * -15px));
+            }
+            75% {
+                transform: translateX(60px) translateY(calc(sin(var(--index) * 0.3 + 3) * 10px));
+            }
+            85% {
+                transform: translateX(30px) translateY(calc(sin(var(--index) * 0.3 + 3.5) * -5px));
+            }
+            95% {
+                transform: translateX(10px) translateY(calc(sin(var(--index) * 0.3 + 4) * 2px));
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Version 2: Liquid Flow */
+        .v2 .letter {
+            animation: liquidFlow 3.5s cubic-bezier(0.33, 0, 0.67, 1) forwards;
+            animation-delay: calc(var(--index) * 0.035s);
+        }
+
+        @keyframes liquidFlow {
+            0% {
+                transform: translateX(800px) translateY(0);
+                opacity: 0;
+            }
+            3% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Additional wave motion for liquid flow */
+        .v2 .letter::before {
+            content: attr(data-letter);
+            position: absolute;
+            animation: liquidWave 3.5s cubic-bezier(0.33, 0, 0.67, 1) forwards;
+            animation-delay: calc(var(--index) * 0.035s);
+        }
+
+        .v2 .letter {
+            position: relative;
+            color: transparent;
+        }
+
+        @keyframes liquidWave {
+            0% {
+                transform: translateY(0);
+            }
+            20% {
+                transform: translateY(calc(sin(var(--index) * 0.4) * -40px));
+            }
+            40% {
+                transform: translateY(calc(sin(var(--index) * 0.4 + 1.5) * 35px));
+            }
+            60% {
+                transform: translateY(calc(sin(var(--index) * 0.4 + 3) * -25px));
+            }
+            80% {
+                transform: translateY(calc(sin(var(--index) * 0.4 + 4.5) * 15px));
+            }
+            90% {
+                transform: translateY(calc(sin(var(--index) * 0.4 + 6) * -5px));
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Version 3: Gentle Stream */
+        .v3 .letter {
+            animation: gentleStream 4.5s cubic-bezier(0.25, 0, 0.25, 1) forwards;
+            animation-delay: calc(var(--index) * 0.045s);
+        }
+
+        @keyframes gentleStream {
+            0% {
+                transform: translateX(800px) translateY(40px);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            20% {
+                transform: translateX(500px) translateY(calc(cos(var(--index) * 0.25) * -30px));
+            }
+            40% {
+                transform: translateX(300px) translateY(calc(sin(var(--index) * 0.25) * 25px));
+            }
+            60% {
+                transform: translateX(150px) translateY(calc(cos(var(--index) * 0.25 + 1) * -20px));
+            }
+            80% {
+                transform: translateX(50px) translateY(calc(sin(var(--index) * 0.25 + 2) * 10px));
+            }
+            90% {
+                transform: translateX(20px) translateY(calc(cos(var(--index) * 0.25 + 3) * -5px));
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Version 4: Ribbon Wave */
+        .v4 .letter {
+            animation: ribbonWave 3.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: calc(var(--index) * 0.03s);
+        }
+
+        @keyframes ribbonWave {
+            0% {
+                transform: translateX(800px) translateY(0) rotateY(90deg);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            25% {
+                transform: translateX(400px) translateY(calc(sin(var(--index) * 0.3) * 50px)) rotateY(45deg);
+            }
+            50% {
+                transform: translateX(200px) translateY(calc(sin(var(--index) * 0.3 + 1.57) * -50px)) rotateY(0deg);
+            }
+            75% {
+                transform: translateX(50px) translateY(calc(sin(var(--index) * 0.3 + 3.14) * 25px)) rotateY(0deg);
+            }
+            90% {
+                transform: translateX(10px) translateY(calc(sin(var(--index) * 0.3 + 4.71) * -10px)) rotateY(0deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotateY(0deg);
+            }
+        }
+
+        /* Version 5: Feather Float */
+        .v5 .letter {
+            animation: featherFloat 5s cubic-bezier(0.22, 0, 0.78, 1) forwards;
+            animation-delay: calc(var(--index) * 0.05s);
+        }
+
+        @keyframes featherFloat {
+            0% {
+                transform: translateX(800px) translateY(-50px);
+                opacity: 0;
+            }
+            5% {
+                opacity: 0.8;
+            }
+            25% {
+                transform: translateX(500px) translateY(calc(sin(var(--index) * 0.2) * 40px));
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(250px) translateY(calc(cos(var(--index) * 0.2) * -35px));
+            }
+            75% {
+                transform: translateX(80px) translateY(calc(sin(var(--index) * 0.2 + 1) * 20px));
+            }
+            90% {
+                transform: translateX(20px) translateY(calc(cos(var(--index) * 0.2 + 2) * -10px));
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Version 6: Butter Smooth */
+        .v6 .letter {
+            animation: butterSmooth 3.5s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+            animation-delay: calc(var(--index) * 0.025s);
+        }
+
+        @keyframes butterSmooth {
+            0% {
+                transform: translateX(800px) translateY(0);
+                opacity: 0;
+            }
+            2% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Additional smooth wave for butter smooth */
+        .v6 .letter {
+            animation: butterSmooth 3.5s cubic-bezier(0.37, 0, 0.63, 1) forwards,
+                      butterWave 3.5s cubic-bezier(0.37, 0, 0.63, 1) forwards;
+            animation-delay: calc(var(--index) * 0.025s);
+        }
+
+        @keyframes butterWave {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            15% {
+                transform: translateY(calc(sin(var(--index) * 0.35) * -25px));
+            }
+            30% {
+                transform: translateY(calc(sin(var(--index) * 0.35 + 1) * 20px));
+            }
+            45% {
+                transform: translateY(calc(sin(var(--index) * 0.35 + 2) * -15px));
+            }
+            60% {
+                transform: translateY(calc(sin(var(--index) * 0.35 + 3) * 10px));
+            }
+            75% {
+                transform: translateY(calc(sin(var(--index) * 0.35 + 4) * -5px));
+            }
+            90% {
+                transform: translateY(calc(sin(var(--index) * 0.35 + 5) * 2px));
+            }
+        }
+
+        /* Version 7: Cream Pour */
+        .v7 .letter {
+            animation: creamPour 4s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+            animation-delay: calc(var(--index) * 0.04s);
+        }
+
+        @keyframes creamPour {
+            0% {
+                transform: translateX(800px) translateY(-30px) scale(0.8);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+                transform: translateX(700px) translateY(-30px) scale(0.9);
+            }
+            30% {
+                transform: translateX(400px) translateY(calc(cos(var(--index) * 0.3) * 35px)) scale(1.05);
+            }
+            60% {
+                transform: translateX(150px) translateY(calc(sin(var(--index) * 0.3) * -25px)) scale(1);
+            }
+            85% {
+                transform: translateX(30px) translateY(calc(cos(var(--index) * 0.3 + 1) * 10px)) scale(1);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scale(1);
+            }
+        }
+
+        /* Version 8: Velvet Wave */
+        .v8 .letter {
+            animation: velvetWave 4.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+            animation-delay: calc(var(--index) * 0.038s);
+        }
+
+        @keyframes velvetWave {
+            0% {
+                transform: translateX(800px) translateY(0);
+                opacity: 0;
+            }
+            3% {
+                opacity: 1;
+            }
+            20% {
+                transform: translateX(550px) translateY(calc(sin(var(--index) * 0.28) * -35px));
+            }
+            35% {
+                transform: translateX(380px) translateY(calc(sin(var(--index) * 0.28 + 0.8) * 30px));
+            }
+            50% {
+                transform: translateX(250px) translateY(calc(sin(var(--index) * 0.28 + 1.6) * -25px));
+            }
+            65% {
+                transform: translateX(140px) translateY(calc(sin(var(--index) * 0.28 + 2.4) * 18px));
+            }
+            80% {
+                transform: translateX(60px) translateY(calc(sin(var(--index) * 0.28 + 3.2) * -10px));
+            }
+            92% {
+                transform: translateX(15px) translateY(calc(sin(var(--index) * 0.28 + 4) * 4px));
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        /* Version 9: Silk River */
+        .v9 .letter {
+            animation: silkRiver 3.8s cubic-bezier(0.35, 0, 0.65, 1) forwards;
+            animation-delay: calc(var(--index) * 0.032s);
+            transform-origin: center;
+        }
+
+        @keyframes silkRiver {
+            0% {
+                transform: translateX(800px) translateY(20px) scale(0.9);
+                opacity: 0;
+            }
+            4% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateX(0) translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Additional micro-movement for silk river */
+        .v9 .letter::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: silkMicro 3.8s cubic-bezier(0.35, 0, 0.65, 1) forwards;
+            animation-delay: calc(var(--index) * 0.032s);
+        }
+
+        @keyframes silkMicro {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(calc(sin(var(--index) * 0.5) * -30px));
+            }
+            50% {
+                transform: translateY(calc(sin(var(--index) * 0.5 + 1.57) * 25px));
+            }
+            75% {
+                transform: translateY(calc(sin(var(--index) * 0.5 + 3.14) * -15px));
+            }
+        }
+
+        /* Version 10: Perfect Flow */
+        .v10 .letter {
+            animation: perfectFlow 4s cubic-bezier(0.4, 0, 0.1, 1) forwards;
+            animation-delay: calc(var(--index) * 0.03s);
+        }
+
+        @keyframes perfectFlow {
+            0% {
+                transform: translateX(800px) translateY(0);
+                opacity: 0;
+            }
+            2% {
+                opacity: 0.5;
+            }
+            5% {
+                opacity: 1;
+            }
+            15% {
+                transform: translateX(600px) translateY(calc(sin(var(--index) * 0.25) * -28px));
+            }
+            25% {
+                transform: translateX(480px) translateY(calc(sin(var(--index) * 0.25 + 0.4) * 24px));
+            }
+            35% {
+                transform: translateX(360px) translateY(calc(sin(var(--index) * 0.25 + 0.8) * -20px));
+            }
+            45% {
+                transform: translateX(270px) translateY(calc(sin(var(--index) * 0.25 + 1.2) * 16px));
+            }
+            55% {
+                transform: translateX(190px) translateY(calc(sin(var(--index) * 0.25 + 1.6) * -12px));
+            }
+            65% {
+                transform: translateX(120px) translateY(calc(sin(var(--index) * 0.25 + 2) * 8px));
+            }
+            75% {
+                transform: translateX(70px) translateY(calc(sin(var(--index) * 0.25 + 2.4) * -5px));
+            }
+            85% {
+                transform: translateX(35px) translateY(calc(sin(var(--index) * 0.25 + 2.8) * 3px));
+            }
+            93% {
+                transform: translateX(10px) translateY(calc(sin(var(--index) * 0.25 + 3.2) * -1px));
+            }
+            100% {
+                transform: translateX(0) translateY(0);
+            }
+        }
+
+        button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>STREAMLINED - Smooth Letter Wave Animations</h2>
+        
+        <!-- Version 1 -->
+        <div class="variation v1">
+            <div class="label">01. SILK SMOOTH WAVE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 2 -->
+        <div class="variation v2">
+            <div class="label">02. LIQUID FLOW</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" data-letter="S" style="--index: 0">S</span>
+                    <span class="letter" data-letter="t" style="--index: 1">t</span>
+                    <span class="letter" data-letter="r" style="--index: 2">r</span>
+                    <span class="letter" data-letter="e" style="--index: 3">e</span>
+                    <span class="letter" data-letter="a" style="--index: 4">a</span>
+                    <span class="letter" data-letter="m" style="--index: 5">m</span>
+                    <span class="letter" data-letter="l" style="--index: 6">l</span>
+                    <span class="letter" data-letter="i" style="--index: 7">i</span>
+                    <span class="letter" data-letter="n" style="--index: 8">n</span>
+                    <span class="letter" data-letter="e" style="--index: 9">e</span>
+                    <span class="letter" data-letter="d" style="--index: 10">d</span>
+                    <span class="letter" data-letter="." style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 3 -->
+        <div class="variation v3">
+            <div class="label">03. GENTLE STREAM</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 4 -->
+        <div class="variation v4">
+            <div class="label">04. RIBBON WAVE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 5 -->
+        <div class="variation v5">
+            <div class="label">05. FEATHER FLOAT</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 6 -->
+        <div class="variation v6">
+            <div class="label">06. BUTTER SMOOTH</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 7 -->
+        <div class="variation v7">
+            <div class="label">07. CREAM POUR</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 8 -->
+        <div class="variation v8">
+            <div class="label">08. VELVET WAVE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 9 -->
+        <div class="variation v9">
+            <div class="label">09. SILK RIVER</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Version 10 -->
+        <div class="variation v10">
+            <div class="label">10. PERFECT FLOW</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <div class="streamlined">
+                    <span class="letter" style="--index: 0">S</span>
+                    <span class="letter" style="--index: 1">t</span>
+                    <span class="letter" style="--index: 2">r</span>
+                    <span class="letter" style="--index: 3">e</span>
+                    <span class="letter" style="--index: 4">a</span>
+                    <span class="letter" style="--index: 5">m</span>
+                    <span class="letter" style="--index: 6">l</span>
+                    <span class="letter" style="--index: 7">i</span>
+                    <span class="letter" style="--index: 8">n</span>
+                    <span class="letter" style="--index: 9">e</span>
+                    <span class="letter" style="--index: 10">d</span>
+                    <span class="letter" style="--index: 11">.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="replayAll()">Replay All</button>
+    
+    <script>
+        function replayAll() {
+            // Get all streamlined containers
+            const streamlinedContainers = document.querySelectorAll('.streamlined');
+            
+            // Remove and re-add each letter to restart animations
+            streamlinedContainers.forEach(container => {
+                const letters = container.querySelectorAll('.letter');
+                const parent = container.parentNode;
+                const newContainer = container.cloneNode(false);
+                
+                letters.forEach(letter => {
+                    const newLetter = letter.cloneNode(true);
+                    newContainer.appendChild(newLetter);
+                });
+                
+                parent.replaceChild(newContainer, container);
+            });
+        }
+        
+        // Optional: Add intersection observer for animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('.variation').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

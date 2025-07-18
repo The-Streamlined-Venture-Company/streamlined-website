@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Colour Morph Animation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3.12.2/dist/MorphSVGPlugin.min.js"></script>
+    <style>
+        body {
+            background-color: #060E2C;
+            overflow: hidden;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        svg {
+            width: 90%;
+            height: 90%;
+            max-width: 1200px;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <svg id="mainSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 400">
+        <defs>
+            <filter id="glow" x="-100%" y="-100%" width="250%" height="250%">
+                <feGaussianBlur stdDeviation="10" result="coloredBlur" />
+                <feOffset dx="0" dy="0" result="offsetblur"></feOffset>
+                <feFlood id="glowAlpha" flood-color="#FFF" flood-opacity="0.5"></feFlood>
+                <feComposite in2="offsetblur" operator="in"></feComposite>
+                <feMerge>
+                    <feMergeNode/>          
+                    <feMergeNode in="SourceGraphic"></feMergeNode>
+                </feMerge>
+            </filter>
+            
+            <!-- Define morph shapes for STREAMLINED -->
+            <!-- S morphs -->
+            <path id="S_short" d="M50,100 Q30,100 30,120 L30,140 Q30,160 50,160 L70,160 Q90,160 90,180 L90,200 Q90,220 70,220 L50,220"/>
+            <path id="S_long" d="M50,50 Q30,50 30,70 L30,90 Q30,110 50,110 L70,110 Q90,110 90,130 L90,250 Q90,270 70,270 L50,270"/>
+            
+            <!-- T morphs -->
+            <path id="T_short" d="M150,100 L210,100 M180,100 L180,220"/>
+            <path id="T_long" d="M150,50 L210,50 M180,50 L180,270"/>
+            
+            <!-- R morphs -->
+            <path id="R_short" d="M250,100 L250,220 M250,100 Q290,100 290,140 Q290,180 250,180 L290,220"/>
+            <path id="R_long" d="M250,50 L250,270 M250,50 Q290,50 290,110 Q290,170 250,170 L290,270"/>
+            
+            <!-- E morphs -->
+            <path id="E_short" d="M350,100 L350,220 M350,100 L390,100 M350,160 L380,160 M350,220 L390,220"/>
+            <path id="E_long" d="M350,50 L350,270 M350,50 L390,50 M350,160 L380,160 M350,270 L390,270"/>
+            
+            <!-- A morphs -->
+            <path id="A_short" d="M440,220 L460,100 L480,220 M450,170 L470,170"/>
+            <path id="A_long" d="M440,270 L460,50 L480,270 M450,170 L470,170"/>
+            
+            <!-- M morphs -->
+            <path id="M_short" d="M530,220 L530,100 L550,150 L570,100 L570,220"/>
+            <path id="M_long" d="M530,270 L530,50 L550,150 L570,50 L570,270"/>
+            
+            <!-- L morphs -->
+            <path id="L_short" d="M620,100 L620,220 L660,220"/>
+            <path id="L_long" d="M620,50 L620,270 L660,270"/>
+            
+            <!-- I morphs -->
+            <path id="I_short" d="M710,100 L710,220"/>
+            <path id="I_long" d="M710,50 L710,270"/>
+            
+            <!-- N morphs -->
+            <path id="N_short" d="M760,220 L760,100 L800,220 L800,100"/>
+            <path id="N_long" d="M760,270 L760,50 L800,270 L800,50"/>
+            
+            <!-- E2 morphs -->
+            <path id="E2_short" d="M850,100 L850,220 M850,100 L890,100 M850,160 L880,160 M850,220 L890,220"/>
+            <path id="E2_long" d="M850,50 L850,270 M850,50 L890,50 M850,160 L880,160 M850,270 L890,270"/>
+            
+            <!-- D morphs -->
+            <path id="D_short" d="M940,100 L940,220 M940,100 Q980,120 980,160 Q980,200 940,220"/>
+            <path id="D_long" d="M940,50 L940,270 M940,50 Q1020,100 1020,160 Q1020,220 940,270"/>
+        </defs>
+        
+        <g filter="url(#glow)">
+            <!-- Initial letters -->
+            <path id="S1" d="M50,100 Q30,100 30,120 L30,140 Q30,160 50,160 L70,160 Q90,160 90,180 L90,200 Q90,220 70,220 L50,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="T1" d="M150,100 L210,100 M180,100 L180,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="R1" d="M250,100 L250,220 M250,100 Q290,100 290,140 Q290,180 250,180 L290,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="E1" d="M350,100 L350,220 M350,100 L390,100 M350,160 L380,160 M350,220 L390,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="A1" d="M440,220 L460,100 L480,220 M450,170 L470,170" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="M1" d="M530,220 L530,100 L550,150 L570,100 L570,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="L1" d="M620,100 L620,220 L660,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="I1" d="M710,100 L710,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="N1" d="M760,220 L760,100 L800,220 L800,100" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="E2_1" d="M850,100 L850,220 M850,100 L890,100 M850,160 L880,160 M850,220 L890,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+            <path id="D1" d="M940,100 L940,220 M940,100 Q980,120 980,160 Q980,200 940,220" fill="none" stroke="#fff" stroke-width="20" stroke-linecap="round"/>
+        </g>
+    </svg>
+
+    <script>
+        // Wait for MorphSVGPlugin to load
+        if (typeof MorphSVGPlugin === 'undefined') {
+            console.warn('MorphSVGPlugin not loaded. Using basic animations instead.');
+        }
+
+        gsap.config({trialWarn: false});
+        
+        let colorArray = ["#fbe46c","#fe987b","#d569fa","#5f88ea","#63cdeb", "#afff8a", "#fbe46c"];
+        const interp = gsap.utils.interpolate(colorArray);
+        
+        gsap.set('svg', {
+            visibility: 'visible'
+        });
+
+        // Main timeline
+        let mainTl = gsap.timeline({
+            defaults: {
+                duration: 2,
+                ease: 'power2.inOut'
+            },
+            repeat: -1,
+            yoyo: true
+        });
+
+        // Animate each letter to stretch
+        const letters = ['S1', 'T1', 'R1', 'E1', 'A1', 'M1', 'L1', 'I1', 'N1', 'E2_1', 'D1'];
+        const longShapes = ['#S_long', '#T_long', '#R_long', '#E_long', '#A_long', '#M_long', '#L_long', '#I_long', '#N_long', '#E2_long', '#D_long'];
+        
+        if (typeof MorphSVGPlugin !== 'undefined') {
+            // Use MorphSVG if available
+            letters.forEach((letter, i) => {
+                mainTl.to(`#${letter}`, {
+                    morphSVG: {
+                        shape: longShapes[i]
+                    },
+                    duration: 1.5,
+                    ease: "power2.inOut"
+                }, i * 0.1);
+            });
+        } else {
+            // Fallback animation without MorphSVG
+            letters.forEach((letter, i) => {
+                mainTl.to(`#${letter}`, {
+                    scaleY: 2,
+                    y: -60,
+                    duration: 1.5,
+                    transformOrigin: "center bottom",
+                    ease: "power2.inOut"
+                }, i * 0.1);
+            });
+        }
+
+        // Color animation
+        let colorTl = gsap.timeline();
+        colorTl.to(gsap.utils.toArray('path'), {
+            stroke: '#fff',
+            duration: 0.25 * colorArray.length,
+            modifiers: {
+                stroke: function() {
+                    return interp(this.ratio);
+                }
+            },
+            stagger: {
+                each: 0.05,
+                repeat: -1
+            },
+            ease: 'sine.inOut'
+        }).seek(100);
+
+        // Glow color animation
+        colorTl.to('#glowAlpha', {
+            attr: { 'flood-color': '#fff' },
+            duration: 0.25 * colorArray.length,
+            modifiers: {
+                'flood-color': function() {
+                    return interp(this.ratio);
+                }
+            },
+            stagger: {
+                each: 0.05,
+                repeat: -1
+            },
+            ease: 'sine.inOut'
+        }, 0).seek(100);
+    </script>
+</body>
+</html>

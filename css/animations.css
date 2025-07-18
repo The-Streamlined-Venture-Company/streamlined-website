@@ -166,6 +166,16 @@ body.skip-intro .streamlined-animated {
     animation: fadeIn 0.8s ease 9.5s forwards;
 }
 
+/* Homepage top navigation animation */
+.intro-active .top-nav a {
+    opacity: 0;
+    animation: fadeIn 0.8s ease 3.5s forwards;
+}
+
+body.skip-intro .top-nav a {
+    opacity: 0.7;
+}
+
 /* Logo Animations */
 .logo-loader {
     position: fixed;
@@ -223,22 +233,7 @@ body.skip-intro .streamlined-animated {
     opacity: 1;
 }
 
-/* Color fade overlay for page loads */
-.color-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9998;
-    opacity: 1;
-    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-}
-
-.color-overlay.fade-out {
-    opacity: 0;
-}
+/* Removed color overlay - using simple fade transitions instead */
 
 /* Fade in page content */
 body:not(.intro-active) .hero-content,
@@ -268,3 +263,103 @@ body.skip-intro .word {
     animation: none;
     filter: none;
 }
+
+/* Smooth Fade Animations for Microsites */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade classes */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-in-up {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.fade-in-scale {
+    opacity: 0;
+    animation: fadeInScale 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Staggered animations with delay */
+[data-delay="0.1"] { animation-delay: 0.1s; }
+[data-delay="0.2"] { animation-delay: 0.2s; }
+[data-delay="0.3"] { animation-delay: 0.3s; }
+[data-delay="0.4"] { animation-delay: 0.4s; }
+[data-delay="0.5"] { animation-delay: 0.5s; }
+
+/* Scroll-triggered animations */
+.scroll-fade-in {
+    opacity: 0;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-fade-in.in-view,
+.scroll-fade-in-up.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Service card hover effects */
+.service-card {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+}
+
+/* Button hover effects */
+.cta-button, .contact-link {
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button:hover, .contact-link:hover {
+    transform: translateY(-2px);
+}
+
+.cta-button::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cta-button:hover::after {
+    width: 100%;
+}
+

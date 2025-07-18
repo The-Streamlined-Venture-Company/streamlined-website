@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Wave Path Animation</title>
+    <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nova+Mono&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background-color: #18181c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Nova Mono', monospace;
+            font-size: 4rem;
+            text-transform: uppercase;
+            color: goldenrod;
+            perspective: 900px;
+            letter-spacing: 0.1em;
+            display: inline-block;
+            position: relative;
+        }
+
+        /* Initial state - off screen to the left */
+        .char {
+            position: absolute;
+            offset-path: path('M-500 200 Q-250 50 0 150 T250 150 T500 150 T750 150 T1000 150 T1250 150');
+            offset-distance: 0%;
+            opacity: 0;
+            animation: 
+                waveIn 3s cubic-bezier(.4, 0, .2, 1) forwards calc(var(--char-index) * 60ms),
+                colorShift 3s ease-out forwards calc(var(--char-index) * 60ms);
+            transform: perspective(800px) scale(0.5) rotate3d(1, 0, 0, -180deg);
+        }
+
+        /* Main wave animation - brings letters in from left */
+        @keyframes waveIn {
+            0% {
+                offset-distance: 0%;
+                opacity: 0;
+                transform: perspective(800px) scale(0.5) rotate3d(1, 0, 0, -180deg);
+            }
+            20% {
+                opacity: 1;
+            }
+            60% {
+                offset-distance: calc(45% + (var(--char-index) * 2%));
+                transform: perspective(800px) scale(1.2) rotate3d(1, 0, 0, 90deg);
+            }
+            100% {
+                offset-distance: calc(50% + (var(--char-index) * 2%));
+                opacity: 1;
+                transform: perspective(800px) scale(1) rotate3d(0, 0, 0, 0deg);
+            }
+        }
+
+        /* Color animation during wave */
+        @keyframes colorShift {
+            0% {
+                color: red;
+            }
+            50% {
+                color: #ff6b6b;
+            }
+            75% {
+                color: #ffd93d;
+            }
+            100% {
+                color: goldenrod;
+            }
+        }
+
+        /* After animation completes, letters settle into normal position */
+        .settled .char {
+            animation: none;
+            position: relative;
+            offset-path: none;
+            transform: none;
+            opacity: 1;
+            color: goldenrod;
+            transition: all 0.5s ease-out;
+        }
+
+        /* Button to replay animation */
+        button {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 1rem 2rem;
+            background: goldenrod;
+            color: #18181c;
+            border: none;
+            font-family: 'Nova Mono', monospace;
+            font-size: 1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #fff;
+            transform: translateX(-50%) translateY(-2px);
+        }
+
+        /* Alternative wave paths for variety */
+        .wave-path-2 .char {
+            offset-path: path('M-500 150 Q-200 50 100 150 Q300 250 500 150 Q700 50 900 150 Q1100 250 1300 150');
+        }
+
+        .wave-path-3 .char {
+            offset-path: path('M-500 200 C-300 50 -100 350 100 200 S500 50 700 200 S1100 50 1300 200');
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 data-splitting>STREAMLINED</h1>
+    </div>
+    
+    <button onclick="replayAnimation()">Replay Animation</button>
+
+    <script>
+        // Initialize Splitting
+        Splitting({
+            whitespace: true
+        });
+
+        // Function to settle letters after animation
+        function settleLetters() {
+            const h1 = document.querySelector('h1');
+            setTimeout(() => {
+                h1.classList.add('settled');
+            }, 3500); // Wait for animation to complete
+        }
+
+        // Function to replay animation
+        function replayAnimation() {
+            const h1 = document.querySelector('h1');
+            h1.classList.remove('settled');
+            
+            // Force reflow
+            void h1.offsetHeight;
+            
+            // Re-apply splitting
+            h1.innerHTML = 'STREAMLINED';
+            Splitting({
+                target: h1,
+                whitespace: true
+            });
+            
+            settleLetters();
+        }
+
+        // Initial settlement
+        settleLetters();
+
+        // Alternative: Create multiple variations
+        function addWaveVariation(className) {
+            const h1 = document.querySelector('h1');
+            h1.classList.add(className);
+        }
+
+        // Uncomment to use different wave paths
+        // addWaveVariation('wave-path-2');
+        // addWaveVariation('wave-path-3');
+    </script>
+</body>
+</html>

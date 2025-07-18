@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - GSAP Smooth Wave</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .variation {
+            height: 150px;
+            margin-bottom: 4rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #222;
+            padding-bottom: 4rem;
+        }
+
+        .label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .text-wrapper {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            position: relative;
+            display: flex;
+            align-items: baseline;
+            white-space: nowrap;
+        }
+
+        .we-are {
+            display: inline-block;
+            opacity: 0;
+            letter-spacing: inherit;
+            margin-right: 0.3em;
+        }
+
+        .streamlined {
+            display: inline-block;
+            position: relative;
+            letter-spacing: inherit;
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>STREAMLINED - GSAP Ultra Smooth Animations</h2>
+        
+        <!-- Version 1: Liquid Silk -->
+        <div class="variation v1">
+            <div class="label">01. LIQUID SILK</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span> <span class="streamlined">
+                    <span class="letter">S</span><span class="letter">t</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">m</span><span class="letter">l</span><span class="letter">i</span><span class="letter">n</span><span class="letter">e</span><span class="letter">d</span><span class="letter">.</span>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Version 2: Ocean Flow -->
+        <div class="variation v2">
+            <div class="label">02. OCEAN FLOW</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span> <span class="streamlined">
+                    <span class="letter">S</span><span class="letter">t</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">m</span><span class="letter">l</span><span class="letter">i</span><span class="letter">n</span><span class="letter">e</span><span class="letter">d</span><span class="letter">.</span>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Version 3: Velvet Stream -->
+        <div class="variation v3">
+            <div class="label">03. VELVET STREAM</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span> <span class="streamlined">
+                    <span class="letter">S</span><span class="letter">t</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">m</span><span class="letter">l</span><span class="letter">i</span><span class="letter">n</span><span class="letter">e</span><span class="letter">d</span><span class="letter">.</span>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Version 4: Butter Flow -->
+        <div class="variation v4">
+            <div class="label">04. BUTTER FLOW</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span> <span class="streamlined">
+                    <span class="letter">S</span><span class="letter">t</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">m</span><span class="letter">l</span><span class="letter">i</span><span class="letter">n</span><span class="letter">e</span><span class="letter">d</span><span class="letter">.</span>
+                </span>
+            </div>
+        </div>
+        
+        <!-- Version 5: Cream Wave -->
+        <div class="variation v5">
+            <div class="label">05. CREAM WAVE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span> <span class="streamlined">
+                    <span class="letter">S</span><span class="letter">t</span><span class="letter">r</span><span class="letter">e</span><span class="letter">a</span><span class="letter">m</span><span class="letter">l</span><span class="letter">i</span><span class="letter">n</span><span class="letter">e</span><span class="letter">d</span><span class="letter">.</span>
+                </span>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="replayAll()">Replay All</button>
+    
+    <script>
+        // Animation 1: Liquid Silk
+        function animateV1() {
+            const tl = gsap.timeline();
+            const letters = document.querySelectorAll('.v1 .letter');
+            const weAre = document.querySelector('.v1 .we-are');
+            const streamlined = document.querySelector('.v1 .streamlined');
+            
+            // Set initial position for the whole word
+            gsap.set(streamlined, { x: 800 });
+            gsap.set(letters, { opacity: 0 });
+            
+            // Fade in "We are"
+            tl.to(weAre, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+            
+            // Slide in the whole word
+            tl.to(streamlined, {
+                x: 0,
+                duration: 3,
+                ease: "power3.inOut"
+            }, 0.3);
+            
+            // Animate each letter with wave motion
+            letters.forEach((letter, i) => {
+                tl.to(letter, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 2,
+                    ease: "power3.inOut",
+                    onUpdate: function() {
+                        const progress = this.progress();
+                        const wave = Math.sin((progress * Math.PI * 3) + (i * 0.5)) * 30 * (1 - progress);
+                        gsap.set(letter, { y: wave });
+                    }
+                }, 0.3 + i * 0.03);
+            });
+        }
+        
+        // Animation 2: Ocean Flow
+        function animateV2() {
+            const tl = gsap.timeline();
+            const letters = document.querySelectorAll('.v2 .letter');
+            const weAre = document.querySelector('.v2 .we-are');
+            const streamlined = document.querySelector('.v2 .streamlined');
+            
+            gsap.set(streamlined, { x: 800 });
+            gsap.set(letters, { opacity: 0 });
+            
+            tl.to(weAre, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+            
+            // Slide the whole word
+            tl.to(streamlined, {
+                x: 0,
+                duration: 3.5,
+                ease: "power2.inOut"
+            }, 0.3);
+            
+            // Create wave pattern on letters
+            letters.forEach((letter, i) => {
+                const delay = i * 0.04;
+                
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.5,
+                    delay: delay
+                }, 0.3);
+                
+                tl.to(letter, {
+                    y: 0,
+                    duration: 3,
+                    ease: "power2.inOut",
+                    onUpdate: function() {
+                        const progress = this.progress();
+                        const wave = Math.sin((progress * Math.PI * 3) + (i * 0.5)) * 40 * (1 - progress);
+                        gsap.set(letter, { y: wave });
+                    }
+                }, 0.3 + delay);
+            });
+        }
+        
+        // Animation 3: Velvet Stream
+        function animateV3() {
+            const tl = gsap.timeline();
+            const letters = document.querySelectorAll('.v3 .letter');
+            const weAre = document.querySelector('.v3 .we-are');
+            const streamlined = document.querySelector('.v3 .streamlined');
+            
+            gsap.set(streamlined, { x: 800 });
+            gsap.set(letters, { opacity: 0, y: 0 });
+            
+            tl.to(weAre, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+            
+            // Slide whole word
+            tl.to(streamlined, {
+                x: 0,
+                duration: 3,
+                ease: "power3.inOut"
+            }, 0.3);
+            
+            // Stagger letter appearance with wave
+            letters.forEach((letter, i) => {
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.3,
+                    delay: i * 0.03
+                }, 0.4);
+                
+                tl.to(letter, {
+                    y: 0,
+                    duration: 2.5,
+                    ease: "power3.inOut",
+                    onUpdate: function() {
+                        const progress = this.progress();
+                        const wave = Math.sin((progress * Math.PI * 2.5) + (i * 0.4)) * 35 * (1 - progress);
+                        gsap.set(letter, { y: wave });
+                    }
+                }, 0.4 + i * 0.03);
+            });
+        }
+        
+        // Animation 4: Butter Flow
+        function animateV4() {
+            const tl = gsap.timeline();
+            const letters = document.querySelectorAll('.v4 .letter');
+            const weAre = document.querySelector('.v4 .we-are');
+            const streamlined = document.querySelector('.v4 .streamlined');
+            
+            gsap.set(streamlined, { x: 800 });
+            gsap.set(letters, { opacity: 0, y: 0 });
+            
+            tl.to(weAre, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+            
+            // Super smooth slide
+            tl.to(streamlined, {
+                x: 0,
+                duration: 3.2,
+                ease: "power4.inOut"
+            }, 0.3);
+            
+            // Gentle wave on letters
+            letters.forEach((letter, i) => {
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.4,
+                    delay: i * 0.025
+                }, 0.3);
+                
+                // Gentle wave motion
+                tl.to(letter, {
+                    y: 0,
+                    duration: 2.8,
+                    ease: "none",
+                    onUpdate: function() {
+                        const progress = this.progress();
+                        const wave = Math.sin((progress * Math.PI * 2) + (i * 0.3)) * 25 * (1 - progress);
+                        gsap.set(letter, { y: wave });
+                    }
+                }, 0.4 + i * 0.025);
+            });
+        }
+        
+        // Animation 5: Cream Wave
+        function animateV5() {
+            const tl = gsap.timeline();
+            const letters = document.querySelectorAll('.v5 .letter');
+            const weAre = document.querySelector('.v5 .we-are');
+            const streamlined = document.querySelector('.v5 .streamlined');
+            
+            gsap.set(streamlined, { x: 800 });
+            gsap.set(letters, { opacity: 0, y: 0 });
+            
+            tl.to(weAre, {
+                opacity: 1,
+                duration: 0.5,
+                ease: "power2.out"
+            });
+            
+            // Smooth slide with custom ease
+            tl.to(streamlined, {
+                x: 0,
+                duration: 3.5,
+                ease: "power2.inOut"
+            }, 0.3);
+            
+            letters.forEach((letter, i) => {
+                // Fade in letters
+                tl.to(letter, {
+                    opacity: 1,
+                    duration: 0.3,
+                    delay: i * 0.02
+                }, 0.3);
+                
+                // Wave motion during slide
+                tl.to(letter, {
+                    y: 0,
+                    duration: 3.5,
+                    ease: "none",
+                    onUpdate: function() {
+                        const prog = this.progress();
+                        const amp = 30 * (1 - prog);
+                        const freq = 3;
+                        const phase = i * 0.3;
+                        const y = Math.sin(prog * Math.PI * freq + phase) * amp;
+                        gsap.set(letter, { y: y });
+                    }
+                }, 0.3 + i * 0.02);
+            });
+        }
+        
+        // Initialize all animations
+        function initAnimations() {
+            animateV1();
+            animateV2();
+            animateV3();
+            animateV4();
+            animateV5();
+        }
+        
+        // Replay all animations
+        function replayAll() {
+            // Kill all existing animations
+            gsap.killTweensOf("*");
+            
+            // Reset all positions
+            document.querySelectorAll('.streamlined').forEach(container => {
+                gsap.set(container, { x: 800 });
+            });
+            
+            document.querySelectorAll('.letter').forEach(letter => {
+                gsap.set(letter, { y: 0, opacity: 0 });
+            });
+            
+            document.querySelectorAll('.we-are').forEach(el => {
+                gsap.set(el, { opacity: 0 });
+            });
+            
+            // Restart animations
+            setTimeout(initAnimations, 100);
+        }
+        
+        // Start animations on load
+        window.addEventListener('load', initAnimations);
+        
+        // Custom ease for cream wave
+        gsap.registerPlugin({
+            name: "CustomEase",
+            version: "3.12.2",
+            register(gsap) {
+                // Register custom ease if needed
+            }
+        });
+    </script>
+</body>
+</html>

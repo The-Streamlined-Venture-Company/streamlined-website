@@ -1,0 +1,236 @@
+/* Clean Homepage CSS */
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Base */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+    background-color: #f5f5f5;
+    color: #000;
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Canvas Background */
+#waves-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+/* Navigation - Fixed top right */
+.nav {
+    position: fixed;
+    top: 80px;
+    right: calc(50% - 500px); /* Center based on 1000px content width */
+    z-index: 10;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav a {
+    color: #999;
+    text-decoration: none;
+    font-size: 1.75rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav a:hover {
+    color: #000;
+}
+
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: currentColor;
+    transition: width 0.3s ease;
+}
+
+.nav a:hover::after {
+    width: 100%;
+}
+
+/* Nav Button */
+.nav-button {
+    border: 1px solid currentColor;
+    border-radius: 30px;
+    padding: 0.5rem 2rem;
+}
+
+.nav-button::after {
+    display: none;
+}
+
+.nav-button:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Content wrapper for centering */
+.content-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 1000px;
+    padding: 0 40px;
+}
+
+/* Logo */
+.logo {
+    width: 800px;
+    height: 182px;
+    margin-bottom: 3rem;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
+    display: block;
+}
+
+/* Tagline */
+.tagline {
+    max-width: 100%;
+}
+
+.tagline-combined {
+    font-size: 4rem;
+    font-weight: 500;
+    color: #bbb;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 0;
+}
+
+.black-text {
+    color: #000;
+}
+
+/* Animated Text */
+.animated-text {
+    display: inline-block;
+    position: relative;
+}
+
+/* Service List */
+.service-list {
+    list-style: none;
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.service-item {
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+/* Staggered animations for list items */
+.service-item:nth-child(1) {
+    animation: fadeInUp 0.8s ease 2s forwards;
+}
+
+.service-item:nth-child(2) {
+    animation: fadeInUp 0.8s ease 2.3s forwards;
+}
+
+.service-item:nth-child(3) {
+    animation: fadeInUp 0.8s ease 2.6s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Links */
+.link-talent {
+    color: #0039a6;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.link-interfaces {
+    color: #fe5000;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.link-resources {
+    color: #ffa500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.link-talent:hover,
+.link-interfaces:hover,
+.link-resources:hover {
+    transform: translateY(-2px) scale(1.05);
+    display: inline-block;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .nav {
+        position: static;
+        margin: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+    
+    .logo {
+        position: static;
+        margin: 20px;
+        width: 350px;
+        height: 80px;
+    }
+    
+    .tagline {
+        position: static;
+        margin: 20px;
+    }
+    
+    .nav a {
+        font-size: 1.25rem;
+    }
+    
+    .nav-button {
+        padding: 0.3rem 1.5rem;
+    }
+    
+    .tagline-bold,
+    .tagline-light {
+        font-size: 2.5rem;
+    }
+}

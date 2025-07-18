@@ -64,33 +64,25 @@ class AnimationController {
     // Start SVG morph animation
     startMorphAnimation(delay) {
         const morphScale = document.getElementById('morphScale');
-        const morphColor = document.getElementById('morphColor');
         
-        if (morphScale && morphColor) {
+        if (morphScale) {
             setTimeout(() => {
                 morphScale.beginElement();
-                morphColor.beginElement();
             }, delay);
         }
     }
     
-    // Fade in for sub-pages with color overlay
+    // Fade in for sub-pages without color overlay
     fadeInPage() {
-        // Create color overlay that matches the page color
-        const pageColor = window.getComputedStyle(document.body).backgroundColor;
-        const overlay = document.createElement('div');
-        overlay.className = 'color-overlay';
-        overlay.style.backgroundColor = pageColor;
-        document.body.appendChild(overlay);
-        
-        // Start fade out after a brief moment
-        setTimeout(() => {
-            overlay.classList.add('fade-out');
-            // Remove after transition
+        // Simple fade in without color overlay
+        const container = document.querySelector('.container');
+        if (container) {
+            container.style.opacity = '0';
+            container.style.transition = 'opacity 0.6s ease';
             setTimeout(() => {
-                overlay.remove();
-            }, 1500);
-        }, 200);
+                container.style.opacity = '1';
+            }, 100);
+        }
     }
     
     // Split text into animated words while preserving links

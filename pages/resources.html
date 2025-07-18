@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resources - Streamlined</title>
+    <link rel="icon" type="image/png" href="../assets/images/logo-square.png">
     <link rel="stylesheet" href="../css/main.css">
 </head>
 <body class="page-resources">
     <div class="container">
-        <header>
-            <a href="../index.html" class="logo">
-                <img src="../assets/images/logo.gif" alt="Streamlined">
-            </a>
+        <header class="fade-in">
             <nav class="nav">
-                <a href="#how-it-works">How it Works</a>
-                <a href="#pricing">Pricing</a>
+                <a href="#guides">Guides</a>
                 <a href="#about">About</a>
+                <a href="#contact" class="nav-button">Get In Touch</a>
             </nav>
         </header>
         
         <main>
             <section class="hero">
-                <div class="tagline">
-                    <span class="tagline-bold">Curated guides for modern life.</span>
-                    Discover our collection of thoughtfully crafted resources
+                <div class="hero-content fade-in-up">
+                    <div class="logo">
+                        <a href="../index.html">
+                            <img src="../assets/images/logo.gif" alt="Streamlined">
+                        </a>
+                    </div>
+                    <div class="tagline">
+                        <h1 class="tagline-bold">Curated guides for modern life.</h1>
+                        <p class="tagline-light">Discover our collection of thoughtfully crafted resources</p>
+                    </div>
                 </div>
             </section>
             
@@ -81,6 +86,14 @@
                     </div>
                 </div>
             </section>
+            
+            <section class="contact-section" id="contact">
+                <div class="contact-content fade-in">
+                    <h2>Get in Touch</h2>
+                    <p>Ready to explore our curated resources?</p>
+                    <a href="mailto:resources@streamlined.com" class="contact-link">resources@streamlined.com</a>
+                </div>
+            </section>
         </main>
     </div>
     
@@ -88,6 +101,7 @@
     <script src="../js/transitions.js"></script>
     <script src="../js/animations.js"></script>
     <script src="../js/guides.js"></script>
+    <script src="../js/progressive-scroll.js"></script>
     <script src="../js/app.js"></script>
 </body>
 </html>

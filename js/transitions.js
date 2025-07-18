@@ -42,18 +42,10 @@ class PageTransitions {
     
     // Create transition effect
     createTransition(targetColor, href) {
-        // Get current page color
-        const currentColor = window.getComputedStyle(document.body).backgroundColor;
-        
-        // Create white intermediate overlay
+        // Create white overlay for clean transition
         const whiteOverlay = document.createElement('div');
         whiteOverlay.className = 'page-transition white-layer';
         whiteOverlay.style.backgroundColor = '#ffffff';
-        
-        // Create color overlay
-        const colorOverlay = document.createElement('div');
-        colorOverlay.className = 'page-transition color-layer';
-        colorOverlay.style.backgroundColor = targetColor;
         
         // Create logo
         const logo = document.createElement('img');
@@ -62,23 +54,17 @@ class PageTransitions {
         
         // Add to page
         document.body.appendChild(whiteOverlay);
-        document.body.appendChild(colorOverlay);
         document.body.appendChild(logo);
         
         // Animate sequence
         requestAnimationFrame(() => {
-            // First fade to white
+            // Fade to white
             whiteOverlay.classList.add('active');
             
-            // Then show logo
+            // Show logo
             setTimeout(() => {
                 logo.style.opacity = '1';
             }, 300);
-            
-            // Then fade in target color
-            setTimeout(() => {
-                colorOverlay.classList.add('active');
-            }, 500);
             
             // Fade out current content
             const container = document.querySelector('.container');
@@ -91,7 +77,7 @@ class PageTransitions {
         // Navigate after transition
         setTimeout(() => {
             window.location.href = href;
-        }, 1200);
+        }, 800);
     }
     
     // Get correct logo path based on current location

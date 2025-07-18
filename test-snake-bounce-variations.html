@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Snake & Bounce Variations</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        .variation {
+            height: 200px;
+            margin-bottom: 6rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid #222;
+            padding-bottom: 4rem;
+        }
+
+        .label {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            font-size: 0.8rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .text-wrapper {
+            font-size: 3rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            position: relative;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5em;
+        }
+
+        .we-are {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .streamlined {
+            display: inline-block;
+            position: absolute;
+            left: calc(100% + 0.5em);
+            white-space: nowrap;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Version 1: Snake Wave */
+        .v1 .streamlined {
+            animation: snakeWave 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes snakeWave {
+            0% {
+                transform: translateX(100vw) translateY(0);
+            }
+            10% {
+                transform: translateX(400px) translateY(-80px) rotate(10deg);
+            }
+            20% {
+                transform: translateX(300px) translateY(80px) rotate(-10deg);
+            }
+            30% {
+                transform: translateX(200px) translateY(-60px) rotate(8deg);
+            }
+            40% {
+                transform: translateX(100px) translateY(60px) rotate(-8deg);
+            }
+            50% {
+                transform: translateX(50px) translateY(-40px) rotate(5deg);
+            }
+            60% {
+                transform: translateX(20px) translateY(40px) rotate(-5deg);
+            }
+            70% {
+                transform: translateX(10px) translateY(-20px) rotate(3deg);
+            }
+            80% {
+                transform: translateX(5px) translateY(20px) rotate(-3deg);
+            }
+            90% {
+                transform: translateX(2px) translateY(-10px) rotate(1deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+        }
+
+        /* Version 2: Extreme Bounce */
+        .v2 .streamlined {
+            animation: extremeBounce 4.5s ease-out forwards;
+        }
+
+        @keyframes extremeBounce {
+            0% {
+                transform: translateX(100vw) translateY(-200px);
+            }
+            15% {
+                transform: translateX(50px) translateY(100px) scaleY(0.8);
+            }
+            20% {
+                transform: translateX(40px) translateY(-150px) scaleY(1.2);
+            }
+            30% {
+                transform: translateX(30px) translateY(80px) scaleY(0.9);
+            }
+            40% {
+                transform: translateX(20px) translateY(-100px) scaleY(1.1);
+            }
+            50% {
+                transform: translateX(15px) translateY(60px) scaleY(0.95);
+            }
+            60% {
+                transform: translateX(10px) translateY(-60px) scaleY(1.05);
+            }
+            70% {
+                transform: translateX(7px) translateY(40px) scaleY(0.98);
+            }
+            80% {
+                transform: translateX(4px) translateY(-30px) scaleY(1.02);
+            }
+            90% {
+                transform: translateX(2px) translateY(15px) scaleY(0.99);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scaleY(1);
+            }
+        }
+
+        /* Version 3: Spiral Snake */
+        .v3 .streamlined {
+            animation: spiralSnake 4s ease-out forwards;
+        }
+
+        @keyframes spiralSnake {
+            0% {
+                transform: translateX(100vw) rotate(0deg);
+            }
+            10% {
+                transform: translateX(350px) translateY(-100px) rotate(360deg);
+            }
+            20% {
+                transform: translateX(280px) translateY(100px) rotate(720deg);
+            }
+            30% {
+                transform: translateX(210px) translateY(-80px) rotate(1080deg);
+            }
+            40% {
+                transform: translateX(140px) translateY(80px) rotate(1440deg);
+            }
+            50% {
+                transform: translateX(80px) translateY(-60px) rotate(1800deg);
+            }
+            60% {
+                transform: translateX(40px) translateY(60px) rotate(2160deg);
+            }
+            70% {
+                transform: translateX(20px) translateY(-40px) rotate(2520deg);
+            }
+            80% {
+                transform: translateX(10px) translateY(30px) rotate(2880deg);
+            }
+            90% {
+                transform: translateX(5px) translateY(-15px) rotate(3240deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(3600deg);
+            }
+        }
+
+        /* Version 4: Elastic Snake */
+        .v4 .streamlined {
+            animation: elasticSnake 3.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes elasticSnake {
+            0% {
+                transform: translateX(100vw) scaleX(1);
+            }
+            20% {
+                transform: translateX(100px) translateY(-50px) scaleX(2) scaleY(0.5);
+            }
+            30% {
+                transform: translateX(50px) translateY(50px) scaleX(0.5) scaleY(1.5);
+            }
+            40% {
+                transform: translateX(25px) translateY(-40px) scaleX(1.5) scaleY(0.8);
+            }
+            50% {
+                transform: translateX(15px) translateY(30px) scaleX(0.8) scaleY(1.2);
+            }
+            60% {
+                transform: translateX(10px) translateY(-20px) scaleX(1.2) scaleY(0.9);
+            }
+            70% {
+                transform: translateX(5px) translateY(15px) scaleX(0.9) scaleY(1.1);
+            }
+            80% {
+                transform: translateX(3px) translateY(-10px) scaleX(1.1) scaleY(0.95);
+            }
+            90% {
+                transform: translateX(1px) translateY(5px) scaleX(0.95) scaleY(1.05);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scaleX(1) scaleY(1);
+            }
+        }
+
+        /* Version 5: Whip Crack */
+        .v5 .streamlined {
+            animation: whipCrack 3s ease-out forwards;
+            transform-origin: right center;
+        }
+
+        @keyframes whipCrack {
+            0% {
+                transform: translateX(100vw) scaleX(3) scaleY(0.2);
+            }
+            15% {
+                transform: translateX(200px) translateY(-100px) scaleX(2) scaleY(0.5) rotate(-20deg);
+            }
+            25% {
+                transform: translateX(100px) translateY(120px) scaleX(1.5) scaleY(0.8) rotate(25deg);
+            }
+            35% {
+                transform: translateX(50px) translateY(-80px) scaleX(1.2) scaleY(1) rotate(-15deg);
+            }
+            45% {
+                transform: translateX(25px) translateY(60px) scaleX(1.1) scaleY(1.1) rotate(10deg);
+            }
+            55% {
+                transform: translateX(15px) translateY(-40px) scaleX(1) scaleY(1) rotate(-8deg);
+            }
+            65% {
+                transform: translateX(8px) translateY(30px) scaleX(1) scaleY(1) rotate(5deg);
+            }
+            75% {
+                transform: translateX(4px) translateY(-20px) scaleX(1) scaleY(1) rotate(-3deg);
+            }
+            85% {
+                transform: translateX(2px) translateY(10px) scaleX(1) scaleY(1) rotate(2deg);
+            }
+            95% {
+                transform: translateX(1px) translateY(-5px) scaleX(1) scaleY(1) rotate(-1deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(0deg);
+            }
+        }
+
+        /* Version 6: Bouncing Ball */
+        .v6 .streamlined {
+            animation: bouncingBall 4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes bouncingBall {
+            0% {
+                transform: translateX(100vw) translateY(-300px);
+            }
+            10% {
+                transform: translateX(300px) translateY(0) scaleY(0.7) scaleX(1.3);
+            }
+            15% {
+                transform: translateX(250px) translateY(-200px) scaleY(1.1) scaleX(0.9);
+            }
+            25% {
+                transform: translateX(150px) translateY(0) scaleY(0.8) scaleX(1.2);
+            }
+            30% {
+                transform: translateX(120px) translateY(-150px) scaleY(1.05) scaleX(0.95);
+            }
+            40% {
+                transform: translateX(80px) translateY(0) scaleY(0.85) scaleX(1.15);
+            }
+            45% {
+                transform: translateX(60px) translateY(-100px) scaleY(1.02) scaleX(0.98);
+            }
+            55% {
+                transform: translateX(40px) translateY(0) scaleY(0.9) scaleX(1.1);
+            }
+            60% {
+                transform: translateX(30px) translateY(-60px) scaleY(1.01) scaleX(0.99);
+            }
+            70% {
+                transform: translateX(20px) translateY(0) scaleY(0.95) scaleX(1.05);
+            }
+            75% {
+                transform: translateX(15px) translateY(-30px) scaleY(1) scaleX(1);
+            }
+            85% {
+                transform: translateX(10px) translateY(0) scaleY(0.98) scaleX(1.02);
+            }
+            90% {
+                transform: translateX(5px) translateY(-10px) scaleY(1) scaleX(1);
+            }
+            95% {
+                transform: translateX(2px) translateY(0) scaleY(1) scaleX(1);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scaleY(1) scaleX(1);
+            }
+        }
+
+        /* Version 7: Zigzag Snake */
+        .v7 .streamlined {
+            animation: zigzagSnake 3.5s linear forwards;
+        }
+
+        @keyframes zigzagSnake {
+            0% {
+                transform: translateX(100vw) translateY(0);
+            }
+            5% {
+                transform: translateX(450px) translateY(-100px) rotate(15deg);
+            }
+            10% {
+                transform: translateX(400px) translateY(100px) rotate(-15deg);
+            }
+            15% {
+                transform: translateX(350px) translateY(-90px) rotate(12deg);
+            }
+            20% {
+                transform: translateX(300px) translateY(90px) rotate(-12deg);
+            }
+            25% {
+                transform: translateX(250px) translateY(-80px) rotate(10deg);
+            }
+            30% {
+                transform: translateX(200px) translateY(80px) rotate(-10deg);
+            }
+            35% {
+                transform: translateX(160px) translateY(-70px) rotate(8deg);
+            }
+            40% {
+                transform: translateX(130px) translateY(70px) rotate(-8deg);
+            }
+            45% {
+                transform: translateX(100px) translateY(-60px) rotate(6deg);
+            }
+            50% {
+                transform: translateX(80px) translateY(60px) rotate(-6deg);
+            }
+            55% {
+                transform: translateX(60px) translateY(-50px) rotate(5deg);
+            }
+            60% {
+                transform: translateX(45px) translateY(50px) rotate(-5deg);
+            }
+            65% {
+                transform: translateX(35px) translateY(-40px) rotate(4deg);
+            }
+            70% {
+                transform: translateX(25px) translateY(40px) rotate(-4deg);
+            }
+            75% {
+                transform: translateX(18px) translateY(-30px) rotate(3deg);
+            }
+            80% {
+                transform: translateX(12px) translateY(30px) rotate(-3deg);
+            }
+            85% {
+                transform: translateX(8px) translateY(-20px) rotate(2deg);
+            }
+            90% {
+                transform: translateX(5px) translateY(15px) rotate(-2deg);
+            }
+            95% {
+                transform: translateX(2px) translateY(-8px) rotate(1deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(0deg);
+            }
+        }
+
+        /* Version 8: Jello Wobble */
+        .v8 .streamlined {
+            animation: jelloWobble 4s ease-out forwards;
+        }
+
+        @keyframes jelloWobble {
+            0% {
+                transform: translateX(100vw);
+            }
+            15% {
+                transform: translateX(50px) skewX(-25deg) skewY(5deg);
+            }
+            20% {
+                transform: translateX(40px) skewX(20deg) skewY(-5deg);
+            }
+            25% {
+                transform: translateX(30px) skewX(-15deg) skewY(3deg);
+            }
+            30% {
+                transform: translateX(25px) skewX(10deg) skewY(-3deg);
+            }
+            35% {
+                transform: translateX(20px) skewX(-8deg) skewY(2deg);
+            }
+            40% {
+                transform: translateX(15px) skewX(6deg) skewY(-2deg);
+            }
+            45% {
+                transform: translateX(12px) skewX(-5deg) skewY(1deg);
+            }
+            50% {
+                transform: translateX(10px) skewX(4deg) skewY(-1deg);
+            }
+            55% {
+                transform: translateX(8px) skewX(-3deg) skewY(0.5deg);
+            }
+            60% {
+                transform: translateX(6px) skewX(2deg) skewY(-0.5deg);
+            }
+            70% {
+                transform: translateX(4px) skewX(-1.5deg) skewY(0.3deg);
+            }
+            80% {
+                transform: translateX(2px) skewX(1deg) skewY(-0.3deg);
+            }
+            90% {
+                transform: translateX(1px) skewX(-0.5deg) skewY(0.1deg);
+            }
+            100% {
+                transform: translateX(0) skewX(0deg) skewY(0deg);
+            }
+        }
+
+        /* Version 9: Spring Coil */
+        .v9 .streamlined {
+            animation: springCoil 3.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes springCoil {
+            0% {
+                transform: translateX(100vw) rotate(0deg);
+            }
+            10% {
+                transform: translateX(300px) translateY(-50px) rotate(180deg) scale(0.9);
+            }
+            20% {
+                transform: translateX(200px) translateY(50px) rotate(360deg) scale(1.1);
+            }
+            30% {
+                transform: translateX(150px) translateY(-40px) rotate(540deg) scale(0.95);
+            }
+            40% {
+                transform: translateX(100px) translateY(40px) rotate(720deg) scale(1.05);
+            }
+            50% {
+                transform: translateX(70px) translateY(-30px) rotate(900deg) scale(0.98);
+            }
+            60% {
+                transform: translateX(45px) translateY(30px) rotate(1080deg) scale(1.02);
+            }
+            70% {
+                transform: translateX(25px) translateY(-20px) rotate(1260deg) scale(0.99);
+            }
+            80% {
+                transform: translateX(15px) translateY(15px) rotate(1440deg) scale(1.01);
+            }
+            90% {
+                transform: translateX(5px) translateY(-8px) rotate(1620deg) scale(1);
+            }
+            100% {
+                transform: translateX(0) translateY(0) rotate(1800deg) scale(1);
+            }
+        }
+
+        /* Version 10: Rubber Band Snake */
+        .v10 .streamlined {
+            animation: rubberBandSnake 4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+            transform-origin: center center;
+        }
+
+        @keyframes rubberBandSnake {
+            0% {
+                transform: translateX(100vw) scaleX(1);
+            }
+            10% {
+                transform: translateX(400px) translateY(-80px) scaleX(3) scaleY(0.3) rotate(10deg);
+            }
+            20% {
+                transform: translateX(300px) translateY(100px) scaleX(0.5) scaleY(2) rotate(-15deg);
+            }
+            30% {
+                transform: translateX(200px) translateY(-70px) scaleX(2) scaleY(0.5) rotate(12deg);
+            }
+            40% {
+                transform: translateX(120px) translateY(80px) scaleX(0.7) scaleY(1.5) rotate(-10deg);
+            }
+            50% {
+                transform: translateX(70px) translateY(-60px) scaleX(1.5) scaleY(0.7) rotate(8deg);
+            }
+            60% {
+                transform: translateX(40px) translateY(50px) scaleX(0.8) scaleY(1.3) rotate(-6deg);
+            }
+            70% {
+                transform: translateX(20px) translateY(-40px) scaleX(1.2) scaleY(0.8) rotate(4deg);
+            }
+            80% {
+                transform: translateX(10px) translateY(25px) scaleX(0.9) scaleY(1.1) rotate(-2deg);
+            }
+            90% {
+                transform: translateX(5px) translateY(-10px) scaleX(1.05) scaleY(0.95) rotate(1deg);
+            }
+            100% {
+                transform: translateX(0) translateY(0) scaleX(1) scaleY(1) rotate(0deg);
+            }
+        }
+
+        button {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: #fff;
+            color: #000;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>STREAMLINED - Snake & Bounce Variations</h2>
+        
+        <!-- Version 1 -->
+        <div class="variation v1">
+            <div class="label">01. SNAKE WAVE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 2 -->
+        <div class="variation v2">
+            <div class="label">02. EXTREME BOUNCE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 3 -->
+        <div class="variation v3">
+            <div class="label">03. SPIRAL SNAKE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 4 -->
+        <div class="variation v4">
+            <div class="label">04. ELASTIC SNAKE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 5 -->
+        <div class="variation v5">
+            <div class="label">05. WHIP CRACK</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 6 -->
+        <div class="variation v6">
+            <div class="label">06. BOUNCING BALL</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 7 -->
+        <div class="variation v7">
+            <div class="label">07. ZIGZAG SNAKE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 8 -->
+        <div class="variation v8">
+            <div class="label">08. JELLO WOBBLE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 9 -->
+        <div class="variation v9">
+            <div class="label">09. SPRING COIL</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+        
+        <!-- Version 10 -->
+        <div class="variation v10">
+            <div class="label">10. RUBBER BAND SNAKE</div>
+            <div class="text-wrapper">
+                <span class="we-are">We are</span>
+                <span class="streamlined">Streamlined.</span>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="replayAll()">Replay All</button>
+    
+    <script>
+        function replayAll() {
+            // Get all streamlined elements
+            const streamlinedElements = document.querySelectorAll('.streamlined');
+            
+            // Remove and re-add to restart animations
+            streamlinedElements.forEach(el => {
+                const parent = el.parentNode;
+                const newEl = el.cloneNode(true);
+                parent.replaceChild(newEl, el);
+            });
+        }
+        
+        // Optional: Add intersection observer for animations on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('.variation').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
