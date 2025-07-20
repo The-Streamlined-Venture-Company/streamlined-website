@@ -65,9 +65,14 @@
     position: absolute;
     z-index: 3;
     top: calc(3em - 27px);
-    background-image: linear-gradient(45deg, rgba(0,0,0,0.3), transparent 70%),
-                      linear-gradient(45deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.3) 80%);
+    background-image: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.3) 30%, transparent 60%);
     transform: var(--card-transform) translateX(-5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 1.5rem;
+    box-sizing: border-box;
 }
 
 .images-leaning > div > img,
@@ -387,4 +392,37 @@ body {
     font-weight: 400;
     color: #666666;
     max-width: 400px;
+}
+
+/* Card text overlay - positioned exactly like the :after overlay */
+.card-text {
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    z-index: 4;
+    top: calc(3em - 27px);
+    transform: var(--card-transform) translateX(-5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    pointer-events: none;
+}
+
+.card-text .number {
+    font-size: 0.7rem;
+    color: #ffffff;
+    opacity: 0.7;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+}
+
+.card-text h3 {
+    font-family: 'FreightDispProLight-Regular', Georgia, serif;
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: 300;
+    letter-spacing: -0.02em;
 }
