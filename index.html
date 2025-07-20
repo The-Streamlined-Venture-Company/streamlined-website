@@ -64,7 +64,7 @@
                     rgba(255,255,255,0.05) 2px,
                     rgba(255,255,255,0.05) 4px
                 ),
-                #FFD700;
+                #FFC30D;
             background-size: 20px 20px, auto;
             position: relative;
         }
@@ -215,6 +215,11 @@
             line-height: 1;
             text-transform: none;
             margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: "kern" 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
         /* Remove white text override - all text should be black */
@@ -227,6 +232,9 @@
             color: rgba(255, 255, 255, 0.9);
             max-width: 90%;
             margin-top: 0.5rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
         
         /* Remove card-info since card-text handles it */
@@ -379,24 +387,24 @@
     </div>
     <div class="images-leaning">
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FF3030'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FF3030'/%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
             <div class="card-text">
-                <h3>Talent</h3>
-                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
+                <h3>Resources</h3>
+                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FFD700'/%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FFC30D'/%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
             <div class="card-text">
                 <h3>Interfaces</h3>
                 <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%230066FF'/%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%230066FF'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
             <div class="card-text">
-                <h3>Resources</h3>
-                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
+                <h3>Talent</h3>
+                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
             </div>
         </div>
     </div>
