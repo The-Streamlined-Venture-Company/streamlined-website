@@ -362,17 +362,17 @@ body {
 }
 
 .logo-section img {
-    width: 75px;
+    width: 94px;  /* 25% larger: 75 * 1.25 = 93.75 */
     height: auto;
 }
 
 .hero-title {
     font-family: 'FreightDispProLight-Regular', Georgia, serif;
-    font-size: 3rem;
+    font-size: 3.75rem;  /* 25% larger: 3 * 1.25 = 3.75 */
     font-weight: 300;
     line-height: 0.9;
     letter-spacing: -0.04em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.875rem;  /* 25% larger: 1.5 * 1.25 = 1.875 */
 }
 
 .hero-title .line {
@@ -387,11 +387,11 @@ body {
 
 .hero-tagline {
     font-family: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 1rem;
+    font-size: 1.25rem;  /* 25% larger: 1 * 1.25 = 1.25 */
     line-height: 1.5;
     font-weight: 400;
     color: #666666;
-    max-width: 400px;
+    max-width: 500px;  /* 25% larger: 400 * 1.25 = 500 */
 }
 
 /* Variation: Aligned with Resources */
@@ -432,7 +432,7 @@ body {
     text-align: center;
 }
 .text-centered-single .hero-title {
-    font-size: 3.5rem;
+    font-size: 4.375rem;  /* 25% larger: 3.5 * 1.25 = 4.375 */
 }
 .text-centered-single .hero-title .line {
     display: inline;
@@ -442,7 +442,7 @@ body {
 }
 .text-centered-single .hero-tagline {
     margin: 0 auto;
-    font-size: 1.1rem;
+    font-size: 1.375rem;  /* 25% larger: 1.1 * 1.25 = 1.375 */
 }
 
 /* Variation: Left Indented */
