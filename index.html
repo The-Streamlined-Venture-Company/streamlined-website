@@ -3,10 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Staggered Layers Fade</title>
+    <title>Streamlined - Swiss Style Cards</title>
     <link rel="stylesheet" href="leaning-cards-fresh.css">
     <style>
-        /* Smooth background overlay for final fade */
+        /* Swiss minimalist style - override image styles */
+        .images-leaning > div > img {
+            content: '';
+            object-fit: cover;
+            border: none;
+            box-shadow: none;
+        }
+        
+        /* Restore original image styling */
+        .images-leaning > div > img {
+            border-left: 0.2em solid;
+            border-image: linear-gradient(105deg, transparent 0.5%, #aaa 0.7%) 1;
+            box-shadow: 0.1em 0.2em 0 -0.1em #666;
+            filter: saturate(90%);
+        }
+        
+        /* Card 1 - Red background */
+        .images-leaning > div:nth-child(1) > img {
+            background: #FF3030;
+            position: relative;
+        }
+        
+        /* Card 2 - Yellow background */
+        .images-leaning > div:nth-child(2) > img {
+            background: #FFD700;
+            position: relative;
+        }
+        
+        /* Card 3 - Blue background */
+        .images-leaning > div:nth-child(3) > img {
+            background: #0066FF;
+            position: relative;
+        }
+        
+        /* Restore original overlay with shading */
+        .images-leaning > div:after {
+            background-image: linear-gradient(45deg, rgba(0,0,0,0.3), transparent 70%),
+                              linear-gradient(45deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.3) 80%);
+        }
+        
+        /* Shape for card 1 - Grid */
+        .images-leaning > div:nth-child(1):after::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 40%;
+            background: 
+                linear-gradient(90deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%),
+                linear-gradient(0deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%);
+            background-size: 50% 50%;
+        }
+        
+        /* Position text exactly like the image/overlay */
+        .card-text {
+            position: absolute;
+            width: 60%;
+            height: calc(100% + 5px);
+            top: calc(3em - 27px);
+            left: auto;
+            right: 0;
+            transform: var(--card-transform) translateX(-5px);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        
+        .card-text .number {
+            display: none;
+        }
+        
+        .card-text h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            text-transform: none;
+            margin: 0;
+        }
+        
+        /* Remove white text override - all text should be black */
+        
+        /* Description block */
+        .card-description {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 90%;
+            margin-top: 0.5rem;
+        }
+        
+        /* Remove card-info since card-text handles it */
+        .card-text h3,
+        .card-text .card-description {
+            position: relative;
+        }
+        
+        /* Page overlay and animations remain the same */
         .page-overlay {
             position: fixed;
             top: 0;
@@ -25,25 +130,6 @@
             transition-delay: 1s;
         }
         
-        /* Override individual animations - logo section fades in as one block */
-        .animation-sequence .logo-section {
-            opacity: 0;
-            animation: fadeIn 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            animation-delay: 0.3s;
-        }
-        
-        /* Remove individual animations for logo elements */
-        .animation-sequence .logo-section img,
-        .animation-sequence .hero-title,
-        .animation-sequence .hero-tagline {
-            opacity: 1;
-            animation: none;
-        }
-        
-        /* Reduce gap before cards animate in */
-        .animation-sequence .images-leaning > div:nth-child(1) { animation-delay: 2.8s; }
-        .animation-sequence .images-leaning > div:nth-child(2) { animation-delay: 2.4s; }
-        .animation-sequence .images-leaning > div:nth-child(3) { animation-delay: 2.0s; }
         /* First layer: card text fades */
         body.exiting .card-text {
             opacity: 0;
@@ -64,7 +150,6 @@
         body.exiting .images-leaning > div:nth-child(2) > img { transition-delay: 0.35s; }
         body.exiting .images-leaning > div:nth-child(3) > img { transition-delay: 0.4s; }
         
-        /* Shadows and overlays fade at same time as images */
         body.exiting .images-leaning > div:before,
         body.exiting .images-leaning > div:after {
             opacity: 0;
@@ -87,24 +172,77 @@
             transition-delay: 0.8s;
         }
         
-        /* Background fades to solid color */
-        body.exiting .images-leaning {
-            background-image: linear-gradient(352deg, transparent 45.2%,
-                                                    rgba(187,187,187,0) 45.5%,
-                                                    rgba(187,187,187,0) 45.6%,
-                                                    rgba(204,204,204,0) 45.8%,
-                                                    rgba(238,238,238,0) 60.0%),
-                              linear-gradient(30deg, rgba(204,204,204,0), rgba(238,238,238,0) 90%);
-            transition: background-image 0.4s ease-out;
-            transition-delay: 0.8s;
+        /* Logo section animations */
+        .animation-sequence .logo-section {
+            opacity: 0;
+            animation: fadeIn 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation-delay: 0.3s;
         }
+        
+        .animation-sequence .logo-section img,
+        .animation-sequence .hero-title,
+        .animation-sequence .hero-tagline {
+            opacity: 1;
+            animation: none;
+        }
+        
+        .animation-sequence .images-leaning > div:nth-child(1) { animation-delay: 2.8s; }
+        .animation-sequence .images-leaning > div:nth-child(2) { animation-delay: 2.4s; }
+        .animation-sequence .images-leaning > div:nth-child(3) { animation-delay: 2.0s; }
         
         .images-leaning > div {
             cursor: pointer;
         }
+        
+        /* Hover effects for cards - use inner elements for tilt */
+        .images-leaning > div > img,
+        .images-leaning > div:after,
+        .card-text {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Tilt inner elements on hover instead of the container */
+        .images-leaning > div:hover > img {
+            transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
+        }
+        
+        .images-leaning > div:hover:after,
+        .images-leaning > div:hover .card-text {
+            transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
+        }
+        
+        /* Animate shadows on hover */
+        .images-leaning > div:before {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .images-leaning > div:hover:before {
+            transform: rotate(-8deg) translateX(3px) translateY(3px);
+            opacity: 0.8;
+        }
+        
+        /* Enhance box shadow on image hover */
+        .images-leaning > div > img {
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .images-leaning > div:hover > img {
+            box-shadow: 0.15em 0.3em 0 -0.05em #666;
+        }
     </style>
 </head>
 <body class="animation-sequence text-centered-single hover-bright">
+    <style>
+        /* Position cards closer to header */
+        .images-leaning {
+            position: fixed;
+            bottom: 0; /* Move up closer to header */
+            left: 0;
+            right: 0;
+        }
+    </style>
     <div class="page-overlay"></div>
     
     <div class="logo-section">
@@ -117,24 +255,24 @@
     </div>
     <div class="images-leaning">
         <div onclick="navigateToPage('page.html')">
-            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=600&fit=crop" alt="Talent - Team collaboration" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FF3030'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
             <div class="card-text">
-                <span class="number">01</span>
                 <h3>Talent</h3>
+                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=600&fit=crop" alt="Interfaces - Digital design" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FFD700'/%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
             <div class="card-text">
-                <span class="number">02</span>
                 <h3>Interfaces</h3>
+                <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop" alt="Resources - Knowledge tools" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%230066FF'/%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
             <div class="card-text">
-                <span class="number">03</span>
                 <h3>Resources</h3>
+                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
             </div>
         </div>
     </div>
