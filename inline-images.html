@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Images in Text</title>
+    <style>
+        @font-face {
+            font-family: 'FreightDispProLight-Regular';
+            src: url('assets/fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+                 url('assets/fonts/FreightDispProLight-Regular.woff') format('woff');
+            font-weight: 300;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: 'FreightDispProLight-Italic';
+            src: url('assets/fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+                 url('assets/fonts/FreightDispProLight-Italic.woff') format('woff');
+            font-weight: 300;
+            font-style: italic;
+        }
+        
+        body {
+            margin: 0;
+            padding: 60px 20px;
+            background-color: #f8f7f5;
+            font-family: 'FreightDispProLight-Regular', Georgia, serif;
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .text-content {
+            font-size: 1.4rem;
+            letter-spacing: 0.01em;
+        }
+        
+        .text-content p {
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+        
+        /* Inline image styles */
+        .inline-image {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.3em;
+            height: 1.2em;
+            width: auto;
+            border-radius: 4px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            top: -0.1em;
+        }
+        
+        .inline-image:hover {
+            transform: scale(3) translateY(-0.2em);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 10;
+            position: relative;
+        }
+        
+        /* Larger inline images for emphasis */
+        .inline-image-large {
+            height: 2em;
+            margin: 0 0.4em;
+        }
+        
+        .inline-image-large:hover {
+            transform: scale(2.5) translateY(-0.3em);
+        }
+        
+        /* Italic text */
+        .italic {
+            font-family: 'FreightDispProLight-Italic', Georgia, serif;
+            font-style: italic;
+        }
+        
+        /* Title */
+        h1 {
+            font-size: 3rem;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+            text-align: center;
+        }
+        
+        /* Highlight certain words */
+        .highlight {
+            background: linear-gradient(to bottom, transparent 60%, rgba(255, 220, 0, 0.3) 60%);
+            padding: 0 0.1em;
+        }
+        
+        /* Animation for images loading */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .inline-image {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* Credit line */
+        .credit {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #ddd;
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>A Love Story That Became a Business</h1>
+        
+        <div class="text-content">
+            <p>
+                It started with a wedding
+                <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=100&h=100&fit=crop" 
+                     alt="wedding rings" class="inline-image-large">
+                — two people who fell in love
+                <img src="https://images.unsplash.com/photo-1518104593124-ac2e82a5eb9d?w=100&h=100&fit=crop" 
+                     alt="couple" class="inline-image">
+                over shared dreams of building something meaningful together. 
+                <span class="italic">What began as pillow talk about the future</span> 
+                evolved into <span class="highlight">Streamlined</span>, a family business born from the belief 
+                that work should flow
+                <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=100&h=100&fit=crop" 
+                     alt="flowing water" class="inline-image">
+                as naturally as life itself.
+            </p>
+            
+            <p>
+                We noticed something simple yet profound: brilliant people
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=100&h=100&fit=crop" 
+                     alt="professional woman" class="inline-image">
+                were drowning in busywork, innovative companies
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=100&h=100&fit=crop" 
+                     alt="modern office" class="inline-image">
+                were struggling with outdated tools, and everyone seemed to be working harder, 
+                not smarter. <span class="italic">There had to be a better way</span>.
+            </p>
+            
+            <p>
+                So we built one. Today, Streamlined helps you move through work and life with the 
+                same grace
+                <img src="https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?w=100&h=100&fit=crop" 
+                     alt="dancer" class="inline-image">
+                we discovered in our partnership. We've organized our offerings into three 
+                interconnected realms, each designed to remove friction from your journey:
+            </p>
+            
+            <p>
+                <a href="/talent" style="text-decoration: none; color: inherit;">
+                    <strong>Talent</strong>
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=100&h=100&fit=crop" 
+                         alt="team collaboration" class="inline-image-large">
+                </a>
+                brings you AI-enhanced assistants
+                <img src="https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=100&h=100&fit=crop" 
+                     alt="AI assistant" class="inline-image">
+                who think, adapt, and grow with your needs. <span class="italic">Like having a brilliant 
+                colleague who never sleeps</span>.
+            </p>
+            
+            <p>
+                <a href="/interfaces" style="text-decoration: none; color: inherit;">
+                    <strong>Interfaces</strong>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=100&h=100&fit=crop" 
+                         alt="beautiful dashboard" class="inline-image-large">
+                </a>
+                transforms how you work with tools
+                <img src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=100&h=100&fit=crop" 
+                     alt="design tools" class="inline-image">
+                that feel like extensions of your mind — intuitive, powerful, and surprisingly delightful.
+            </p>
+            
+            <p>
+                <a href="/resources" style="text-decoration: none; color: inherit;">
+                    <strong>Resources</strong>
+                    <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=100&h=100&fit=crop" 
+                         alt="library" class="inline-image-large">
+                </a>
+                curates the wisdom
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop" 
+                     alt="knowledge" class="inline-image">
+                you need to navigate career transitions, industry insights, and life's bigger questions.
+            </p>
+            
+            <p>
+                Everything we create carries the DNA
+                <img src="https://images.unsplash.com/photo-1628595351029-c2bf17511435?w=100&h=100&fit=crop" 
+                     alt="DNA helix" class="inline-image">
+                of our origin story: <span class="highlight">human connection enhanced by intelligent technology</span>. 
+                Not AI for AI's sake, but thoughtful augmentation that helps you focus on what matters most.
+            </p>
+            
+            <p style="text-align: center; margin-top: 3rem;">
+                <span class="italic">Ready to streamline your world?</span><br>
+                <a href="/our-story" style="font-size: 0.9rem; color: #666;">Read our full story →</a>
+            </p>
+        </div>
+        
+        <div class="credit">
+            A family business built on love, powered by intelligence
+        </div>
+    </div>
+</body>
+</html>
