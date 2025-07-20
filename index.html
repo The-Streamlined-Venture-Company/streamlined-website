@@ -3,56 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined</title>
-    <link rel="icon" type="image/png" href="assets/images/logo-square.png">
-    <link rel="stylesheet" href="css/main.css">
+    <title>Streamlined - Design for the Future</title>
+    <link rel="stylesheet" href="homepage.css">
 </head>
-<body class="page-home">
+<body>
     <div class="container">
-        <header class="home-header">
-            <nav class="top-nav">
-                <a href="#about">About</a>
-                <a href="#ethos">Ethos</a>
-                <a href="#contact" class="nav-button">Get In Touch</a>
-            </nav>
+        <header class="site-header">
+            <a href="/" class="logo">
+                <img src="assets/logo.gif" alt="Streamlined" class="logo-img">
+                <span class="logo-text">Streamlined<span class="logo-symbol">®</span></span>
+            </a>
         </header>
-        <main>
-            <section class="hero">
-                <div class="hero-content">
-                    <div class="logo">
-                        <img src="assets/images/logo.gif" alt="Streamlined">
-                    </div>
-                    <div class="tagline">
-                        <p class="tagline-bold">We are <span class="streamlined-animated"><span style="--i: 0">S</span><span style="--i: 1">t</span><span style="--i: 2">r</span><span style="--i: 3">e</span><span style="--i: 4">a</span><span style="--i: 5">m</span><span style="--i: 6">l</span><span style="--i: 7">i</span><span style="--i: 8">n</span><span style="--i: 9">e</span><span style="--i: 10">d</span></span>.</p>
-                        <p class="tagline-light tagline-animated">We help design-conscious, nimble minds streamline how they live and work, with 
-                            <a href="pages/talent.html" class="tagline-link talent-link">talent</a>, 
-                            <a href="pages/interfaces.html" class="tagline-link interfaces-link">interfaces</a>, and 
-                            <a href="pages/resources.html" class="tagline-link resources-link">resources</a>.
-                        </p>
-                    </div>
-                </div>
-            </section>
+
+        <main class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="line">We are</span>
+                    <span class="line emphasis">Streamlined.</span>
+                </h1>
+                
+                <p class="hero-description">
+                    We help design-conscious, nimble minds streamline how they work and live, with:
+                </p>
+            </div>
+
+            <nav class="main-navigation">
+                <a href="talent.html" class="nav-item">
+                    <span class="nav-number">01</span>
+                    <h2 class="nav-title">Talent</h2>
+                    <p class="nav-description">Curated design professionals ready to elevate your vision</p>
+                    <span class="nav-arrow">→</span>
+                </a>
+                
+                <a href="interfaces.html" class="nav-item">
+                    <span class="nav-number">02</span>
+                    <h2 class="nav-title">Interfaces</h2>
+                    <p class="nav-description">Digital experiences that feel inevitable, not designed</p>
+                    <span class="nav-arrow">→</span>
+                </a>
+                
+                <a href="resources.html" class="nav-item">
+                    <span class="nav-number">03</span>
+                    <h2 class="nav-title">Resources</h2>
+                    <p class="nav-description">Tools and insights for the modern creative mind</p>
+                    <span class="nav-arrow">→</span>
+                </a>
+            </nav>
         </main>
+
+        <footer class="site-footer">
+            <p>&copy; 2024 Streamlined. Simplicity is the ultimate sophistication.</p>
+        </footer>
     </div>
-    
-    <!-- SVG Filter for Morph Effect -->
-    <svg width="0" height="0" style="position: absolute;">
-        <defs>
-            <filter id="extremeMorph">
-                <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="turbulence" seed="10"/>
-                <feDisplacementMap in2="turbulence" in="SourceGraphic" scale="70" xChannelSelector="R" yChannelSelector="G">
-                    <animate id="morphScale" attributeName="scale" dur="2s" values="70;50;30;10;0" fill="freeze" begin="indefinite"/>
-                </feDisplacementMap>
-            </filter>
-        </defs>
-    </svg>
-    
-    <script src="https://unpkg.com/rough-notation@0.5.1/lib/rough-notation.iife.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/transitions.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/rough-notation.js?v=7"></script>
-    <script src="js/progressive-scroll.js"></script>
-    <script src="js/app.js"></script>
+
+    <script src="homepage.js"></script>
 </body>
 </html>
