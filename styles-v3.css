@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #fff;
+    overflow-x: hidden;
+}
+
+.scroll-indicator {
+    position: fixed;
+    right: 2rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #f0f0f0;
+    z-index: 100;
+}
+
+.scroll-line {
+    width: 100%;
+    height: 0%;
+    background: #000;
+    transition: height 0.3s ease;
+}
+
+section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 4rem;
+}
+
+.intro {
+    background: #fafafa;
+}
+
+.logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: logoReveal 1s ease-out forwards;
+}
+
+.reveal-text {
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 200;
+    letter-spacing: -0.02em;
+    overflow: hidden;
+}
+
+.reveal-text::after {
+    content: 'We are Streamlined';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fafafa;
+    animation: textReveal 1.5s ease-out 0.5s forwards;
+}
+
+.philosophy {
+    background: #fff;
+    padding: 8rem 4rem;
+}
+
+.large-text {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 300;
+    line-height: 1.4;
+    max-width: 800px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(50px);
+}
+
+.large-text.visible {
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.services {
+    background: #000;
+    color: #fff;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4rem;
+    width: 100%;
+    max-width: 1200px;
+    padding: 8rem 4rem;
+}
+
+.service-item {
+    text-align: center;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.service-item.visible {
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.service-item:nth-child(2) { animation-delay: 0.2s; }
+.service-item:nth-child(3) { animation-delay: 0.4s; }
+
+.service-item h2 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.service-item p {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.7;
+    margin-bottom: 2rem;
+}
+
+.explore {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.explore:hover {
+    opacity: 1;
+}
+
+@keyframes logoReveal {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes textReveal {
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .services {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}

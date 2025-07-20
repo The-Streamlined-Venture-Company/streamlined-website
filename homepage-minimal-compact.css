@@ -1,0 +1,222 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2.5rem;
+    
+    --transition-base: 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-white);
+    font-weight: 400;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.minimal-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.content-wrapper {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Header */
+.minimal-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-logo {
+    width: 40px;
+    height: auto;
+    margin-bottom: var(--spacing-sm);
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: clamp(2rem, 3vw, 2.5rem);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+}
+
+.hero-title .line {
+    display: block;
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.hero-title .line:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+/* Tagline */
+.tagline-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    max-width: 800px;
+}
+
+.hero-tagline {
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.2;
+    font-weight: 400;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.4s forwards;
+}
+
+/* Navigation */
+.minimal-nav {
+    display: flex;
+    gap: var(--spacing-xl);
+    align-items: center;
+}
+
+.text-link {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    color: var(--color-black);
+    font-size: 1.1rem;
+    transition: all var(--transition-base);
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+}
+
+.text-link:nth-child(1) { animation-delay: 0.6s; }
+.text-link:nth-child(2) { animation-delay: 0.7s; }
+.text-link:nth-child(3) { animation-delay: 0.8s; }
+
+.text-link:hover {
+    gap: var(--spacing-md);
+}
+
+.link-number {
+    font-size: 0.7rem;
+    opacity: 0.4;
+    font-weight: 600;
+}
+
+.link-name {
+    font-family: var(--font-headline);
+    font-weight: 300;
+}
+
+.link-arrow {
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all var(--transition-base);
+}
+
+.text-link:hover .link-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Background Images */
+.background-images {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.bg-image {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.2);
+    opacity: 0.1;
+}
+
+.bg-image.active {
+    opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .content-wrapper {
+        padding: var(--spacing-md);
+    }
+    
+    .hero-tagline {
+        font-size: 2rem;
+    }
+    
+    .minimal-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+    }
+    
+    .text-link {
+        font-size: 1.2rem;
+    }
+}

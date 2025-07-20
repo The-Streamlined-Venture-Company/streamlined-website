@@ -1,0 +1,258 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    --color-bg: #f0f0f0;
+    --color-primary-white: rgb(240, 240, 240);
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    --transition-elegant: 2.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-bg);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    height: 100vh;
+}
+
+/* Left Panel - Exact match from minimal-visible */
+.left-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background: transparent;
+    position: relative;
+}
+
+.left-content {
+    max-width: 400px;
+}
+
+.hero-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+
+/* Right Panel - Card Style Masonry */
+.right-panel {
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    padding: var(--spacing-md);
+}
+
+.masonry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: var(--spacing-md);
+    height: 100%;
+}
+
+/* Card Styling based on provided CSS */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    color: var(--color-primary-white);
+    box-shadow: 0 10px 30px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.card.full-width {
+    grid-column: span 2;
+}
+
+.card img {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0.9;
+    transition: opacity 0.2s ease-out;
+}
+
+.card h2 {
+    position: absolute;
+    inset: auto auto 30px 30px;
+    margin: 0;
+    transition: inset 0.3s 0.3s ease-out;
+    font-family: var(--font-headline);
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+}
+
+.card p,
+.card .card-link {
+    position: absolute;
+    opacity: 0;
+    max-width: 80%;
+    transition: opacity 0.3s ease-out;
+    font-family: var(--font-tagline);
+}
+
+.card p {
+    inset: auto auto 80px 30px;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.card .card-link {
+    inset: auto auto 40px 30px;
+    color: inherit;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Hover Effects */
+.card:hover h2 {
+    inset: auto auto 150px 30px;
+    transition: inset 0.3s ease-out;
+}
+
+.card:hover p,
+.card:hover .card-link {
+    opacity: 1;
+    transition: opacity 0.5s 0.1s ease-in;
+}
+
+.card:hover img {
+    transition: opacity 0.3s ease-in;
+    opacity: 1;
+}
+
+/* Scroll Animation States */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all var(--transition-elegant);
+}
+
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays */
+.hero-logo.visible {
+    transition-delay: 0.2s;
+}
+
+.hero-title .line:nth-child(1).visible {
+    transition-delay: 0.5s;
+}
+
+.hero-title .line:nth-child(2).visible {
+    transition-delay: 0.8s;
+}
+
+.hero-tagline.visible {
+    transition-delay: 2.8s;
+}
+
+.card:nth-child(1).visible {
+    transition-delay: 4.8s;
+}
+
+.card:nth-child(2).visible {
+    transition-delay: 5.1s;
+}
+
+.card:nth-child(3).visible {
+    transition-delay: 5.4s;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .masonry-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, 250px);
+    }
+    
+    .card.full-width {
+        grid-column: span 1;
+    }
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Center Out Fade</title>
+    <link rel="stylesheet" href="leaning-cards-fresh.css">
+    <style>
+        body.exiting .images-leaning > div {
+            opacity: 0;
+            transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Center card fades first */
+        body.exiting .images-leaning > div:nth-child(2) { transition-delay: 0s; }
+        /* Then outer cards simultaneously */
+        body.exiting .images-leaning > div:nth-child(1) { transition-delay: 0.2s; }
+        body.exiting .images-leaning > div:nth-child(3) { transition-delay: 0.2s; }
+        
+        /* Then all text elements together */
+        body.exiting .logo-section {
+            opacity: 0;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition-delay: 0.5s;
+        }
+        
+        /* Background fade */
+        .page-fade {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #eee;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.3s ease-out;
+            transition-delay: 0.8s;
+        }
+        
+        body.exiting .page-fade {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .images-leaning > div {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="animation-sequence text-centered-single hover-bright">
+    <div class="page-fade"></div>
+    
+    <div class="logo-section">
+        <img src="assets/logo.gif" alt="Streamlined Logo" />
+        <h1 class="hero-title">
+            <span class="line">We are</span>
+            <span class="line emphasis">Streamlined.</span>
+        </h1>
+        <p class="hero-tagline">We help design-conscious, nimble minds streamline how they work and live, with:</p>
+    </div>
+    <div class="images-leaning">
+        <div onclick="navigateToPage('talent.html')">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=400&h=600&fit=crop" alt="Talent - Team collaboration" />
+            <div class="card-text">
+                <span class="number">01</span>
+                <h3>Talent</h3>
+            </div>
+        </div>
+        <div onclick="navigateToPage('interfaces.html')">
+            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=600&fit=crop" alt="Interfaces - Digital design" />
+            <div class="card-text">
+                <span class="number">02</span>
+                <h3>Interfaces</h3>
+            </div>
+        </div>
+        <div onclick="navigateToPage('resources.html')">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop" alt="Resources - Knowledge tools" />
+            <div class="card-text">
+                <span class="number">03</span>
+                <h3>Resources</h3>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function navigateToPage(url) {
+            document.body.classList.add('exiting');
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1100);
+        }
+    </script>
+</body>
+</html>

@@ -351,7 +351,7 @@ body {
     }
 }
 
-/* Logo section */
+/* Logo section - Base styles */
 .logo-section {
     position: fixed;
     top: 10%;
@@ -394,6 +394,69 @@ body {
     max-width: 400px;
 }
 
+/* Variation: Aligned with Resources */
+.text-align-resources .logo-section {
+    transform: translateX(calc(-50% - 10em));
+}
+
+/* Variation: Larger Typography */
+.text-large .hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 2rem;
+}
+.text-large .hero-tagline {
+    font-size: 1.1rem;
+}
+
+/* Variation: Smaller Typography */
+.text-small .hero-title {
+    font-size: 2.5rem;
+    margin-bottom: 1.2rem;
+}
+.text-small .hero-tagline {
+    font-size: 0.9rem;
+}
+
+/* Variation: Centered */
+.text-centered .logo-section {
+    transform: translateX(-50%);
+    text-align: center;
+}
+.text-centered .hero-tagline {
+    margin: 0 auto;
+}
+
+/* Variation: Centered Single Line */
+.text-centered-single .logo-section {
+    transform: translateX(-50%);
+    text-align: center;
+}
+.text-centered-single .hero-title {
+    font-size: 3.5rem;
+}
+.text-centered-single .hero-title .line {
+    display: inline;
+}
+.text-centered-single .hero-title .line:first-child:after {
+    content: " ";
+}
+.text-centered-single .hero-tagline {
+    margin: 0 auto;
+    font-size: 1.1rem;
+}
+
+/* Variation: Left Indented */
+.text-indented .logo-section {
+    transform: translateX(calc(-50% - 35em));
+}
+.text-indented .hero-title {
+    font-size: 2.8rem;
+}
+.text-indented .hero-tagline {
+    font-size: 0.95rem;
+    padding-left: 2em;
+}
+
 /* Card text overlay - positioned exactly like the :after overlay */
 .card-text {
     width: 60%;
@@ -425,4 +488,237 @@ body {
     color: #ffffff;
     font-weight: 300;
     letter-spacing: -0.02em;
+}
+
+/* Hover Effect 1: Strong Brightness */
+.hover-bright .images-leaning > div > img {
+    transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-bright .images-leaning > div:hover > img {
+    filter: saturate(120%) brightness(1.15) contrast(1.05);
+}
+
+/* Hover Effect 2: Text Slide Up */
+.hover-text-slide .card-text {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-text-slide .images-leaning > div:hover .card-text {
+    transform: translateY(-10px);
+}
+.hover-text-slide .card-text h3 {
+    transition: font-size 0.4s ease;
+}
+.hover-text-slide .images-leaning > div:hover .card-text h3 {
+    font-size: 1.7rem;
+}
+
+/* Hover Effect 3: Dramatic Overlay */
+.hover-dramatic .images-leaning > div:after {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hover-dramatic .images-leaning > div:hover:after {
+    background-image: linear-gradient(135deg, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.5) 30%, transparent 60%);
+}
+
+/* Hover Effect 4: Color Wash */
+.hover-color .images-leaning > div::before {
+    content: '';
+    position: absolute;
+    width: 60%;
+    height: 100%;
+    top: calc(3em - 27px);
+    right: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    opacity: 0;
+    z-index: 3;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    transform: var(--card-transform) translateX(-5px);
+}
+.hover-color .images-leaning > div:hover::before {
+    opacity: 1;
+}
+
+/* Hover Effect 5: Scale Image */
+.hover-scale .images-leaning > div > img {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+.hover-scale .images-leaning > div:hover > img {
+    transform: scale(1.05);
+}
+.hover-scale .card-text {
+    transition: opacity 0.4s ease;
+}
+.hover-scale .images-leaning > div:hover .card-text {
+    opacity: 0.9;
+}
+
+
+/* Animation Variations */
+
+/* Variation 1: Classic Fade In */
+.animation-fade .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.animation-fade .images-leaning > div:nth-child(1) { animation-delay: 0.3s; }
+.animation-fade .images-leaning > div:nth-child(2) { animation-delay: 0.6s; }
+.animation-fade .images-leaning > div:nth-child(3) { animation-delay: 0.9s; }
+
+/* Variation 1a: Slower Fade */
+.animation-fade-slow .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animation-fade-slow .images-leaning > div:nth-child(1) { animation-delay: 0.5s; }
+.animation-fade-slow .images-leaning > div:nth-child(2) { animation-delay: 1.0s; }
+.animation-fade-slow .images-leaning > div:nth-child(3) { animation-delay: 1.5s; }
+
+/* Variation 1b: Quick Sequential Fade */
+.animation-fade-quick .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animation-fade-quick .images-leaning > div:nth-child(1) { animation-delay: 0.1s; }
+.animation-fade-quick .images-leaning > div:nth-child(2) { animation-delay: 0.25s; }
+.animation-fade-quick .images-leaning > div:nth-child(3) { animation-delay: 0.4s; }
+
+/* Variation 1c: Overlap Fade */
+.animation-fade-overlap .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 2s cubic-bezier(0.645, 0.045, 0.355, 1) forwards;
+}
+
+.animation-fade-overlap .images-leaning > div:nth-child(1) { animation-delay: 0.2s; }
+.animation-fade-overlap .images-leaning > div:nth-child(2) { animation-delay: 0.4s; }
+.animation-fade-overlap .images-leaning > div:nth-child(3) { animation-delay: 0.6s; }
+
+/* Variation 1d: Delayed Cascade */
+.animation-fade-cascade .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+
+.animation-fade-cascade .images-leaning > div:nth-child(1) { animation-delay: 0.8s; }
+.animation-fade-cascade .images-leaning > div:nth-child(2) { animation-delay: 1.2s; }
+.animation-fade-cascade .images-leaning > div:nth-child(3) { animation-delay: 1.6s; }
+
+/* Full Sequential Animation */
+.animation-sequence .logo-section img {
+    opacity: 0;
+    animation: fadeIn 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.2s;
+}
+
+.animation-sequence .hero-title {
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 0.8s;
+}
+
+.animation-sequence .hero-tagline {
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    animation-delay: 1.6s;
+}
+
+.animation-sequence .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) forwards;
+}
+
+.animation-sequence .images-leaning > div:nth-child(1) { animation-delay: 3.6s; }
+.animation-sequence .images-leaning > div:nth-child(2) { animation-delay: 3.2s; }
+.animation-sequence .images-leaning > div:nth-child(3) { animation-delay: 2.8s; }
+
+/* Variation 1e: Simultaneous Fade */
+.animation-fade-together .images-leaning > div {
+    opacity: 0;
+    animation: fadeIn 3s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.animation-fade-together .images-leaning > div:nth-child(1) { animation-delay: 0.3s; }
+.animation-fade-together .images-leaning > div:nth-child(2) { animation-delay: 0.35s; }
+.animation-fade-together .images-leaning > div:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+/* Variation 2: Gentle Rise */
+.animation-rise .images-leaning > div {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: gentleRise 2s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+}
+
+.animation-rise .images-leaning > div:nth-child(1) { animation-delay: 0.2s; }
+.animation-rise .images-leaning > div:nth-child(2) { animation-delay: 0.5s; }
+.animation-rise .images-leaning > div:nth-child(3) { animation-delay: 0.8s; }
+
+@keyframes gentleRise {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Variation 3: Soft Blur */
+.animation-blur .images-leaning > div {
+    opacity: 0;
+    filter: blur(10px);
+    animation: softBlur 1.8s ease-out forwards;
+}
+
+.animation-blur .images-leaning > div:nth-child(1) { animation-delay: 0.4s; }
+.animation-blur .images-leaning > div:nth-child(2) { animation-delay: 0.7s; }
+.animation-blur .images-leaning > div:nth-child(3) { animation-delay: 1.0s; }
+
+@keyframes softBlur {
+    to {
+        opacity: 1;
+        filter: blur(0);
+    }
+}
+
+/* Variation 4: Streamlined Slide */
+.animation-slide .images-leaning > div {
+    opacity: 0;
+    transform: translateX(-30px);
+    animation: streamlinedSlide 2.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.animation-slide .images-leaning > div:nth-child(1) { animation-delay: 0.3s; }
+.animation-slide .images-leaning > div:nth-child(2) { animation-delay: 0.6s; }
+.animation-slide .images-leaning > div:nth-child(3) { animation-delay: 0.9s; }
+
+@keyframes streamlinedSlide {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Variation 5: Elegant Scale */
+.animation-scale .images-leaning > div {
+    opacity: 0;
+    transform: scale(0.95);
+    animation: elegantScale 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.animation-scale .images-leaning > div:nth-child(1) { animation-delay: 0.2s; }
+.animation-scale .images-leaning > div:nth-child(2) { animation-delay: 0.4s; }
+.animation-scale .images-leaning > div:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes elegantScale {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }

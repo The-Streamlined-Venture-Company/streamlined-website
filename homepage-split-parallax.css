@@ -1,0 +1,277 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    --transition-parallax: 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-white);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    height: 100vh;
+}
+
+/* Left Panel */
+.left-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background: var(--color-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.left-content {
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
+
+.parallax-layer {
+    will-change: transform;
+    transition: transform var(--transition-parallax);
+}
+
+.hero-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: var(--spacing-lg);
+    opacity: 0;
+    animation: fadeInParallax 1s ease-out forwards;
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title .line {
+    display: block;
+    opacity: 0;
+    animation: fadeInParallax 1s ease-out forwards;
+}
+
+.hero-title .line:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.65rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-gray);
+    opacity: 0;
+    animation: fadeInParallax 1s ease-out 0.4s forwards;
+}
+
+/* Right Panel */
+.right-panel {
+    display: flex;
+    align-items: center;
+    background: #f8f8f8;
+    overflow: hidden;
+}
+
+.split-navigation {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.split-card {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+}
+
+.parallax-container {
+    position: absolute;
+    inset: -10%;
+    width: 120%;
+    height: 120%;
+    will-change: transform;
+    transition: transform var(--transition-parallax);
+}
+
+.parallax-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter var(--transition-parallax);
+}
+
+.split-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-parallax);
+    z-index: 1;
+}
+
+.split-title {
+    font-family: var(--font-headline);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--color-white);
+    letter-spacing: -0.02em;
+    transition: all var(--transition-parallax);
+    opacity: 0;
+    animation: fadeInParallax 1s ease-out forwards;
+}
+
+.split-card:nth-child(1) .split-title { animation-delay: 0.6s; }
+.split-card:nth-child(2) .split-title { animation-delay: 0.7s; }
+.split-card:nth-child(3) .split-title { animation-delay: 0.8s; }
+
+/* Hover Effects */
+.split-card:hover .parallax-container {
+    transform: scale(1);
+}
+
+.split-card:hover .parallax-image {
+    filter: grayscale(0%);
+}
+
+.split-card:hover .split-overlay {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.split-card:hover .split-title {
+    transform: translateZ(50px);
+    letter-spacing: 0.05em;
+}
+
+/* Depth layers on load */
+.split-card:nth-child(1) .parallax-container {
+    animation: parallaxSlide1 1.5s ease-out;
+}
+
+.split-card:nth-child(2) .parallax-container {
+    animation: parallaxSlide2 1.5s ease-out;
+}
+
+.split-card:nth-child(3) .parallax-container {
+    animation: parallaxSlide3 1.5s ease-out;
+}
+
+/* Animations */
+@keyframes fadeInParallax {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes parallaxSlide1 {
+    from {
+        transform: translateX(-100px) scale(1.2);
+    }
+    to {
+        transform: translateX(0) scale(1.1);
+    }
+}
+
+@keyframes parallaxSlide2 {
+    from {
+        transform: translateX(100px) scale(1.2);
+    }
+    to {
+        transform: translateX(0) scale(1.1);
+    }
+}
+
+@keyframes parallaxSlide3 {
+    from {
+        transform: translateX(-100px) scale(1.2);
+    }
+    to {
+        transform: translateX(0) scale(1.1);
+    }
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .left-panel {
+        padding: var(--spacing-lg);
+    }
+    
+    .hero-tagline {
+        font-size: 1.4rem;
+    }
+    
+    .split-title {
+        font-size: 2rem;
+    }
+}

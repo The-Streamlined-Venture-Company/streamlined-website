@@ -1,0 +1,379 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    --color-bg: #eee;
+    --body-w: 800px;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --card-transform: perspective(20em) rotateY(1deg) rotateZ(-5deg) skewY(-2deg) skewX(-1deg) scaleX(var(--resize));
+    
+    --transition-elegant: 2.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100vh;
+    min-width: var(--body-w);
+}
+
+body {
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--color-bg);
+    font-size: 10px;
+    font-family: var(--font-body);
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Left Content - Streamlined Branding */
+.left-content {
+    position: absolute;
+    top: 5rem;
+    left: 5rem;
+    max-width: 400px;
+    z-index: 10;
+}
+
+.hero-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 3rem;
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 3rem;
+    color: var(--color-black);
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: -0.01em;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+
+/* Basic Images Layout (top row) */
+.images-basic {
+    width: 600px;
+    padding: 5em 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.images-basic.visible {
+    opacity: 1;
+}
+
+.images-basic > div {
+    width: 130px;
+}
+
+.images-basic img {
+    width: 100%;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Leaning Cards Layout */
+.images-leaning {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: var(--body-w);
+    margin: 10em auto 0;
+    min-height: 330px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(352deg, transparent 45.2%,
+                                            #bbb 45.5%,
+                                            #bbb 45.6%,
+                                            #ccc 45.8%,
+                                            var(--color-bg) 60.0%),
+                    linear-gradient(30deg, #ccc, #eee 90%);
+    background-size: 100% 32.4em;
+    background-position: 50% 100%;
+}
+
+.images-leaning > div {
+    width: 250px;
+    position: absolute;
+    left: 50%;
+    bottom: 7.8em;
+    z-index: 0;
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: transform 0.3s ease-out;
+}
+
+/* Card shadows */
+.images-leaning > div:before {
+    content: '';
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 7%;
+    z-index: 1;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(120deg, transparent 42%,
+                                            rgba(0,0,0,0.15) 45%,
+                                            rgba(0,0,0,0.35) 65%),
+                    linear-gradient(20deg, transparent 38%,
+                                            rgba(0,0,0,0.25) 45%,
+                                            rgba(0,0,0,0.23) 55%,
+                                            rgba(0,0,0,0.13) 75%),
+                    radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.15) 3%, transparent 40%);
+    transform: rotate(-8deg);
+}
+
+/* Card shading */
+.images-leaning > div:after {
+    content: '';
+    width: 60%;
+    height: 100%;
+    position: absolute;
+    z-index: 3;
+    background-image: linear-gradient(45deg, rgba(0,0,0,0.3), transparent 70%),
+                    linear-gradient(45deg, rgba(255,255,255,0) 60%, rgba(255,255,255,0.3) 80%);
+    transform: var(--card-transform);
+}
+
+.images-leaning > div > img {
+    width: 60%;
+    height: 100%;
+    display: block;
+    position: relative;
+    z-index: 2;
+    border-left: 0.2em solid;
+    border-image: linear-gradient(105deg, transparent 0.5%, #aaa 0.7%) 1;
+    box-shadow: 0.1em 0.2em 0 -0.1em #666;
+    filter: saturate(90%);
+    transform: var(--card-transform);
+}
+
+/* Card positioning and transforms */
+.images-leaning > div:nth-of-type(4) {
+    --resize: 0.99;
+    margin-left: -40.4em;
+}
+
+.images-leaning > div:nth-of-type(4):before {
+    background-size: 100% 85%, 100% 15%, 100% 10%;
+    background-position: 0.1em 0, 0 100%, -3em 83%;
+}
+
+.images-leaning > div:nth-of-type(3) {
+    --resize: 0.96;
+    margin-left: -15.3em;
+    transform: scaleY(0.98) translate(-8em, -2.1em);
+}
+
+.images-leaning > div:nth-of-type(3):before {
+    background-size: 100% 84%, 100% 16%, 100% 10%;
+    background-position: 0.4em 0, 0 100%, -3em 81%;
+}
+
+.images-leaning > div:nth-of-type(2) {
+    --resize: 0.925;
+    margin-left: 10em;
+    transform: scaleY(0.965) translate(-17em, -4.2em);
+}
+
+.images-leaning > div:nth-of-type(2):before {
+    background-size: 100% 83%, 100% 17%, 100% 10%;
+    background-position: 0.6em 0, 0.1em 100%, -3em 81%;
+}
+
+.images-leaning > div:nth-of-type(1) {
+    --resize: 0.895;
+    margin-left: 35.2em;
+    transform: scaleY(0.94) translate(-26.6em, -6.2em);
+}
+
+.images-leaning > div:nth-of-type(1):before {
+    background-size: 100% 82%, 100% 18%, 100% 10%;
+    background-position: 0.8em 0, 0.1em 100%, -3em 80%;
+}
+
+/* Card Labels */
+.card-label {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 4;
+    color: var(--color-white);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-out;
+}
+
+.card-label h3 {
+    font-family: var(--font-headline);
+    font-size: 2.4rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+}
+
+.card-label span {
+    font-family: var(--font-tagline);
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+/* Hover Effects */
+.images-leaning > div:hover {
+    transform: translateY(-5px);
+}
+
+.images-leaning > div:hover .card-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Scroll Animation States */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all var(--transition-elegant);
+}
+
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered Animation Delays */
+.hero-logo.visible {
+    transition-delay: 0.2s;
+}
+
+.hero-title .line:nth-child(1).visible {
+    transition-delay: 0.5s;
+}
+
+.hero-title .line:nth-child(2).visible {
+    transition-delay: 0.8s;
+}
+
+.hero-tagline.visible {
+    transition-delay: 2.8s;
+}
+
+.images-basic.visible {
+    transition-delay: 4.8s;
+}
+
+.images-leaning > div {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity var(--transition-elegant), transform var(--transition-elegant);
+}
+
+.images-leaning > div.visible:nth-of-type(1) {
+    opacity: 1;
+    transform: scaleY(0.94) translate(-26.6em, -6.2em);
+    transition-delay: 5.8s;
+}
+
+.images-leaning > div.visible:nth-of-type(2) {
+    opacity: 1;
+    transform: scaleY(0.965) translate(-17em, -4.2em);
+    transition-delay: 6.1s;
+}
+
+.images-leaning > div.visible:nth-of-type(3) {
+    opacity: 1;
+    transform: scaleY(0.98) translate(-8em, -2.1em);
+    transition-delay: 6.4s;
+}
+
+.images-leaning > div.visible:nth-of-type(4) {
+    opacity: 1;
+    transform: initial;
+    transition-delay: 6.7s;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .left-content {
+        position: relative;
+        top: auto;
+        left: auto;
+        margin-bottom: 3rem;
+    }
+    
+    .images-basic {
+        width: 100%;
+        padding: 2em 0;
+    }
+    
+    .images-leaning {
+        transform: scale(0.7);
+        margin-top: 5em;
+    }
+}

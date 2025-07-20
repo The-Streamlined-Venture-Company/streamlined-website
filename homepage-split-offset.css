@@ -1,0 +1,245 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    --transition-elegant: 2.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-white);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 45% 55%;
+    height: 100vh;
+    position: relative;
+}
+
+/* Left Panel */
+.left-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background: var(--color-white);
+    position: relative;
+    z-index: 2;
+    margin-top: 10vh;
+}
+
+.left-content {
+    max-width: 500px;
+    background: var(--color-white);
+    padding: var(--spacing-lg);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+}
+
+.hero-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.7rem;
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+
+/* Right Panel */
+.right-panel {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    position: relative;
+    margin-top: -5vh;
+}
+
+.split-navigation {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 110vh;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) 0;
+}
+
+.split-card {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.card-content {
+    position: absolute;
+    left: -100px;
+    z-index: 3;
+    background: var(--color-black);
+    color: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    min-width: 250px;
+    transition: all var(--transition-elegant);
+}
+
+.card-number {
+    display: block;
+    font-size: 0.9rem;
+    opacity: 0.5;
+    margin-bottom: 0.5rem;
+}
+
+.split-title {
+    font-family: var(--font-headline);
+    font-size: 2.5rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.split-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all var(--transition-elegant);
+    filter: grayscale(100%);
+}
+
+/* Hover Effects */
+.split-card:hover .card-content {
+    left: -80px;
+    background: var(--color-black);
+}
+
+.split-card:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+
+/* Scroll Animation States */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all var(--transition-elegant);
+}
+
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays */
+.hero-logo.visible {
+    transition-delay: 0.2s;
+}
+
+.hero-title .line:nth-child(1).visible {
+    transition-delay: 0.5s;
+}
+
+.hero-title .line:nth-child(2).visible {
+    transition-delay: 0.8s;
+}
+
+.hero-tagline.visible {
+    transition-delay: 2.8s;
+}
+
+.split-card:nth-child(1).visible {
+    transition-delay: 4.8s;
+}
+
+.split-card:nth-child(2).visible {
+    transition-delay: 5.1s;
+}
+
+.split-card:nth-child(3).visible {
+    transition-delay: 5.4s;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .left-panel {
+        margin-top: 0;
+        padding: var(--spacing-lg);
+    }
+    
+    .right-panel {
+        margin-top: 0;
+    }
+    
+    .card-content {
+        position: relative;
+        left: 0;
+        background: rgba(0,0,0,0.8);
+        width: 100%;
+    }
+}

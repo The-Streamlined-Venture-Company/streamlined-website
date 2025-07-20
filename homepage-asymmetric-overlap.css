@@ -1,0 +1,280 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    --transition-elegant: 2.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-white);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    height: 100vh;
+}
+
+/* Left Panel - Exact match from minimal-visible */
+.left-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-xl);
+    background: var(--color-white);
+    position: relative;
+}
+
+.left-content {
+    max-width: 400px;
+}
+
+.hero-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+    letter-spacing: 0.005em;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+
+/* Right Panel - Overlapping Cards */
+.right-panel {
+    position: relative;
+    overflow: hidden;
+    background: #f0f0f0;
+    padding: var(--spacing-lg);
+}
+
+.overlap-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.overlap-card {
+    position: absolute;
+    overflow: hidden;
+    text-decoration: none;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    transition: all var(--transition-elegant);
+}
+
+.overlap-card.primary {
+    top: 10%;
+    left: 5%;
+    width: 70%;
+    height: 45%;
+    z-index: 3;
+}
+
+.overlap-card.secondary {
+    top: 30%;
+    right: 5%;
+    width: 65%;
+    height: 40%;
+    z-index: 2;
+    transform: rotate(-3deg);
+}
+
+.overlap-card.tertiary {
+    bottom: 5%;
+    left: 15%;
+    width: 60%;
+    height: 35%;
+    z-index: 1;
+    transform: rotate(2deg);
+}
+
+.overlap-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all var(--transition-elegant);
+    filter: grayscale(100%);
+}
+
+.card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    transition: all var(--transition-elegant);
+}
+
+.card-number {
+    font-size: 0.9rem;
+    opacity: 0.5;
+    font-weight: 600;
+}
+
+.card-title {
+    font-family: var(--font-headline);
+    font-size: 2.2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+/* Hover Effects */
+.overlap-card:hover {
+    z-index: 10 !important;
+    transform: rotate(0deg) scale(1.05) !important;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+}
+
+.overlap-card:hover img {
+    filter: grayscale(0%);
+}
+
+.overlap-card:hover .card-content {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    background: rgba(255,255,255,0.95);
+}
+
+/* Hover effect on siblings */
+.overlap-card:hover ~ .overlap-card {
+    transform: translateY(20px) scale(0.95);
+    opacity: 0.8;
+}
+
+/* Scroll Animation States */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all var(--transition-elegant);
+}
+
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.overlap-card.secondary.visible {
+    transform: translateY(0) rotate(-3deg);
+}
+
+.overlap-card.tertiary.visible {
+    transform: translateY(0) rotate(2deg);
+}
+
+/* Staggered delays */
+.hero-logo.visible {
+    transition-delay: 0.2s;
+}
+
+.hero-title .line:nth-child(1).visible {
+    transition-delay: 0.5s;
+}
+
+.hero-title .line:nth-child(2).visible {
+    transition-delay: 0.8s;
+}
+
+.hero-tagline.visible {
+    transition-delay: 2.8s;
+}
+
+.overlap-card.primary.visible {
+    transition-delay: 4.8s;
+}
+
+.overlap-card.secondary.visible {
+    transition-delay: 5.1s;
+}
+
+.overlap-card.tertiary.visible {
+    transition-delay: 5.4s;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .overlap-card {
+        position: relative;
+        width: 100% !important;
+        height: 250px !important;
+        margin-bottom: var(--spacing-md);
+        transform: none !important;
+    }
+    
+    .overlap-container {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+}

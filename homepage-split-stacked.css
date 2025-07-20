@@ -1,0 +1,273 @@
+@font-face {
+    font-family: 'FreightDispProLight-Regular';
+    src: url('fonts/FreightDispProLight-Regular.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Regular.woff') format('woff'),
+         url('fonts/FreightDispProLight-Regular.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'FreightDispProLight-Italic';
+    src: url('fonts/FreightDispProLight-Italic.woff2') format('woff2'),
+         url('fonts/FreightDispProLight-Italic.woff') format('woff'),
+         url('fonts/FreightDispProLight-Italic.ttf') format('truetype');
+    font-weight: 300;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    --color-black: #000000;
+    --color-white: #ffffff;
+    --color-gray: #666666;
+    
+    --font-headline: 'FreightDispProLight-Regular', Georgia, serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --font-tagline: 'Avenir', 'Avenir Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 5rem;
+    
+    --transition-elegant: 2.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--color-black);
+    background: var(--color-white);
+    font-weight: 400;
+    overflow: hidden;
+}
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 35% 65%;
+    height: 100vh;
+}
+
+/* Left Panel - Info Side */
+.left-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--spacing-xl);
+    background: var(--color-white);
+    border-right: 1px solid rgba(0,0,0,0.05);
+}
+
+.left-header {
+    max-width: 400px;
+}
+
+.hero-logo {
+    width: 70px;
+    height: auto;
+    margin-bottom: var(--spacing-lg);
+}
+
+.hero-title {
+    font-family: var(--font-headline);
+    font-size: 3.5rem;
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+}
+
+.hero-title .line {
+    display: block;
+}
+
+.hero-title .emphasis {
+    font-family: 'FreightDispProLight-Italic', Georgia, serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.left-footer {
+    max-width: 400px;
+}
+
+.hero-tagline {
+    font-family: var(--font-tagline);
+    font-size: 1.7rem;
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--color-gray);
+}
+
+/* Right Panel - Stacked Cards */
+.right-panel {
+    position: relative;
+    overflow: hidden;
+    background: #f5f5f5;
+    padding: var(--spacing-lg);
+}
+
+.card-stack {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.stack-card {
+    position: absolute;
+    width: 85%;
+    height: 70%;
+    text-decoration: none;
+    display: block;
+    overflow: hidden;
+    border-radius: 2px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    transition: all var(--transition-elegant);
+}
+
+.stack-card[data-index="1"] {
+    top: 5%;
+    left: 5%;
+    z-index: 3;
+}
+
+.stack-card[data-index="2"] {
+    top: 15%;
+    left: 10%;
+    z-index: 2;
+}
+
+.stack-card[data-index="3"] {
+    top: 25%;
+    left: 15%;
+    z-index: 1;
+}
+
+.stack-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all var(--transition-elegant);
+    filter: grayscale(100%);
+}
+
+.card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-md);
+    transition: all var(--transition-elegant);
+}
+
+.card-number {
+    font-size: 0.9rem;
+    opacity: 0.5;
+}
+
+.card-title {
+    font-family: var(--font-headline);
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+/* Hover Effects */
+.stack-card:hover {
+    transform: translateY(-20px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.3);
+}
+
+.stack-card:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.05);
+}
+
+.stack-card:hover .card-label {
+    padding: var(--spacing-lg) var(--spacing-xl);
+}
+
+/* Stacking interaction */
+.stack-card[data-index="1"]:hover ~ .stack-card[data-index="2"] {
+    transform: translateX(20px) translateY(10px);
+}
+
+.stack-card[data-index="1"]:hover ~ .stack-card[data-index="3"] {
+    transform: translateX(40px) translateY(20px);
+}
+
+.stack-card[data-index="2"]:hover ~ .stack-card[data-index="3"] {
+    transform: translateX(20px) translateY(10px);
+}
+
+/* Scroll Animation States */
+.scroll-element {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: all var(--transition-elegant);
+}
+
+.scroll-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered delays */
+.hero-logo.visible {
+    transition-delay: 0.2s;
+}
+
+.hero-title .line:nth-child(1).visible {
+    transition-delay: 0.5s;
+}
+
+.hero-title .line:nth-child(2).visible {
+    transition-delay: 0.8s;
+}
+
+.hero-tagline.visible {
+    transition-delay: 2.8s;
+}
+
+.stack-card[data-index="1"].visible {
+    transition-delay: 4.8s;
+}
+
+.stack-card[data-index="2"].visible {
+    transition-delay: 5.1s;
+}
+
+.stack-card[data-index="3"].visible {
+    transition-delay: 5.4s;
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .split-layout {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+    }
+    
+    .left-panel {
+        padding: var(--spacing-lg);
+    }
+    
+    .stack-card {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        top: auto !important;
+        left: auto !important;
+        margin-bottom: var(--spacing-md);
+    }
+}
