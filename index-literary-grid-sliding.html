@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Literary Grid Sliding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+        }
+
+        .num {
+            font-size: 10rem;
+            line-height: 0.9;
+            font-weight: 550;
+            font-variation-settings: 'wdth' 35, 'YTFI' 788;
+        }
+
+        .stretch {
+            font-weight: 500;
+            font-variation-settings: 'wdth' 35;
+            writing-mode: vertical-rl;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(-1);
+        }
+        
+        /* Grid container stays on the right */
+        .grid-container {
+            position: fixed;
+            right: 0;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Each column */
+        .column-wrapper {
+            position: relative;
+            height: 100%;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+            border-left: 1px solid white;
+        }
+        
+        .column-wrapper:last-child {
+            border-right: 1px solid white;
+        }
+        
+        /* Default collapsed width */
+        .column-wrapper {
+            width: 200px;
+        }
+        
+        /* Expanded width - all the way to the left */
+        .column-wrapper.expanded {
+            width: calc(100vw - 400px); /* Full width minus the two collapsed columns */
+        }
+        
+        /* Column content container */
+        .column-content {
+            position: relative;
+            height: 100%;
+            display: flex;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Collapsed view */
+        .collapsed-view {
+            width: 200px;
+            flex-shrink: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Expanded content */
+        .expanded-content {
+            position: absolute;
+            left: 200px;
+            top: 0;
+            width: calc(100vw - 600px); /* Full width minus all three collapsed columns */
+            height: 100%;
+            background: #0a0a0a;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            padding: 3rem;
+        }
+        
+        .column-wrapper.expanded .expanded-content {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Fade out collapsed content when expanded */
+        .column-wrapper.expanded .collapsed-view {
+            opacity: 0.3;
+        }
+        
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 2rem;
+            height: 2rem;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+        }
+        
+        .close-btn:before,
+        .close-btn:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 1.5rem;
+            height: 2px;
+            background: #fff;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .close-btn:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    </style>
+</head>
+<body class="bg-black overflow-hidden">
+    <div class="grid-container" id="gridContainer">
+        <!-- Column 1 - Pro -->
+        <div class="column-wrapper" id="column-0" onclick="toggleColumn(0, event)">
+            <div class="column-content">
+                <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
+                    <div class="sm:pb-8 pb-3 num">1</div>
+                    <div class="sm:py-3 py-1.5 uppercase font-light">Herman Hesse</div>
+                    <div class="sm:h-28 h-20 flex items-center text-xs">
+                        <p class="break-words font-light whitespace-pre-line mx-auto w-28">Professionalism is dedication multiplied on time</p>
+                    </div>
+                    <div class="sm:py-3 py-1.5 uppercase">Page 56</div>
+                    <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                        <q class="text-xs absolute sm:top-28 top-24 left-[8%] max-w-[84%]">
+                            But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously.
+                        </q>
+                        <div class="relative h-full">
+                            <div class="uppercase stretch bg-black">Talent</div>
+                        </div>
+                    </div>
+                </article>
+                <div class="expanded-content text-white">
+                    <div class="close-btn" onclick="closeColumn(0, event)"></div>
+                    <h2 class="text-5xl font-light mb-8">Talent</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>We offer comprehensive professional services designed to streamline your workflow and elevate your business operations.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Approach</h3>
+                        <p>Drawing from Herman Hesse's philosophy that "professionalism is dedication multiplied on time," we focus on long-term partnerships that grow stronger with each interaction.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Services Include</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Strategic consulting and planning</li>
+                            <li>Process optimization and automation</li>
+                            <li>Team training and development</li>
+                            <li>Performance metrics and analytics</li>
+                            <li>Ongoing support and iteration</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously."
+                            <cite class="block text-sm mt-2 not-italic">— Herman Hesse</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Column 2 - Design -->
+        <div class="column-wrapper" id="column-1" onclick="toggleColumn(1, event)">
+            <div class="column-content">
+                <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
+                    <div class="sm:pb-8 pb-3 num">2</div>
+                    <div class="sm:py-3 py-1.5 uppercase font-light">Bob Dylan</div>
+                    <div class="sm:h-28 h-20 flex items-center text-xs">
+                        <p class="break-words font-light whitespace-pre-line mx-auto w-28">Society is mainly designed by it's cultural elites</p>
+                    </div>
+                    <div class="sm:py-3 py-1.5  uppercase">Page 85</div>
+                    <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                        <q class="text-xs absolute top-28 left-[8%] max-w-[84%]">
+                            what a drag it gets to be. writing for this chosen few. writing for anyone cpt you.
+                        </q>
+                        <div class="relative h-full">
+                            <div class="uppercase stretch bg-black">Interfaces</div>
+                        </div>
+                    </div>
+                </article>
+                <div class="expanded-content text-white">
+                    <div class="close-btn" onclick="closeColumn(1, event)"></div>
+                    <h2 class="text-5xl font-light mb-8">Interfaces</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>Design is not just about aesthetics—it's about creating meaningful connections between ideas, people, and experiences.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Design Principles</h3>
+                        <p>Inspired by Bob Dylan's observation that "society is mainly designed by its cultural elites," we believe in democratizing good design.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Design Services</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Brand identity and visual systems</li>
+                            <li>User experience and interface design</li>
+                            <li>Information architecture</li>
+                            <li>Design systems and component libraries</li>
+                            <li>Accessibility and inclusive design</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "what a drag it gets to be. writing for this chosen few. writing for anyone cpt you."
+                            <cite class="block text-sm mt-2 not-italic">— Bob Dylan</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Column 3 - About -->
+        <div class="column-wrapper" id="column-2" onclick="toggleColumn(2, event)">
+            <div class="column-content">
+                <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
+                    <div class="sm:pb-8 pb-3 num">3</div>
+                    <div class="sm:py-3 py-1.5 uppercase font-light">Isaac Asimov</div>
+                    <div class="sm:h-28 h-20 flex items-center text-xs">
+                        <p class="break-words font-light whitespace-pre-line mx-auto w-28">Exploration of unknown is all about warm heart</p>
+                    </div>
+                    <div class="sm:py-3 py-1.5 uppercase">Page 27</div>
+                    <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                        <q class="text-xs absolute top-32 left-[8%] max-w-[84%]">
+                            It's your fiction that interests me. Your studies of the interplay of human motives and emotion.
+                        </q>
+                        <div class="relative h-full">
+                            <div class="uppercase stretch bg-black">Guides</div>
+                        </div>
+                    </div>
+                </article>
+                <div class="expanded-content text-white">
+                    <div class="close-btn" onclick="closeColumn(2, event)"></div>
+                    <h2 class="text-5xl font-light mb-8">Guides</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>We are a collective of designers, developers, and strategists dedicated to helping organizations work smarter, not harder.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Story</h3>
+                        <p>Like Isaac Asimov's belief that "exploration of unknown is all about warm heart," we approach every project with curiosity and empathy.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Values</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Clarity over complexity</li>
+                            <li>Function informs form</li>
+                            <li>Collaboration over competition</li>
+                            <li>Continuous learning and adaptation</li>
+                            <li>Human-centered solutions</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "It's your fiction that interests me. Your studies of the interplay of human motives and emotion."
+                            <cite class="block text-sm mt-2 not-italic">— Isaac Asimov</cite>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let expandedColumn = null;
+        const columns = document.querySelectorAll('.column-wrapper');
+        
+        function toggleColumn(index, event) {
+            event.stopPropagation();
+            
+            if (expandedColumn === index) {
+                closeColumn(index, event);
+                return;
+            }
+            
+            // Close any previously expanded column
+            if (expandedColumn !== null) {
+                columns[expandedColumn].classList.remove('expanded');
+            }
+            
+            // Collapse all columns to the left of the clicked one
+            for (let i = 0; i < index; i++) {
+                columns[i].classList.remove('expanded');
+            }
+            
+            // Expand the clicked column
+            columns[index].classList.add('expanded');
+            expandedColumn = index;
+        }
+        
+        function closeColumn(index, event) {
+            event.stopPropagation();
+            columns[index].classList.remove('expanded');
+            if (expandedColumn === index) {
+                expandedColumn = null;
+            }
+        }
+        
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && expandedColumn !== null) {
+                columns[expandedColumn].classList.remove('expanded');
+                expandedColumn = null;
+            }
+        });
+    </script>
+</body>
+</html>

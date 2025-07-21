@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Literary Grid Expandable</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+        }
+
+        .num {
+            font-size: 10rem;
+            line-height: 0.9;
+            font-weight: 550;
+            font-variation-settings: 'wdth' 35, 'YTFI' 788;
+        }
+
+        .stretch {
+            font-weight: 500;
+            font-variation-settings: 'wdth' 35;
+            writing-mode: vertical-rl;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(-1);
+        }
+        
+        /* Expanded content panel */
+        .expanded-content {
+            position: absolute;
+            top: 0;
+            right: 100%;
+            width: 50vw;
+            height: 100%;
+            background: #111;
+            transform: translateX(0);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            z-index: 30;
+            border-right: 1px solid #333;
+        }
+        
+        .column-expanded .expanded-content {
+            transform: translateX(100%);
+        }
+        
+        /* Adjust main grid when column is expanded */
+        .grid-container {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .has-expanded-column .grid-container {
+            transform: translateX(-50vw);
+        }
+        
+        /* Darken other columns when one is expanded */
+        .column-wrapper {
+            transition: opacity 0.3s ease;
+        }
+        
+        .has-expanded-column .column-wrapper:not(.column-expanded) {
+            opacity: 0.3;
+        }
+        
+        /* Click cursor */
+        .column-wrapper {
+            cursor: pointer;
+        }
+        
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            cursor: pointer;
+            z-index: 40;
+        }
+        
+        .close-btn:before,
+        .close-btn:after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 2rem;
+            height: 2px;
+            background: #fff;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+        
+        .close-btn:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    </style>
+</head>
+<body class="bg-black overflow-hidden">
+    <div class="relative min-w-screen min-h-screen flex items-center justify-end text-white has-expanded-column" id="mainContainer">
+        <div class="grid border-x grid-cols-3 divide-x divide-solid divide-white h-screen grid-container">
+            <!-- Column 1 - Pro -->
+            <article class="group h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 column-wrapper relative" onclick="toggleColumn(0)">
+                <div class="expanded-content p-12">
+                    <div class="close-btn" onclick="event.stopPropagation(); closeColumn(0)"></div>
+                    <h2 class="text-5xl font-light mb-8">Professional Services</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>We offer comprehensive professional services designed to streamline your workflow and elevate your business operations.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Approach</h3>
+                        <p>Drawing from Herman Hesse's philosophy that "professionalism is dedication multiplied on time," we focus on long-term partnerships that grow stronger with each interaction.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Services Include</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Strategic consulting and planning</li>
+                            <li>Process optimization and automation</li>
+                            <li>Team training and development</li>
+                            <li>Performance metrics and analytics</li>
+                            <li>Ongoing support and iteration</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously."
+                            <cite class="block text-sm mt-2 not-italic">— Herman Hesse</cite>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="sm:pb-8 pb-3 num">1</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Herman Hesse</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Professionalism is dedication multiplied on time</p>
+                </div>
+                <div class="sm:py-3 py-1.5 uppercase">Page 56</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute sm:top-28 top-24 left-[8%] max-w-[84%]">
+                        But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">Pro</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Column 2 - Design -->
+            <article class="group border-l lg:border-l-0 h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 column-wrapper relative" onclick="toggleColumn(1)">
+                <div class="expanded-content p-12">
+                    <div class="close-btn" onclick="event.stopPropagation(); closeColumn(1)"></div>
+                    <h2 class="text-5xl font-light mb-8">Design Philosophy</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>Design is not just about aesthetics—it's about creating meaningful connections between ideas, people, and experiences.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Design Principles</h3>
+                        <p>Inspired by Bob Dylan's observation that "society is mainly designed by its cultural elites," we believe in democratizing good design.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Design Services</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Brand identity and visual systems</li>
+                            <li>User experience and interface design</li>
+                            <li>Information architecture</li>
+                            <li>Design systems and component libraries</li>
+                            <li>Accessibility and inclusive design</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "what a drag it gets to be. writing for this chosen few. writing for anyone cpt you."
+                            <cite class="block text-sm mt-2 not-italic">— Bob Dylan</cite>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="sm:pb-8 pb-3 num">2</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Bob Dylan</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Society is mainly designed by it's cultural elites</p>
+                </div>
+                <div class="sm:py-3 py-1.5  uppercase">Page 85</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute top-28 left-[8%] max-w-[84%]">
+                        what a drag it gets to be. writing for this chosen few. writing for anyone cpt you.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">Design</div>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Column 3 - About -->
+            <article class="group lg:border-l-0 sm:border-l border-l-0 h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 column-wrapper relative" onclick="toggleColumn(2)">
+                <div class="expanded-content p-12">
+                    <div class="close-btn" onclick="event.stopPropagation(); closeColumn(2)"></div>
+                    <h2 class="text-5xl font-light mb-8">About Streamlined</h2>
+                    <div class="text-lg space-y-6 text-gray-300">
+                        <p>We are a collective of designers, developers, and strategists dedicated to helping organizations work smarter, not harder.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Story</h3>
+                        <p>Like Isaac Asimov's belief that "exploration of unknown is all about warm heart," we approach every project with curiosity and empathy.</p>
+                        <h3 class="text-2xl text-white mt-8 mb-4">Our Values</h3>
+                        <ul class="space-y-3 list-disc list-inside">
+                            <li>Clarity over complexity</li>
+                            <li>Function informs form</li>
+                            <li>Collaboration over competition</li>
+                            <li>Continuous learning and adaptation</li>
+                            <li>Human-centered solutions</li>
+                        </ul>
+                        <blockquote class="border-l-4 border-gray-600 pl-6 my-8 italic text-xl">
+                            "It's your fiction that interests me. Your studies of the interplay of human motives and emotion."
+                            <cite class="block text-sm mt-2 not-italic">— Isaac Asimov</cite>
+                        </blockquote>
+                    </div>
+                </div>
+                <div class="sm:pb-8 pb-3 num">3</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Isaac Asimov</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Exploration of unknown is all about warm heart</p>
+                </div>
+                <div class="sm:py-3 py-1.5 uppercase">Page 27</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute top-32 left-[8%] max-w-[84%]">
+                        It's your fiction that interests me. Your studies of the interplay of human motives and emotion.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">About</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+    
+    <script>
+        let expandedColumn = null;
+        const mainContainer = document.getElementById('mainContainer');
+        const columns = document.querySelectorAll('.column-wrapper');
+        
+        function toggleColumn(index) {
+            if (expandedColumn === index) {
+                closeColumn(index);
+            } else {
+                if (expandedColumn !== null) {
+                    columns[expandedColumn].classList.remove('column-expanded');
+                }
+                expandedColumn = index;
+                columns[index].classList.add('column-expanded');
+                mainContainer.classList.add('has-expanded-column');
+            }
+        }
+        
+        function closeColumn(index) {
+            columns[index].classList.remove('column-expanded');
+            mainContainer.classList.remove('has-expanded-column');
+            expandedColumn = null;
+        }
+        
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && expandedColumn !== null) {
+                closeColumn(expandedColumn);
+            }
+        });
+    </script>
+</body>
+</html>
