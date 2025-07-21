@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Wedge Inward V5 - Moved 10px left</title>
+    <title>Streamlined - Swiss Style Cards</title>
     
     <style>
+        /* CSS Variables for easier maintenance */
+        :root {
+            --card-width: 600px;
+            --card-height: 900px;
+            --card-image-width: 60%;
+            --card-spacing: 40em;
+            --shadow-offset-x: 57px;
+            --shadow-offset-y: calc(7% - 91px);
+            --image-transform-x: -70px;
+            --image-transform-y: -70px;
+        }
+        
         html,
         body {
             min-height: 100vh;
@@ -19,8 +31,9 @@
             flex-direction: column;
             align-items: stretch;
             justify-content: space-between;
-            background-color: #eee;
+            background-color: #f7f7f7;
             font-size: 10px;
+            min-height: 100vh;
         }
 
         .images-leaning {
@@ -32,15 +45,35 @@
             position: relative;
             background-repeat: no-repeat;
             /* Only adjusting the wall angle from 352deg to 360deg */
-            background-image: linear-gradient(360deg, transparent 45.2%, #bbb 45.5%, #bbb 45.6%, #ccc 45.8%, #eee 60%), linear-gradient(30deg, #ccc, #eee 90%);
+            background-image: 
+                /* Original wall/floor gradients */
+                linear-gradient(360deg, transparent 45.2%, #bbb 45.5%, #bbb 45.6%, #ccc 45.8%, #eee 60%), 
+                linear-gradient(30deg, #ccc, #eee 90%);
             background-size: 100% 97.2em;
             background-position: 50% calc(100% + 122px);
         }
-        .images-leaning > div {
-            width: 600px;
+        
+        /* Wall texture overlay - only on the wall portion */
+        .images-leaning::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background-color: #f7f7f7;
+            background-image: url("assets/white-wall.png");
+            /* Mask to show texture only on wall - extended to 75% */
+            mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 75%);
+            -webkit-mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 75%);
+        }
+        /* Card container base styles */
+        .images-leaning > article {
+            width: var(--card-width);
             position: absolute;
             left: calc(50% - 100px);
-            bottom: calc(23.4em - 100px);
+            bottom: calc(23.4em - 100px - 7px);
             z-index: 0;
             display: flex;
             justify-content: flex-end;
@@ -58,16 +91,20 @@
             background-image: linear-gradient(124deg, transparent 42%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.35) 65%), linear-gradient(24deg, transparent 38%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0.23) 55%, rgba(0, 0, 0, 0.13) 75%), radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.15) 3%, transparent 40%);
             transform: rotate(-4deg);
         } */
-        .images-leaning > div:after {
+        /* Card overlay gradient */
+        .images-leaning > article:after {
             content: "";
             width: 60%;
             height: 100%;
             position: absolute;
             z-index: 3;
-            background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
+            background-image: 
+                linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), 
+                linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize));
         }
-        .images-leaning > div > img {
+        /* Card image styling */
+        .images-leaning > article > img {
             width: 60%;
             height: 100%;
             display: block;
@@ -79,130 +116,109 @@
             filter: saturate(90%);
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize));
         }
-        .images-leaning > div:nth-of-type(4) {
+        .images-leaning > article:nth-of-type(4) {
             --resize: 0.99;
             margin-left: -121.2em;
         }
-        .images-leaning > div:nth-of-type(4):before {
+        .images-leaning > article:nth-of-type(4):before {
             background-size: 100% 85%, 100% 15%, 100% 10%;
             background-position: 0.3em 0, 0 100%, -9em 83%;
         }
-        .images-leaning > div:nth-of-type(3) {
+        /* Card 1 (leftmost) - ID 2 in HTML */
+        .images-leaning > article:nth-of-type(3) {
             --resize: 0.96;
             margin-left: -40em;
             transform: scaleY(0.98) translate(-19.2em, -6.3em);
             overflow: hidden;
         }
-        .images-leaning > div:nth-of-type(3) > img {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
+        .images-leaning > article:nth-of-type(3) > img {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > div:nth-of-type(3):after {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
+        .images-leaning > article:nth-of-type(3):after {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > div:nth-of-type(3):before {
+        /* Common shadow styles for all cards */
+        .images-leaning > article:before {
             content: "";
             width: calc(50% + 20px);
             height: calc(100% + 18px);
             position: absolute;
-            left: 57px;
-            top: calc(7% - 91px);
+            left: var(--shadow-offset-x);
+            top: var(--shadow-offset-y);
             z-index: 1;
             background-repeat: no-repeat;
-            background-image: linear-gradient(102deg, transparent 25%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.3) 65%), linear-gradient(5deg, transparent 35%, rgba(0, 0, 0, 0.22) 45%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.12) 75%), radial-gradient(ellipse at 0% 95%, rgba(0, 0, 0, 0.08) 10%, transparent 50%);
+            background-image: 
+                linear-gradient(102deg, transparent 25%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.3) 65%), 
+                linear-gradient(5deg, transparent 35%, rgba(0, 0, 0, 0.22) 45%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.12) 75%), 
+                radial-gradient(ellipse at 0% 95%, rgba(0, 0, 0, 0.08) 10%, transparent 50%);
             transform: rotate(0deg) scaleX(0.6);
             background-size: 100% 83%, 100% 17%, 100% 10%;
             background-position: 0 0, 0 100%, 0 81%;
-            mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
-                       linear-gradient(to right, transparent 0%, black 15%, black 100%);
+            mask-image: 
+                linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
+                linear-gradient(to right, transparent 0%, black 15%, black 100%);
             mask-composite: intersect;
             -webkit-mask-composite: source-in;
             clip-path: polygon(0% 0%, 100% 0%, 100% 81%, 65% 95%, 61% 100%, 0% 88%);
         }
-        .images-leaning > div:nth-of-type(2) {
+        /* Card 2 (center) - ID 1 in HTML */
+        .images-leaning > article:nth-of-type(2) {
             --resize: 0.96;
             margin-left: 0;
             transform: scaleY(0.98) translate(-19.2em, -6.3em);
             overflow: hidden;
         }
-        .images-leaning > div:nth-of-type(2) > img {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
+        .images-leaning > article:nth-of-type(2) > img {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > div:nth-of-type(2):after {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
+        .images-leaning > article:nth-of-type(2):after {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > div:nth-of-type(2):before {
-            content: "";
-            width: calc(50% + 20px);
-            height: calc(100% + 18px);
-            position: absolute;
-            left: 57px;
-            top: calc(7% - 91px);
-            z-index: 1;
-            background-repeat: no-repeat;
-            background-image: linear-gradient(102deg, transparent 25%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.3) 65%), linear-gradient(5deg, transparent 35%, rgba(0, 0, 0, 0.22) 45%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.12) 75%), radial-gradient(ellipse at 0% 95%, rgba(0, 0, 0, 0.08) 10%, transparent 50%);
-            transform: rotate(0deg) scaleX(0.6);
-            background-size: 100% 83%, 100% 17%, 100% 10%;
-            background-position: 0 0, 0 100%, 0 81%;
-            mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
-                       linear-gradient(to right, transparent 0%, black 15%, black 100%);
-            mask-composite: intersect;
-            -webkit-mask-composite: source-in;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 81%, 65% 95%, 61% 100%, 0% 88%);
-        }
-        .images-leaning > div:nth-of-type(1) {
+        /* Card 3 (rightmost) - ID 0 in HTML */
+        .images-leaning > article:nth-of-type(1) {
             --resize: 0.96;
             margin-left: 40em;
             transform: scaleY(0.98) translate(-19.2em, -6.3em);
             overflow: hidden;
         }
-        .images-leaning > div:nth-of-type(1) > img {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
+        .images-leaning > article:nth-of-type(1) > img {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > div:nth-of-type(1):after {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
-        }
-        .images-leaning > div:nth-of-type(1):before {
-            content: "";
-            width: calc(50% + 20px);
-            height: calc(100% + 18px);
-            position: absolute;
-            left: 57px;
-            top: calc(7% - 91px);
-            z-index: 1;
-            background-repeat: no-repeat;
-            background-image: linear-gradient(102deg, transparent 25%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.3) 65%), linear-gradient(5deg, transparent 35%, rgba(0, 0, 0, 0.22) 45%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.12) 75%), radial-gradient(ellipse at 0% 95%, rgba(0, 0, 0, 0.08) 10%, transparent 50%);
-            transform: rotate(0deg) scaleX(0.6);
-            background-size: 100% 83%, 100% 17%, 100% 10%;
-            background-position: 0 0, 0 100%, 0 81%;
-            mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
-                       linear-gradient(to right, transparent 0%, black 15%, black 100%);
-            mask-composite: intersect;
-            -webkit-mask-composite: source-in;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 81%, 65% 95%, 61% 100%, 0% 88%);
+        .images-leaning > article:nth-of-type(1):after {
+            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
         
-        /* Logo section - centered above cards */
-        .logo-section {
+        /* Header section - using same calculation as leftmost card */
+        header.logo-section {
             position: absolute;
             top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
+            left: calc(50% - 100px); /* Same base as cards */
+            width: 600px;
+            transform: translateX(-40em) translateX(-19.2em); /* Same transform as card 3 */
             z-index: 20;
             pointer-events: none;
+        }
+        
+        /* Inner content wrapper to match image positioning */
+        .header-content {
+            width: 60%; /* Match image width */
+            margin-left: 40%; /* Push to right like flex-end */
+            transform: translateX(var(--image-transform-x)); /* Match image transform */
+            text-align: left;
+            padding-left: 0; /* No compensation needed */
         }
         
         .logo-section img {
             width: 60px;
             height: auto;
-            margin: 0 auto 1.5rem auto;
+            margin: 0 0 1.5rem 0;
             display: block;
         }
         
         .hero-title {
             font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
             font-size: 4.8rem;
-            font-weight: 300;
+            font-weight: 400;
             letter-spacing: -0.02em;
             margin: 0;
             color: #18191a;
@@ -215,38 +231,103 @@
         
         .hero-title .emphasis {
             font-weight: 700;
+            letter-spacing: -0.04em;
         }
         
         .hero-tagline {
             font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 1.9rem;
+            font-size: 1.3rem;
             font-weight: 400;
             line-height: 1.5;
             color: #666;
             margin-top: 1rem;
         }
+        
+        
+        /* Card text overlay - positioned on the image */
+        .card-text {
+            position: absolute;
+            width: 60%;
+            height: 100%;
+            right: 0;
+            top: 0;
+            transform: translateX(var(--image-transform-x)); /* Match image transform */
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 3rem;
+            padding-bottom: 6rem; /* Positioned higher from bottom */
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        
+        .card-text h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            text-transform: none;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: "kern" 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .card-description {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 90%;
+            margin-top: 0.5rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
     </style>
 </head>
 <body>
-    <div class="logo-section">
-        <img src="assets/logo.gif" alt="Streamlined Logo" />
-        <h1 class="hero-title">
-            <span class="line">We are</span>
-            <span class="line emphasis">Streamlined.</span>
-        </h1>
-        <p class="hero-tagline">We help design-conscious, nimble minds streamline<br>how they work and live, with:</p>
-    </div>
+    <!-- Header Section -->
+    <header class="logo-section">
+        <div class="header-content">
+            <img src="assets/logo.gif" alt="Streamlined Logo" />
+            <h1 class="hero-title">
+                <span class="line">We are</span>
+                <span class="line emphasis">Streamlined.</span>
+            </h1>
+            <p class="hero-tagline">We help design-conscious, nimble minds streamline how they work and live, with:</p>
+        </div>
+    </header>
     
-    <div id="app" class="images-leaning">
-        <div class="card" id="0">
-            <img src="https://picsum.photos/720/960?random=1">
-        </div>
-        <div class="card" id="1">
-            <img src="https://picsum.photos/720/960?random=2">
-        </div>
-        <div class="card" id="2">
-            <img src="https://picsum.photos/720/960?random=3">
-        </div>
-    </div>
+    <!-- Cards Section -->
+    <main id="app" class="images-leaning">
+        <article class="card" id="2">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%230066FF'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='195' cy='300' r='75'/%3E%3Ccircle cx='405' cy='300' r='75'/%3E%3Ccircle cx='195' cy='510' r='75'/%3E%3Ccircle cx='405' cy='510' r='75'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
+            <div class="card-text">
+                <h3>Talent</h3>
+                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
+            </div>
+        </article>
+        <article class="card" id="1">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FFC30D'/%3E%3Cg fill='%23000'%3E%3Cpath d='M300 250 L180 400 L420 400 Z'/%3E%3Cpath d='M300 550 L420 400 L180 400 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
+            <div class="card-text">
+                <h3>Interfaces</h3>
+                <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
+            </div>
+        </article>
+        <article class="card" id="0">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FF3030'/%3E%3Crect x='210' y='300' width='180' height='270' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
+            <div class="card-text">
+                <h3>Resources</h3>
+                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
+            </div>
+        </article>
+    </main>
 </body>
 </html>

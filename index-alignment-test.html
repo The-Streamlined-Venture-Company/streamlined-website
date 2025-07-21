@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Alignment Test</title>
+    
+    <style>
+        html,
+        body {
+            min-height: 100vh;
+            min-width: 1600px;
+        }
+
+        body {
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: space-between;
+            background-color: #eee;
+            font-size: 10px;
+        }
+
+        .images-leaning {
+            flex-grow: 1;
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(360deg, transparent 45.2%, #bbb 45.5%, #bbb 45.6%, #ccc 45.8%, #eee 60%), linear-gradient(30deg, #ccc, #eee 90%);
+            background-size: 100% 97.2em;
+            background-position: 50% calc(100% + 122px);
+        }
+        
+        /* Test wrapper to visualize actual card positions */
+        .test-wrapper {
+            position: absolute;
+            top: 30%;
+            left: 0;
+            right: 0;
+            height: 600px;
+        }
+        
+        /* Simple cards without complex transforms for testing */
+        .test-card {
+            width: 360px; /* 600px * 0.6 */
+            height: 540px; /* 900px * 0.6 */
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid red;
+            position: absolute;
+            bottom: 0;
+        }
+        
+        .test-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Calculate exact positions */
+        .test-card:nth-child(1) {
+            left: calc(50% - 100px - 40em - 19.2em + 240px - 70px);
+        }
+        
+        .test-card:nth-child(2) {
+            left: calc(50% - 100px + 0em - 19.2em + 240px - 70px);
+        }
+        
+        .test-card:nth-child(3) {
+            left: calc(50% - 100px + 40em - 19.2em + 240px - 70px);
+        }
+        
+        /* Header aligned with first card */
+        .test-header {
+            position: absolute;
+            top: 10%;
+            left: calc(50% - 100px - 40em - 19.2em + 240px - 70px);
+            width: 360px;
+            background: rgba(0, 255, 0, 0.2);
+            border: 2px solid green;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        
+        .hero-title {
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 4.8rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin: 0 0 1rem 0;
+            color: #18191a;
+        }
+        
+        .hero-title .line {
+            display: block;
+            line-height: 1;
+        }
+        
+        .hero-title .emphasis {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="images-leaning">
+        <div class="test-header">
+            <h1 class="hero-title">
+                <span class="line">We are</span>
+                <span class="line emphasis">Streamlined.</span>
+            </h1>
+        </div>
+        
+        <div class="test-wrapper">
+            <div class="test-card">
+                <img src="https://picsum.photos/600/900?random=1" alt="Card 1">
+            </div>
+            <div class="test-card">
+                <img src="https://picsum.photos/600/900?random=2" alt="Card 2">
+            </div>
+            <div class="test-card">
+                <img src="https://picsum.photos/600/900?random=3" alt="Card 3">
+            </div>
+        </div>
+    </div>
+</body>
+</html>

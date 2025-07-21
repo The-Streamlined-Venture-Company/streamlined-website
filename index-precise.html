@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Precise Positioning</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            min-height: 100vh;
+            background-color: #eee;
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 10px;
+        }
+        
+        /* Scene container */
+        .scene {
+            width: 100%;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Wall/floor background */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-repeat: no-repeat;
+            background-image: 
+                linear-gradient(360deg, transparent 45.2%, #bbb 45.5%, #bbb 45.6%, #ccc 45.8%, #eee 60%), 
+                linear-gradient(30deg, #ccc, #eee 90%);
+            background-size: 100% 97.2em;
+            background-position: 50% calc(100% + 122px);
+        }
+        
+        /* Content wrapper */
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .header {
+            position: absolute;
+            top: 10%;
+            left: calc(50% - 520px); /* Precisely positioned to align with cards */
+            z-index: 20;
+        }
+        
+        .header img {
+            width: 60px;
+            height: auto;
+            margin-bottom: 24px;
+            display: block;
+        }
+        
+        .header h1 {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #18191a;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+        
+        .header h1 .emphasis {
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #666;
+        }
+        
+        /* Cards container */
+        .cards-container {
+            position: absolute;
+            bottom: 200px; /* Fixed distance from bottom */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1200px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        /* Individual card */
+        .card {
+            position: relative;
+            width: 360px;
+            height: 540px;
+        }
+        
+        /* Card shadow */
+        .card-shadow {
+            position: absolute;
+            width: calc(50% + 20px);
+            height: calc(100% + 18px);
+            left: 57px;
+            top: calc(7% - 91px);
+            z-index: 1;
+            background-repeat: no-repeat;
+            background-image: 
+                linear-gradient(102deg, transparent 25%, rgba(0, 0, 0, 0.15) 35%, rgba(0, 0, 0, 0.3) 65%), 
+                linear-gradient(5deg, transparent 35%, rgba(0, 0, 0, 0.22) 45%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.12) 75%), 
+                radial-gradient(ellipse at 0% 95%, rgba(0, 0, 0, 0.08) 10%, transparent 50%);
+            transform: rotate(0deg) scaleX(0.6);
+            background-size: 100% 83%, 100% 17%, 100% 10%;
+            background-position: 0 0, 0 100%, 0 81%;
+            mask-image: 
+                linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
+                linear-gradient(to right, transparent 0%, black 15%, black 100%);
+            mask-composite: intersect;
+            -webkit-mask-composite: source-in;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 81%, 65% 95%, 61% 100%, 0% 88%);
+        }
+        
+        /* Card image */
+        .card-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            border-left: 6px solid;
+            border-image: linear-gradient(90deg, transparent 0.5%, #aaa 0.7%) 1;
+            box-shadow: 3px 2px 0 -3px #666;
+            filter: saturate(90%);
+            overflow: hidden;
+        }
+        
+        /* Card overlay gradient */
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            background-image: 
+                linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), 
+                linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
+            pointer-events: none;
+        }
+        
+        /* Card content - precisely positioned */
+        .card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 4;
+            padding: 30px;
+            color: white;
+        }
+        
+        .card-content h3 {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            margin-bottom: 8px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .card-content p {
+            font-size: 12px;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 90%;
+        }
+        
+        /* Responsive scaling variables */
+        @media (min-width: 1600px) {
+            .cards-container {
+                transform: translateX(-50%) scale(1.2);
+                transform-origin: center bottom;
+            }
+            
+            .header {
+                left: calc(50% - 624px); /* Adjusted for scale */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scene">
+        <div class="background"></div>
+        
+        <div class="content">
+            <header class="header">
+                <img src="assets/logo.gif" alt="Streamlined Logo" />
+                <h1>
+                    <div>We are</div>
+                    <div class="emphasis">Streamlined.</div>
+                </h1>
+                <p>We help design-conscious, nimble minds streamline<br>how they work and live, with:</p>
+            </header>
+            
+            <div class="cards-container">
+                <!-- Card 1: Talent (Blue) -->
+                <div class="card">
+                    <div class="card-shadow"></div>
+                    <div class="card-image">
+                        <svg width="360" height="540" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="360" height="540" fill="#0066FF"/>
+                            <g fill="#000">
+                                <circle cx="117" cy="180" r="45"/>
+                                <circle cx="243" cy="180" r="45"/>
+                                <circle cx="117" cy="306" r="45"/>
+                                <circle cx="243" cy="306" r="45"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <h3>Talent</h3>
+                        <p>Connecting design-conscious minds with opportunities that matter.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 2: Interfaces (Yellow) -->
+                <div class="card">
+                    <div class="card-shadow"></div>
+                    <div class="card-image">
+                        <svg width="360" height="540" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="360" height="540" fill="#FFC30D"/>
+                            <g fill="#000">
+                                <path d="M180 150 L108 240 L252 240 Z"/>
+                                <path d="M180 330 L252 240 L108 240 Z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <h3>Interfaces</h3>
+                        <p>Crafting digital experiences that blend beauty and function.</p>
+                    </div>
+                </div>
+                
+                <!-- Card 3: Resources (Red) -->
+                <div class="card">
+                    <div class="card-shadow"></div>
+                    <div class="card-image">
+                        <svg width="360" height="540" viewBox="0 0 360 540" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="360" height="540" fill="#FF3030"/>
+                            <rect x="126" y="180" width="108" height="162" fill="#000"/>
+                        </svg>
+                    </div>
+                    <div class="card-overlay"></div>
+                    <div class="card-content">
+                        <h3>Resources</h3>
+                        <p>Curated tools and knowledge for the modern creative professional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
