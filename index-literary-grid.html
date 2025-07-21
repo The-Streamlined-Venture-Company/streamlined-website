@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Literary Grid</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+        }
+
+        .group-hover\:transition-transform {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+            animation-direction: alternate;
+        }
+
+        .num {
+            font-size: 10rem;
+            line-height: 0.9;
+            font-weight: 550;
+            font-variation-settings: 'wdth' 35, 'YTFI' 788;
+        }
+
+        .stretch {
+            font-weight: 500;
+            font-variation-settings: 'wdth' 35;
+            writing-mode: vertical-rl;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scale(-1);
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div class="relative min-w-screen min-h-screen flex items-center justify-end text-white">
+        <div class="grid border-x grid-cols-3 divide-x divide-solid divide-white h-screen">
+            <article class="group h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2">
+                <div class="sm:pb-8 pb-3 num">1</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Herman Hesse</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Professionalism is dedication multiplied on time</p>
+                </div>
+                <div class="sm:py-3 py-1.5 uppercase">Page 56</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute sm:top-28 top-24 left-[8%] max-w-[84%]">
+                        But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">Pro</div>
+                    </div>
+                </div>
+            </article>
+            <article class="group border-l lg:border-l-0 h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2">
+                <div class="sm:pb-8 pb-3 num">2</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Bob Dylan</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Society is mainly designed by it's cultural elites</p>
+                </div>
+                <div class="sm:py-3 py-1.5  uppercase">Page 85</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute top-28 left-[8%] max-w-[84%]">
+                        what a drag it gets to be. writing for this chosen few. writing for anyone cpt you.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">Design</div>
+                    </div>
+                </div>
+            </article>
+            <article class="group lg:border-l-0 sm:border-l border-l-0 h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2">
+                <div class="sm:pb-8 pb-3 num">3</div>
+                <div class="sm:py-3 py-1.5 uppercase font-light">Isaac Asimov</div>
+                <div class="sm:h-28 h-20 flex items-center text-xs">
+                    <p class="break-words font-light whitespace-pre-line mx-auto w-28">Exploration of unknown is all about warm heart</p>
+                </div>
+                <div class="sm:py-3 py-1.5 uppercase">Page 27</div>
+                <div class="py-8 text-9xl relative flex-1 flex flex-col">
+                    <q class="text-xs absolute top-32 left-[8%] max-w-[84%]">
+                        It's your fiction that interests me. Your studies of the interplay of human motives and emotion.
+                    </q>
+                    <div class="relative h-full">
+                        <div class="uppercase stretch bg-black">About</div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</body>
+</html>
