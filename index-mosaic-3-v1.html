@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Mosaic Reveal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .intro-text {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            position: fixed;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            text-align: center;
+            padding: 2rem;
+            line-height: 1.2;
+            z-index: 10;
+        }
+
+        .intro-text h1 {
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .intro-text p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            opacity: 0.7;
+            max-width: 600px;
+        }
+
+        .container {
+            width: 100vw;
+            height: 400vh;
+        }
+
+        .mosaic-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            width: 90vw;
+            height: 90vh;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            gap: 10px;
+        }
+
+        .mosaic-piece {
+            position: relative;
+            overflow: hidden;
+            background: #111;
+            opacity: 0;
+            transform: scale(0.8);
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        /* Talent - large piece, top left */
+        .mosaic-piece.talent {
+            grid-column: 1 / 7;
+            grid-row: 1 / 8;
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Interfaces - medium piece, top right */
+        .mosaic-piece.interfaces {
+            grid-column: 7 / 13;
+            grid-row: 1 / 6;
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Resources - bottom spanning piece */
+        .mosaic-piece.resources {
+            grid-column: 3 / 13;
+            grid-row: 7 / 13;
+            background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1498049860654-af1a5c566876?w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Service content */
+        .service-content {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            color: white;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+        }
+
+        .mosaic-piece.revealed .service-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-content h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+        }
+
+        .service-content p {
+            font-size: clamp(1rem, 1.5vw, 1.3rem);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+            max-width: 400px;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.5);
+        }
+
+        .service-content .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .service-content .cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,255,255,0.3);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+            z-index: 11;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Animation states */
+        .mosaic-piece.animate-in {
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .mosaic-piece.revealed {
+            opacity: 1 !important;
+            transform: scale(1) translate(0, 0) !important;
+        }
+
+        @media (max-width: 768px) {
+            .mosaic-grid {
+                width: 95vw;
+                height: 95vh;
+                gap: 5px;
+            }
+            
+            .service-content {
+                left: 1.5rem;
+                bottom: 1.5rem;
+            }
+            
+            .service-content h2 {
+                font-size: 2rem;
+            }
+            
+            .service-content p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-text">
+        <h1>Streamlined</h1>
+        <p>We help design-conscious, purpose driven minds streamline how they live and work</p>
+    </div>
+    
+    <div class="scroll-indicator">Scroll to explore</div>
+    
+    <div class="container">
+        <div class="mosaic-grid">
+            <div class="mosaic-piece talent">
+                <div class="service-content">
+                    <h2>Talent</h2>
+                    <p>Connecting exceptional minds with purpose-driven opportunities</p>
+                    <a href="#talent" class="cta">Explore →</a>
+                </div>
+            </div>
+            
+            <div class="mosaic-piece interfaces">
+                <div class="service-content">
+                    <h2>Interfaces</h2>
+                    <p>Crafting digital experiences that inspire</p>
+                    <a href="#interfaces" class="cta">Discover →</a>
+                </div>
+            </div>
+            
+            <div class="mosaic-piece resources">
+                <div class="service-content">
+                    <h2>Resources</h2>
+                    <p>Curated tools and platforms for modern professionals</p>
+                    <a href="#resources" class="cta">Learn More →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Scroll-based mosaic animation
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            const introText = document.querySelector('.intro-text');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            const talent = document.querySelector('.talent');
+            const interfaces = document.querySelector('.interfaces');
+            const resources = document.querySelector('.resources');
+            
+            // Fade out intro text
+            if (scrollProgress > 0.05) {
+                introText.style.opacity = Math.max(0, 1 - (scrollProgress * 10));
+                scrollIndicator.style.opacity = 0;
+            }
+            
+            // Animate Talent piece - slides in from top-left
+            if (scrollProgress > 0.1) {
+                const progress = Math.min((scrollProgress - 0.1) / 0.2, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                
+                talent.classList.add('animate-in');
+                talent.style.opacity = easeProgress;
+                talent.style.transform = `scale(${0.8 + (0.2 * easeProgress)}) translate(${(1 - easeProgress) * -30}%, ${(1 - easeProgress) * -30}%)`;
+                
+                if (easeProgress > 0.9) {
+                    talent.classList.add('revealed');
+                }
+            }
+            
+            // Animate Interfaces piece - slides in from top-right
+            if (scrollProgress > 0.2) {
+                const progress = Math.min((scrollProgress - 0.2) / 0.2, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                
+                interfaces.classList.add('animate-in');
+                interfaces.style.opacity = easeProgress;
+                interfaces.style.transform = `scale(${0.8 + (0.2 * easeProgress)}) translate(${(1 - easeProgress) * 30}%, ${(1 - easeProgress) * -30}%)`;
+                
+                if (easeProgress > 0.9) {
+                    interfaces.classList.add('revealed');
+                }
+            }
+            
+            // Animate Resources piece - slides in from bottom
+            if (scrollProgress > 0.3) {
+                const progress = Math.min((scrollProgress - 0.3) / 0.2, 1);
+                const easeProgress = 1 - Math.pow(1 - progress, 3);
+                
+                resources.classList.add('animate-in');
+                resources.style.opacity = easeProgress;
+                resources.style.transform = `scale(${0.8 + (0.2 * easeProgress)}) translate(0, ${(1 - easeProgress) * 30}%)`;
+                
+                if (easeProgress > 0.9) {
+                    resources.classList.add('revealed');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Grid Reveal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .intro-text {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #fff;
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 300;
+            position: fixed;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            text-align: center;
+            padding: 2rem;
+            line-height: 1.2;
+            z-index: 10;
+        }
+
+        .intro-text h1 {
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+        }
+
+        .intro-text p {
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
+            opacity: 0.7;
+            max-width: 600px;
+        }
+
+        .container {
+            width: 100vw;
+            height: 400vh;
+        }
+
+        .grid-parent {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            width: 100%;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            gap: 0;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .grid-parent.visible {
+            opacity: 1;
+        }
+
+        .grid-parent .grid-item {
+            position: relative;
+            overflow: hidden;
+            background-color: #111;
+        }
+
+        /* Grid items for revealing the main content */
+        .grid-parent .grid-item:nth-child(1),
+        .grid-parent .grid-item:nth-child(2),
+        .grid-parent .grid-item:nth-child(3) {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .grid-parent .grid-item.revealed {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        /* Talent - left column */
+        .grid-parent .grid-item:nth-child(1) {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80');
+        }
+
+        /* Interfaces - center column */
+        .grid-parent .grid-item:nth-child(2) {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80');
+        }
+
+        /* Resources - right column */
+        .grid-parent .grid-item:nth-child(3) {
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1498049860654-af1a5c566876?w=800&q=80');
+        }
+
+        /* Remove overlay divs - we don't need them */
+        .grid-parent .overlay {
+            display: none;
+        }
+
+        /* Content for each service */
+        .service-content {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            right: 3rem;
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-content.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-content h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -0.02em;
+        }
+
+        .service-content p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .service-content .cta {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: white;
+            color: #000;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .service-content .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.2);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            animation: bounce 2s infinite;
+            z-index: 11;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-text">
+        <h1>Streamlined</h1>
+        <p>We help design-conscious, purpose driven minds streamline how they live and work</p>
+    </div>
+    
+    <div class="scroll-indicator">Scroll to explore</div>
+    
+    <div class="container">
+        <div class="grid-parent">
+            <!-- Main content cells -->
+            <div class="grid-item">
+                <div class="service-content">
+                    <h2>Talent</h2>
+                    <p>Connecting exceptional minds with purpose-driven opportunities</p>
+                    <a href="#talent" class="cta">Learn More</a>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="service-content">
+                    <h2>Interfaces</h2>
+                    <p>Crafting digital experiences that inspire and delight</p>
+                    <a href="#interfaces" class="cta">Learn More</a>
+                </div>
+            </div>
+            <div class="grid-item">
+                <div class="service-content">
+                    <h2>Resources</h2>
+                    <p>Curated tools and platforms for modern professionals</p>
+                    <a href="#resources" class="cta">Learn More</a>
+                </div>
+            </div>
+            
+            <!-- Empty cells for grid layout -->
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+            <div class="grid-item"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simple scroll-based animation without external library
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            const gridParent = document.querySelector('.grid-parent');
+            const gridItems = document.querySelectorAll('.grid-item:nth-child(-n+3)');
+            const introText = document.querySelector('.intro-text');
+            const scrollIndicator = document.querySelector('.scroll-indicator');
+            
+            // Fade out intro text
+            if (scrollProgress > 0.1) {
+                introText.style.opacity = Math.max(0, 1 - (scrollProgress * 8));
+                scrollIndicator.style.opacity = 0;
+            }
+            
+            // Show grid when intro fades
+            if (scrollProgress > 0.15) {
+                gridParent.classList.add('visible');
+            }
+            
+            // Reveal each grid item sequentially
+            gridItems.forEach((item, index) => {
+                const revealPoint = 0.2 + (index * 0.15);
+                if (scrollProgress > revealPoint) {
+                    item.classList.add('revealed');
+                    // Show content after grid item is revealed
+                    setTimeout(() => {
+                        const content = item.querySelector('.service-content');
+                        if (content) content.classList.add('visible');
+                    }, 400);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
