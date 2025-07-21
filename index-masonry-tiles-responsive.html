@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Responsive Masonry</title>
+    <style>
+        *, 
+        *:before, 
+        *:after {
+            -webkit-box-sizing: border-box; 
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        * {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: hsl(0,0%,14%);
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            height: 100vh;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Desktop Layout */
+        .masonry-list {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+            padding: 0;
+            background-color: hsl(0,0%,14%);
+        }
+
+        .masonry-list li {
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Wide tile - spans full width, 1 row */
+        .masonry-list li.tile-wide {
+            grid-column: 1 / -1;
+            grid-row: 1 / 2;
+        }
+
+        /* Talent tile - takes left column, bottom 2 rows */
+        .masonry-list li.tile-talent {
+            grid-column: 1 / 2;
+            grid-row: 2 / 4;
+        }
+
+        /* Interfaces tile - middle column, middle row */
+        .masonry-list li.tile-interfaces {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+        }
+
+        /* Resources tile - right column, middle row */
+        .masonry-list li.tile-resources {
+            grid-column: 3 / 4;
+            grid-row: 2 / 3;
+        }
+        
+        /* Extra tile to fill bottom */
+        .masonry-list li.tile-extra {
+            grid-column: 2 / 4;
+            grid-row: 3 / 4;
+        }
+        
+        .masonry-list li.tile-extra .tile-primary-content {
+            background-color: #5A4A42;
+        }
+        
+        /* Loading animations */
+        @keyframes fadeInScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.95) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        @keyframes fadeInSlideRight {
+            0% {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Apply animations to tiles */
+        .masonry-list li {
+            opacity: 0;
+        }
+        
+        .masonry-list li.tile-wide {
+            animation: fadeInScale 0.8s 0.1s forwards;
+        }
+        
+        .masonry-list li.tile-talent {
+            animation: fadeInSlideRight 0.8s 0.3s forwards;
+        }
+        
+        .masonry-list li.tile-interfaces {
+            animation: fadeInScale 0.8s 0.5s forwards;
+        }
+        
+        .masonry-list li.tile-resources {
+            animation: fadeInSlideUp 0.8s 0.7s forwards;
+        }
+        
+        .masonry-list li.tile-extra {
+            animation: fadeInScale 0.8s 0.9s forwards;
+        }
+        
+        /* Mobile animations - simpler fade in */
+        @media (max-width: 768px) {
+            .masonry-list li {
+                animation: fadeInScale 0.6s forwards;
+            }
+            
+            .masonry-list li.tile-wide {
+                animation-delay: 0s;
+            }
+            
+            .masonry-list li.tile-talent {
+                animation-delay: 0.2s;
+            }
+            
+            .masonry-list li.tile-interfaces {
+                animation-delay: 0.4s;
+            }
+            
+            .masonry-list li.tile-resources {
+                animation-delay: 0.6s;
+            }
+            
+            .masonry-list li.tile-extra {
+                animation-delay: 0.8s;
+            }
+        }
+
+        /* Mobile Layout */
+        @media (max-width: 768px) {
+            .masonry-list {
+                display: block;
+                position: relative;
+                height: auto;
+                padding: 0;
+                gap: 0;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            
+            body {
+                overflow-y: auto;
+                height: auto;
+            }
+
+            .masonry-list li {
+                width: 100% !important;
+                height: 100vh !important;
+                margin: 0;
+                padding: 0;
+                display: block;
+                position: relative;
+            }
+        }
+
+        /* Hover effects */
+        .masonry-list li:focus,
+        .masonry-list li:hover {
+            
+        }
+
+        .masonry-list li:focus a::after,
+        .masonry-list li:hover a::after {
+            opacity: 1;
+            transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+        }
+
+        .masonry-list li:focus .tile-primary-content img,
+        .masonry-list li:hover .tile-primary-content img {
+            transform: scale(1.2);
+            -webkit-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            transform-origin: 50% 50%;
+            -webkit-transform-origin: 50% 50%;
+            -moz-transform-origin: 50% 50%;
+            transition: transform 15000ms cubic-bezier(0, 0, .80, .90);
+            -webkit-transition: -webkit-transform 15000ms cubic-bezier(0, 0, .80, .90);
+            -moz-transition: -moz-transform 15000ms cubic-bezier(0, 0, .80, .90);
+        }
+
+        .masonry-list li:focus p,
+        .masonry-list li:hover p,
+        .masonry-list li:focus h2,
+        .masonry-list li:hover h2,
+        .masonry-list li:focus .tile-secondary-content,
+        .masonry-list li:hover .tile-secondary-content {
+            opacity: 1;
+        }
+
+        .masonry-list li a::after {
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAARCAYAAAA7bUf6AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkY1ODk4MTY1MDNBQTExRTNBN0U2RjUyQkFDMTgxQjI1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkY1ODk4MTY2MDNBQTExRTNBN0U2RjUyQkFDMTgxQjI1Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RjU4OTgxNjMwM0FBMTFFM0E3RTZGNTJCQUMxODFCMjUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RjU4OTgxNjQwM0FBMTFFM0E3RTZGNTJCQUMxODFCMjUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6XrhZfAAAAiUlEQVR42qzT0QmAIBQFUJP8aYh2ah0XaYZogtzGJfrsdQUpi6z3tAtXUfHgjw0RqRiNbqogOs4GnVBbgii8xKAznbHhdZKGoUMdXWOlSDWULgK0lED3DS7UJ+f+SeZAnwgHYiFfEBt5g0RIDhqlSA46EM38HSs6oO7psM1c6lEv/cVV+QXZBRgAnat44PE4W1oAAAAASUVORK5CYII=');
+            bottom: 40px;
+            content: '';
+            display: block;
+            height: 17px;
+            opacity: 0;
+            position: absolute;
+            right: 40px;
+            width: 17px;
+            transform: translate3d(-10px,-10px,0);
+            -webkit-transform: translate3d(-10px,-10px,0);
+            -moz-transform: translate3d(-10px,-10px,0);
+            transition: all 150ms ease-out;
+            -webkit-transition: all 150ms ease-out;
+            -moz-transition: all 150ms ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .masonry-list li a::after {
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* Sliding text animations */
+        .masonry-list li.tile-wide:focus .tile-primary-content p,
+        .masonry-list li.tile-wide:hover .tile-primary-content p,
+        .masonry-list li.tile-interfaces:focus .tile-primary-content p,
+        .masonry-list li.tile-interfaces:hover .tile-primary-content p,
+        .masonry-list li.tile-resources:focus .tile-primary-content p,
+        .masonry-list li.tile-resources:hover .tile-primary-content p {
+            transform: translate3d(150%,0,0);
+            -webkit-transform: translate3d(150%,0,0);
+            -moz-transform: translate3d(150%,0,0);
+            transition: transform 300ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-wide:focus .tile-secondary-content p,
+        .masonry-list li.tile-wide:hover .tile-secondary-content p,
+        .masonry-list li.tile-interfaces:focus .tile-secondary-content p,
+        .masonry-list li.tile-interfaces:hover .tile-secondary-content p,
+        .masonry-list li.tile-resources:focus .tile-secondary-content p,
+        .masonry-list li.tile-resources:hover .tile-secondary-content p {
+            transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            transition: transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-wide .tile-primary-content p,
+        .masonry-list li.tile-interfaces .tile-primary-content p,
+        .masonry-list li.tile-resources .tile-primary-content p {
+            transform: translate3d(0,0,0);
+            -webkit-transform: translate3d(0,0,0);
+            -moz-transform: translate3d(0,0,0);
+            transition: transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-wide .tile-secondary-content p,
+        .masonry-list li.tile-interfaces .tile-secondary-content p,
+        .masonry-list li.tile-resources .tile-secondary-content p {
+            opacity: 1;
+            transform: translate3d(-150%,0,0);
+            -webkit-transform: translate3d(-150%,0,0);
+            -moz-transform: translate3d(-150%,0,0);
+            transition: transform 300ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        /* Tile styles */
+        .masonry-list li.tile-wide .tile-primary-content {
+            background-color: #788895;
+        }
+
+        .masonry-list li.tile-talent .tile-primary-content {
+            padding: 0;
+        }
+
+        .masonry-list li.tile-talent .tile-secondary-content {
+            background-color: hsla(0,0%,0%,.7);
+            transition: opacity 100ms ease-out;
+            -webkit-transition: opacity 100ms ease-out;
+            -moz-transition: opacity 100ms ease-out;
+        }
+
+        .masonry-list li.tile-interfaces .tile-primary-content {
+            background-color: #e79c65;
+        }
+
+        .masonry-list li.tile-resources .tile-primary-content {
+            background-color: #b7b5a6;
+        }
+        
+        /* Extra tile animations */
+        .masonry-list li.tile-extra:focus .tile-primary-content p,
+        .masonry-list li.tile-extra:hover .tile-primary-content p {
+            transform: translateX(150%);
+            -webkit-transform: translateX(150%);
+            -moz-transform: translateX(150%);
+            transition: transform 300ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-extra:focus .tile-secondary-content p,
+        .masonry-list li.tile-extra:hover .tile-secondary-content p {
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            -moz-transform: translateX(0);
+            transition: transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-extra .tile-primary-content p {
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            -moz-transform: translateX(0);
+            transition: transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms 150ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list li.tile-extra .tile-secondary-content p {
+            opacity: 1;
+            transform: translateX(-150%);
+            -webkit-transform: translateX(-150%);
+            -moz-transform: translateX(-150%);
+            transition: transform 300ms cubic-bezier(0, 0, .40, 1);
+            -webkit-transition: -webkit-transform 300ms cubic-bezier(0, 0, .40, 1);
+            -moz-transition: -moz-transform 300ms cubic-bezier(0, 0, .40, 1);
+        }
+
+        .masonry-list a,
+        .masonry-list button {
+            color: hsl(0,0%,100%);
+            display: block;
+            height: 100%;
+            position: relative;
+            width: 100%;
+        }
+
+        .masonry-list .tile-primary-content,
+        .masonry-list .tile-secondary-content {
+            bottom: 0;
+            left: 0;
+            overflow: hidden;
+            padding: 40px;
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        @media (max-width: 768px) {
+            .masonry-list .tile-primary-content,
+            .masonry-list .tile-secondary-content {
+                padding: 20px;
+            }
+        }
+
+        .masonry-list .tile-primary-content {
+            background-color: #a49058;
+            width: 100%;
+            height: 100%;
+        }
+
+        .masonry-list .tile-primary-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1);
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            transition: transform 200ms ease-out;
+            -webkit-transition: -webkit-transform 200ms ease-out;
+            -moz-transition: -moz-transform 200ms ease-out;
+        }
+
+        .masonry-list .tile-secondary-content {
+            opacity: 0;
+            transition: opacity 250ms ease-out;
+            -webkit-transition: opacity 250ms ease-out;
+            -moz-transition: opacity 250ms ease-out;
+        }
+
+        .masonry-list .tile-secondary-content p,
+        .masonry-list .tile-secondary-content h2 {
+            opacity: 0;
+            transition: opacity 200ms 100ms ease-in;
+            -webkit-transition: opacity 200ms 100ms ease-in;
+            -moz-transition: opacity 200ms 100ms ease-in;
+        }
+
+        .masonry-list p,
+        .masonry-list h2 {
+            text-transform: uppercase;
+        }
+
+        .masonry-list h2 {
+            font-size: 12px;
+            margin: 0;
+            position: absolute;
+        }
+
+        .masonry-list p {
+            font-size: 28px;
+            font-weight: 300;
+            line-height: 1.1em;
+            margin: 1em 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .masonry-list h2 {
+                font-size: 14px;
+            }
+
+            .masonry-list p {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <ul class="masonry-list">
+        <li class="tile-wide">
+            <a href="#">
+                <div class="tile-primary-content">
+                    <h2>Welcome</h2>
+                    <p>We help design-conscious minds streamline how they work</p>
+                </div>
+                <div class="tile-secondary-content">
+                    <p>Discover our services</p>
+                </div>
+            </a>
+        </li>
+        <li class="tile-talent">
+            <a href="#">
+                <div class="tile-primary-content">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" alt="">
+                </div>
+                <div class="tile-secondary-content">
+                    <h2>Talent</h2>
+                    <p>Connecting exceptional minds</p>
+                </div>
+            </a>
+        </li>
+        <li class="tile-interfaces">
+            <a href="#">
+                <div class="tile-primary-content">
+                    <h2>Interfaces</h2>
+                    <p>Digital experiences that inspire and delight</p>
+                </div>
+                <div class="tile-secondary-content">
+                    <p>Design & Development</p>
+                </div>
+            </a>
+        </li>
+        <li class="tile-resources">
+            <a href="#">
+                <div class="tile-primary-content">
+                    <h2>Resources</h2>
+                    <p>Curated tools for modern professionals</p>
+                </div>
+                <div class="tile-secondary-content">
+                    <p>Explore our platforms</p>
+                </div>
+            </a>
+        </li>
+        <li class="tile-extra">
+            <a href="#">
+                <div class="tile-primary-content">
+                    <h2>Contact</h2>
+                    <p>Get in touch with our team</p>
+                </div>
+                <div class="tile-secondary-content">
+                    <p>Let's work together</p>
+                </div>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>
