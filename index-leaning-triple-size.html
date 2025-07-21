@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Triple Size Leaning Cards</title>
+    
+    <style>
+        html,
+        body {
+            min-height: 100vh;
+            min-width: 1600px;
+        }
+
+        body {
+            margin: 0 auto;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            justify-content: space-between;
+            background-color: #eee;
+            font-size: 10px;
+        }
+
+        .images-leaning {
+            flex-grow: 1;
+            box-sizing: border-box;
+            width: 100%;
+            min-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(352deg, transparent 45.2%, #bbb 45.5%, #bbb 45.6%, #ccc 45.8%, #eee 60%), linear-gradient(30deg, #ccc, #eee 90%);
+            background-size: 100% 97.2em;
+            background-position: 50% calc(100% + 122px);
+        }
+        .images-leaning > div {
+            width: 600px;
+            position: absolute;
+            left: calc(50% - 100px);
+            bottom: calc(23.4em - 100px);
+            z-index: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .images-leaning > div:before {
+            content: "";
+            width: 60%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 7%;
+            z-index: 1;
+            background-repeat: no-repeat;
+            background-image: linear-gradient(120deg, transparent 42%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.35) 65%), linear-gradient(20deg, transparent 38%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0.23) 55%, rgba(0, 0, 0, 0.13) 75%), radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.15) 3%, transparent 40%);
+            transform: rotate(-8deg);
+        }
+        .images-leaning > div:after {
+            content: "";
+            width: 60%;
+            height: 100%;
+            position: absolute;
+            z-index: 3;
+            background-image: linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
+            transform: perspective(60em) rotateY(1deg) rotateZ(-5deg) skewY(-2deg) skewX(-1deg) scaleX(var(--resize));
+        }
+        .images-leaning > div > img {
+            width: 60%;
+            height: 100%;
+            display: block;
+            position: relative;
+            z-index: 2;
+            border-left: 0.6em solid;
+            border-image: linear-gradient(105deg, transparent 0.5%, #aaa 0.7%) 1;
+            box-shadow: 0.3em 0.6em 0 -0.3em #666;
+            filter: saturate(90%);
+            transform: perspective(60em) rotateY(1deg) rotateZ(-5deg) skewY(-2deg) skewX(-1deg) scaleX(var(--resize));
+        }
+        .images-leaning > div:nth-of-type(4) {
+            --resize: 0.99;
+            margin-left: -121.2em;
+        }
+        .images-leaning > div:nth-of-type(4):before {
+            background-size: 100% 85%, 100% 15%, 100% 10%;
+            background-position: 0.3em 0, 0 100%, -9em 83%;
+        }
+        .images-leaning > div:nth-of-type(3) {
+            --resize: 0.96;
+            margin-left: -36.7em;
+            transform: scaleY(0.98) translate(-19.2em, -6.3em);
+        }
+        .images-leaning > div:nth-of-type(3):before {
+            background-size: 100% 84%, 100% 16%, 100% 10%;
+            background-position: 1.2em 0, 0 100%, -9em 81%;
+        }
+        .images-leaning > div:nth-of-type(2) {
+            --resize: 0.925;
+            margin-left: 24em;
+            transform: scaleY(0.965) translate(-40.8em, -12.6em);
+        }
+        .images-leaning > div:nth-of-type(2):before {
+            background-size: 100% 83%, 100% 17%, 100% 10%;
+            background-position: 1.8em 0, 0.3em 100%, -9em 81%;
+        }
+        .images-leaning > div:nth-of-type(1) {
+            --resize: 0.895;
+            margin-left: 84.5em;
+            transform: scaleY(0.94) translate(-63.8em, -18.6em);
+        }
+        .images-leaning > div:nth-of-type(1):before {
+            background-size: 100% 82%, 100% 18%, 100% 10%;
+            background-position: 2.4em 0, 0.3em 100%, -9em 80%;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="images-leaning">
+        <div class="card" id="0">
+            <img src="https://picsum.photos/720/960?random=1">
+        </div>
+        <div class="card" id="1">
+            <img src="https://picsum.photos/720/960?random=2">
+        </div>
+        <div class="card" id="2">
+            <img src="https://picsum.photos/720/960?random=3">
+        </div>
+    </div>
+</body>
+</html>
