@@ -221,7 +221,7 @@
         
         /* Inner content wrapper to match image positioning */
         .header-content {
-            width: 60%; /* Match image width */
+            width: 80%; /* Wider for single line title */
             margin-left: 40%; /* Push to right like flex-end */
             transform: translateX(var(--image-transform-x)); /* Match image transform */
             text-align: left;
@@ -237,7 +237,7 @@
         
         .hero-title {
             font-family: 'FreightDispProLight-Regular', Georgia, serif;
-            font-size: 4.8rem;
+            font-size: 6.2rem;
             font-weight: 300;
             line-height: 0.9;
             letter-spacing: -0.04em;
@@ -246,7 +246,11 @@
         }
         
         .hero-title .line {
-            display: block;
+            display: inline;
+        }
+        
+        .hero-title .line:first-child::after {
+            content: " ";
         }
         
         .hero-title .emphasis {
@@ -262,7 +266,8 @@
             font-weight: 400;
             line-height: 1.5;
             color: #666;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
+            max-width: 600px;
         }
         
         
@@ -399,9 +404,56 @@
         @keyframes fadeIn {
             to { opacity: 1; }
         }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #f7f7f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        
+        .preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .preloader-logo {
+            width: 80px;
+            height: auto;
+            opacity: 0;
+            animation: logoFadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes logoFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Delay main content animations until preloader is done */
+        body.loading .logo-section img,
+        body.loading .hero-title,
+        body.loading .hero-tagline,
+        body.loading .images-leaning > article {
+            animation-play-state: paused;
+        }
     </style>
 </head>
-<body>
+<body class="loading">
+    <!-- Preloader -->
+    <div class="preloader">
+        <img src="assets/logo.gif" alt="Streamlined" class="preloader-logo">
+    </div>
+    
     <!-- Header Section -->
     <header class="logo-section">
         <div class="header-content">
@@ -438,5 +490,26 @@
             </div>
         </article>
     </main>
+    
+    <script>
+        // Preloader logic
+        window.addEventListener('load', function() {
+            // Show preloader for at least 2 seconds for the logo animation
+            setTimeout(function() {
+                // Fade out preloader
+                document.querySelector('.preloader').classList.add('fade-out');
+                
+                // Start main animations after preloader begins fading
+                setTimeout(function() {
+                    document.body.classList.remove('loading');
+                    
+                    // Remove preloader from DOM after fade completes
+                    setTimeout(function() {
+                        document.querySelector('.preloader').remove();
+                    }, 800);
+                }, 400);
+            }, 2000);
+        });
+    </script>
 </body>
 </html>
