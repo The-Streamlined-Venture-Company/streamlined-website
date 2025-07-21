@@ -3,9 +3,129 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Swiss Style Cards</title>
+    <title>Streamlined - Scale & Move Loader</title>
     <link rel="stylesheet" href="leaning-cards-fresh.css">
     <style>
+        /* Loader Animation - Scale & Move */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #eee;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 1s ease-out;
+        }
+        
+        .loader-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-logo {
+            width: 94px;
+            height: auto;
+            opacity: 0;
+            animation: gentleFadeMove 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        @keyframes gentleFadeMove {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            30% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            70% {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+                position: absolute;
+                top: 50%;
+                left: 50%;
+            }
+            100% {
+                opacity: 0;
+                transform: translate(0, 0);
+                position: fixed;
+                top: 10%;
+                left: calc(50% - 30em - 47px);
+            }
+        }
+        
+        /* Hide main content initially */
+        .logo-section,
+        .images-leaning {
+            opacity: 0;
+            animation: gentleFadeIn 1.8s ease-out forwards;
+            animation-delay: 2.2s;
+        }
+        
+        .hero-title,
+        .hero-tagline {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        
+        .hero-title {
+            animation: subtleReveal 1.5s ease-out forwards;
+            animation-delay: 2.8s;
+        }
+        
+        .hero-tagline {
+            animation: subtleReveal 1.5s ease-out forwards;
+            animation-delay: 3.2s;
+        }
+        
+        .images-leaning > div {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+        
+        .images-leaning > div:nth-child(1) {
+            animation: subtleReveal 1.5s ease-out forwards;
+            animation-delay: 3.6s;
+        }
+        
+        .images-leaning > div:nth-child(2) {
+            animation: subtleReveal 1.5s ease-out forwards;
+            animation-delay: 3.8s;
+        }
+        
+        .images-leaning > div:nth-child(3) {
+            animation: subtleReveal 1.5s ease-out forwards;
+            animation-delay: 4s;
+        }
+        
+        @keyframes gentleFadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes subtleReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Hide the logo in the logo section initially */
+        .logo-section img {
+            opacity: 0;
+        }
+        
         /* Swiss minimalist style - override image styles */
         .images-leaning > div > img {
             content: '';
@@ -39,7 +159,7 @@
             position: relative;
         }
         
-        /* Card 1 - Red background with texture */
+        /* Card backgrounds remain the same */
         .images-leaning > div:nth-child(1) > img {
             background: 
                 repeating-linear-gradient(
@@ -54,7 +174,6 @@
             position: relative;
         }
         
-        /* Card 2 - Yellow background with texture */
         .images-leaning > div:nth-child(2) > img {
             background: 
                 repeating-linear-gradient(
@@ -69,7 +188,6 @@
             position: relative;
         }
         
-        /* Card 3 - Blue background with texture */
         .images-leaning > div:nth-child(3) > img {
             background: 
                 repeating-linear-gradient(
@@ -84,6 +202,7 @@
             position: relative;
         }
         
+        /* Rest of the styles from original index.html... */
         /* Enhanced overlay with sophisticated shading */
         .images-leaning > div:after {
             background-image: 
@@ -115,7 +234,6 @@
         }
         
         /* Card-specific shading variations */
-        /* Card 1 (Red) - Warmer tones */
         .images-leaning > div:nth-child(1):after {
             background-image: 
                 linear-gradient(180deg, 
@@ -133,7 +251,6 @@
                     transparent 60%);
         }
         
-        /* Card 2 (Yellow) - Brighter, softer shadows */
         .images-leaning > div:nth-child(2):after {
             background-image: 
                 linear-gradient(180deg, 
@@ -151,7 +268,6 @@
                     rgba(0,0,0,0.05) 100%);
         }
         
-        /* Card 3 (Blue) - Cooler, deeper shadows */
         .images-leaning > div:nth-child(3):after {
             background-image: 
                 linear-gradient(180deg, 
@@ -168,20 +284,6 @@
                 radial-gradient(ellipse at center, 
                     transparent 30%, 
                     rgba(0,0,0,0.08) 100%);
-        }
-        
-        /* Shape for card 1 - Grid */
-        .images-leaning > div:nth-child(1):after::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 40%;
-            background: 
-                linear-gradient(90deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%),
-                linear-gradient(0deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%);
-            background-size: 50% 50%;
         }
         
         /* Position text exactly like the image/overlay */
@@ -222,8 +324,6 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
-        /* Remove white text override - all text should be black */
-        
         /* Description block */
         .card-description {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -237,7 +337,6 @@
             text-rendering: optimizeLegibility;
         }
         
-        /* Remove card-info since card-text handles it */
         .card-text h3,
         .card-text .card-description {
             position: relative;
@@ -262,78 +361,17 @@
             transition-delay: 1s;
         }
         
-        /* First layer: card text fades */
-        body.exiting .card-text {
-            opacity: 0;
-            transition: opacity 0.15s ease-out;
-        }
-        
-        body.exiting .images-leaning > div:nth-child(1) .card-text { transition-delay: 0s; }
-        body.exiting .images-leaning > div:nth-child(2) .card-text { transition-delay: 0.05s; }
-        body.exiting .images-leaning > div:nth-child(3) .card-text { transition-delay: 0.1s; }
-        
-        /* Second layer: images and shadows fade together */
-        body.exiting .images-leaning > div > img {
-            opacity: 0;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        body.exiting .images-leaning > div:nth-child(1) > img { transition-delay: 0.3s; }
-        body.exiting .images-leaning > div:nth-child(2) > img { transition-delay: 0.35s; }
-        body.exiting .images-leaning > div:nth-child(3) > img { transition-delay: 0.4s; }
-        
-        body.exiting .images-leaning > div:before,
-        body.exiting .images-leaning > div:after {
-            opacity: 0;
-            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        body.exiting .images-leaning > div:nth-child(1):before,
-        body.exiting .images-leaning > div:nth-child(1):after { transition-delay: 0.3s; }
-        body.exiting .images-leaning > div:nth-child(2):before,
-        body.exiting .images-leaning > div:nth-child(2):after { transition-delay: 0.35s; }
-        body.exiting .images-leaning > div:nth-child(3):before,
-        body.exiting .images-leaning > div:nth-child(3):after { transition-delay: 0.4s; }
-        
-        /* Third layer: everything else fades together */
-        body.exiting .hero-tagline,
-        body.exiting .hero-title,
-        body.exiting .logo-section img {
-            opacity: 0;
-            transition: opacity 0.4s ease-out;
-            transition-delay: 0.8s;
-        }
-        
-        /* Logo section animations */
-        .animation-sequence .logo-section {
-            opacity: 0;
-            animation: fadeIn 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            animation-delay: 0.3s;
-        }
-        
-        .animation-sequence .logo-section img,
-        .animation-sequence .hero-title,
-        .animation-sequence .hero-tagline {
-            opacity: 1;
-            animation: none;
-        }
-        
-        .animation-sequence .images-leaning > div:nth-child(1) { animation-delay: 2.8s; }
-        .animation-sequence .images-leaning > div:nth-child(2) { animation-delay: 2.4s; }
-        .animation-sequence .images-leaning > div:nth-child(3) { animation-delay: 2.0s; }
-        
+        /* Card hover and exit animations */
         .images-leaning > div {
             cursor: pointer;
         }
         
-        /* Hover effects for cards - use inner elements for tilt */
         .images-leaning > div > img,
         .images-leaning > div:after,
         .card-text {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* Tilt inner elements on hover instead of the container */
         .images-leaning > div:hover > img {
             transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
         }
@@ -343,7 +381,6 @@
             transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
         }
         
-        /* Animate shadows on hover */
         .images-leaning > div:before {
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                         opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -354,7 +391,6 @@
             opacity: 0.7;
         }
         
-        /* Enhance box shadow on image hover */
         .images-leaning > div > img {
             transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
                         transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -365,16 +401,12 @@
         }
     </style>
 </head>
-<body class="animation-sequence text-centered-single hover-bright">
-    <style>
-        /* Position cards closer to header */
-        .images-leaning {
-            position: fixed;
-            bottom: 0; /* Move up closer to header */
-            left: 0;
-            right: 0;
-        }
-    </style>
+<body>
+    <!-- Loader Overlay -->
+    <div class="loader-overlay">
+        <img src="assets/logo.gif" alt="Streamlined Logo" class="loader-logo" />
+    </div>
+    
     <div class="page-overlay"></div>
     
     <div class="logo-section">
@@ -416,6 +448,16 @@
                 window.location.href = url;
             }, 1500);
         }
+        
+        // Remove loader after animation completes
+        setTimeout(() => {
+            document.querySelector('.loader-overlay').classList.add('fade-out');
+            // Show the actual logo in the logo section
+            setTimeout(() => {
+                document.querySelector('.logo-section img').style.opacity = '1';
+                document.querySelector('.logo-section img').style.transition = 'opacity 1.5s ease-out';
+            }, 800);
+        }, 2200);
     </script>
 </body>
 </html>

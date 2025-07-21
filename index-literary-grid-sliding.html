@@ -21,6 +21,21 @@
             font-weight: 550;
             font-variation-settings: 'wdth' 35, 'YTFI' 788;
         }
+        
+        /* Icon styles */
+        .icon-shape {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .icon-shape svg {
+            width: 100%;
+            height: 100%;
+        }
 
         .stretch {
             font-weight: 500;
@@ -30,6 +45,7 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%) scale(-1);
+            background: transparent;
         }
         
         /* Grid container stays on the right */
@@ -78,7 +94,7 @@
         .collapsed-view {
             width: 200px;
             flex-shrink: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         /* Expanded content */
@@ -101,9 +117,20 @@
             transform: translateX(0);
         }
         
-        /* Fade out collapsed content when expanded */
+        /* White background for collapsed view when expanded */
         .column-wrapper.expanded .collapsed-view {
-            opacity: 0.3;
+            background: white;
+            color: black;
+        }
+        
+        .column-wrapper.expanded .collapsed-view svg path,
+        .column-wrapper.expanded .collapsed-view svg circle,
+        .column-wrapper.expanded .collapsed-view svg rect {
+            fill: black !important;
+        }
+        
+        .column-wrapper.expanded .collapsed-view .stretch {
+            color: black;
         }
         
         /* Close button */
@@ -137,26 +164,85 @@
         .close-btn:after {
             transform: translate(-50%, -50%) rotate(-45deg);
         }
+        
+        /* Logo and title section */
+        .logo-section {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: calc(100vw - 600px);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            text-align: center;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            z-index: 10;
+        }
+        
+        .logo-section.hidden {
+            opacity: 0;
+            transform: translateX(-50px);
+            pointer-events: none;
+        }
+        
+        .logo-section img {
+            width: 120px;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-title {
+            font-family: 'Roboto Flex', sans-serif;
+            font-size: 4rem;
+            font-weight: 500;
+            font-variation-settings: 'wdth' 35;
+            letter-spacing: 0.05em;
+            margin: 0 0 1rem 0;
+            line-height: 1.1;
+            text-transform: uppercase;
+        }
+        
+        
+        .hero-tagline {
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #999;
+            max-width: 500px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body class="bg-black overflow-hidden">
+    <!-- Logo and title section -->
+    <div class="logo-section" id="logoSection">
+        <img src="assets/logo.gif" alt="Streamlined Logo" />
+        <h1 class="hero-title">We are Streamlined.</h1>
+        <p class="hero-tagline">We help design-conscious, nimble minds streamline how they work and live, with:</p>
+    </div>
+    
     <div class="grid-container" id="gridContainer">
         <!-- Column 1 - Pro -->
         <div class="column-wrapper" id="column-0" onclick="toggleColumn(0, event)">
             <div class="column-content">
                 <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
-                    <div class="sm:pb-8 pb-3 num">1</div>
+                    <div class="sm:pb-8 pb-3 icon-shape">
+                        <svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="40" fill="white"/>
+                        </svg>
+                    </div>
                     <div class="sm:py-3 py-1.5 uppercase font-light">Herman Hesse</div>
                     <div class="sm:h-28 h-20 flex items-center text-xs">
                         <p class="break-words font-light whitespace-pre-line mx-auto w-28">Professionalism is dedication multiplied on time</p>
                     </div>
                     <div class="sm:py-3 py-1.5 uppercase">Page 56</div>
                     <div class="py-8 text-9xl relative flex-1 flex flex-col">
-                        <q class="text-xs absolute sm:top-28 top-24 left-[8%] max-w-[84%]">
-                            But if I do not go along with your sadness, do not let myself be infected by it, that does not mean I don't recognize it or take it seriously.
-                        </q>
                         <div class="relative h-full">
-                            <div class="uppercase stretch bg-black">Talent</div>
+                            <div class="uppercase stretch">Talent</div>
                         </div>
                     </div>
                 </article>
@@ -188,18 +274,19 @@
         <div class="column-wrapper" id="column-1" onclick="toggleColumn(1, event)">
             <div class="column-content">
                 <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
-                    <div class="sm:pb-8 pb-3 num">2</div>
+                    <div class="sm:pb-8 pb-3 icon-shape">
+                        <svg viewBox="0 0 120 120">
+                            <path d="M60 20 L100 90 L20 90 Z" fill="white"/>
+                        </svg>
+                    </div>
                     <div class="sm:py-3 py-1.5 uppercase font-light">Bob Dylan</div>
                     <div class="sm:h-28 h-20 flex items-center text-xs">
                         <p class="break-words font-light whitespace-pre-line mx-auto w-28">Society is mainly designed by it's cultural elites</p>
                     </div>
                     <div class="sm:py-3 py-1.5  uppercase">Page 85</div>
                     <div class="py-8 text-9xl relative flex-1 flex flex-col">
-                        <q class="text-xs absolute top-28 left-[8%] max-w-[84%]">
-                            what a drag it gets to be. writing for this chosen few. writing for anyone cpt you.
-                        </q>
                         <div class="relative h-full">
-                            <div class="uppercase stretch bg-black">Interfaces</div>
+                            <div class="uppercase stretch">Interfaces</div>
                         </div>
                     </div>
                 </article>
@@ -231,18 +318,19 @@
         <div class="column-wrapper" id="column-2" onclick="toggleColumn(2, event)">
             <div class="column-content">
                 <article class="collapsed-view h-full flex flex-col divide-y text-sm text-center divide-gray-400 px-2 text-white">
-                    <div class="sm:pb-8 pb-3 num">3</div>
+                    <div class="sm:pb-8 pb-3 icon-shape">
+                        <svg viewBox="0 0 120 120">
+                            <rect x="25" y="25" width="70" height="70" fill="white"/>
+                        </svg>
+                    </div>
                     <div class="sm:py-3 py-1.5 uppercase font-light">Isaac Asimov</div>
                     <div class="sm:h-28 h-20 flex items-center text-xs">
                         <p class="break-words font-light whitespace-pre-line mx-auto w-28">Exploration of unknown is all about warm heart</p>
                     </div>
                     <div class="sm:py-3 py-1.5 uppercase">Page 27</div>
                     <div class="py-8 text-9xl relative flex-1 flex flex-col">
-                        <q class="text-xs absolute top-32 left-[8%] max-w-[84%]">
-                            It's your fiction that interests me. Your studies of the interplay of human motives and emotion.
-                        </q>
                         <div class="relative h-full">
-                            <div class="uppercase stretch bg-black">Guides</div>
+                            <div class="uppercase stretch">Guides</div>
                         </div>
                     </div>
                 </article>
@@ -274,6 +362,7 @@
     <script>
         let expandedColumn = null;
         const columns = document.querySelectorAll('.column-wrapper');
+        const logoSection = document.getElementById('logoSection');
         
         function toggleColumn(index, event) {
             event.stopPropagation();
@@ -296,6 +385,9 @@
             // Expand the clicked column
             columns[index].classList.add('expanded');
             expandedColumn = index;
+            
+            // Hide logo section when a column is expanded
+            logoSection.classList.add('hidden');
         }
         
         function closeColumn(index, event) {
@@ -303,6 +395,8 @@
             columns[index].classList.remove('expanded');
             if (expandedColumn === index) {
                 expandedColumn = null;
+                // Show logo section when all columns are collapsed
+                logoSection.classList.remove('hidden');
             }
         }
         
@@ -311,6 +405,8 @@
             if (e.key === 'Escape' && expandedColumn !== null) {
                 columns[expandedColumn].classList.remove('expanded');
                 expandedColumn = null;
+                // Show logo section when all columns are collapsed
+                logoSection.classList.remove('hidden');
             }
         });
     </script>

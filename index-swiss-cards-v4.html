@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Swiss Style Cards</title>
+    <title>Streamlined - Swiss Cards V4 - Diagonal Split</title>
     <link rel="stylesheet" href="leaning-cards-fresh.css">
     <style>
-        /* Swiss minimalist style - override image styles */
+        /* Swiss minimalist style - Diagonal Split */
         .images-leaning > div > img {
             content: '';
             object-fit: cover;
@@ -39,48 +39,36 @@
             position: relative;
         }
         
-        /* Card 1 - Red background with texture */
+        /* Card 1 - Red with diagonal white split */
         .images-leaning > div:nth-child(1) > img {
             background: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.04) 2px,
-                    rgba(255,255,255,0.04) 4px
-                ),
-                #FF3030;
-            background-size: 20px 20px, auto;
+                linear-gradient(135deg, 
+                    #fff 0%, 
+                    #fff 48%, 
+                    #FF3030 52%, 
+                    #FF3030 100%);
             position: relative;
         }
         
-        /* Card 2 - Yellow background with texture */
+        /* Card 2 - Yellow with diagonal white split */
         .images-leaning > div:nth-child(2) > img {
             background: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.05) 2px,
-                    rgba(255,255,255,0.05) 4px
-                ),
-                #FFC30D;
-            background-size: 20px 20px, auto;
+                linear-gradient(135deg, 
+                    #FFC30D 0%, 
+                    #FFC30D 48%, 
+                    #fff 52%, 
+                    #fff 100%);
             position: relative;
         }
         
-        /* Card 3 - Blue background with texture */
+        /* Card 3 - Blue with diagonal white split */
         .images-leaning > div:nth-child(3) > img {
             background: 
-                repeating-linear-gradient(
-                    45deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(255,255,255,0.03) 2px,
-                    rgba(255,255,255,0.03) 4px
-                ),
-                #0066FF;
-            background-size: 20px 20px, auto;
+                linear-gradient(45deg, 
+                    #0066FF 0%, 
+                    #0066FF 48%, 
+                    #fff 52%, 
+                    #fff 100%);
             position: relative;
         }
         
@@ -170,20 +158,6 @@
                     rgba(0,0,0,0.08) 100%);
         }
         
-        /* Shape for card 1 - Grid */
-        .images-leaning > div:nth-child(1):after::before {
-            content: '';
-            position: absolute;
-            top: 10%;
-            left: 10%;
-            width: 80%;
-            height: 40%;
-            background: 
-                linear-gradient(90deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%),
-                linear-gradient(0deg, #000 0%, #000 45%, transparent 45%, transparent 55%, #000 55%, #000 100%);
-            background-size: 50% 50%;
-        }
-        
         /* Position text exactly like the image/overlay */
         .card-text {
             position: absolute;
@@ -222,8 +196,6 @@
             text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
-        /* Remove white text override - all text should be black */
-        
         /* Description block */
         .card-description {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -237,7 +209,6 @@
             text-rendering: optimizeLegibility;
         }
         
-        /* Remove card-info since card-text handles it */
         .card-text h3,
         .card-text .card-description {
             position: relative;
@@ -387,21 +358,21 @@
     </div>
     <div class="images-leaning">
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FF3030'/%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
             <div class="card-text">
                 <h3>Resources</h3>
                 <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FFC30D'/%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
             <div class="card-text">
                 <h3>Interfaces</h3>
                 <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
             </div>
         </div>
         <div onclick="navigateToPage('page.html')">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%230066FF'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
             <div class="card-text">
                 <h3>Talent</h3>
                 <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>

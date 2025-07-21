@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Scroll Experience</title>
+    <link rel="stylesheet" href="scroll-homepage.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <h1 class="sr-only">Streamlined Scroll Experience</h1>
+
+            <div class="fieldset-wrapper">
+                <fieldset>
+                    <legend class="sr-only">Effects</legend>
+
+                    <input type="radio" id="fade-effect" name="effect" value="fade" checked class="sr-only">
+                    <label for="fade-effect">Fade</label>
+
+                    <input type="radio" id="slide-effect" name="effect" value="slide" class="sr-only">
+                    <label for="slide-effect">Slide</label>
+
+                    <input type="radio" id="zoom-effect" name="effect" value="zoom" class="sr-only">
+                    <label for="zoom-effect">Zoom</label>
+
+                    <input type="radio" id="rotate-effect" name="effect" value="rotate" class="sr-only">
+                    <label for="rotate-effect">Rotate</label>
+                </fieldset>
+            </div>
+
+            <nav>
+                <ul class="indicator">
+                    <li><a href="#intro"><span class="sr-only">Introduction</span></a></li>
+                    <li><a href="#talent"><span class="sr-only">Talent</span></a></li>
+                    <li><a href="#interfaces"><span class="sr-only">Interfaces</span></a></li>
+                    <li><a href="#resources"><span class="sr-only">Resources</span></a></li>
+                    <li><a href="#about"><span class="sr-only">About</span></a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section id="intro" class="section">
+                <div class="content">
+                    <h2><strong>Welcome</strong> to <em>Streamlined</em></h2>
+                    
+                    <div class="text">
+                        <img src="assets/logo.gif" alt="Streamlined Logo" class="intro-logo">
+                        <p>We're a modern support company that helps people and businesses move faster, work smarter, and do more — with less friction.</p>
+                        <p>Born from a <a href="/our-story">love story</a>, we believe work should flow as naturally as life itself.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="talent" class="section">
+                <div class="content">
+                    <h2><strong>Talent</strong> that thinks, adapts, and <em>grows</em> with you</h2>
+                    
+                    <div class="text">
+                        <div class="icon-placeholder talent-icon">
+                            <svg viewBox="0 0 400 600" width="200" height="300">
+                                <rect width="400" height="600" fill="#0066FF"/>
+                                <g fill="#fff">
+                                    <circle cx="130" cy="150" r="50"/>
+                                    <circle cx="270" cy="150" r="50"/>
+                                    <circle cx="130" cy="290" r="50"/>
+                                    <circle cx="270" cy="290" r="50"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <p>AI-savvy assistants and custom-built AI agents that replace or augment traditional hires.</p>
+                        <p>Our team combines human insight with artificial intelligence to deliver exceptional support at scale. <em>Like having a brilliant colleague who never sleeps.</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="interfaces" class="section">
+                <div class="content">
+                    <h2><strong>Interfaces</strong> that feel like <em>extensions</em> of your mind</h2>
+                    
+                    <div class="text">
+                        <div class="icon-placeholder interfaces-icon">
+                            <svg viewBox="0 0 400 600" width="200" height="300">
+                                <rect width="400" height="600" fill="#FFC30D"/>
+                                <g fill="#000">
+                                    <path d="M200 100 L120 200 L280 200 Z"/>
+                                    <path d="M200 300 L280 200 L120 200 Z"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <p>Internal tools and applications, built by us or for clients, that make work flow more efficiently.</p>
+                        <p><em>Beautiful design meets powerful functionality.</em> We craft digital experiences that are intuitive, powerful, and surprisingly delightful.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="resources" class="section">
+                <div class="content">
+                    <h2><strong>Resources</strong> to navigate <em>career</em> and life</h2>
+                    
+                    <div class="text">
+                        <div class="icon-placeholder resources-icon">
+                            <svg viewBox="0 0 400 600" width="200" height="300">
+                                <rect width="400" height="600" fill="#FF3030"/>
+                                <rect x="140" y="140" width="120" height="180" fill="#fff"/>
+                            </svg>
+                        </div>
+                        <p>Platforms, directories, guides, and publications that help people navigate industries, careers, and life's pursuits.</p>
+                        <p>We curate the wisdom you need to make informed decisions and accelerate your journey.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="section">
+                <div class="content">
+                    <h2><strong>About</strong> Streamlined</h2>
+                    
+                    <div class="text">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=400&fit=crop" alt="Wedding rings" class="about-image">
+                        <p>Everything we create carries the DNA of our origin story: <strong>human connection enhanced by intelligent technology</strong>.</p>
+                        <p>Not AI for AI's sake, but thoughtful augmentation that helps you focus on what matters most.</p>
+                        <p class="cta"><a href="/get-started">Ready to streamline your world?</a></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Horizontal scroll section -->
+            <section id="sectionPin">
+                <div class="pin-wrap">
+                    <div class="pin-item">
+                        <h2>Trusted by Industry Leaders</h2>
+                        <p>From startups to Fortune 500 companies, we help organizations work smarter.</p>
+                    </div>
+                    <div class="pin-item">
+                        <h2>AI-First Approach</h2>
+                        <p>Embedded intelligence in everything we create, without the hype.</p>
+                    </div>
+                    <div class="pin-item">
+                        <h2>Family Business Values</h2>
+                        <p>Built on trust, powered by innovation, driven by results.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Let's build something beautiful together <span class="emoji">✨</span></p>
+        </footer>
+    </div>
+
+    <script src="scroll-homepage.js"></script>
+</body>
+</html>

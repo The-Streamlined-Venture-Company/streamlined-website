@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --bg-color: #eee;
+            --text-primary: #191919;
+            --text-secondary: #666;
+            --card-red: #FF3030;
+            --card-yellow: #FFC30D;
+            --card-blue: #0066FF;
+            --card-width: 220px;
+            --card-height: 330px;
+            --card-transform: perspective(20em) rotateY(1deg) rotateZ(-5deg) skewY(-2deg) skewX(-1deg);
+        }
+        
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Loader */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            animation: overlayFade 4s ease-out forwards;
+        }
+        
+        .loader-logo {
+            width: 94px;
+            height: auto;
+            opacity: 0;
+            animation: breathe 3s ease-in-out;
+        }
+        
+        @keyframes overlayFade {
+            0%, 70% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                pointer-events: none;
+            }
+        }
+        
+        @keyframes breathe {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            30% {
+                opacity: 0.8;
+                transform: scale(1.02);
+            }
+            60% {
+                opacity: 0.8;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+        
+        /* Logo Section - 3D Wall Effect */
+        .logo-section {
+            position: fixed;
+            top: calc(10% + 20px);
+            left: 50%;
+            transform: translateX(calc(-50% - 30em + 47px)) perspective(2000px) rotateY(-1deg);
+            text-align: left;
+            z-index: 10;
+            transform-style: preserve-3d;
+            opacity: 0;
+            animation: simpleFade 2.5s ease-out forwards;
+            animation-delay: 3s;
+        }
+        
+        .logo-section img {
+            width: 80px;
+            height: auto;
+            display: block;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            filter: drop-shadow(3px 3px 2px rgba(0,0,0,0.08));
+            transform: translateZ(20px);
+            transition: transform 0.5s ease-out;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: simpleFade 2s ease-out forwards;
+            animation-delay: 3.5s;
+            transform: translateZ(15px);
+            text-shadow: 2px 2px 1px rgba(0,0,0,0.05), 4px 4px 8px rgba(0,0,0,0.03);
+            transition: transform 0.5s ease-out 0.05s;
+        }
+        
+        .hero-title .line {
+            display: inline;
+        }
+        
+        .hero-title .line:first-child:after {
+            content: " ";
+        }
+        
+        .hero-title .emphasis {
+            font-style: italic;
+        }
+        
+        .hero-tagline {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+            opacity: 0;
+            animation: simpleFade 2s ease-out forwards;
+            animation-delay: 3.8s;
+            transform: translateZ(10px);
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.04), 2px 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.5s ease-out 0.1s;
+        }
+        
+        @keyframes simpleFade {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        /* Cards Container */
+        .images-leaning {
+            position: fixed;
+            bottom: -40px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            min-height: 290px;
+            background-repeat: no-repeat;
+            background-image: 
+                linear-gradient(352deg, 
+                    transparent 45.2%,
+                    #bbb 45.5%,
+                    #bbb 45.6%,
+                    #ccc 45.8%,
+                    var(--bg-color) 60%),
+                linear-gradient(30deg, #ccc, #eee 90%);
+            background-size: 100% 28.5em;
+            background-position: 50% calc(100% - 40px);
+            opacity: 0;
+            animation: simpleFade 2.5s ease-out forwards;
+            animation-delay: 3s;
+        }
+        
+        /* Individual Cards */
+        .images-leaning > div {
+            width: var(--card-width);
+            position: absolute;
+            left: 50%;
+            bottom: 7.8em;
+            z-index: 0;
+            display: flex;
+            justify-content: flex-end;
+            cursor: pointer;
+            opacity: 0;
+        }
+        
+        /* Card Shadows */
+        .images-leaning > div:before {
+            content: '';
+            width: 60%;
+            height: calc(100% - 19px);
+            position: absolute;
+            left: 3px;
+            top: calc(7% - 10px);
+            z-index: 1;
+            background-repeat: no-repeat;
+            background-image: 
+                linear-gradient(120deg, 
+                    transparent 42%,
+                    rgba(0,0,0,0.15) 45%,
+                    rgba(0,0,0,0.3) 65%,
+                    rgba(0,0,0,0.4) 100%);
+            transform: rotate(-8deg);
+            opacity: 0.5;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Card Images */
+        .images-leaning > div > img {
+            position: absolute;
+            width: 60%;
+            height: calc(100% + 5px);
+            top: calc(3em - 27px);
+            left: auto;
+            right: 0;
+            object-fit: fill;
+            border: none;
+            border-left: 0.25em solid;
+            border-image: 
+                linear-gradient(
+                    105deg, 
+                    transparent 0%, 
+                    #888 1%, 
+                    #aaa 20%, 
+                    #bbb 50%, 
+                    #aaa 80%, 
+                    #888 99%, 
+                    transparent 100%
+                ) 1;
+            box-shadow: 
+                0.08em 0.15em 0.3em rgba(0,0,0,0.3),
+                0.05em 0.1em 0 -0.02em rgba(0,0,0,0.4),
+                0 0 0.5em rgba(0,0,0,0.1);
+            filter: saturate(90%) contrast(1.02);
+            transform: var(--card-transform) translateX(-5px);
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 2;
+        }
+        
+        /* Card Overlay */
+        .images-leaning > div:after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: calc(100% + 5px);
+            top: calc(3em - 27px);
+            right: 0;
+            z-index: 3;
+            pointer-events: none;
+            transform: var(--card-transform) translateX(-5px);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* Card Positions */
+        .images-leaning > div:nth-child(1) {
+            margin-left: 20em;
+            transform: scaleY(0.94) translate(-24.5em, -4.8em);
+            z-index: 3;
+            animation: simpleFade 2s ease-out forwards;
+            animation-delay: 4.5s;
+        }
+        
+        .images-leaning > div:nth-child(2) {
+            transform: scaleY(0.965) translate(-18.5em, -2.8em);
+            z-index: 2;
+            animation: simpleFade 2s ease-out forwards;
+            animation-delay: 4.3s;
+        }
+        
+        .images-leaning > div:nth-child(3) {
+            margin-left: -20em;
+            transform: scaleY(0.98) translate(-12.5em, -0.7em);
+            z-index: 1;
+            animation: simpleFade 2s ease-out forwards;
+            animation-delay: 4.1s;
+        }
+        
+        /* Card Backgrounds - subtle texture overlay */
+        .images-leaning > div:nth-child(1) > img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.04) 2px,
+                    rgba(255,255,255,0.04) 4px
+                );
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        
+        .images-leaning > div:nth-child(2) > img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.05) 2px,
+                    rgba(255,255,255,0.05) 4px
+                );
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        
+        .images-leaning > div:nth-child(3) > img::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 4px
+                );
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+        
+        /* Card Shading */
+        .images-leaning > div:nth-child(1):after {
+            background-image: 
+                linear-gradient(180deg, 
+                    rgba(255,255,255,0.15) 0%, 
+                    transparent 25%),
+                linear-gradient(135deg, 
+                    rgba(0,0,0,0.2) 0%, 
+                    rgba(0,0,0,0.08) 30%,
+                    transparent 65%),
+                radial-gradient(ellipse at 80% 20%, 
+                    rgba(255,255,255,0.08) 0%, 
+                    transparent 40%),
+                radial-gradient(ellipse at bottom right, 
+                    rgba(0,0,0,0.15) 0%, 
+                    transparent 60%);
+        }
+        
+        .images-leaning > div:nth-child(2):after {
+            background-image: 
+                linear-gradient(180deg, 
+                    rgba(255,255,255,0.2) 0%, 
+                    transparent 30%),
+                linear-gradient(135deg, 
+                    rgba(0,0,0,0.15) 0%, 
+                    rgba(0,0,0,0.05) 25%,
+                    transparent 60%),
+                radial-gradient(ellipse at 70% 30%, 
+                    rgba(255,255,255,0.12) 0%, 
+                    transparent 50%),
+                linear-gradient(to bottom, 
+                    transparent 70%, 
+                    rgba(0,0,0,0.05) 100%);
+        }
+        
+        .images-leaning > div:nth-child(3):after {
+            background-image: 
+                linear-gradient(180deg, 
+                    rgba(255,255,255,0.1) 0%, 
+                    transparent 20%),
+                linear-gradient(135deg, 
+                    rgba(0,0,0,0.25) 0%, 
+                    rgba(0,0,0,0.12) 20%,
+                    rgba(0,0,0,0.05) 40%, 
+                    transparent 70%),
+                radial-gradient(ellipse at 85% 15%, 
+                    rgba(255,255,255,0.06) 0%, 
+                    transparent 35%),
+                radial-gradient(ellipse at center, 
+                    transparent 30%, 
+                    rgba(0,0,0,0.08) 100%);
+        }
+        
+        /* Card Text */
+        .card-text {
+            position: absolute;
+            width: 60%;
+            height: calc(100% + 5px);
+            top: calc(3em - 27px);
+            left: auto;
+            right: 0;
+            transform: var(--card-transform) translateX(-5px);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            box-sizing: border-box;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card-text h3 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            text-transform: none;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            font-feature-settings: "kern" 1;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .card-description {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 90%;
+            margin-top: 0.5rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Hover Effects */
+        .images-leaning > div:hover > img {
+            transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
+            box-shadow: 0.15em 0.3em 0 -0.05em #666;
+        }
+        
+        .images-leaning > div:hover:after,
+        .images-leaning > div:hover .card-text {
+            transform: var(--card-transform) translateX(-5px) rotateZ(-4deg);
+        }
+        
+        .images-leaning > div:hover:before {
+            transform: rotate(-8deg);
+            opacity: 0.7;
+        }
+        
+        /* Perspective hover effect */
+        body:hover .logo-section {
+            transform: translateX(calc(-50% - 30em + 47px)) perspective(2000px) rotateY(-0.8deg);
+            transition: transform 0.6s ease-out;
+        }
+        
+        body:hover .logo-section img {
+            transform: translateZ(25px);
+            transition: transform 0.5s ease-out;
+        }
+        
+        body:hover .hero-title {
+            transform: translateZ(18px);
+            transition: transform 0.5s ease-out 0.05s;
+        }
+        
+        body:hover .hero-tagline {
+            transform: translateZ(12px);
+            transition: transform 0.5s ease-out 0.1s;
+        }
+        
+        /* Page transition */
+        .page-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-color);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        body.exiting .page-overlay {
+            opacity: 1;
+            transition-delay: 1s;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            :root {
+                --card-width: 140px;
+                --card-height: 210px;
+            }
+            
+            .logo-section {
+                transform: translateX(-50%) perspective(2000px) rotateY(-1deg) !important;
+                left: 50%;
+                padding: 0 20px;
+            }
+            
+            .logo-section img {
+                width: 60px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1rem;
+            }
+            
+            .images-leaning {
+                min-height: 220px;
+                background-size: 100% 20em;
+            }
+            
+            .images-leaning > div {
+                bottom: 5em;
+            }
+            
+            .card-text h3 {
+                font-size: 1.8rem;
+            }
+            
+            .card-description {
+                font-size: 0.65rem;
+            }
+            
+            /* Adjust card positions */
+            .images-leaning > div:nth-child(1) {
+                margin-left: 12em;
+                transform: scaleY(0.94) translate(-16em, -3em);
+            }
+            
+            .images-leaning > div:nth-child(2) {
+                transform: scaleY(0.965) translate(-12em, -1.8em);
+            }
+            
+            .images-leaning > div:nth-child(3) {
+                margin-left: -12em;
+                transform: scaleY(0.98) translate(-8em, -0.5em);
+            }
+        }
+        
+        @media (max-width: 480px) {
+            :root {
+                --card-width: 100px;
+                --card-height: 150px;
+            }
+            
+            .hero-title {
+                font-size: 1.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 0.875rem;
+            }
+            
+            .card-text {
+                padding: 1rem;
+            }
+            
+            .card-text h3 {
+                font-size: 1.25rem;
+            }
+            
+            .card-description {
+                font-size: 0.5rem;
+                line-height: 1.2;
+            }
+        }
+        
+        /* Show logo after loader fades */
+        .show-logo {
+            opacity: 1 !important;
+            transition: opacity 2.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader Overlay -->
+    <div class="loader-overlay">
+        <img src="assets/logo.gif" alt="Streamlined Logo" class="loader-logo" />
+    </div>
+    
+    <div class="page-overlay"></div>
+    
+    <div class="logo-section">
+        <img src="assets/logo.gif" alt="Streamlined Logo" />
+        <h1 class="hero-title">
+            <span class="line">We are</span>
+            <span class="line emphasis">Streamlined.</span>
+        </h1>
+        <p class="hero-tagline">We help design-conscious, nimble minds streamline how they work and live, with:</p>
+    </div>
+    
+    <div class="images-leaning">
+        <div onclick="navigateToPage('page.html')">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FF3030'/%3E%3Crect x='140' y='140' width='120' height='180' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
+            <div class="card-text">
+                <h3>Resources</h3>
+                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
+            </div>
+        </div>
+        <div onclick="navigateToPage('page.html')">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%23FFC30D'/%3E%3Cg fill='%23000'%3E%3Cpath d='M200 100 L120 200 L280 200 Z'/%3E%3Cpath d='M200 300 L280 200 L120 200 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
+            <div class="card-text">
+                <h3>Interfaces</h3>
+                <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
+            </div>
+        </div>
+        <div onclick="navigateToPage('page.html')">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='600'%3E%3Crect width='400' height='600' fill='%230066FF'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='130' cy='150' r='50'/%3E%3Ccircle cx='270' cy='150' r='50'/%3E%3Ccircle cx='130' cy='290' r='50'/%3E%3Ccircle cx='270' cy='290' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
+            <div class="card-text">
+                <h3>Talent</h3>
+                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function navigateToPage(url) {
+            document.body.classList.add('exiting');
+            setTimeout(() => {
+                window.location.href = url;
+            }, 1500);
+        }
+        
+        // Show the actual logo in the logo section after overlay fades
+        setTimeout(() => {
+            document.querySelector('.logo-section img').classList.add('show-logo');
+        }, 3500);
+    </script>
+</body>
+</html>
