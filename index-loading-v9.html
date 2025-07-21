@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Loading Animation V5 - Elegant Stagger</title>
+    <title>Streamlined - Loading Animation V9 - Swiss Design</title>
     
     <style>
         /* Font Face Declarations 
@@ -111,17 +111,9 @@
             background-image: linear-gradient(124deg, transparent 42%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.35) 65%), linear-gradient(24deg, transparent 38%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0.23) 55%, rgba(0, 0, 0, 0.13) 75%), radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.15) 3%, transparent 40%);
             transform: rotate(-4deg);
         } */
-        /* Card overlay gradient */
+        /* Card overlay gradient - removed for clean geometric look */
         .images-leaning > article:after {
-            content: "";
-            width: 60%;
-            height: 100%;
-            position: absolute;
-            z-index: 3;
-            background-image: 
-                linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), 
-                linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize));
+            display: none;
         }
         /* Card image styling */
         .images-leaning > article > img {
@@ -130,8 +122,7 @@
             display: block;
             position: relative;
             z-index: 2;
-            border-left: 0.6em solid;
-            border-image: linear-gradient(90deg, transparent 0.5%, #aaa 0.7%) 1;
+            border: 2px solid #fff;
             box-shadow: 0.3em 0.2em 0 -0.3em #666;
             filter: saturate(90%);
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize));
@@ -152,9 +143,6 @@
             overflow: hidden;
         }
         .images-leaning > article:nth-of-type(3) > img {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
-        }
-        .images-leaning > article:nth-of-type(3):after {
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
         /* Common shadow styles for all cards */
@@ -191,9 +179,6 @@
         .images-leaning > article:nth-of-type(2) > img {
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > article:nth-of-type(2):after {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
-        }
         /* Card 3 (rightmost) - ID 0 in HTML */
         .images-leaning > article:nth-of-type(1) {
             --resize: 0.96;
@@ -204,26 +189,26 @@
         .images-leaning > article:nth-of-type(1) > img {
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
-        .images-leaning > article:nth-of-type(1):after {
-            transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
-        }
         
-        /* Header section - centered */
+        /* Header section - using same calculation as leftmost card */
         header.logo-section {
             position: absolute;
             top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
+            left: calc(50% - 100px); /* Same base as cards */
+            width: 600px;
+            transform: translateX(-40em) translateX(-19.2em); /* Same transform as card 3 */
             z-index: 20;
             pointer-events: none;
-            width: 100%;
         }
         
-        /* Inner content wrapper - centered */
+        /* Inner content wrapper to match image positioning */
         .header-content {
-            width: 100%;
-            text-align: center;
+            width: 60%; /* Match image width */
+            margin-left: 40%; /* Push to right like flex-end */
+            transform: translateX(var(--image-transform-x)); /* Match image transform */
+            text-align: left;
+            padding-left: 0; /* No compensation needed */
+            white-space: nowrap; /* Prevent line breaks */
         }
         
         .logo-section img {
@@ -270,7 +255,7 @@
         }
         
         
-        /* Card text overlay - positioned on the image */
+        /* Card text overlay - positioned at top with Swiss style */
         .card-text {
             position: absolute;
             width: 60%;
@@ -281,39 +266,66 @@
             z-index: 5;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            padding: 3rem;
-            padding-bottom: 6rem; /* Positioned higher from bottom */
+            justify-content: flex-start;
+            padding: 0;
             box-sizing: border-box;
             pointer-events: none;
         }
         
+        /* White header section */
+        .white-header {
+            background: #fff;
+            padding: 1.8rem 2.2rem;
+            border-bottom: 2px solid #000;
+        }
+        
+        /* Swiss header styling */
+        .swiss-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: #000;
+        }
+        
+        .swiss-title {
+            font-size: 1rem;
+        }
+        
+        .swiss-dots {
+            flex-grow: 1;
+            text-align: center;
+            letter-spacing: 0.3em;
+        }
+        
+        .swiss-issue {
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+        
+        /* Main title styling */
         .card-text h3 {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: 900;
-            color: #fff;
+            color: #000;
             letter-spacing: -0.02em;
-            line-height: 1;
+            line-height: 0.9;
             text-transform: none;
             margin: 0;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
             font-feature-settings: "kern" 1;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
+        
         .card-description {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: 0.75rem;
-            line-height: 1.4;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 90%;
-            margin-top: 0.5rem;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
+            display: none; /* Hide descriptions for cleaner Swiss style */
         }
         
         /* Loading Animation V5 - Elegant Stagger */
@@ -468,24 +480,46 @@
     <!-- Cards Section -->
     <main id="app" class="images-leaning">
         <article class="card" id="2">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%230066FF'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='195' cy='300' r='75'/%3E%3Ccircle cx='405' cy='300' r='75'/%3E%3Ccircle cx='195' cy='510' r='75'/%3E%3Ccircle cx='405' cy='510' r='75'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
+            <!-- Swiss Design - Pink with circles -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FF1493'/%3E%3Cg fill='%23000'%3E%3Ccircle cx='195' cy='400' r='75'/%3E%3Ccircle cx='405' cy='400' r='75'/%3E%3Ccircle cx='195' cy='610' r='75'/%3E%3Ccircle cx='405' cy='610' r='75'/%3E%3C/g%3E%3C/svg%3E" alt="Talent" />
             <div class="card-text">
-                <h3>Talent</h3>
-                <div class="card-description">Connecting design-conscious minds with opportunities that matter.</div>
+                <div class="white-header">
+                    <div class="swiss-header">
+                        <span class="swiss-title">SWISS</span>
+                        <span class="swiss-dots">•••</span>
+                        <span class="swiss-issue">01/25</span>
+                    </div>
+                    <h3>TALENT</h3>
+                </div>
+                <div class="card-description">Connecting design-conscious minds</div>
             </div>
         </article>
         <article class="card" id="1">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FFC30D'/%3E%3Cg fill='%23000'%3E%3Cpath d='M300 250 L180 400 L420 400 Z'/%3E%3Cpath d='M300 550 L420 400 L180 400 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
+            <!-- Swiss Design - Yellow with triangles -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FFD700'/%3E%3Cg fill='%23000'%3E%3Cpath d='M300 350 L180 500 L420 500 Z'/%3E%3Cpath d='M300 650 L420 500 L180 500 Z'/%3E%3C/g%3E%3C/svg%3E" alt="Interfaces" />
             <div class="card-text">
-                <h3>Interfaces</h3>
-                <div class="card-description">Crafting digital experiences that blend beauty and function.</div>
+                <div class="white-header">
+                    <div class="swiss-header">
+                        <span class="swiss-title">SWISS</span>
+                        <span class="swiss-issue">02/25</span>
+                    </div>
+                    <h3>INTERFACES</h3>
+                </div>
+                <div class="card-description">Digital experiences that matter</div>
             </div>
         </article>
         <article class="card" id="0">
-            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FF3030'/%3E%3Crect x='210' y='300' width='180' height='270' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
+            <!-- Swiss Design - Red with rectangle -->
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='900'%3E%3Crect width='600' height='900' fill='%23FF3030'/%3E%3Crect x='210' y='420' width='180' height='270' fill='%23000'/%3E%3C/svg%3E" alt="Resources" />
             <div class="card-text">
-                <h3>Resources</h3>
-                <div class="card-description">Curated tools and knowledge for the modern creative professional.</div>
+                <div class="white-header">
+                    <div class="swiss-header">
+                        <span class="swiss-title">SWISS</span>
+                        <span class="swiss-issue">03/25</span>
+                    </div>
+                    <h3>RESOURCES</h3>
+                </div>
+                <div class="card-description">Tools for modern creatives</div>
             </div>
         </article>
     </main>

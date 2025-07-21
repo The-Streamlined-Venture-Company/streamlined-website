@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Loading Animation V5 - Elegant Stagger</title>
+    <title>Streamlined - Loading Animation V7 - Enhanced Leaning Gradient</title>
     
     <style>
         /* Font Face Declarations 
@@ -111,16 +111,21 @@
             background-image: linear-gradient(124deg, transparent 42%, rgba(0, 0, 0, 0.15) 45%, rgba(0, 0, 0, 0.35) 65%), linear-gradient(24deg, transparent 38%, rgba(0, 0, 0, 0.25) 45%, rgba(0, 0, 0, 0.23) 55%, rgba(0, 0, 0, 0.13) 75%), radial-gradient(ellipse at 50% 100%, rgba(0, 0, 0, 0.15) 3%, transparent 40%);
             transform: rotate(-4deg);
         } */
-        /* Card overlay gradient */
+        /* Card overlay gradient - enhanced for leaning effect */
         .images-leaning > article:after {
             content: "";
             width: 60%;
             height: 100%;
             position: absolute;
             z-index: 3;
+            /* Enhanced gradient to emphasize the leaning forward effect */
             background-image: 
-                linear-gradient(45deg, rgba(0, 0, 0, 0.3), transparent 70%), 
-                linear-gradient(45deg, rgba(255, 255, 255, 0) 60%, rgba(255, 255, 255, 0.3) 80%);
+                /* Bottom darker gradient - stronger to show depth */
+                linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.1) 30%, transparent 50%),
+                /* Top lighter gradient - subtle highlight on upper edge */
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, transparent 20%),
+                /* Left edge shadow - shows the card edge */
+                linear-gradient(to right, rgba(0, 0, 0, 0.2) 0%, transparent 5%);
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize));
         }
         /* Card image styling */
@@ -208,22 +213,25 @@
             transform: perspective(60em) rotateX(0deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(var(--image-transform-x), var(--image-transform-y));
         }
         
-        /* Header section - centered */
+        /* Header section - using same calculation as leftmost card */
         header.logo-section {
             position: absolute;
             top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
+            left: calc(50% - 100px); /* Same base as cards */
+            width: 600px;
+            transform: translateX(-40em) translateX(-19.2em); /* Same transform as card 3 */
             z-index: 20;
             pointer-events: none;
-            width: 100%;
         }
         
-        /* Inner content wrapper - centered */
+        /* Inner content wrapper to match image positioning */
         .header-content {
-            width: 100%;
-            text-align: center;
+            width: 60%; /* Match image width */
+            margin-left: 40%; /* Push to right like flex-end */
+            transform: translateX(var(--image-transform-x)); /* Match image transform */
+            text-align: left;
+            padding-left: 0; /* No compensation needed */
+            white-space: nowrap; /* Prevent line breaks */
         }
         
         .logo-section img {
