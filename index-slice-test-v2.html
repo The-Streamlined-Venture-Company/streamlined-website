@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Shadow Smooth V7</title>
+    <title>Streamlined - Slice Test V2 - Steep angle to corner</title>
     
     <style>
         html,
@@ -91,6 +91,7 @@
             --resize: 0.96;
             margin-left: -36.7em;
             transform: scaleY(0.98) translate(-19.2em, -6.3em);
+            overflow: hidden;
         }
         .images-leaning > div:nth-of-type(3) > img {
             transform: perspective(60em) rotateX(3deg) rotateY(0deg) rotateZ(0deg) skewY(0deg) skewX(0deg) scaleX(var(--resize)) translate(-70px, -70px);
@@ -112,10 +113,10 @@
             background-size: 100% 83%, 100% 17%, 100% 10%;
             background-position: 0 0, 0 100%, 0 81%;
             mask-image: linear-gradient(to bottom, black 0%, black 85%, transparent 100%), 
-                       linear-gradient(to right, transparent 0%, black 15%, black 100%),
-                       linear-gradient(105deg, black 0%, black 50%, transparent 60%);
+                       linear-gradient(to right, transparent 0%, black 15%, black 100%);
             mask-composite: intersect;
             -webkit-mask-composite: source-in;
+            clip-path: polygon(0% 0%, 100% 0%, 100% 75%, 70% 100%, 0% 95%);
         }
         .images-leaning > div:nth-of-type(2) {
             --resize: 0.925;

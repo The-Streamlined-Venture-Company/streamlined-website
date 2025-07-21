@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Shadow Smooth V7</title>
+    <title>Streamlined - Corner Test V5 - Added Shadow Layer</title>
     
     <style>
         html,
@@ -116,6 +116,17 @@
                        linear-gradient(105deg, black 0%, black 50%, transparent 60%);
             mask-composite: intersect;
             -webkit-mask-composite: source-in;
+            position: relative;
+        }
+        .images-leaning > div:nth-of-type(3):before::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30%;
+            height: 15%;
+            background: linear-gradient(135deg, transparent 0%, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+            transform: skewX(-15deg);
         }
         .images-leaning > div:nth-of-type(2) {
             --resize: 0.925;
