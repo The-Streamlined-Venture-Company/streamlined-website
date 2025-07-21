@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Leaning Cards V6</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #fefefe;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Minimal line platform */
+        .platform {
+            position: absolute;
+            bottom: 150px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        
+        /* Cards container */
+        .cards-wrapper {
+            display: flex;
+            gap: -4rem;
+            align-items: flex-end;
+            position: relative;
+            z-index: 10;
+            transform: translateY(-50px);
+        }
+        
+        /* Individual card - Extreme perspective */
+        .card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        }
+        
+        .card:nth-child(1) {
+            width: 300px;
+            height: 450px;
+            transform: perspective(2000px) rotateX(20deg) rotateY(-30deg) translateZ(100px);
+            z-index: 3;
+            margin-right: -80px;
+        }
+        
+        .card:nth-child(2) {
+            width: 280px;
+            height: 420px;
+            transform: perspective(2000px) rotateX(15deg) rotateY(-20deg) translateZ(50px);
+            z-index: 2;
+            margin-right: -80px;
+        }
+        
+        .card:nth-child(3) {
+            width: 260px;
+            height: 390px;
+            transform: perspective(2000px) rotateX(10deg) rotateY(-10deg) translateZ(0px);
+            z-index: 1;
+        }
+        
+        /* Dramatic cast shadows */
+        .card::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -20px;
+            width: 120%;
+            height: 400px;
+            background: linear-gradient(100deg, 
+                transparent 0%,
+                rgba(0,0,0,0.05) 20%, 
+                rgba(0,0,0,0.1) 40%,
+                rgba(0,0,0,0.05) 60%,
+                transparent 100%);
+            transform: skewX(-25deg) scaleY(0.5);
+            transform-origin: bottom left;
+            z-index: -1;
+            filter: blur(40px);
+            opacity: 0.7;
+        }
+        
+        /* Card face */
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                -5px 5px 20px rgba(0,0,0,0.1),
+                -10px 10px 40px rgba(0,0,0,0.05);
+            transform-style: preserve-3d;
+        }
+        
+        /* Card side edge */
+        .card-face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 8px;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(0,0,0,0.3) 0%, 
+                rgba(0,0,0,0.1) 100%);
+            transform: rotateY(90deg) translateZ(4px);
+        }
+        
+        /* Card backgrounds */
+        .card:nth-child(1) .card-face {
+            background: #FF3030;
+        }
+        
+        .card:nth-child(2) .card-face {
+            background: #FFC30D;
+        }
+        
+        .card:nth-child(3) .card-face {
+            background: #0066FF;
+        }
+        
+        /* Card content - top aligned */
+        .card-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 3rem;
+            color: white;
+        }
+        
+        .card-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 2rem;
+        }
+        
+        .card-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -0.04em;
+            line-height: 0.9;
+        }
+        
+        .card-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.8;
+            max-width: 80%;
+        }
+        
+        /* Hover effects */
+        .card:hover {
+            transform: perspective(2000px) rotateX(18deg) rotateY(-32deg) translateZ(120px) translateX(-20px);
+        }
+        
+        .card:nth-child(2):hover {
+            transform: perspective(2000px) rotateX(13deg) rotateY(-22deg) translateZ(70px);
+        }
+        
+        .card:nth-child(3):hover {
+            transform: perspective(2000px) rotateX(8deg) rotateY(-12deg) translateZ(20px) translateX(20px);
+        }
+        
+        /* Header - bottom left */
+        .header {
+            position: absolute;
+            bottom: 4rem;
+            left: 4rem;
+        }
+        
+        .logo {
+            width: 40px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+        
+        .subtitle {
+            font-size: 0.875rem;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="assets/logo.gif" alt="Streamlined" class="logo">
+            <h1 class="title">Streamlined</h1>
+            <p class="subtitle">Design-conscious solutions</p>
+        </div>
+        
+        <!-- Cards -->
+        <div class="cards-wrapper">
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <svg class="card-icon" viewBox="0 0 100 100">
+                            <rect x="25" y="25" width="50" height="50" fill="#000" />
+                        </svg>
+                        <h2 class="card-title">Resources</h2>
+                        <p class="card-description">Curated tools and knowledge for the modern creative professional.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <svg class="card-icon" viewBox="0 0 100 100">
+                            <rect x="30" y="30" width="40" height="40" fill="#000" transform="rotate(45 50 50)" />
+                        </svg>
+                        <h2 class="card-title">Interfaces</h2>
+                        <p class="card-description">Crafting digital experiences that blend beauty and function.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <svg class="card-icon" viewBox="0 0 100 100">
+                            <circle cx="30" cy="30" r="10" fill="#fff" />
+                            <circle cx="70" cy="30" r="10" fill="#fff" />
+                            <circle cx="30" cy="70" r="10" fill="#fff" />
+                            <circle cx="70" cy="70" r="10" fill="#fff" />
+                        </svg>
+                        <h2 class="card-title">Talent</h2>
+                        <p class="card-description">Connecting design-conscious minds with opportunities that matter.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Platform -->
+        <div class="platform"></div>
+    </div>
+    
+    <script>
+        function navigateToPage(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

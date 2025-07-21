@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    
+    <style>
+        /* ==================== RESET & BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #000;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* ==================== HEADER ==================== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem 3rem;
+            background: #f5f5f5;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .menu-link {
+            font-size: 0.875rem;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .menu-link:hover {
+            color: #000;
+        }
+        
+        /* ==================== MAIN CONTAINER ==================== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10rem 2rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        /* ==================== HERO SECTION ==================== */
+        .hero-section {
+            text-align: left;
+            margin-bottom: 3rem;
+            width: 100%;
+            max-width: 600px;
+            margin-right: auto;
+            margin-left: 0;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .logo {
+            width: 60px;
+            height: auto;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 300;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.125rem;
+            font-weight: 400;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* ==================== BOOKS CONTAINER ==================== */
+        .books-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin-top: 4rem;
+        }
+        
+        /* Book Card Base */
+        .book-card {
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            animation: slideUp 0.8s ease-out forwards;
+        }
+        
+        .book-card:nth-child(1) {
+            left: 20%;
+            bottom: 0;
+            z-index: 3;
+            animation-delay: 0.2s;
+        }
+        
+        .book-card:nth-child(2) {
+            left: 40%;
+            bottom: 0;
+            z-index: 2;
+            animation-delay: 0.3s;
+        }
+        
+        .book-card:nth-child(3) {
+            left: 60%;
+            bottom: 0;
+            z-index: 1;
+            animation-delay: 0.4s;
+        }
+        
+        /* Book 3D Structure */
+        .book {
+            width: 180px;
+            height: 260px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateY(-25deg) rotateX(5deg);
+            transition: transform 0.3s ease;
+        }
+        
+        /* Book Face (Front Cover) */
+        .book-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 4px 8px 8px 4px;
+            box-shadow: 
+                0 2px 4px rgba(0,0,0,0.1),
+                inset -2px 0 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Book Spine */
+        .book-spine {
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 20px;
+            height: 100%;
+            transform: rotateY(-90deg) translateZ(10px);
+            border-radius: 4px 0 0 4px;
+            box-shadow: inset -2px 0 4px rgba(0,0,0,0.2);
+        }
+        
+        /* Book Shadow on Ground */
+        .book-shadow {
+            position: absolute;
+            bottom: -10px;
+            left: -10px;
+            right: -10px;
+            height: 20px;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%);
+            filter: blur(10px);
+            transform: translateZ(-50px);
+        }
+        
+        /* Color Backgrounds */
+        .book-card:nth-child(1) .book-face {
+            background: linear-gradient(135deg, #0066FF 0%, #0052CC 100%);
+        }
+        
+        .book-card:nth-child(1) .book-spine {
+            background: #0052CC;
+        }
+        
+        .book-card:nth-child(2) .book-face {
+            background: linear-gradient(135deg, #FFC30D 0%, #FFB300 100%);
+        }
+        
+        .book-card:nth-child(2) .book-spine {
+            background: #FFB300;
+        }
+        
+        .book-card:nth-child(3) .book-face {
+            background: linear-gradient(135deg, #FF3030 0%, #E62E2E 100%);
+        }
+        
+        .book-card:nth-child(3) .book-spine {
+            background: #E62E2E;
+        }
+        
+        /* Book Icon */
+        .book-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: auto;
+            margin-top: 2rem;
+            opacity: 0.9;
+        }
+        
+        /* Book Text */
+        .book-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .book-description {
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: rgba(255,255,255,0.9);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* Book Texture Overlay */
+        .book-face::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 4px
+                ),
+                linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
+        }
+        
+        /* Hover Effects */
+        .book-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .book-card:hover .book {
+            transform: perspective(1000px) rotateY(-20deg) rotateX(3deg);
+        }
+        
+        .book-card:hover .book-shadow {
+            transform: translateZ(-50px) scaleX(1.1);
+            opacity: 0.5;
+        }
+        
+        /* ==================== ANIMATIONS ==================== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* ==================== LOADER ==================== */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f5f5f5;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+        
+        .loader-overlay.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-logo {
+            width: 60px;
+            height: auto;
+            opacity: 0;
+            animation: pulse 2s ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0; transform: scale(0.95); }
+        }
+        
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 8rem 1.5rem 3rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .books-container {
+                height: 350px;
+            }
+            
+            .book {
+                width: 150px;
+                height: 220px;
+            }
+            
+            .book-card:nth-child(1) { left: 10%; }
+            .book-card:nth-child(2) { left: 35%; }
+            .book-card:nth-child(3) { left: 60%; }
+            
+            .book-title {
+                font-size: 1.5rem;
+            }
+            
+            .book-icon {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .book {
+                width: 120px;
+                height: 180px;
+            }
+            
+            .book-title {
+                font-size: 1.25rem;
+            }
+            
+            .book-description {
+                font-size: 0.65rem;
+            }
+            
+            .book-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-overlay" id="loader">
+        <img src="assets/logo.gif" alt="Streamlined Logo" class="loader-logo" />
+    </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="logo-small">
+            <img src="assets/logo.gif" alt="Streamlined" style="height: 30px;">
+        </div>
+        <nav>
+            <a href="#" class="menu-link">Menu</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <img src="assets/logo.gif" alt="Streamlined Logo" class="logo" />
+            <h1 class="hero-title">We are Streamlined.</h1>
+            <p class="hero-subtitle">We help design-conscious, nimble minds streamline how they work and live, with:</p>
+        </section>
+        
+        <!-- Books Container -->
+        <div class="books-container">
+            <!-- Talent Book -->
+            <article class="book-card" onclick="navigateToPage('page.html')">
+                <div class="book">
+                    <div class="book-shadow"></div>
+                    <div class="book-spine"></div>
+                    <div class="book-face">
+                        <svg class="book-icon" viewBox="0 0 60 60">
+                            <circle cx="15" cy="15" r="6" fill="#fff" opacity="0.9" />
+                            <circle cx="45" cy="15" r="6" fill="#fff" opacity="0.9" />
+                            <circle cx="15" cy="45" r="6" fill="#fff" opacity="0.9" />
+                            <circle cx="45" cy="45" r="6" fill="#fff" opacity="0.9" />
+                        </svg>
+                        <h2 class="book-title">Talent</h2>
+                        <p class="book-description">Connecting design-conscious minds with opportunities that matter.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Interfaces Book -->
+            <article class="book-card" onclick="navigateToPage('page.html')">
+                <div class="book">
+                    <div class="book-shadow"></div>
+                    <div class="book-spine"></div>
+                    <div class="book-face">
+                        <svg class="book-icon" viewBox="0 0 60 60">
+                            <rect x="18" y="18" width="24" height="24" fill="#000" opacity="0.9" transform="rotate(45 30 30)" />
+                        </svg>
+                        <h2 class="book-title">Interfaces</h2>
+                        <p class="book-description">Crafting digital experiences that blend beauty and function.</p>
+                    </div>
+                </div>
+            </article>
+            
+            <!-- Resources Book -->
+            <article class="book-card" onclick="navigateToPage('page.html')">
+                <div class="book">
+                    <div class="book-shadow"></div>
+                    <div class="book-spine"></div>
+                    <div class="book-face">
+                        <svg class="book-icon" viewBox="0 0 60 60">
+                            <rect x="15" y="15" width="30" height="30" fill="#000" opacity="0.9" />
+                        </svg>
+                        <h2 class="book-title">Resources</h2>
+                        <p class="book-description">Curated tools and knowledge for the modern creative professional.</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    
+    <script>
+        // Remove loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.classList.add('fade-out');
+            }, 1500);
+        });
+        
+        // Navigation
+        function navigateToPage(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

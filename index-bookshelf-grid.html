@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Bookshelf Grid</title>
+    
+    <style>
+        body {
+            background-color: #f5f5f0;
+            margin: 0;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpolygon fill='%23000' points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E");
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* Header section */
+        .header-section {
+            text-align: center;
+            padding: 3rem 2rem 2rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            color: #18191a;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.2s forwards;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            line-height: 1.6;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.3s forwards;
+        }
+        
+        /* Avatar style */
+        .imgct {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+            z-index: 100;
+            opacity: 0;
+            animation: slideInLeft 0.8s ease-out 0.5s forwards;
+        }
+        
+        .imgct img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        /* Bookshelf styles */
+        .bookshelf {
+            width: 90%;
+            max-width: 900px;
+            margin: 5rem auto;
+            text-align: center;
+            position: relative;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .bookshelf:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .bookshelf:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .bookshelf.first {
+            margin-top: 2rem;
+            animation-delay: 0.2s;
+        }
+        
+        /* Book grid */
+        .book-grid {
+            z-index: 2;
+            position: relative;
+            transform: translateY(-15px);
+        }
+        
+        .book-grid ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+        }
+        
+        .book-grid ul li {
+            justify-self: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .book-grid ul li:hover {
+            transform: translateY(-10px) rotate(-2deg);
+        }
+        
+        .book-grid ul li:hover .book-cover {
+            box-shadow: 0.15em 0.3em 0 -0.05em #666;
+        }
+        
+        /* Book cover container */
+        .book-cover {
+            display: block;
+            width: 280px;
+            height: 420px;
+            position: relative;
+            box-shadow: 
+                /* Primary shadow */
+                0.08em 0.15em 0.3em rgba(0,0,0,0.3),
+                /* Sharp edge shadow for depth */
+                0.05em 0.1em 0 -0.02em rgba(0,0,0,0.4),
+                /* Subtle ambient shadow */
+                0 0 0.5em rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            border-radius: 2px 5px 5px 2px;
+            overflow: hidden;
+            border-left: 0.25em solid;
+            border-image: 
+                linear-gradient(
+                    105deg, 
+                    transparent 0%, 
+                    #888 1%, 
+                    #aaa 20%, 
+                    #bbb 50%, 
+                    #aaa 80%, 
+                    #888 99%, 
+                    transparent 100%
+                ) 1;
+            filter: saturate(90%) contrast(1.02);
+        }
+        
+        /* Book content */
+        .book-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            color: white;
+        }
+        
+        .book-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+        
+        .book-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.75rem;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            letter-spacing: -0.02em;
+            line-height: 1;
+        }
+        
+        .book-subtitle {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            line-height: 1.4;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* Book spine effect - removed as it's handled by border */
+        .book-spine {
+            display: none;
+        }
+        
+        /* Book colors matching main index */
+        .bookshelf .book-cover:nth-child(1) .book-content {
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.04) 2px,
+                    rgba(255,255,255,0.04) 4px
+                ),
+                #FF3030;
+            background-size: 20px 20px, auto;
+        }
+        
+        .bookshelf .book-cover:nth-child(2) .book-content {
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.05) 2px,
+                    rgba(255,255,255,0.05) 4px
+                ),
+                #FFC30D;
+            background-size: 20px 20px, auto;
+        }
+        
+        .bookshelf .book-cover:nth-child(3) .book-content {
+            background: 
+                repeating-linear-gradient(
+                    45deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 4px
+                ),
+                #0066FF;
+            background-size: 20px 20px, auto;
+        }
+        
+        /* Shelf shadows */
+        .shelf-shadows {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1rem;
+            border-radius: 2px;
+            z-index: 1;
+            box-shadow: 0px -5px 3px 0px rgba(170, 170, 170, 0.2), 
+                        0px 15px 20px 0px rgba(0, 0, 0, 0.3), 
+                        0px 5px 5px 0px rgba(119, 119, 119, 0.3);
+        }
+        
+        .shelf {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1rem;
+            background: linear-gradient(180deg, #f9f9f9 0%, #e8e8e8 100%);
+            border-radius: 2px;
+            z-index: 3;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+        
+        /* Section labels */
+        .shelf-label {
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.875rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .imgct {
+                position: static;
+                margin: 0 auto 2rem;
+                display: block;
+                text-align: center;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .book-grid ul {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .book-cover {
+                width: 200px;
+                height: 300px;
+            }
+            
+            .book-icon {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .book-title {
+                font-size: 1.25rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .book-grid ul {
+                grid-template-columns: 1fr;
+            }
+            
+            .bookshelf {
+                margin: 3rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Avatar -->
+    <div class="imgct">
+        <img src="assets/logo.gif" alt="Streamlined avatar">
+    </div>
+    
+    <!-- Header -->
+    <div class="header-section">
+        <img src="assets/logo.gif" alt="Streamlined Logo" class="logo" />
+        <h1 class="main-title">We are Streamlined.</h1>
+        <p class="subtitle">We help design-conscious, nimble minds streamline how they work and live.</p>
+    </div>
+    
+    <!-- Main Shelf - Streamlined Services -->
+    <div class="bookshelf first">
+        <div class="book-grid">
+            <ul>
+                <li onclick="navigateToPage('page.html')">
+                    <div class="book-cover">
+                        <div class="book-content">
+                            <svg class="book-icon" viewBox="0 0 400 600">
+                                <rect x="140" y="140" width="120" height="180" fill="#000"/>
+                            </svg>
+                            <h3 class="book-title">Resources</h3>
+                            <p class="book-subtitle">Curated tools and knowledge for the modern creative professional.</p>
+                        </div>
+                    </div>
+                </li>
+                <li onclick="navigateToPage('page.html')">
+                    <div class="book-cover">
+                        <div class="book-content">
+                            <svg class="book-icon" viewBox="0 0 400 600">
+                                <g fill="#000">
+                                    <path d="M200 100 L120 200 L280 200 Z"/>
+                                    <path d="M200 300 L280 200 L120 200 Z"/>
+                                </g>
+                            </svg>
+                            <h3 class="book-title">Interfaces</h3>
+                            <p class="book-subtitle">Crafting digital experiences that blend beauty and function.</p>
+                        </div>
+                    </div>
+                </li>
+                <li onclick="navigateToPage('page.html')">
+                    <div class="book-cover">
+                        <div class="book-content">
+                            <svg class="book-icon" viewBox="0 0 400 600">
+                                <g fill="#000">
+                                    <circle cx="130" cy="150" r="50"/>
+                                    <circle cx="270" cy="150" r="50"/>
+                                    <circle cx="130" cy="290" r="50"/>
+                                    <circle cx="270" cy="290" r="50"/>
+                                </g>
+                            </svg>
+                            <h3 class="book-title">Talent</h3>
+                            <p class="book-subtitle">Connecting design-conscious minds with opportunities that matter.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="shelf-shadows"></div>
+        <div class="shelf"></div>
+    </div>
+    
+    <script>
+        // Navigation
+        function navigateToPage(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

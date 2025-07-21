@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Leaning Cards V8</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #fff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1300px;
+            height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            position: relative;
+            padding: 0 3rem;
+        }
+        
+        /* White platform edge */
+        .platform {
+            position: absolute;
+            bottom: 120px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #e0e0e0 20%, 
+                #e0e0e0 80%, 
+                transparent 100%);
+        }
+        
+        .platform::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(180deg, 
+                rgba(0,0,0,0.02) 0%, 
+                transparent 100%);
+        }
+        
+        /* Cards container */
+        .cards-wrapper {
+            display: flex;
+            gap: 5rem;
+            align-items: flex-end;
+            padding-bottom: 140px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Individual card - Varied angles */
+        .card {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:nth-child(1) {
+            width: 240px;
+            height: 360px;
+            transform: perspective(1500px) rotateX(8deg) rotateY(-10deg) rotateZ(-2deg);
+        }
+        
+        .card:nth-child(2) {
+            width: 260px;
+            height: 390px;
+            transform: perspective(1500px) rotateX(10deg) rotateY(-5deg) rotateZ(0deg);
+        }
+        
+        .card:nth-child(3) {
+            width: 250px;
+            height: 375px;
+            transform: perspective(1500px) rotateX(9deg) rotateY(-2deg) rotateZ(2deg);
+        }
+        
+        /* Geometric shadows */
+        .card::before {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: 20px;
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(180deg, 
+                rgba(0,0,0,0.12) 0%, 
+                rgba(0,0,0,0.06) 50%,
+                transparent 100%);
+            transform: skewX(-10deg) scaleX(0.9);
+            z-index: -1;
+            clip-path: polygon(0 0, 100% 10%, 90% 100%, 10% 100%);
+        }
+        
+        /* Card face minimal */
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 0 0 1px rgba(0,0,0,0.05),
+                0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        /* Card backgrounds - solid colors */
+        .card:nth-child(1) .card-face {
+            background: #FF3030;
+        }
+        
+        .card:nth-child(2) .card-face {
+            background: #FFC30D;
+        }
+        
+        .card:nth-child(3) .card-face {
+            background: #0066FF;
+        }
+        
+        /* Card content - geometric layout */
+        .card-content {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .card-icon {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .text-wrapper {
+            text-align: center;
+        }
+        
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .card-description {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            opacity: 0.8;
+        }
+        
+        /* Hover effects - cards tilt forward */
+        .card:nth-child(1):hover {
+            transform: perspective(1500px) rotateX(5deg) rotateY(-12deg) rotateZ(-3deg) translateY(-15px);
+        }
+        
+        .card:nth-child(2):hover {
+            transform: perspective(1500px) rotateX(7deg) rotateY(-5deg) rotateZ(0deg) translateY(-15px);
+        }
+        
+        .card:nth-child(3):hover {
+            transform: perspective(1500px) rotateX(6deg) rotateY(-2deg) rotateZ(3deg) translateY(-15px);
+        }
+        
+        /* Header - top left */
+        .header {
+            position: absolute;
+            top: 3rem;
+            left: 3rem;
+        }
+        
+        .logo {
+            width: 50px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #18191a;
+            margin-bottom: 0.25rem;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        /* Navigation dots */
+        .nav-dots {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <img src="assets/logo.gif" alt="Streamlined" class="logo">
+            <h1 class="title">We are Streamlined.</h1>
+            <p class="subtitle">We help design-conscious minds streamline.</p>
+        </div>
+        
+        <!-- Cards -->
+        <div class="cards-wrapper">
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <div class="icon-wrapper">
+                            <svg class="card-icon" viewBox="0 0 120 120">
+                                <rect x="30" y="30" width="60" height="60" fill="#000" />
+                            </svg>
+                        </div>
+                        <div class="text-wrapper">
+                            <h2 class="card-title">Resources</h2>
+                            <p class="card-description">Curated tools and knowledge.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <div class="icon-wrapper">
+                            <svg class="card-icon" viewBox="0 0 120 120">
+                                <rect x="35" y="35" width="50" height="50" fill="#000" transform="rotate(45 60 60)" />
+                            </svg>
+                        </div>
+                        <div class="text-wrapper">
+                            <h2 class="card-title">Interfaces</h2>
+                            <p class="card-description">Digital experiences that matter.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" onclick="navigateToPage('page.html')">
+                <div class="card-face">
+                    <div class="card-content">
+                        <div class="icon-wrapper">
+                            <svg class="card-icon" viewBox="0 0 120 120">
+                                <circle cx="35" cy="35" r="12" fill="#fff" />
+                                <circle cx="85" cy="35" r="12" fill="#fff" />
+                                <circle cx="35" cy="85" r="12" fill="#fff" />
+                                <circle cx="85" cy="85" r="12" fill="#fff" />
+                            </svg>
+                        </div>
+                        <div class="text-wrapper">
+                            <h2 class="card-title">Talent</h2>
+                            <p class="card-description">Connecting creative minds.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Platform -->
+        <div class="platform"></div>
+        
+        <!-- Navigation dots -->
+        <div class="nav-dots">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot active"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    
+    <script>
+        function navigateToPage(url) {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                window.location.href = url;
+            }, 500);
+        }
+    </script>
+</body>
+</html>
