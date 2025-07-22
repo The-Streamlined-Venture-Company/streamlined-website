@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #FFFFFF;
+            color: #333333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header with animated gradient */
+        .header {
+            padding: 80px;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(-45deg, #B8C5D6, #D6E3F0, #E8D5C4, #F0E6D8);
+            background-size: 400% 400%;
+            animation: gradient 18s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .header.slide-up {
+            min-height: 50vh;
+            padding: 60px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 60px;
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: logo-loader 2s ease forwards;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: brightness(0.8) contrast(1.1);
+        }
+        
+        @keyframes logo-loader {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .header.slide-up .nav-brand {
+            width: 50px;
+            margin-bottom: 25px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 1.8s;
+            transition: font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #4A5568;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(50px, 8vw, 80px);
+            margin-bottom: 25px;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tagline */
+        .tagline-wrapper {
+            position: relative;
+            height: 50px;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            line-height: 1.5;
+            color: rgba(74, 85, 104, 0.8);
+            font-weight: 400;
+            position: absolute;
+            white-space: nowrap;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.7;
+            font-size: 20px;
+            color: rgba(74, 85, 104, 0.7);
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            width: 0;
+            animation: typing 4.5s linear 2.6s forwards;
+        }
+
+        @keyframes typing {
+            to { width: 100% }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: #B8C5D6;
+            margin-left: 2px;
+            animation: blink 0.75s step-end infinite;
+            vertical-align: text-bottom;
+            opacity: 0.9;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1 }
+            51%, 100% { opacity: 0 }
+        }
+
+        .subtitle.finished {
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle.finished .cursor {
+            animation: none;
+            opacity: 0;
+        }
+
+        /* Services section - directly in container */
+        .services {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #FFFFFF;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+        }
+
+        .service:nth-child(2) {
+            border-top: 1px solid #F5F5F5;
+        }
+
+        .service:nth-child(3) {
+            border-top: 1px solid #F5F5F5;
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+            max-width: 1400px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-inner {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+        }
+
+        .service-1 .service-number { color: #B8C5D6; }
+        .service-2 .service-number { color: #D6E3F0; }
+        .service-3 .service-number { color: #E8D5C4; }
+
+        .service:hover .service-number {
+            color: #FFFFFF;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            color: #333333;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.4;
+            color: #666666;
+            max-width: 600px;
+        }
+
+        /* Hover effects */
+        .service-1:hover {
+            background: #B8C5D6;
+        }
+        .service-2:hover {
+            background: #D6E3F0;
+        }
+        .service-3:hover {
+            background: #E8D5C4;
+        }
+
+        .service:hover .service-title,
+        .service:hover .service-desc {
+            color: #4A5568;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .service {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="assets/logo.gif" alt="Streamlined">
+                </div>
+                <h1>We are Streamlined.</h1>
+                <div class="tagline-wrapper">
+                    <p class="subtitle" id="tagline">
+                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span><span class="cursor"></span>
+                    </p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="services" id="services">
+            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                <div class="service-inner">
+                    <div class="service-number">01</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-inner">
+                    <div class="service-number">02</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Interfaces</h2>
+                        <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                <div class="service-inner">
+                    <div class="service-number">03</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Platforms</h2>
+                        <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Show services
+                document.getElementById('services').classList.add('show');
+
+                // Finish typewriter effect
+                setTimeout(() => {
+                    document.getElementById('tagline').classList.add('finished');
+                }, 7100);
+
+                // When "with:" appears, immediately show services
+                setTimeout(() => {
+                    document.getElementById('header').classList.add('slide-up');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                }, 7100);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #FFF9F5;
+            color: #3D3632;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - slides up */
+        .header {
+            padding: 80px;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up {
+            min-height: 35vh;
+            padding: 60px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 60px;
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: logo-loader 2s ease forwards;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes logo-loader {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .header.slide-up .nav-brand {
+            width: 50px;
+            margin-bottom: 25px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 1.8s;
+            transition: font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: geometricPrecision;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            color: #3D3632;
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(50px, 8vw, 80px);
+            margin-bottom: 25px;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tagline wrapper */
+        .tagline-wrapper {
+            position: relative;
+            height: 50px;
+        }
+
+        /* Tagline with typewriter effect */
+        .subtitle {
+            font-size: 28px;
+            line-height: 1.5;
+            color: #6D5D52;
+            font-weight: 400;
+            position: absolute;
+            white-space: nowrap;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: geometricPrecision;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            font-feature-settings: "kern" 1, "liga" 1;
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.7;
+            font-size: 20px;
+            color: #7D6D62;
+        }
+
+        .header.slide-up .subtitle.finished {
+            font-weight: 400;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden;
+            width: 0;
+            animation: typing 4.5s linear 2.6s forwards;
+        }
+
+        @keyframes typing {
+            to { width: 100% }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: #C9A582;
+            margin-left: 2px;
+            animation: blink 0.75s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1 }
+            51%, 100% { opacity: 0 }
+        }
+
+        .subtitle.finished {
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            color: #6D5D52;
+        }
+
+        .subtitle.finished .cursor {
+            animation: none;
+            opacity: 0;
+        }
+
+        /* Services wrapper */
+        .services-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            overflow: hidden;
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .services-wrapper.expanded {
+            height: 50vh;
+        }
+
+        /* Line animations */
+        .line-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scan-line {
+            position: absolute;
+            height: 2px;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            animation: scan-fade 1.5s ease forwards;
+        }
+
+        .scan-line:nth-child(1) {
+            top: 33.33%;
+            background: linear-gradient(to right, transparent, #C9A582, transparent);
+            animation-delay: 7.1s;
+            box-shadow: 0 0 10px rgba(201, 165, 130, 0.3);
+        }
+
+        .scan-line:nth-child(2) {
+            top: 66.66%;
+            background: linear-gradient(to right, transparent, #DDB89A, transparent);
+            animation-delay: 7.1s;
+            box-shadow: 0 0 10px rgba(221, 184, 154, 0.3);
+        }
+
+        .scan-line:nth-child(3) {
+            bottom: 0;
+            background: linear-gradient(to right, transparent, #F1CBB2, transparent);
+            animation-delay: 7.1s;
+            box-shadow: 0 0 10px rgba(241, 203, 178, 0.3);
+        }
+
+        @keyframes scan-fade {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Services */
+        .services {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-content {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .service-number {
+            font-size: 180px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+        }
+
+        .service-1 .service-number { color: #C9A582; }
+        .service-2 .service-number { color: #DDB89A; }
+        .service-3 .service-number { color: #F1CBB2; }
+
+        .service:hover .service-number {
+            color: #FFF9F5;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            color: #3D3632;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #8D7D72;
+            max-width: 600px;
+        }
+
+        /* Hover effects */
+        .service-1:hover {
+            background: #C9A582;
+        }
+        .service-2:hover {
+            background: #DDB89A;
+        }
+        .service-3:hover {
+            background: #F1CBB2;
+        }
+
+        .service:hover .service-title,
+        .service:hover .service-desc {
+            color: #FFF9F5;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="assets/logo.gif" alt="Streamlined">
+                </div>
+                <h1>We are Streamlined.</h1>
+                <div class="tagline-wrapper">
+                    <p class="subtitle" id="tagline">
+                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span><span class="cursor"></span>
+                    </p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="services-wrapper">
+            <div class="line-layer">
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+            </div>
+            
+            <div class="services" id="services">
+                <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">01</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Talent</h2>
+                                <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">02</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Interfaces</h2>
+                                <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">03</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Platforms</h2>
+                                <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Show services
+                document.getElementById('services').classList.add('show');
+
+                // Finish typewriter effect
+                setTimeout(() => {
+                    document.getElementById('tagline').classList.add('finished');
+                }, 7100);
+
+                // When "with:" appears, immediately show services
+                setTimeout(() => {
+                    document.getElementById('header').classList.add('slide-up');
+                    document.querySelector('.services-wrapper').classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                }, 7100);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
