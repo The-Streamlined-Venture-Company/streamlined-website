@@ -376,6 +376,66 @@
             color: #030303;
         }
 
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        
+        .main-nav.show {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 40px;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .nav-links li {
+            margin: 0;
+        }
+        
+        .nav-links a {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease, opacity 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #FFFFFF;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
         /* Hover effects */
         .service:hover {
             background: #FFFFFF !important;
@@ -435,6 +495,16 @@
 </head>
 <body>
     <div class="container">
+        <!-- Navigation -->
+        <nav class="main-nav" id="main-nav">
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#philosophy">Philosophy</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        
         <!-- Logo outside of header -->
         <div class="logo-wrapper" id="logo-wrapper">
             <div class="nav-brand" id="nav-brand">
@@ -528,6 +598,11 @@
                     setTimeout(() => {
                         logoWrapper.classList.add('at-top');
                         navBrand.classList.add('at-top');
+                        
+                        // Show navigation when logo animation completes (1.5s transition)
+                        setTimeout(() => {
+                            document.getElementById('main-nav').classList.add('show');
+                        }, 1500);
                     }, 50);
                     
                     // Add Co. after Streamlined finishes sliding
