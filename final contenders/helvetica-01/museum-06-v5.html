@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f5f0e8;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* Main content */
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 60px 60px;
+            position: relative;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 80px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Left content */
+        .left-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .main-title span {
+            display: block;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .main-title span:nth-child(1) { animation-delay: 0.1s; }
+        .main-title span:nth-child(2) { animation-delay: 0.2s; }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #333;
+            max-width: 400px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        /* Service menu */
+        .service-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        .service-item {
+            padding: 30px;
+            background: #dc3545;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.2);
+            transition: left 0.3s ease;
+        }
+
+        .service-item:hover::before {
+            left: 0;
+        }
+
+        .service-item:hover {
+            transform: translateX(10px);
+        }
+
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .service-number {
+            font-size: 48px;
+            font-weight: 700;
+            opacity: 0.3;
+        }
+
+        .service-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        /* Background decoration */
+        .bg-decoration {
+            position: fixed;
+            top: -20%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: #dc3545;
+            border-radius: 50%;
+            opacity: 0.05;
+            z-index: -1;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-brand">Streamlined</div>
+        </nav>
+
+        <div class="bg-decoration"></div>
+
+        <section class="main-content">
+            <div class="content-grid">
+                <div class="left-content">
+                    <h1 class="main-title">
+                        <span>We are</span>
+                        <span>Streamlined</span>
+                    </h1>
+                    <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+                </div>
+
+                <div class="service-menu">
+                    <div class="service-item" onclick="window.location.href='#talent'">
+                        <div class="service-header">
+                            <h2 class="service-title">Talent</h2>
+                            <div class="service-number">01</div>
+                        </div>
+                        <p class="service-desc">Expert professionals ready to transform your vision</p>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#interfaces'">
+                        <div class="service-header">
+                            <h2 class="service-title">Interfaces</h2>
+                            <div class="service-number">02</div>
+                        </div>
+                        <p class="service-desc">Beautiful, functional digital experiences</p>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#platforms'">
+                        <div class="service-header">
+                            <h2 class="service-title">Platforms</h2>
+                            <div class="service-number">03</div>
+                        </div>
+                        <p class="service-desc">Modern tools for efficient workflows</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

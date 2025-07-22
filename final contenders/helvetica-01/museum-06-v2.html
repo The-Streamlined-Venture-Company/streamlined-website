@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f5f0e8;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* Hero section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        /* Left panel */
+        .left-panel {
+            flex: 1.5;
+            padding: 120px 60px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .main-title span {
+            display: block;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .main-title span:nth-child(1) { animation-delay: 0.1s; }
+        .main-title span:nth-child(2) { animation-delay: 0.2s; }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #333;
+            max-width: 400px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        /* Right panel - Gradient fade */
+        .right-panel {
+            flex: 1;
+            position: relative;
+            background: linear-gradient(to right, #f5f0e8 0%, #dc3545 100%);
+        }
+
+        /* Service overlay */
+        .service-overlay {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            padding: 40px 60px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+            transform: translateY(100%);
+            animation: slideUp 1s ease 0.8s forwards;
+        }
+
+        .service-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: #dc3545;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .service-card:hover {
+            transform: translateX(10px);
+        }
+
+        .service-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+
+        .service-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.4;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column;
+            }
+            
+            .service-overlay {
+                position: relative;
+                transform: none;
+                animation: none;
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-brand">Streamlined</div>
+        </nav>
+
+        <section class="hero">
+            <div class="left-panel">
+                <h1 class="main-title">
+                    <span>We are</span>
+                    <span>Streamlined</span>
+                </h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+            
+            <div class="right-panel"></div>
+        </section>
+
+        <div class="service-overlay">
+            <div class="service-card" onclick="window.location.href='#talent'">
+                <div class="service-number">01</div>
+                <h2 class="service-title">Talent</h2>
+                <p class="service-desc">Expert professionals ready to transform your vision</p>
+            </div>
+            
+            <div class="service-card" onclick="window.location.href='#interfaces'">
+                <div class="service-number">02</div>
+                <h2 class="service-title">Interfaces</h2>
+                <p class="service-desc">Beautiful, functional digital experiences</p>
+            </div>
+            
+            <div class="service-card" onclick="window.location.href='#platforms'">
+                <div class="service-number">03</div>
+                <h2 class="service-title">Platforms</h2>
+                <p class="service-desc">Modern tools for efficient workflows</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

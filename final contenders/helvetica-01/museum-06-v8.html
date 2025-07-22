@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f5f0e8;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Left section */
+        .left-section {
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #f5f0e8;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+        }
+
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .main-title span {
+            display: block;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        .main-title span:nth-child(1) { animation-delay: 0.1s; }
+        .main-title span:nth-child(2) { animation-delay: 0.2s; }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #333;
+            max-width: 400px;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.5s forwards;
+        }
+
+        /* Right section */
+        .right-section {
+            background: #dc3545;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .service-block {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.4s ease;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .service-block:last-child {
+            border-bottom: none;
+        }
+
+        .service-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: rgba(0,0,0,0.1);
+            transition: width 0.4s ease;
+        }
+
+        .service-block:hover::before {
+            width: 100%;
+        }
+
+        .service-block:hover {
+            padding-left: 80px;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-number {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 120px;
+            font-weight: 700;
+            color: rgba(255,255,255,0.1);
+        }
+
+        .service-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            color: rgba(255,255,255,0.8);
+            line-height: 1.4;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-section,
+            .right-section {
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-section">
+            <div class="nav-brand">Streamlined</div>
+            
+            <div class="main-content">
+                <h1 class="main-title">
+                    <span>We are</span>
+                    <span>Streamlined</span>
+                </h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </div>
+        
+        <div class="right-section">
+            <div class="services-container">
+                <div class="service-block" onclick="window.location.href='#talent'">
+                    <div class="service-number">01</div>
+                    <div class="service-content">
+                        <h2 class="service-title">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision</p>
+                    </div>
+                </div>
+                
+                <div class="service-block" onclick="window.location.href='#interfaces'">
+                    <div class="service-number">02</div>
+                    <div class="service-content">
+                        <h2 class="service-title">Interfaces</h2>
+                        <p class="service-desc">Beautiful, functional digital experiences</p>
+                    </div>
+                </div>
+                
+                <div class="service-block" onclick="window.location.href='#platforms'">
+                    <div class="service-number">03</div>
+                    <div class="service-content">
+                        <h2 class="service-title">Platforms</h2>
+                        <p class="service-desc">Modern tools for efficient workflows</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
