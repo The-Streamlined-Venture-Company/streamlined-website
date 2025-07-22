@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader img {
+            width: 80px;
+            height: auto;
+        }
+
+        /* Full screen grid */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            min-height: 100vh;
+            gap: 1px;
+            background: #1a1a1a;
+        }
+
+        /* Grid cells */
+        .cell {
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            grid-column: 1;
+            grid-row: 1;
+            padding: 30px;
+            background: #0a0a0a;
+        }
+
+        .nav-brand {
+            width: 40px;
+            height: auto;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Title */
+        .title-cell {
+            grid-column: 2 / 4;
+            grid-row: 1 / 3;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            background: #050505;
+        }
+
+        h1 {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        h1 span:nth-child(2) {
+            color: #FF6B35;
+        }
+
+        /* Subtitle */
+        .subtitle-cell {
+            grid-column: 4;
+            grid-row: 1 / 3;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            background: #111;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #888;
+        }
+
+        /* Services */
+        .service {
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-1 {
+            grid-column: 1 / 3;
+            grid-row: 3 / 5;
+            background: #0f0f0f;
+        }
+
+        .service-2 {
+            grid-column: 3;
+            grid-row: 3 / 5;
+            background: #141414;
+        }
+
+        .service-3 {
+            grid-column: 4;
+            grid-row: 3 / 5;
+            background: #1a1a1a;
+        }
+
+        /* Service hover effects */
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-1::before { background: #FF0000; }
+        .service-2::before { background: #FF6B35; }
+        .service-3::before { background: #FFD93D; }
+
+        .service:hover::before {
+            opacity: 0.1;
+        }
+
+        .service:hover {
+            transform: translateY(-2px);
+        }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #666;
+        }
+
+        /* Decorative cells */
+        .deco-1 {
+            grid-column: 1;
+            grid-row: 2;
+            background: #080808;
+        }
+
+        .deco-2 {
+            grid-column: 2 / 4;
+            grid-row: 4;
+            background: linear-gradient(45deg, #000 0%, #0a0a0a 100%);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .nav,
+            .title-cell,
+            .subtitle-cell,
+            .service-1,
+            .service-2,
+            .service-3 {
+                grid-column: 1;
+                grid-row: auto;
+            }
+            
+            .deco-1,
+            .deco-2 {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <img src="../assets/logo.gif" alt="Loading...">
+    </div>
+
+    <div class="container">
+        <div class="cell nav">
+            <div class="nav-brand">
+                <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+            </div>
+        </div>
+        
+        <div class="cell title-cell">
+            <h1>
+                <span>We are</span>
+                <span>Streamlined.</span>
+            </h1>
+        </div>
+        
+        <div class="cell subtitle-cell">
+            <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+        </div>
+        
+        <div class="cell deco-1"></div>
+        
+        <div class="cell service service-1" onclick="window.location.href='#talent'">
+            <div class="service-number">01</div>
+            <h2 class="service-title">Talent</h2>
+            <p class="service-desc">Expert professionals ready to transform your vision</p>
+        </div>
+        
+        <div class="cell service service-2" onclick="window.location.href='#interfaces'">
+            <div class="service-number">02</div>
+            <h2 class="service-title">Interfaces</h2>
+            <p class="service-desc">Beautiful, functional digital experiences</p>
+        </div>
+        
+        <div class="cell service service-3" onclick="window.location.href='#platforms'">
+            <div class="service-number">03</div>
+            <h2 class="service-title">Platforms</h2>
+            <p class="service-desc">Modern tools for efficient workflows</p>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

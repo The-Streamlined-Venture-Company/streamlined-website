@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader img {
+            width: 80px;
+            height: auto;
+        }
+
+        /* Full screen striped grid */
+        .container {
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: 80px 1fr;
+            position: relative;
+        }
+
+        /* Navigation stripe */
+        .nav-stripe {
+            grid-column: 1 / 8;
+            grid-row: 1;
+            background: #000;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .nav-brand {
+            width: 40px;
+            height: auto;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Content stripes */
+        .stripe {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .stripe-1 {
+            grid-column: 1 / 3;
+            background: #050505;
+        }
+
+        .stripe-2 {
+            grid-column: 3 / 5;
+            background: #0a0a0a;
+        }
+
+        .stripe-3 {
+            grid-column: 5 / 6;
+            background: #0f0f0f;
+        }
+
+        .stripe-4 {
+            grid-column: 6 / 8;
+            background: #111;
+        }
+
+        /* Title stripe */
+        .title-stripe {
+            grid-column: 1 / 5;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+            background: #000;
+        }
+
+        h1 {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        h1 span:nth-child(2) {
+            margin-left: 60px;
+        }
+
+        /* Subtitle stripe */
+        .subtitle-stripe {
+            grid-column: 5 / 8;
+            padding: 60px 40px;
+            display: flex;
+            align-items: center;
+            background: #080808;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        /* Service stripes */
+        .service-stripe {
+            cursor: pointer;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-1 {
+            grid-column: 1 / 3;
+            background: #0a0a0a;
+        }
+
+        .service-2 {
+            grid-column: 3 / 5;
+            background: #0f0f0f;
+        }
+
+        .service-3 {
+            grid-column: 5 / 8;
+            background: #141414;
+        }
+
+        /* Animated lines */
+        .service-stripe::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            transform: translateX(-100%);
+            animation: scan 8s infinite linear;
+        }
+
+        .service-1::before { 
+            background: #FF0000;
+            animation-delay: 0s;
+        }
+        .service-2::before { 
+            background: #FF6B35;
+            animation-delay: 2.66s;
+        }
+        .service-3::before { 
+            background: #FFD93D;
+            animation-delay: 5.33s;
+        }
+
+        @keyframes scan {
+            to {
+                transform: translateX(100%);
+            }
+        }
+
+        .service-stripe:hover {
+            background: #1a1a1a;
+        }
+
+        .service-stripe:hover::before {
+            animation-duration: 1s;
+        }
+
+        .service-number {
+            font-size: 200px;
+            font-weight: 700;
+            line-height: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0.03;
+            transition: all 0.3s ease;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service-stripe:hover .service-number {
+            opacity: 0.8;
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .service-1 .service-title { color: #FF0000; }
+        .service-2 .service-title { color: #FF6B35; }
+        .service-3 .service-title { color: #FFD93D; }
+
+        .service-desc {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #666;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .service-stripe:hover .service-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Vertical dividers */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 80px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent calc(100% / 7 - 1px),
+                #1a1a1a calc(100% / 7 - 1px),
+                #1a1a1a calc(100% / 7)
+            );
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                overflow-y: auto;
+            }
+            
+            .stripe,
+            .title-stripe,
+            .subtitle-stripe,
+            .service-stripe {
+                grid-column: 1;
+            }
+            
+            .container::before {
+                display: none;
+            }
+            
+            h1 span:nth-child(2) {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <img src="../assets/logo.gif" alt="Loading...">
+    </div>
+
+    <div class="container">
+        <div class="nav-stripe">
+            <div class="nav-brand">
+                <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+            </div>
+        </div>
+        
+        <div class="stripe stripe-1"></div>
+        <div class="stripe stripe-2"></div>
+        <div class="stripe stripe-3"></div>
+        <div class="stripe stripe-4"></div>
+        
+        <div class="title-stripe">
+            <h1>
+                <span>We are</span>
+                <span>Streamlined.</span>
+            </h1>
+        </div>
+        
+        <div class="subtitle-stripe">
+            <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+        </div>
+        
+        <div class="service-stripe service-1" onclick="window.location.href='#talent'">
+            <div class="service-number">01</div>
+            <div class="service-content">
+                <h2 class="service-title">Talent</h2>
+                <p class="service-desc">Expert professionals ready to transform</p>
+            </div>
+        </div>
+        
+        <div class="service-stripe service-2" onclick="window.location.href='#interfaces'">
+            <div class="service-number">02</div>
+            <div class="service-content">
+                <h2 class="service-title">Interfaces</h2>
+                <p class="service-desc">Beautiful, functional digital experiences</p>
+            </div>
+        </div>
+        
+        <div class="service-stripe service-3" onclick="window.location.href='#platforms'">
+            <div class="service-number">03</div>
+            <div class="service-content">
+                <h2 class="service-title">Platforms</h2>
+                <p class="service-desc">Modern tools for efficient workflows</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #0f0f0f;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main Hero */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            min-height: 65vh;
+            position: relative;
+        }
+
+        /* Background line animation */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #222;
+            transform: translateY(-50%);
+            animation: expand-line 2s ease forwards;
+        }
+
+        @keyframes expand-line {
+            from {
+                transform: translateY(-50%) scaleX(0);
+            }
+            to {
+                transform: translateY(-50%) scaleX(1);
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-brand {
+            width: 60px;
+            height: auto;
+            margin: 0 auto 40px;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 0.5s;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        h1 {
+            font-size: clamp(100px, 16vw, 260px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            margin-bottom: 40px;
+        }
+
+        h1 span {
+            display: inline-block;
+            opacity: 0;
+            animation: word-in 0.8s ease forwards;
+        }
+
+        h1 span:nth-child(1) { animation-delay: 0.7s; }
+        h1 span:nth-child(2) { animation-delay: 0.9s; }
+        h1 span:nth-child(3) { animation-delay: 1.1s; }
+
+        @keyframes word-in {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #777;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 1.4s;
+        }
+
+        /* Services - Minimal rows */
+        .services {
+            position: relative;
+        }
+
+        .service {
+            height: 140px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .service:nth-child(2) {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        /* Progressive line loading */
+        .service::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #fff;
+            animation: load-line 1s ease forwards;
+        }
+
+        .service-1::after { animation-delay: 1.8s; }
+        .service-2::after { animation-delay: 2s; }
+        .service-3::after { animation-delay: 2.2s; }
+
+        @keyframes load-line {
+            to {
+                width: 100%;
+            }
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            opacity: 0;
+            animation: fade-in 0.6s ease forwards;
+        }
+
+        .service:nth-child(1) .service-content { animation-delay: 2.2s; }
+        .service:nth-child(2) .service-content { animation-delay: 2.4s; }
+        .service:nth-child(3) .service-content { animation-delay: 2.6s; }
+
+        .service-inner {
+            display: grid;
+            grid-template-columns: 100px 1fr auto;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-number {
+            font-size: 80px;
+            font-weight: 100;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-number {
+            opacity: 0.3;
+        }
+
+        .service-1:hover .service-number { color: #FF0000; }
+        .service-2:hover .service-number { color: #FF6B35; }
+        .service-3:hover .service-number { color: #FFD93D; }
+
+        .service-title {
+            font-size: 42px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-desc {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Hover effects */
+        .service:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .service-1:hover .service-title { color: #FF0000; }
+        .service-2:hover .service-title { color: #FF6B35; }
+        .service-3:hover .service-title { color: #FFD93D; }
+
+        /* Active line indicator */
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 60px;
+            height: 1px;
+            transform: translateY(-50%) scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .service-1::before { background: #FF0000; }
+        .service-2::before { background: #FF6B35; }
+        .service-3::before { background: #FFD93D; }
+
+        .service:hover::before {
+            transform: translateY(-50%) scaleX(1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: clamp(70px, 14vw, 160px);
+            }
+            
+            .service {
+                height: 110px;
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                grid-template-columns: 60px 1fr;
+                gap: 30px;
+            }
+            
+            .service-number {
+                font-size: 60px;
+            }
+            
+            .service-title {
+                font-size: 32px;
+            }
+            
+            .service-desc {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>
+                    <span>We</span> <span>are</span> <span>Streamlined.</span>
+                </h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </div>
+        
+        <div class="services">
+            <div class="service service-1" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">01</div>
+                        <h2 class="service-title">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">02</div>
+                        <h2 class="service-title">Interfaces</h2>
+                        <p class="service-desc">Beautiful, functional digital experiences</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">03</div>
+                        <h2 class="service-title">Platforms</h2>
+                        <p class="service-desc">Modern tools for efficient workflows</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

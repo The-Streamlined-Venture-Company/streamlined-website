@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Logo Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader img {
+            width: 80px;
+            height: auto;
+            opacity: 0.8;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - slides up */
+        .header {
+            padding: 80px;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+
+        .header.slide-up {
+            min-height: 25vh;
+            padding: 40px 80px;
+            transform: translateY(0);
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(100px, 15vw, 220px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            margin-bottom: 30px;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(60px, 8vw, 100px);
+        }
+
+        .subtitle {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #888;
+            max-width: 600px;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.5;
+            font-size: 16px;
+        }
+
+        /* Services wrapper */
+        .services-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            overflow: hidden;
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .services-wrapper.expanded {
+            height: 60vh;
+        }
+
+        /* Line animations */
+        .line-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scan-line {
+            position: absolute;
+            height: 2px;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            animation: scan-fade 1.5s ease forwards;
+        }
+
+        .scan-line:nth-child(1) {
+            top: 33.33%;
+            background: linear-gradient(to right, transparent, #FF0000, transparent);
+            animation-delay: 0.5s;
+        }
+
+        .scan-line:nth-child(2) {
+            top: 66.66%;
+            background: linear-gradient(to right, transparent, #FF6B35, transparent);
+            animation-delay: 0.8s;
+        }
+
+        .scan-line:nth-child(3) {
+            bottom: 0;
+            background: linear-gradient(to right, transparent, #FFD93D, transparent);
+            animation-delay: 1.1s;
+        }
+
+        @keyframes scan-fade {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Services */
+        .services {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-content {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .service-number {
+            font-size: 180px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service:hover .service-number {
+            color: #000;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 600px;
+        }
+
+        /* Hover effects */
+        .service-1:hover {
+            background: #FF0000;
+        }
+        .service-2:hover {
+            background: #FF6B35;
+        }
+        .service-3:hover {
+            background: #FFD93D;
+        }
+
+        .service:hover .service-title,
+        .service:hover .service-desc {
+            color: #000;
+        }
+
+        /* Bottom accent line */
+        .service::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            transition: width 0.5s ease;
+        }
+
+        .service-1::after { background: #FF0000; }
+        .service-2::after { background: #FF6B35; }
+        .service-3::after { background: #FFD93D; }
+
+        .service:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Loader -->
+    <div class="loader" id="loader">
+        <img src="../assets/logo.gif" alt="Loading...">
+    </div>
+
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>We are<br>Streamlined.</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </header>
+        
+        <div class="services-wrapper">
+            <div class="line-layer">
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+            </div>
+            
+            <div class="services" id="services">
+                <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">01</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Talent</h2>
+                                <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">02</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Interfaces</h2>
+                                <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">03</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Platforms</h2>
+                                <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+                
+                // Show services
+                setTimeout(() => {
+                    document.getElementById('services').classList.add('show');
+                }, 100);
+
+                // After lines scan, expand services and shrink header
+                setTimeout(() => {
+                    document.getElementById('header').classList.add('slide-up');
+                    document.querySelector('.services-wrapper').classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                }, 1800);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

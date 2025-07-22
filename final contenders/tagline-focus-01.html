@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #111;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Logo Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader img {
+            width: 80px;
+            height: auto;
+            opacity: 0.8;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header - slides up */
+        .header {
+            padding: 80px;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up {
+            min-height: 25vh;
+            padding: 40px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fade-in 0.5s ease forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 0.5s;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(40px, 6vw, 60px);
+            margin-bottom: 20px;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Tagline with word-by-word reveal */
+        .subtitle {
+            font-size: 28px;
+            line-height: 1.5;
+            color: #fff;
+            max-width: 800px;
+            font-weight: 300;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.3;
+            font-size: 16px;
+        }
+
+        .subtitle span {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: word-reveal 0.6s ease forwards;
+        }
+
+        .subtitle span:nth-child(1) { animation-delay: 0.8s; }
+        .subtitle span:nth-child(2) { animation-delay: 0.9s; }
+        .subtitle span:nth-child(3) { animation-delay: 1.0s; }
+        .subtitle span:nth-child(4) { animation-delay: 1.1s; }
+        .subtitle span:nth-child(5) { animation-delay: 1.2s; }
+        .subtitle span:nth-child(6) { animation-delay: 1.3s; }
+        .subtitle span:nth-child(7) { animation-delay: 1.4s; }
+        .subtitle span:nth-child(8) { animation-delay: 1.5s; }
+        .subtitle span:nth-child(9) { animation-delay: 1.6s; }
+        .subtitle span:nth-child(10) { animation-delay: 1.7s; }
+        .subtitle span:nth-child(11) { animation-delay: 1.8s; }
+        .subtitle span:nth-child(12) { animation-delay: 1.9s; }
+        .subtitle span:nth-child(13) { animation-delay: 2.0s; }
+        .subtitle span:nth-child(14) { animation-delay: 2.1s; }
+        .subtitle span:nth-child(15) { animation-delay: 2.2s; }
+
+        @keyframes word-reveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Highlight key words */
+        .subtitle .highlight {
+            color: #FF6B35;
+            font-weight: 400;
+        }
+
+        /* Services wrapper */
+        .services-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 300px;
+            overflow: hidden;
+            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .services-wrapper.expanded {
+            height: 60vh;
+        }
+
+        /* Line animations */
+        .line-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scan-line {
+            position: absolute;
+            height: 2px;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            animation: scan-fade 1.5s ease forwards;
+        }
+
+        .scan-line:nth-child(1) {
+            top: 33.33%;
+            background: linear-gradient(to right, transparent, #FF0000, transparent);
+            animation-delay: 3s;
+            box-shadow: 0 0 10px #FF0000;
+        }
+
+        .scan-line:nth-child(2) {
+            top: 66.66%;
+            background: linear-gradient(to right, transparent, #FF6B35, transparent);
+            animation-delay: 3.3s;
+            box-shadow: 0 0 10px #FF6B35;
+        }
+
+        .scan-line:nth-child(3) {
+            bottom: 0;
+            background: linear-gradient(to right, transparent, #FFD93D, transparent);
+            animation-delay: 3.6s;
+            box-shadow: 0 0 10px #FFD93D;
+        }
+
+        @keyframes scan-fade {
+            0% {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+
+        /* Services */
+        .services {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-content {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            width: 100%;
+            max-width: 1400px;
+        }
+
+        .service-number {
+            font-size: 180px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service:hover .service-number {
+            color: #000;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 600px;
+        }
+
+        /* Hover effects */
+        .service-1:hover {
+            background: #FF0000;
+        }
+        .service-2:hover {
+            background: #FF6B35;
+        }
+        .service-3:hover {
+            background: #FFD93D;
+        }
+
+        .service:hover .service-title,
+        .service:hover .service-desc {
+            color: #000;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Loader -->
+    <div class="loader" id="loader">
+        <img src="../assets/logo.gif" alt="Loading...">
+    </div>
+
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>We are Streamlined.</h1>
+                <p class="subtitle">
+                    <span>We</span> <span>help</span> <span class="highlight">design-conscious</span> <span>minds</span> 
+                    <span>streamline</span> <span>how</span> <span>they</span> <span class="highlight">work</span> 
+                    <span>and</span> <span class="highlight">live</span> <span>through</span> <span>talent,</span> 
+                    <span>interfaces,</span> <span>and</span> <span>platforms.</span>
+                </p>
+            </div>
+        </header>
+        
+        <div class="services-wrapper">
+            <div class="line-layer">
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+                <div class="scan-line"></div>
+            </div>
+            
+            <div class="services" id="services">
+                <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">01</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Talent</h2>
+                                <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">02</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Interfaces</h2>
+                                <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                    <div class="service-content">
+                        <div class="service-inner">
+                            <div class="service-number">03</div>
+                            <div class="service-info">
+                                <h2 class="service-title">Platforms</h2>
+                                <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+                
+                // Show services
+                setTimeout(() => {
+                    document.getElementById('services').classList.add('show');
+                }, 100);
+
+                // After tagline reveals, scan lines and expand
+                setTimeout(() => {
+                    document.getElementById('header').classList.add('slide-up');
+                    document.querySelector('.services-wrapper').classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                }, 5000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

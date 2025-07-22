@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header with transform animation */
+        .header {
+            padding: 60px 80px;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top left;
+        }
+
+        .header.compact {
+            transform: scale(0.7);
+            padding: 40px 80px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-up 0.6s ease forwards;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(100px, 14vw, 200px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fade-up 0.8s ease forwards;
+            animation-delay: 0.2s;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #777;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fade-up 0.8s ease forwards;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fade-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Services container */
+        .services {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Initial lines that draw across */
+        .line-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .init-line {
+            position: absolute;
+            height: 1px;
+            left: 0;
+            width: 0;
+            animation: draw-across 1s ease forwards;
+        }
+
+        .init-line:nth-child(1) {
+            top: 33.33%;
+            background: #FF0000;
+            animation-delay: 0.8s;
+        }
+
+        .init-line:nth-child(2) {
+            top: 66.66%;
+            background: #FF6B35;
+            animation-delay: 1s;
+        }
+
+        .init-line:nth-child(3) {
+            bottom: 0;
+            background: #FFD93D;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes draw-across {
+            to { width: 100%; }
+        }
+
+        /* Service rows */
+        .service {
+            height: 0;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .service.reveal {
+            height: 33.33%;
+            opacity: 1;
+        }
+
+        .service-1 { 
+            background: linear-gradient(to right, rgba(255, 0, 0, 0.05), transparent);
+            transition-delay: 0.1s;
+        }
+        .service-2 { 
+            background: linear-gradient(to right, rgba(255, 107, 53, 0.05), transparent);
+            transition-delay: 0.2s;
+        }
+        .service-3 { 
+            background: linear-gradient(to right, rgba(255, 217, 61, 0.05), transparent);
+            transition-delay: 0.3s;
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .service.reveal .service-content {
+            opacity: 1;
+            transform: translateX(0);
+            transition-delay: 0.5s;
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 80px;
+            width: 100%;
+        }
+
+        .service-number {
+            font-size: 160px;
+            font-weight: 100;
+            line-height: 1;
+            opacity: 0.08;
+            transition: all 0.3s ease;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service:hover .service-number {
+            opacity: 0.2;
+            transform: scale(1.1);
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 600px;
+        }
+
+        /* Hover states */
+        .service:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .service-1:hover .service-title { color: #FF0000; }
+        .service-2:hover .service-title { color: #FF6B35; }
+        .service-3:hover .service-title { color: #FFD93D; }
+
+        /* Side accent on hover */
+        .service::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-1::before { background: #FF0000; }
+        .service-2::before { background: #FF6B35; }
+        .service-3::before { background: #FFD93D; }
+
+        .service:hover::before {
+            transform: scaleY(1);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+            }
+            
+            .header.compact {
+                transform: scale(0.8);
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                gap: 40px;
+            }
+            
+            .service-number {
+                font-size: 100px;
+            }
+            
+            .service-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>We are<br>Streamlined.</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </header>
+        
+        <div class="services">
+            <div class="line-container">
+                <div class="init-line"></div>
+                <div class="init-line"></div>
+                <div class="init-line"></div>
+            </div>
+            
+            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">01</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Talent</h2>
+                            <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">02</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Interfaces</h2>
+                            <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive engagement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">03</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Platforms</h2>
+                            <p class="service-desc">Modern tools and systems for efficient workflows that scale with your business</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // After lines draw, reveal services and compact header
+        setTimeout(() => {
+            document.getElementById('header').classList.add('compact');
+            document.getElementById('service-1').classList.add('reveal');
+            document.getElementById('service-2').classList.add('reveal');
+            document.getElementById('service-3').classList.add('reveal');
+            
+            // Hide the initial lines
+            setTimeout(() => {
+                document.querySelector('.line-container').style.display = 'none';
+            }, 1000);
+        }, 1800);
+    </script>
+</body>
+</html>

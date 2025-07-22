@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader img {
+            width: 80px;
+            height: auto;
+            opacity: 0.8;
+        }
+
+        /* Full screen diagonal split */
+        .container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        /* Left side - Dark */
+        .left-side {
+            background: #000;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-side::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -100px;
+            width: 200px;
+            height: 200%;
+            background: #050505;
+            transform: rotate(15deg);
+            z-index: 1;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .title-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        /* Right side - Cream Cards */
+        .right-side {
+            background: #f7f2ef;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        .service {
+            background: #f5f3ef;
+            padding: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Dot pattern decoration */
+        .service::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: radial-gradient(circle, rgba(0,0,0,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+
+        .service:hover::before {
+            transform: rotate(30deg) scale(1.1);
+        }
+
+        .service:hover {
+            background: #000;
+            transform: translateX(-10px);
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .service-number {
+            font-size: 200px;
+            font-weight: 100;
+            line-height: 0.8;
+            color: #000;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-number {
+            color: #f5f3ef;
+            opacity: 0.3;
+        }
+
+        .service-meta {
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-meta {
+            color: rgba(245, 243, 239, 0.5);
+        }
+
+        .service-bottom {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+        }
+
+        .service-title {
+            font-size: 56px;
+            font-weight: 700;
+            color: #000;
+            letter-spacing: -0.03em;
+            line-height: 0.9;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-title {
+            color: #f5f3ef;
+        }
+
+        .service-arrow {
+            font-size: 24px;
+            color: #000;
+            transition: all 0.3s ease;
+            transform: translateX(0);
+        }
+
+        .service:hover .service-arrow {
+            color: #f5f3ef;
+            transform: translateX(10px);
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-side::after {
+                display: none;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <img src="../assets/logo.gif" alt="Loading...">
+    </div>
+
+    <div class="container">
+        <div class="left-side">
+            <div class="spacer"></div>
+            
+            <div class="title-wrapper">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>
+                    <span>We are</span>
+                    <span>Streamlined.</span>
+                </h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </div>
+        
+        <div class="right-side">
+            <div class="service service-1" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-number">01</div>
+                        <div class="service-meta">
+                            <div>Modernists:</div>
+                            <div>E01: Expert Team</div>
+                        </div>
+                    </div>
+                    <div class="service-bottom">
+                        <h2 class="service-title">Talent</h2>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-number">02</div>
+                        <div class="service-meta">
+                            <div>Modernists:</div>
+                            <div>E02: Digital Design</div>
+                        </div>
+                    </div>
+                    <div class="service-bottom">
+                        <h2 class="service-title">Interfaces</h2>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-top">
+                        <div class="service-number">03</div>
+                        <div class="service-meta">
+                            <div>Modernists:</div>
+                            <div>E03: Tech Stack</div>
+                        </div>
+                    </div>
+                    <div class="service-bottom">
+                        <h2 class="service-title">Platforms</h2>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            padding: 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            margin: 0 auto 40px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #999;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Services */
+        .services {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0;
+        }
+
+        .service {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Line loader animation */
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            transform: translateY(-50%);
+            animation: line-load 1s ease forwards;
+        }
+
+        .service:nth-child(1)::before { animation-delay: 0.5s; }
+        .service:nth-child(2)::before { animation-delay: 0.8s; }
+        .service:nth-child(3)::before { animation-delay: 1.1s; }
+
+        @keyframes line-load {
+            0% { left: -100%; }
+            50% { left: 0; }
+            100% { left: 100%; }
+        }
+
+        /* Service content */
+        .service-content {
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: fade-in 0.5s ease forwards;
+        }
+
+        .service:nth-child(1) .service-content { animation-delay: 1s; }
+        .service:nth-child(2) .service-content { animation-delay: 1.3s; }
+        .service:nth-child(3) .service-content { animation-delay: 1.6s; }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Service styling */
+        .service-1 { background: rgba(255, 0, 0, 0.1); }
+        .service-2 { background: rgba(255, 107, 53, 0.1); }
+        .service-3 { background: rgba(255, 217, 61, 0.1); }
+
+        .service:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 100;
+            line-height: 1;
+            opacity: 0.3;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #999;
+            max-width: 500px;
+        }
+
+        /* Hover line */
+        .service::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-1::after { background: #FF0000; }
+        .service-2::after { background: #FF6B35; }
+        .service-3::after { background: #FFD93D; }
+
+        .service:hover::after {
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+            }
+            
+            .service-content {
+                padding: 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="nav-brand">
+                <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+            </div>
+            <h1>We are Streamlined.</h1>
+            <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+        </header>
+        
+        <div class="services">
+            <div class="service service-1" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">01</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Talent</h2>
+                            <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">02</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Interfaces</h2>
+                            <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-number">03</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Platforms</h2>
+                            <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

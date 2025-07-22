@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Line Trace Loader */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .trace-loader {
+            width: 150px;
+            height: 2px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .trace-line {
+            position: absolute;
+            height: 2px;
+            background: #fff;
+        }
+
+        .trace-line:nth-child(1) {
+            width: 50px;
+            left: 0;
+            animation: trace-1 2s ease infinite;
+        }
+
+        .trace-line:nth-child(2) {
+            width: 50px;
+            left: 50px;
+            animation: trace-2 2s ease infinite;
+        }
+
+        .trace-line:nth-child(3) {
+            width: 50px;
+            left: 100px;
+            animation: trace-3 2s ease infinite;
+        }
+
+        @keyframes trace-1 {
+            0%, 100% { opacity: 0.2; background: #FF0000; }
+            33% { opacity: 1; background: #FF0000; transform: scaleX(1.5); }
+        }
+
+        @keyframes trace-2 {
+            0%, 100% { opacity: 0.2; background: #FF6B35; }
+            66% { opacity: 1; background: #FF6B35; transform: scaleX(1.5); }
+        }
+
+        @keyframes trace-3 {
+            0%, 100% { opacity: 0.2; background: #FFD93D; }
+            99% { opacity: 1; background: #FFD93D; transform: scaleX(1.5); }
+        }
+
+        /* Full screen diagonal split */
+        .container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+        }
+
+        /* Left side - Dark */
+        .left-side {
+            background: #000;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .left-side::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -100px;
+            width: 200px;
+            height: 200%;
+            background: #050505;
+            transform: rotate(15deg);
+            z-index: 1;
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .title-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        /* Right side - Line Connect */
+        .right-side {
+            background: #0a0a0a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .connect-container {
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .service {
+            margin: 60px 0;
+            cursor: pointer;
+            position: relative;
+            padding: 30px 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Connecting lines */
+        .connect-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #222;
+            top: 100%;
+            transform-origin: left;
+            animation: draw-line 1s ease forwards;
+            animation-delay: 1.5s;
+            opacity: 0;
+        }
+
+        @keyframes draw-line {
+            0% { 
+                transform: scaleX(0);
+                opacity: 1;
+            }
+            100% { 
+                transform: scaleX(1);
+                opacity: 1;
+            }
+        }
+
+        .service:nth-child(1) .connect-line { animation-delay: 1.5s; }
+        .service:nth-child(2) .connect-line { animation-delay: 1.8s; }
+
+        /* Service content */
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .service-line {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .service-1 .service-line { background: #FF0000; }
+        .service-2 .service-line { background: #FF6B35; }
+        .service-3 .service-line { background: #FFD93D; }
+
+        .service:hover .service-line {
+            width: 100%;
+            z-index: -1;
+        }
+
+        .service-1:hover { background: #FF0000; }
+        .service-2:hover { background: #FF6B35; }
+        .service-3:hover { background: #FFD93D; }
+
+        .service:hover .service-number,
+        .service:hover .service-title,
+        .service:hover .service-desc {
+            color: #000;
+        }
+
+        .service-number {
+            font-size: 48px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.3s ease;
+            min-width: 60px;
+        }
+
+        .service-1 .service-number { color: #FF0000; }
+        .service-2 .service-number { color: #FF6B35; }
+        .service-3 .service-number { color: #FFD93D; }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .left-side::after {
+                display: none;
+            }
+            
+            .right-side {
+                min-height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Line Trace Loader -->
+    <div class="loader" id="loader">
+        <div class="trace-loader">
+            <div class="trace-line"></div>
+            <div class="trace-line"></div>
+            <div class="trace-line"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="left-side">
+            <div class="spacer"></div>
+            
+            <div class="title-wrapper">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>
+                    <span>We are</span>
+                    <span>Streamlined.</span>
+                </h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </div>
+        
+        <div class="right-side">
+            <div class="connect-container">
+                <div class="service service-1" onclick="window.location.href='#talent'">
+                    <div class="service-inner">
+                        <div class="service-line"></div>
+                        <div class="service-number">01</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Talent</h2>
+                            <p class="service-desc">Expert professionals ready to transform your vision</p>
+                        </div>
+                    </div>
+                    <div class="connect-line"></div>
+                </div>
+                
+                <div class="service service-2" onclick="window.location.href='#interfaces'">
+                    <div class="service-inner">
+                        <div class="service-line"></div>
+                        <div class="service-number">02</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Interfaces</h2>
+                            <p class="service-desc">Beautiful, functional digital experiences</p>
+                        </div>
+                    </div>
+                    <div class="connect-line"></div>
+                </div>
+                
+                <div class="service service-3" onclick="window.location.href='#platforms'">
+                    <div class="service-inner">
+                        <div class="service-line"></div>
+                        <div class="service-number">03</div>
+                        <div class="service-info">
+                            <h2 class="service-title">Platforms</h2>
+                            <p class="service-desc">Modern tools for efficient workflows</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hide');
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            padding: 80px 60px;
+            position: relative;
+        }
+
+        .nav-brand {
+            width: 50px;
+            height: auto;
+            margin-bottom: 40px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-size: clamp(80px, 12vw, 160px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            margin-bottom: 30px;
+        }
+
+        h1 span {
+            display: block;
+        }
+
+        h1 span:nth-child(2) {
+            color: #666;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 600px;
+        }
+
+        /* Services */
+        .services {
+            flex: 1;
+            position: relative;
+        }
+
+        .service {
+            position: relative;
+            height: 33.33vh;
+            min-height: 200px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        /* Sequential line reveal */
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            z-index: 1;
+            animation: reveal-line 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .service-1::before { 
+            background: #FF0000;
+            animation-delay: 0.5s;
+        }
+        .service-2::before { 
+            background: #FF6B35;
+            animation-delay: 0.9s;
+        }
+        .service-3::before { 
+            background: #FFD93D;
+            animation-delay: 1.3s;
+        }
+
+        @keyframes reveal-line {
+            0% { width: 0; }
+            50% { width: 100%; }
+            100% { width: 100%; opacity: 0.1; }
+        }
+
+        /* Service content */
+        .service-content {
+            padding: 60px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fade-up 0.6s ease forwards;
+        }
+
+        .service:nth-child(1) .service-content { animation-delay: 0.9s; }
+        .service:nth-child(2) .service-content { animation-delay: 1.3s; }
+        .service:nth-child(3) .service-content { animation-delay: 1.7s; }
+
+        @keyframes fade-up {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-left {
+            display: flex;
+            align-items: baseline;
+            gap: 40px;
+        }
+
+        .service-number {
+            font-size: 180px;
+            font-weight: 100;
+            line-height: 1;
+            opacity: 0.1;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-number {
+            opacity: 0.3;
+        }
+
+        .service-title {
+            font-size: 64px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            transition: all 0.3s ease;
+        }
+
+        .service-1:hover .service-title { color: #FF0000; }
+        .service-2:hover .service-title { color: #FF6B35; }
+        .service-3:hover .service-title { color: #FFD93D; }
+
+        .service-right {
+            text-align: right;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #666;
+            max-width: 400px;
+            margin-left: auto;
+            transition: all 0.3s ease;
+        }
+
+        .service:hover .service-desc {
+            color: #999;
+        }
+
+        /* Horizontal line separators */
+        .service:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #222;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: expand-separator 0.6s ease forwards;
+        }
+
+        .service:nth-child(1)::after { animation-delay: 1.2s; }
+        .service:nth-child(2)::after { animation-delay: 1.6s; }
+
+        @keyframes expand-separator {
+            to { transform: scaleX(1); }
+        }
+
+        @media (max-width: 1024px) {
+            .header {
+                padding: 60px 40px;
+            }
+            
+            h1 {
+                font-size: clamp(60px, 10vw, 100px);
+            }
+            
+            .service-content {
+                padding: 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 48px;
+            }
+            
+            .service-right {
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="nav-brand">
+                <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+            </div>
+            <h1>
+                <span>We are</span>
+                <span>Streamlined.</span>
+            </h1>
+            <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+        </header>
+        
+        <div class="services">
+            <div class="service service-1" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <div class="service-number">01</div>
+                            <h2 class="service-title">Talent</h2>
+                        </div>
+                        <div class="service-right">
+                            <p class="service-desc">Expert professionals ready to transform your vision into reality</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <div class="service-number">02</div>
+                            <h2 class="service-title">Interfaces</h2>
+                        </div>
+                        <div class="service-right">
+                            <p class="service-desc">Beautiful, functional digital experiences that captivate users</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <div class="service-number">03</div>
+                            <h2 class="service-title">Platforms</h2>
+                        </div>
+                        <div class="service-right">
+                            <p class="service-desc">Modern tools for efficient workflows that scale with your needs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main Hero */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            min-height: 70vh;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .nav-brand {
+            width: 60px;
+            height: auto;
+            margin: 0 auto 50px;
+            opacity: 0;
+            animation: fade-down 0.8s ease forwards;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @keyframes fade-down {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: clamp(120px, 20vw, 320px);
+            font-weight: 700;
+            line-height: 0.75;
+            letter-spacing: -0.06em;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: scale-in 1s ease forwards;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes scale-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .subtitle {
+            font-size: 22px;
+            line-height: 1.4;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fade-up 0.8s ease forwards;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fade-up {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Services - Stacked lines */
+        .services {
+            position: relative;
+            background: #0a0a0a;
+        }
+
+        .service {
+            height: 100px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-top: 1px solid #1a1a1a;
+        }
+
+        /* Staggered line reveal */
+        .line-reveal {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transform: translateX(-100%);
+            animation: line-reveal 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .service-1 .line-reveal { 
+            animation-delay: 1s;
+        }
+        .service-2 .line-reveal { 
+            animation-delay: 1.2s;
+        }
+        .service-3 .line-reveal { 
+            animation-delay: 1.4s;
+        }
+
+        @keyframes line-reveal {
+            0% { 
+                transform: translateX(-100%);
+            }
+            50% { 
+                transform: translateX(0);
+            }
+            100% { 
+                transform: translateX(100%);
+            }
+        }
+
+        /* Service content */
+        .service-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: content-fade 0.6s ease forwards;
+        }
+
+        .service:nth-child(1) .service-content { animation-delay: 1.5s; }
+        .service:nth-child(2) .service-content { animation-delay: 1.7s; }
+        .service:nth-child(3) .service-content { animation-delay: 1.9s; }
+
+        @keyframes content-fade {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .service-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-left {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .service-number {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.5;
+            letter-spacing: 0.05em;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            transition: all 0.3s ease;
+        }
+
+        .service-arrow {
+            font-size: 32px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
+        }
+
+        .service:hover {
+            background: #111;
+            padding-left: 100px;
+        }
+
+        .service:hover .service-arrow {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .service-1:hover .service-title { color: #FF0000; }
+        .service-2:hover .service-title { color: #FF6B35; }
+        .service-3:hover .service-title { color: #FFD93D; }
+
+        /* Side accent lines */
+        .service::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-1::before { background: #FF0000; }
+        .service-2::before { background: #FF6B35; }
+        .service-3::before { background: #FFD93D; }
+
+        .service:hover::before {
+            transform: scaleY(1);
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: clamp(80px, 18vw, 200px);
+            }
+            
+            .service {
+                height: 80px;
+            }
+            
+            .service-content {
+                padding: 0 40px;
+            }
+            
+            .service-title {
+                font-size: 32px;
+            }
+            
+            .service-arrow {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <div class="hero-content">
+                <div class="nav-brand">
+                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                </div>
+                <h1>We are<br>Streamlined.</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+            </div>
+        </div>
+        
+        <div class="services">
+            <div class="service service-1" onclick="window.location.href='#talent'">
+                <div class="line-reveal"></div>
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <span class="service-number">01</span>
+                            <h2 class="service-title">Talent</h2>
+                        </div>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" onclick="window.location.href='#interfaces'">
+                <div class="line-reveal"></div>
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <span class="service-number">02</span>
+                            <h2 class="service-title">Interfaces</h2>
+                        </div>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" onclick="window.location.href='#platforms'">
+                <div class="line-reveal"></div>
+                <div class="service-content">
+                    <div class="service-inner">
+                        <div class="service-left">
+                            <span class="service-number">03</span>
+                            <h2 class="service-title">Platforms</h2>
+                        </div>
+                        <span class="service-arrow">→</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
