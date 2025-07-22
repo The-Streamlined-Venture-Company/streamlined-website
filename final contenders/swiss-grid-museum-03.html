@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #ff6b35;
+            color: #000;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Header bar */
+        .header-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(255,107,53,0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        /* Main container */
+        .main-container {
+            min-height: 100vh;
+            padding-top: 60px;
+            position: relative;
+        }
+
+        /* Typography composition */
+        .type-composition {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .main-title {
+            position: absolute;
+            font-size: clamp(120px, 20vw, 400px);
+            font-weight: 700;
+            line-height: 0.75;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+        }
+
+        .title-1 {
+            top: 10%;
+            left: -5%;
+            z-index: 2;
+        }
+
+        .title-2 {
+            top: 30%;
+            right: -10%;
+            z-index: 3;
+        }
+
+        .title-3 {
+            bottom: 20%;
+            left: 10%;
+            z-index: 2;
+        }
+
+        .title-4 {
+            bottom: 10%;
+            right: 5%;
+            font-size: clamp(80px, 15vw, 300px);
+            z-index: 4;
+        }
+
+        /* Central info card */
+        .info-card {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            color: #fff;
+            padding: 60px;
+            width: 90%;
+            max-width: 600px;
+            z-index: 10;
+        }
+
+        .card-header {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.02em;
+        }
+
+        .card-desc {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .service-item {
+            padding: 30px 20px;
+            background: rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-item:hover {
+            background: #ff6b35;
+            transform: translateY(-5px);
+        }
+
+        .service-num {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .service-name {
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Background texture */
+        .texture-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.03;
+            background-image: 
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,.05) 35px, rgba(0,0,0,.05) 70px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Side markers */
+        .side-marker {
+            position: fixed;
+            writing-mode: vertical-rl;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0.3;
+        }
+
+        .marker-left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .marker-right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: clamp(80px, 25vw, 200px);
+            }
+            
+            .info-card {
+                padding: 40px 20px;
+                width: 95%;
+            }
+            
+            .service-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="texture-overlay"></div>
+    
+    <header class="header-bar">
+        <div class="header-content">
+            <div class="header-links">
+                <span>Our Exhibition</span>
+                <span>Museum</span>
+                <span>Online Support</span>
+            </div>
+            <div>Menu</div>
+        </div>
+    </header>
+
+    <div class="side-marker marker-left">Natural History</div>
+    <div class="side-marker marker-right">Design Museum</div>
+
+    <div class="main-container">
+        <div class="type-composition">
+            <h1 class="main-title title-1">NATIONAL</h1>
+            <h1 class="main-title title-2">MUSEUM</h1>
+            <h1 class="main-title title-3">STREAM</h1>
+            <h1 class="main-title title-4">LINED</h1>
+            
+            <div class="info-card">
+                <h2 class="card-header">We are Streamlined</h2>
+                <p class="card-desc">Helping design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+                
+                <div class="service-grid">
+                    <div class="service-item" onclick="window.location.href='#talent'">
+                        <div class="service-num">01</div>
+                        <div class="service-name">Talent</div>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#interfaces'">
+                        <div class="service-num">02</div>
+                        <div class="service-name">Interfaces</div>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#platforms'">
+                        <div class="service-num">03</div>
+                        <div class="service-name">Platforms</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

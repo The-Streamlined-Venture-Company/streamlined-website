@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #ff6b35;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Navigation bar */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            font-size: 12px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-link {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-link:hover {
+            opacity: 0.6;
+        }
+
+        /* Main container */
+        .main-container {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Typography layers */
+        .type-container {
+            position: relative;
+            width: 90%;
+            max-width: 1400px;
+            height: 600px;
+        }
+
+        .type-layer {
+            position: absolute;
+            font-size: clamp(80px, 12vw, 200px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .layer-1 {
+            top: 0;
+            left: 0;
+            z-index: 3;
+        }
+
+        .layer-2 {
+            top: 80px;
+            left: 10%;
+            z-index: 2;
+        }
+
+        .layer-3 {
+            top: 160px;
+            left: 5%;
+            z-index: 3;
+        }
+
+        .layer-4 {
+            top: 240px;
+            right: 10%;
+            z-index: 2;
+        }
+
+        .layer-5 {
+            bottom: 80px;
+            left: 15%;
+            z-index: 3;
+        }
+
+        /* Central element */
+        .central-element {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 400px;
+            background: rgba(255,255,255,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 4;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .central-element:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .central-text {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .central-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .central-desc {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #333;
+        }
+
+        /* Service section */
+        .services {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.9);
+            padding: 30px 40px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 50;
+        }
+
+        .service-item {
+            color: #fff;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .service-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-number {
+            font-size: 14px;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .service-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 100px),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0, rgba(0,0,0,0.03) 1px, transparent 1px, transparent 100px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .type-layer {
+                font-size: clamp(60px, 15vw, 120px);
+            }
+            
+            .central-element {
+                width: 250px;
+                height: 300px;
+            }
+            
+            .services {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay"></div>
+    
+    <nav class="nav-bar">
+        <div class="nav-links">
+            <div class="nav-link">Our Exhibition</div>
+            <div class="nav-link">Museum</div>
+            <div class="nav-link">Online Services</div>
+        </div>
+        <div class="nav-link">Menu</div>
+    </nav>
+
+    <div class="main-container">
+        <div class="type-container">
+            <div class="type-layer layer-1">STREAM</div>
+            <div class="type-layer layer-2">LINED</div>
+            <div class="type-layer layer-3">DESIGN</div>
+            <div class="type-layer layer-4">NATURAL</div>
+            <div class="type-layer layer-5">HISTORY</div>
+            
+            <div class="central-element">
+                <div class="central-text">
+                    <h2 class="central-title">We are Streamlined</h2>
+                    <p class="central-desc">Helping design-conscious minds streamline how they work and live</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="services">
+        <div class="service-item" onclick="window.location.href='#talent'">
+            <div class="service-number">01</div>
+            <div class="service-title">Talent</div>
+        </div>
+        
+        <div class="service-item" onclick="window.location.href='#interfaces'">
+            <div class="service-number">02</div>
+            <div class="service-title">Interfaces</div>
+        </div>
+        
+        <div class="service-item" onclick="window.location.href='#platforms'">
+            <div class="service-number">03</div>
+            <div class="service-title">Platforms</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #ff6b35;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            z-index: 100;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-item:hover {
+            opacity: 0.6;
+        }
+
+        .nav-item:nth-child(1) { grid-column: 1 / 3; }
+        .nav-item:nth-child(2) { grid-column: 4 / 6; }
+        .nav-item:nth-child(3) { grid-column: 7 / 9; }
+        .nav-item:nth-child(4) { grid-column: 11 / 13; }
+
+        /* Main grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(8, minmax(100px, 1fr));
+            min-height: 100vh;
+            padding: 100px 30px 30px;
+            gap: 20px;
+        }
+
+        /* Large type blocks */
+        .type-block {
+            display: flex;
+            align-items: center;
+            font-size: clamp(60px, 10vw, 180px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .block-1 {
+            grid-column: 1 / 7;
+            grid-row: 2 / 4;
+        }
+
+        .block-2 {
+            grid-column: 6 / 13;
+            grid-row: 3 / 5;
+            justify-content: flex-end;
+        }
+
+        .block-3 {
+            grid-column: 2 / 8;
+            grid-row: 5 / 7;
+        }
+
+        /* Info panel */
+        .info-panel {
+            grid-column: 9 / 13;
+            grid-row: 6 / 8;
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .info-desc {
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+
+        /* Service buttons */
+        .service-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .service-btn {
+            padding: 15px 20px;
+            background: #fff;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: left;
+        }
+
+        .service-btn:hover {
+            background: #ff6b35;
+            transform: translateX(10px);
+        }
+
+        /* Decorative elements */
+        .circle-element {
+            grid-column: 10 / 12;
+            grid-row: 2 / 4;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+        }
+
+        /* Grid lines */
+        .grid-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(90deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent calc(100% / 12)),
+                repeating-linear-gradient(0deg, rgba(0,0,0,0.02) 0, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 12.5%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+            }
+            
+            .type-block,
+            .info-panel,
+            .circle-element {
+                grid-column: 1;
+                grid-row: auto;
+            }
+            
+            .type-block {
+                padding: 40px 0;
+                justify-content: flex-start !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-lines"></div>
+    
+    <nav class="nav-bar">
+        <div class="nav-item">Our Exhibition</div>
+        <div class="nav-item">Museum</div>
+        <div class="nav-item">Online Support</div>
+        <div class="nav-item">Menu</div>
+    </nav>
+
+    <div class="main-grid">
+        <div class="type-block block-1">STREAM</div>
+        <div class="type-block block-2">LINED</div>
+        <div class="type-block block-3">MUSEUM</div>
+        
+        <div class="circle-element"></div>
+        
+        <div class="info-panel">
+            <h2 class="info-title">We are Streamlined</h2>
+            <p class="info-desc">We help design-conscious minds streamline how they work and live</p>
+            
+            <div class="service-buttons">
+                <button class="service-btn" onclick="window.location.href='#talent'">01 → Talent</button>
+                <button class="service-btn" onclick="window.location.href='#interfaces'">02 → Interfaces</button>
+                <button class="service-btn" onclick="window.location.href='#platforms'">03 → Platforms</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

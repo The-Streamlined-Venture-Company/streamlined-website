@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            line-height: 1;
+        }
+
+        /* Diagonal Swiss Grid */
+        .container {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Diagonal sections */
+        .diagonal-section {
+            position: absolute;
+            transform-origin: top left;
+        }
+
+        .section-1 {
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: #fff;
+            z-index: 3;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-2 {
+            top: 0;
+            right: -25%;
+            width: 75%;
+            height: 100%;
+            background: #dc3545;
+            transform: skewX(-15deg);
+            z-index: 2;
+        }
+
+        .section-3 {
+            bottom: 0;
+            right: -50%;
+            width: 100%;
+            height: 40%;
+            background: #000;
+            transform: skewX(-15deg);
+            z-index: 4;
+        }
+
+        /* Content */
+        .brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 60px;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.3;
+            color: #333;
+            max-width: 400px;
+        }
+
+        /* Services */
+        .services {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            display: flex;
+            z-index: 5;
+        }
+
+        .service {
+            flex: 1;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            color: #fff;
+            transform: skewX(15deg);
+        }
+
+        .service-content {
+            transform: skewX(-15deg);
+        }
+
+        .service:nth-child(1) { 
+            background: #000; 
+            margin-right: -40px;
+        }
+        .service:nth-child(2) { 
+            background: #111;
+            margin-right: -40px;
+            z-index: 1;
+        }
+        .service:nth-child(3) { 
+            background: #222;
+            z-index: 2;
+        }
+
+        .service:hover {
+            transform: skewX(15deg) translateY(-10px);
+            z-index: 10;
+        }
+
+        .service-number {
+            font-size: 60px;
+            font-weight: 700;
+            opacity: 0.3;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.3;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 1024px) {
+            .section-2,
+            .section-3 {
+                transform: none;
+                right: 0;
+            }
+            
+            .section-1 {
+                width: 100%;
+                z-index: 10;
+                background: rgba(255,255,255,0.95);
+            }
+            
+            .services {
+                position: relative;
+                height: auto;
+                flex-direction: column;
+            }
+            
+            .service {
+                transform: none;
+                margin-right: 0;
+            }
+            
+            .service-content {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="diagonal-section section-1">
+            <div class="brand">Streamlined</div>
+            <h1 class="main-title">We are<br>Streamlined</h1>
+            <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+        </div>
+        
+        <div class="diagonal-section section-2"></div>
+        <div class="diagonal-section section-3"></div>
+        
+        <div class="services">
+            <div class="service" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-number">01</div>
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals</p>
+                </div>
+            </div>
+            
+            <div class="service" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-number">02</div>
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Digital experiences</p>
+                </div>
+            </div>
+            
+            <div class="service" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-number">03</div>
+                    <h2 class="service-title">Platforms</h2>
+                    <p class="service-desc">Modern tools</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
