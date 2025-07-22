@@ -12,38 +12,16 @@
         }
 
         body {
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
             background: #111;
             color: #fff;
             overflow-x: hidden;
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
-        /* Logo Loader */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease;
-        }
-
-        .loader.hide {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .loader img {
-            width: 80px;
-            height: auto;
-            opacity: 0.8;
-        }
 
         /* Container */
         .container {
@@ -58,12 +36,13 @@
             min-height: 60vh;
             display: flex;
             align-items: center;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header.slide-up {
-            min-height: 25vh;
-            padding: 40px 80px;
+            min-height: 35vh;
+            padding: 60px 80px;
         }
 
         .header-content {
@@ -72,12 +51,33 @@
         }
 
         .nav-brand {
-            width: 50px;
+            width: 60px;
             height: auto;
             margin-bottom: 30px;
             opacity: 0;
-            animation: fade-in 0.5s ease forwards;
-            animation-delay: 0.3s;
+            animation: logo-loader 2s ease forwards;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes logo-loader {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .header.slide-up .nav-brand {
+            width: 50px;
+            margin-bottom: 25px;
         }
         
         .nav-brand img {
@@ -94,86 +94,97 @@
             margin-bottom: 40px;
             opacity: 0;
             animation: fade-in 0.8s ease forwards;
-            animation-delay: 0.5s;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            animation-delay: 1.8s;
+            transition: font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: geometricPrecision;
+            transform: translateZ(0); /* Force GPU acceleration */
+            backface-visibility: hidden; /* Prevent flickering */
         }
 
         .header.slide-up h1 {
-            font-size: clamp(40px, 6vw, 60px);
-            margin-bottom: 20px;
+            font-size: clamp(50px, 8vw, 80px);
+            margin-bottom: 25px;
         }
 
         @keyframes fade-in {
             to {
                 opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Tagline container */
-        .tagline-container {
+        /* Tagline wrapper */
+        .tagline-wrapper {
             position: relative;
-            margin-bottom: 20px;
+            height: 50px;
         }
 
-        /* Tagline with typewriter effect - two parts */
+        /* Tagline with typewriter effect */
         .subtitle {
             font-size: 28px;
             line-height: 1.5;
-            color: #fff;
-            max-width: 900px;
+            color: rgba(255, 255, 255, 0.95);
             font-weight: 400;
-            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-block;
+            position: absolute;
+            white-space: nowrap;
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: geometricPrecision;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            font-feature-settings: "kern" 1, "liga" 1;
         }
 
         .header.slide-up .subtitle {
-            opacity: 0.3;
-            font-size: 16px;
+            opacity: 0.6;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
         }
 
-        .typewriter-line1 {
+        .header.slide-up .subtitle.finished {
+            font-weight: 400; /* Keep weight consistent during transition */
+        }
+
+        .typewriter-text {
+            display: inline-block;
             overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid #FF6B35;
             width: 0;
-            animation: 
-                typing-line1 3s steps(65, end) 0.8s forwards,
-                blink-caret 0.75s step-end infinite;
+            animation: typing 4.5s linear 2.6s forwards;
         }
 
-        @keyframes typing-line1 {
-            from { width: 0 }
+        @keyframes typing {
             to { width: 100% }
         }
 
-        .typewriter-line2 {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid #FF6B35;
-            width: 0;
-            opacity: 0;
-            animation: 
-                fade-in 0.1s ease 3.8s forwards,
-                typing-line2 1s steps(13, end) 3.8s forwards,
-                blink-caret 0.75s step-end 3.8s infinite;
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: #FF6B35;
+            margin-left: 2px;
+            animation: blink 0.75s step-end infinite;
+            vertical-align: text-bottom;
         }
 
-        @keyframes typing-line2 {
-            from { width: 0 }
-            to { width: 100% }
+        @keyframes blink {
+            0%, 50% { opacity: 1 }
+            51%, 100% { opacity: 0 }
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #FF6B35; }
-        }
-
-        .typewriter-line1.finished,
-        .typewriter-line2.finished {
-            border: none;
+        .subtitle.finished {
             font-weight: 300;
             letter-spacing: 0.02em;
-            width: auto;
+            color: #fff;
+        }
+
+        .subtitle.finished .cursor {
+            animation: none;
+            opacity: 0;
         }
 
         /* Services wrapper */
@@ -184,11 +195,11 @@
             right: 0;
             height: 300px;
             overflow: hidden;
-            transition: height 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .services-wrapper.expanded {
-            height: 60vh;
+            height: 50vh;
         }
 
         /* Line animations */
@@ -212,21 +223,21 @@
         .scan-line:nth-child(1) {
             top: 33.33%;
             background: linear-gradient(to right, transparent, #FF0000, transparent);
-            animation-delay: 5.5s;
+            animation-delay: 7.1s;
             box-shadow: 0 0 10px #FF0000;
         }
 
         .scan-line:nth-child(2) {
             top: 66.66%;
             background: linear-gradient(to right, transparent, #FF6B35, transparent);
-            animation-delay: 5.8s;
+            animation-delay: 7.1s;
             box-shadow: 0 0 10px #FF6B35;
         }
 
         .scan-line:nth-child(3) {
             bottom: 0;
             background: linear-gradient(to right, transparent, #FFD93D, transparent);
-            animation-delay: 6.1s;
+            animation-delay: 7.1s;
             box-shadow: 0 0 10px #FFD93D;
         }
 
@@ -383,24 +394,17 @@
     </style>
 </head>
 <body>
-    <!-- Logo Loader -->
-    <div class="loader" id="loader">
-        <img src="../assets/logo.gif" alt="Loading...">
-    </div>
 
     <div class="container">
         <header class="header" id="header">
             <div class="header-content">
                 <div class="nav-brand">
-                    <img src="../screenshots/s-logo-1.png" alt="Streamlined">
+                    <img src="../assets/logo.gif" alt="Streamlined">
                 </div>
                 <h1>We are Streamlined.</h1>
-                <div class="tagline-container">
-                    <p class="subtitle typewriter-line1" id="tagline1">
-                        We help design-conscious minds streamline how they work and live,
-                    </p>
-                    <p class="subtitle typewriter-line2" id="tagline2">
-                        by providing:
+                <div class="tagline-wrapper">
+                    <p class="subtitle" id="tagline">
+                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span><span class="cursor"></span>
                     </p>
                 </div>
             </div>
@@ -457,32 +461,22 @@
         // Hide loader after page loads
         window.addEventListener('load', function() {
             setTimeout(function() {
-                document.getElementById('loader').classList.add('hide');
-                
                 // Show services
-                setTimeout(() => {
-                    document.getElementById('services').classList.add('show');
-                }, 100);
+                document.getElementById('services').classList.add('show');
 
-                // Remove typewriter class after animation completes
+                // Finish typewriter effect
                 setTimeout(() => {
-                    document.getElementById('tagline1').classList.remove('typewriter-line1');
-                    document.getElementById('tagline1').classList.add('finished');
-                }, 3800);
+                    document.getElementById('tagline').classList.add('finished');
+                }, 7100);
 
-                setTimeout(() => {
-                    document.getElementById('tagline2').classList.remove('typewriter-line2');
-                    document.getElementById('tagline2').classList.add('finished');
-                }, 4800);
-
-                // After tagline types, scan lines and expand
+                // When "with:" appears, immediately show services
                 setTimeout(() => {
                     document.getElementById('header').classList.add('slide-up');
                     document.querySelector('.services-wrapper').classList.add('expanded');
                     document.getElementById('service-1').classList.add('grow');
                     document.getElementById('service-2').classList.add('grow');
                     document.getElementById('service-3').classList.add('grow');
-                }, 7500);
+                }, 7100);
             }, 1500);
         });
     </script>

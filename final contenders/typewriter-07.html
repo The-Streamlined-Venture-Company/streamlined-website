@@ -115,15 +115,13 @@
             margin-bottom: 20px;
         }
 
-        /* Tagline with typewriter effect - two parts */
+        /* Split typewriter lines */
         .subtitle {
             font-size: 28px;
-            line-height: 1.5;
+            line-height: 1.6;
             color: #fff;
-            max-width: 900px;
             font-weight: 400;
             transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: inline-block;
         }
 
         .header.slide-up .subtitle {
@@ -131,49 +129,83 @@
             font-size: 16px;
         }
 
-        .typewriter-line1 {
+        .typewriter-line {
+            position: relative;
+            display: inline-block;
             overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid #FF6B35;
-            width: 0;
-            animation: 
-                typing-line1 3s steps(65, end) 0.8s forwards,
-                blink-caret 0.75s step-end infinite;
         }
 
-        @keyframes typing-line1 {
-            from { width: 0 }
-            to { width: 100% }
+        .typewriter-line1 .text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: reveal-text1 3s linear 0.8s forwards;
+        }
+
+        .typewriter-line2 .text {
+            display: inline-block;
+            white-space: nowrap;
+            animation: reveal-text2 0.8s linear 3.8s forwards;
+        }
+
+        @keyframes reveal-text1 {
+            from { 
+                clip-path: inset(0 100% 0 0);
+            }
+            to { 
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        @keyframes reveal-text2 {
+            from { 
+                clip-path: inset(0 100% 0 0);
+            }
+            to { 
+                clip-path: inset(0 0 0 0);
+            }
+        }
+
+        .cursor {
+            position: absolute;
+            top: 0;
+            width: 3px;
+            height: 1.2em;
+            background: #FF6B35;
+            animation: type-cursor1 3s linear 0.8s forwards,
+                      blink 0.75s step-end infinite 3.8s;
         }
 
         .typewriter-line2 {
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid #FF6B35;
-            width: 0;
             opacity: 0;
-            animation: 
-                fade-in 0.1s ease 3.8s forwards,
-                typing-line2 1s steps(13, end) 3.8s forwards,
-                blink-caret 0.75s step-end 3.8s infinite;
+            animation: fade-in 0.1s ease 3.8s forwards;
         }
 
-        @keyframes typing-line2 {
-            from { width: 0 }
-            to { width: 100% }
+        .typewriter-line2 .cursor {
+            animation: type-cursor2 0.8s linear 3.8s forwards,
+                      blink 0.75s step-end infinite 4.6s;
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: #FF6B35; }
+        @keyframes type-cursor1 {
+            from { left: 0; }
+            to { left: 100%; }
         }
 
-        .typewriter-line1.finished,
-        .typewriter-line2.finished {
-            border: none;
+        @keyframes type-cursor2 {
+            from { left: 0; }
+            to { left: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1 }
+            51%, 100% { opacity: 0 }
+        }
+
+        .subtitle.finished {
             font-weight: 300;
-            letter-spacing: 0.02em;
-            width: auto;
+        }
+
+        .subtitle.finished .cursor {
+            display: none;
         }
 
         /* Services wrapper */
@@ -396,12 +428,17 @@
                 </div>
                 <h1>We are Streamlined.</h1>
                 <div class="tagline-container">
-                    <p class="subtitle typewriter-line1" id="tagline1">
-                        We help design-conscious minds streamline how they work and live,
-                    </p>
-                    <p class="subtitle typewriter-line2" id="tagline2">
-                        by providing:
-                    </p>
+                    <div class="subtitle" id="tagline">
+                        <div class="typewriter-line typewriter-line1">
+                            <span class="text">We help design-conscious minds streamline how they work and live,</span>
+                            <span class="cursor"></span>
+                        </div>
+                        <br>
+                        <div class="typewriter-line typewriter-line2">
+                            <span class="text">by providing:</span>
+                            <span class="cursor"></span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -464,16 +501,10 @@
                     document.getElementById('services').classList.add('show');
                 }, 100);
 
-                // Remove typewriter class after animation completes
+                // Finish typewriter effect
                 setTimeout(() => {
-                    document.getElementById('tagline1').classList.remove('typewriter-line1');
-                    document.getElementById('tagline1').classList.add('finished');
-                }, 3800);
-
-                setTimeout(() => {
-                    document.getElementById('tagline2').classList.remove('typewriter-line2');
-                    document.getElementById('tagline2').classList.add('finished');
-                }, 4800);
+                    document.getElementById('tagline').classList.add('finished');
+                }, 4600);
 
                 // After tagline types, scan lines and expand
                 setTimeout(() => {
