@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Main container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Hero section */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            width: 100%;
+            padding: 0 5vw;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: clamp(60px, 12vw, 200px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+        }
+
+        .tagline {
+            font-size: clamp(18px, 2vw, 24px);
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 600px;
+            color: #666;
+        }
+
+        /* Background elements */
+        .bg-element {
+            position: absolute;
+            font-size: clamp(200px, 30vw, 500px);
+            font-weight: 700;
+            color: rgba(0,0,0,0.03);
+            z-index: 1;
+            user-select: none;
+        }
+
+        .bg-1 {
+            top: -10%;
+            right: -10%;
+            transform: rotate(-15deg);
+        }
+
+        .bg-2 {
+            bottom: -20%;
+            left: -5%;
+            transform: rotate(25deg);
+        }
+
+        /* Service navigation */
+        .services-nav {
+            padding: 80px 5vw;
+            background: #000;
+            color: #fff;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 4px;
+            background: #fff;
+        }
+
+        .service-card {
+            background: #000;
+            padding: 60px 40px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover::before {
+            left: 0;
+        }
+
+        .service-card:hover {
+            transform: scale(0.98);
+        }
+
+        .service-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-index {
+            font-size: 80px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0.2;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover .service-index {
+            color: #000;
+            opacity: 1;
+        }
+
+        .service-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            transition: color 0.5s ease;
+        }
+
+        .service-card:hover .service-name {
+            color: #000;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.8;
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover .service-desc {
+            color: #000;
+            opacity: 1;
+        }
+
+        .service-arrow {
+            position: absolute;
+            bottom: 40px;
+            right: 40px;
+            font-size: 24px;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .service-card:hover .service-arrow {
+            opacity: 1;
+            transform: translateX(0);
+            color: #000;
+        }
+
+        /* Corner labels */
+        .corner-label {
+            position: fixed;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.4;
+            z-index: 100;
+        }
+
+        .label-tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .label-tr {
+            top: 20px;
+            right: 20px;
+        }
+
+        .label-bl {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .label-br {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-card {
+                padding: 40px 30px;
+            }
+            
+            .service-index {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="corner-label label-tl">2024</div>
+    <div class="corner-label label-tr">NYC</div>
+    <div class="corner-label label-bl">Design</div>
+    <div class="corner-label label-br">Solutions</div>
+
+    <div class="container">
+        <section class="hero">
+            <div class="bg-element bg-1">ST</div>
+            <div class="bg-element bg-2">LN</div>
+            
+            <div class="hero-content">
+                <h1>STREAMLINED</h1>
+                <p class="tagline">We help design-conscious minds streamline how they work and live through carefully curated talent, interfaces, and platforms.</p>
+            </div>
+        </section>
+
+        <section class="services-nav">
+            <div class="services-grid">
+                <div class="service-card" onclick="window.location.href='#talent'">
+                    <div class="service-inner">
+                        <div class="service-index">01</div>
+                        <h2 class="service-name">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision into reality</p>
+                    </div>
+                    <span class="service-arrow">→</span>
+                </div>
+                
+                <div class="service-card" onclick="window.location.href='#interfaces'">
+                    <div class="service-inner">
+                        <div class="service-index">02</div>
+                        <h2 class="service-name">Interfaces</h2>
+                        <p class="service-desc">Beautiful digital experiences that inspire and connect</p>
+                    </div>
+                    <span class="service-arrow">→</span>
+                </div>
+                
+                <div class="service-card" onclick="window.location.href='#platforms'">
+                    <div class="service-inner">
+                        <div class="service-index">03</div>
+                        <h2 class="service-name">Platforms</h2>
+                        <p class="service-desc">Modern tools for efficient, streamlined workflows</p>
+                    </div>
+                    <span class="service-arrow">→</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Parallax effect for background elements
+        const bgElements = document.querySelectorAll('.bg-element');
+        
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            bgElements.forEach((element, index) => {
+                const speed = (index + 1) * 20;
+                const xPos = (x - 0.5) * speed;
+                const yPos = (y - 0.5) * speed;
+                
+                element.style.transform += ` translate(${xPos}px, ${yPos}px)`;
+            });
+        });
+    </script>
+</body>
+</html>

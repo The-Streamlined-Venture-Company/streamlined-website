@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Grid system */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            min-height: 100vh;
+            gap: 1px;
+            background: #333;
+        }
+
+        /* Brand */
+        .brand-cell {
+            grid-column: 1 / 4;
+            grid-row: 1;
+            background: #000;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* Main title */
+        .title-cell {
+            grid-column: 1 / 9;
+            grid-row: 2 / 5;
+            background: #000;
+            padding: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 10vw, 160px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+        }
+
+        .main-title span {
+            display: block;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .main-title span:nth-child(1) { animation-delay: 0.1s; }
+        .main-title span:nth-child(2) { animation-delay: 0.2s; }
+        .main-title span:nth-child(3) { animation-delay: 0.3s; }
+
+        /* Color accent cells */
+        .accent-1 {
+            grid-column: 9 / 11;
+            grid-row: 2 / 4;
+            background: #dc3545;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.4s forwards;
+        }
+
+        .accent-2 {
+            grid-column: 11 / 13;
+            grid-row: 2 / 4;
+            background: #ffd93d;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.5s forwards;
+        }
+
+        /* Service cells */
+        .service {
+            background: #000;
+            padding: 40px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        .service-1 {
+            grid-column: 1 / 5;
+            grid-row: 5 / 7;
+            animation-delay: 0.6s;
+        }
+
+        .service-2 {
+            grid-column: 5 / 9;
+            grid-row: 5 / 7;
+            animation-delay: 0.7s;
+        }
+
+        .service-3 {
+            grid-column: 9 / 13;
+            grid-row: 5 / 7;
+            animation-delay: 0.8s;
+        }
+
+        .service:hover {
+            background: #111;
+            transform: scale(1.02);
+        }
+
+        .service-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 60px;
+            font-weight: 700;
+            opacity: 0.1;
+        }
+
+        .service-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            opacity: 0.7;
+            line-height: 1.4;
+        }
+
+        /* Empty cells */
+        .empty {
+            background: #000;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .grid-container {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .brand-cell,
+            .title-cell,
+            .accent-1,
+            .accent-2,
+            .service {
+                min-height: auto;
+                padding: 40px;
+            }
+            
+            .accent-1,
+            .accent-2 {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="brand-cell">
+            <div class="nav-brand">Streamlined</div>
+        </div>
+        
+        <div class="empty" style="grid-column: 4/13; grid-row: 1;"></div>
+        
+        <div class="title-cell">
+            <h1 class="main-title">
+                <span>Streamlined</span>
+                <span>Natural</span>
+                <span>History</span>
+            </h1>
+        </div>
+        
+        <div class="accent-1"></div>
+        <div class="accent-2"></div>
+        
+        <div class="empty" style="grid-column: 9/13; grid-row: 4/5;"></div>
+        <div class="empty" style="grid-column: 1/9; grid-row: 5;"></div>
+        
+        <div class="service service-1" onclick="window.location.href='#talent'">
+            <div class="service-number">01</div>
+            <h2 class="service-title">Talent</h2>
+            <p class="service-desc">Expert professionals</p>
+        </div>
+        
+        <div class="service service-2" onclick="window.location.href='#interfaces'">
+            <div class="service-number">02</div>
+            <h2 class="service-title">Interfaces</h2>
+            <p class="service-desc">Digital experiences</p>
+        </div>
+        
+        <div class="service service-3" onclick="window.location.href='#platforms'">
+            <div class="service-number">03</div>
+            <h2 class="service-title">Platforms</h2>
+            <p class="service-desc">Modern tools</p>
+        </div>
+    </div>
+</body>
+</html>

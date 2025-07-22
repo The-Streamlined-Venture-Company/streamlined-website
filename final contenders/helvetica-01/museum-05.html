@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Full screen sections */
+        .section {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* First section - Title */
+        .section-hero {
+            background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .main-title {
+            font-size: clamp(80px, 15vw, 300px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: scaleIn 1.2s ease forwards;
+        }
+
+        /* Second section - Services */
+        .section-services {
+            background: #000;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            width: 100%;
+            height: 100vh;
+        }
+
+        .service-panel {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.6s ease;
+        }
+
+        .service-panel:nth-child(1) { background: #0a0a0a; }
+        .service-panel:nth-child(2) { background: #1a1a1a; }
+        .service-panel:nth-child(3) { background: #2a2a2a; }
+
+        .service-panel:hover {
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .service-content {
+            text-align: center;
+            padding: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .service-panel:nth-child(1) .service-content { animation-delay: 0.2s; }
+        .service-panel:nth-child(2) .service-content { animation-delay: 0.4s; }
+        .service-panel:nth-child(3) .service-content { animation-delay: 0.6s; }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 700;
+            opacity: 0.1;
+            margin-bottom: 20px;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            opacity: 0.7;
+            line-height: 1.4;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+            animation: bounce 2s infinite;
+        }
+
+        /* Animations */
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-brand">Streamlined</div>
+    </nav>
+
+    <section class="section section-hero">
+        <div class="hero-content">
+            <h1 class="main-title">Streamlined</h1>
+        </div>
+        <div class="scroll-indicator">Scroll to explore</div>
+    </section>
+
+    <section class="section section-services">
+        <div class="services-grid">
+            <div class="service-panel" onclick="window.location.href='#talent'">
+                <div class="service-content">
+                    <div class="service-number">01</div>
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals ready to transform your vision</p>
+                </div>
+            </div>
+            
+            <div class="service-panel" onclick="window.location.href='#interfaces'">
+                <div class="service-content">
+                    <div class="service-number">02</div>
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Beautiful, functional digital experiences</p>
+                </div>
+            </div>
+            
+            <div class="service-panel" onclick="window.location.href='#platforms'">
+                <div class="service-content">
+                    <div class="service-number">03</div>
+                    <h2 class="service-title">Platforms</h2>
+                    <p class="service-desc">Modern tools for efficient workflows</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

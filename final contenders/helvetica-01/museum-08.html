@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+            height: 100vh;
+        }
+
+        /* Main container */
+        .container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* Hero section */
+        .hero {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Overlapping text layers */
+        .text-container {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 60px;
+        }
+
+        .text-layer {
+            position: absolute;
+            font-size: clamp(100px, 18vw, 320px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .layer-1 {
+            top: -20%;
+            left: -5%;
+            color: transparent;
+            -webkit-text-stroke: 2px #000;
+            opacity: 0;
+            animation: slideRight 1s ease forwards;
+        }
+
+        .layer-2 {
+            top: 10%;
+            left: 10%;
+            color: #ffd93d;
+            mix-blend-mode: multiply;
+            opacity: 0;
+            animation: slideLeft 1s ease 0.2s forwards;
+        }
+
+        .layer-3 {
+            top: 40%;
+            left: -10%;
+            color: #dc3545;
+            mix-blend-mode: multiply;
+            opacity: 0;
+            animation: slideRight 1s ease 0.4s forwards;
+        }
+
+        /* Center content */
+        .center-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(255,255,255,0.9);
+            padding: 60px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.8s forwards;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            margin-bottom: 40px;
+        }
+
+        /* Service links */
+        .services {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .service-link {
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            color: #000;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000;
+            transition: width 0.3s ease;
+        }
+
+        .service-link:hover::after {
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes slideRight {
+            to {
+                opacity: 0.3;
+                transform: translateX(20px);
+            }
+        }
+
+        @keyframes slideLeft {
+            to {
+                opacity: 0.5;
+                transform: translateX(-20px);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .text-layer {
+                font-size: clamp(60px, 20vw, 180px);
+            }
+            
+            .services {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .center-content {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="nav-brand">Streamlined</div>
+        </header>
+
+        <section class="hero">
+            <div class="text-container">
+                <div class="text-layer layer-1">MUSEUM</div>
+                <div class="text-layer layer-2">STREAM</div>
+                <div class="text-layer layer-3">HISTORY</div>
+            </div>
+            
+            <div class="center-content">
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+                
+                <div class="services">
+                    <a class="service-link" onclick="window.location.href='#talent'">Talent</a>
+                    <a class="service-link" onclick="window.location.href='#interfaces'">Interfaces</a>
+                    <a class="service-link" onclick="window.location.href='#platforms'">Platforms</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

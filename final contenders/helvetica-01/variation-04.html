@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Main content */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: clamp(80px, 15vw, 240px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            margin-bottom: 60px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 600px;
+            color: #888;
+            margin-bottom: 80px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.2s forwards;
+        }
+
+        /* Services grid - BORDER FILL */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.4s forwards;
+        }
+
+        .service {
+            background: #000;
+            border: 2px solid #222;
+            padding: 60px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #fff;
+            transform: translate(-50%, -50%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .service:hover::before {
+            width: 150%;
+            height: 150%;
+        }
+
+        .service:hover {
+            border-color: #fff;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-number {
+            font-size: 140px;
+            font-weight: 700;
+            line-height: 1;
+            color: #222;
+            margin-bottom: 30px;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-number {
+            color: #000;
+        }
+
+        .service-title {
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-title {
+            color: #000;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.4;
+            color: #666;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-desc {
+            color: #000;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 0 30px;
+            }
+            
+            .services {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .service {
+                padding: 40px;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="grid-overlay"></div>
+        
+        <nav>
+            <div class="nav-brand">Streamlined</div>
+        </nav>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>We are<br>Streamlined.</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live through talent, interfaces, and platforms.</p>
+                
+                <div class="services">
+                    <div class="service" onclick="window.location.href='#talent'">
+                        <div class="service-content">
+                            <div class="service-number">01</div>
+                            <h2 class="service-title">Talent</h2>
+                            <p class="service-desc">Expert professionals ready to transform your vision</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service" onclick="window.location.href='#interfaces'">
+                        <div class="service-content">
+                            <div class="service-number">02</div>
+                            <h2 class="service-title">Interfaces</h2>
+                            <p class="service-desc">Beautiful, functional digital experiences</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service" onclick="window.location.href='#platforms'">
+                        <div class="service-content">
+                            <div class="service-number">03</div>
+                            <h2 class="service-title">Platforms</h2>
+                            <p class="service-desc">Modern tools for efficient workflows</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

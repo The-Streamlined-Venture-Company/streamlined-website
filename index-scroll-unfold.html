@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Unfold Scroll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            height: 400vh;
+        }
+
+        .stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px;
+        }
+
+        /* Center piece with logo */
+        .center-piece {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden;
+        }
+
+        .logo-face img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .logo-face h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-variation-settings: 'wdth' 50;
+        }
+
+        /* Unfolding panels */
+        .panel {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            transform-origin: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            opacity: 0;
+        }
+
+        .panel:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateZ(20px);
+        }
+
+        .panel-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .panel-description {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        /* Initial state */
+        .panel-talent {
+            transform: rotateY(-90deg) translateZ(150px);
+        }
+
+        .panel-interfaces {
+            transform: rotateY(90deg) translateZ(150px);
+        }
+
+        .panel-resources {
+            transform: rotateX(90deg) translateZ(150px);
+        }
+
+        /* Unfolded state */
+        .unfolded .center-piece {
+            transform: scale(0.8);
+        }
+
+        .unfolded .panel {
+            opacity: 1;
+        }
+
+        .unfolded .panel-talent {
+            transform: translateX(-350px) rotateY(0);
+        }
+
+        .unfolded .panel-interfaces {
+            transform: translateX(350px) rotateY(0);
+        }
+
+        .unfolded .panel-resources {
+            transform: translateY(350px) rotateX(0);
+        }
+
+        /* Header text */
+        .intro-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 20;
+            transition: all 0.6s ease;
+        }
+
+        .intro-text h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-variation-settings: 'wdth' 35;
+            margin-bottom: 1rem;
+        }
+
+        .intro-text p {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            max-width: 600px;
+        }
+
+        .intro-text.hidden {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+            pointer-events: none;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .center-piece, .panel {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .unfolded .panel-talent {
+                transform: translateX(-230px) rotateY(0);
+            }
+            
+            .unfolded .panel-interfaces {
+                transform: translateX(230px) rotateY(0);
+            }
+            
+            .unfolded .panel-resources {
+                transform: translateY(230px) rotateX(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="intro-text">
+        <h1>Streamlined</h1>
+        <p>We help design-conscious minds streamline how they work and live</p>
+    </div>
+    
+    <div class="scroll-container">
+        <div class="stage">
+            <div class="center-piece">
+                <div class="logo-face">
+                    <img src="assets/logo.gif" alt="Streamlined Logo" />
+                    <h1>Streamlined</h1>
+                </div>
+            </div>
+            
+            <div class="panel panel-talent">
+                <svg class="panel-icon" viewBox="0 0 120 120">
+                    <circle cx="60" cy="60" r="40" fill="none" stroke="white" stroke-width="2"/>
+                    <circle cx="60" cy="45" r="15" fill="white"/>
+                    <path d="M60 65 Q60 90 80 90 Q60 70 40 90 Q60 90 60 65" fill="white"/>
+                </svg>
+                <h2 class="panel-title">Talent</h2>
+                <p class="panel-description">Connecting exceptional minds with transformative opportunities</p>
+            </div>
+            
+            <div class="panel panel-interfaces">
+                <svg class="panel-icon" viewBox="0 0 120 120">
+                    <rect x="20" y="30" width="80" height="60" rx="5" fill="none" stroke="white" stroke-width="2"/>
+                    <rect x="30" y="40" width="60" height="40" rx="3" fill="white"/>
+                    <circle cx="60" cy="100" r="5" fill="white"/>
+                </svg>
+                <h2 class="panel-title">Interfaces</h2>
+                <p class="panel-description">Crafting digital experiences that inspire and delight</p>
+            </div>
+            
+            <div class="panel panel-resources">
+                <svg class="panel-icon" viewBox="0 0 120 120">
+                    <rect x="25" y="25" width="30" height="30" fill="white"/>
+                    <rect x="65" y="25" width="30" height="30" fill="none" stroke="white" stroke-width="2"/>
+                    <rect x="25" y="65" width="30" height="30" fill="none" stroke="white" stroke-width="2"/>
+                    <rect x="65" y="65" width="30" height="30" fill="white"/>
+                </svg>
+                <h2 class="panel-title">Resources</h2>
+                <p class="panel-description">Curated tools and insights for modern professionals</p>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        const stage = document.querySelector('.stage');
+        const introText = document.querySelector('.intro-text');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const panels = document.querySelectorAll('.panel');
+        
+        function updateScroll() {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            // Hide intro text and scroll indicator
+            if (scrollProgress > 0.1) {
+                introText.classList.add('hidden');
+                scrollIndicator.style.opacity = '0';
+            } else {
+                introText.classList.remove('hidden');
+                scrollIndicator.style.opacity = '0.6';
+            }
+            
+            // Unfold animation
+            if (scrollProgress > 0.2) {
+                stage.classList.add('unfolded');
+                
+                // Add slight floating animation to panels
+                const floatAmount = Math.sin(scrollProgress * Math.PI * 4) * 10;
+                panels.forEach((panel, index) => {
+                    const delay = index * 0.1;
+                    const offset = Math.sin((scrollProgress + delay) * Math.PI * 4) * 10;
+                    panel.style.transform = panel.style.transform.replace(/translateY\([^)]*\)/, '') + ` translateY(${offset}px)`;
+                });
+            } else {
+                stage.classList.remove('unfolded');
+            }
+        }
+        
+        window.addEventListener('scroll', updateScroll);
+        updateScroll();
+        
+        // Add click interactions
+        panels.forEach(panel => {
+            panel.addEventListener('click', () => {
+                const title = panel.querySelector('.panel-title').textContent;
+                console.log(`Clicked on ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* Main container */
+        .main {
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Full screen sections */
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            scroll-snap-align: start;
+        }
+
+        /* Intro section */
+        .intro {
+            background: #000;
+            overflow: hidden;
+        }
+
+        .intro-content {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-mark {
+            width: 120px;
+            height: 120px;
+            background: #fff;
+            margin: 0 auto 60px;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: clamp(80px, 12vw, 200px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 0.85;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            opacity: 0.7;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        /* Background text */
+        .bg-text {
+            position: absolute;
+            font-size: 40vw;
+            font-weight: 700;
+            color: rgba(255,255,255,0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+            letter-spacing: -0.05em;
+            pointer-events: none;
+        }
+
+        /* Services section */
+        .services {
+            background: #fff;
+            color: #000;
+        }
+
+        .services-container {
+            width: 100%;
+            max-width: 1600px;
+            padding: 0 60px;
+        }
+
+        .services-header {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            background: #000;
+        }
+
+        .service-item {
+            background: #fff;
+            padding: 80px 60px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.5s ease;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            transform: translateX(-100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-item:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-number {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            opacity: 0.5;
+            transition: all 0.5s ease;
+        }
+
+        .service-item:hover .service-number {
+            color: #fff;
+            opacity: 1;
+        }
+
+        .service-name {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+            transition: color 0.5s ease;
+        }
+
+        .service-item:hover .service-name {
+            color: #fff;
+        }
+
+        .service-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+
+        .service-item:hover .service-desc {
+            color: #fff;
+            opacity: 1;
+        }
+
+        /* Navigation dots */
+        .nav-dots {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: transparent;
+        }
+
+        .dot.active {
+            background: #fff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+            scroll-snap-type: y mandatory;
+        }
+
+        @media (max-width: 968px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-item {
+                padding: 60px 40px;
+            }
+            
+            .services-container {
+                padding: 0 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <!-- Navigation dots -->
+        <div class="nav-dots">
+            <div class="dot active" onclick="scrollToSection(0)"></div>
+            <div class="dot" onclick="scrollToSection(1)"></div>
+        </div>
+
+        <!-- Intro section -->
+        <section class="section intro" id="section-0">
+            <div class="bg-text">STRMLN</div>
+            <div class="intro-content">
+                <div class="logo-mark"></div>
+                <h1>Streamlined</h1>
+                <p class="tagline">We help design-conscious minds streamline how they work and live.</p>
+            </div>
+        </section>
+
+        <!-- Services section -->
+        <section class="section services" id="section-1">
+            <div class="services-container">
+                <h2 class="services-header">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-item" onclick="window.location.href='#talent'">
+                        <div class="service-content">
+                            <div class="service-number">01</div>
+                            <h3 class="service-name">Talent</h3>
+                            <p class="service-desc">Connect with expert professionals who understand your vision</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#interfaces'">
+                        <div class="service-content">
+                            <div class="service-number">02</div>
+                            <h3 class="service-name">Interfaces</h3>
+                            <p class="service-desc">Beautiful digital experiences that inspire and function flawlessly</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service-item" onclick="window.location.href='#platforms'">
+                        <div class="service-content">
+                            <div class="service-number">03</div>
+                            <h3 class="service-name">Platforms</h3>
+                            <p class="service-desc">Modern tools designed for efficient, streamlined workflows</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Update active dot on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.section');
+            const dots = document.querySelectorAll('.dot');
+            
+            sections.forEach((section, index) => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100 && rect.bottom >= 100) {
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    dots[index].classList.add('active');
+                }
+            });
+        });
+
+        // Scroll to section
+        function scrollToSection(index) {
+            document.getElementById(`section-${index}`).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Custom cursor effect
+        const cursor = document.createElement('div');
+        cursor.style.cssText = `
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.2s ease;
+        `;
+        document.body.appendChild(cursor);
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 10 + 'px';
+            cursor.style.top = e.clientY - 10 + 'px';
+        });
+
+        document.addEventListener('mousedown', () => {
+            cursor.style.transform = 'scale(0.8)';
+        });
+
+        document.addEventListener('mouseup', () => {
+            cursor.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+            height: 300vh;
+        }
+
+        /* Main container */
+        .container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Content */
+        .content {
+            text-align: center;
+            max-width: 1400px;
+            padding: 0 60px;
+        }
+
+        h1 {
+            font-size: clamp(60px, 8vw, 140px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 40px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tagline {
+            font-size: 20px;
+            font-weight: 300;
+            color: #666;
+            margin-bottom: 80px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Services */
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service {
+            width: 300px;
+            text-align: left;
+            cursor: pointer;
+            position: relative;
+            padding: 40px;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            background: #fff;
+        }
+
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: #000;
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .service:hover::before {
+            width: 100%;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-index {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-index {
+            color: #fff;
+        }
+
+        .service-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-name {
+            color: #fff;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+
+        .service:hover .service-desc {
+            color: #fff;
+            opacity: 1;
+        }
+
+        /* Scroll effects */
+        .scrolled h1 {
+            letter-spacing: 0.5em;
+            opacity: 0.1;
+        }
+
+        .scrolled .tagline {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .scrolled .services {
+            gap: 200px;
+            transform: scale(1.2);
+        }
+
+        .scrolled .service {
+            transform: rotate(15deg);
+        }
+
+        /* Scroll indicator */
+        .scroll-line {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: #000;
+            overflow: hidden;
+        }
+
+        .scroll-line::after {
+            content: '';
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: #000;
+            animation: scrollDown 2s ease infinite;
+        }
+
+        @keyframes scrollDown {
+            to {
+                top: 60px;
+            }
+        }
+
+        @media (max-width: 968px) {
+            .services {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .scrolled .services {
+                gap: 40px;
+                transform: scale(1);
+            }
+            
+            .scrolled .service {
+                transform: rotate(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>STREAMLINED</h1>
+            <p class="tagline">We help design-conscious minds work more efficiently</p>
+            
+            <div class="services">
+                <div class="service" onclick="window.location.href='#talent'">
+                    <div class="service-content">
+                        <div class="service-index">01</div>
+                        <h2 class="service-name">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision</p>
+                    </div>
+                </div>
+                
+                <div class="service" onclick="window.location.href='#interfaces'">
+                    <div class="service-content">
+                        <div class="service-index">02</div>
+                        <h2 class="service-name">Interfaces</h2>
+                        <p class="service-desc">Beautiful digital experiences that inspire</p>
+                    </div>
+                </div>
+                
+                <div class="service" onclick="window.location.href='#platforms'">
+                    <div class="service-content">
+                        <div class="service-index">03</div>
+                        <h2 class="service-name">Platforms</h2>
+                        <p class="service-desc">Modern tools for streamlined workflows</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scroll-line"></div>
+
+    <script>
+        const container = document.querySelector('.container');
+        const content = document.querySelector('.content');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const scrollProgress = scrolled / (document.documentElement.scrollHeight - window.innerHeight);
+            
+            if (scrollProgress > 0.1) {
+                content.classList.add('scrolled');
+            } else {
+                content.classList.remove('scrolled');
+            }
+            
+            // Parallax effect
+            container.style.transform = `translateY(${scrolled * 0.3}px)`;
+        });
+    </script>
+</body>
+</html>

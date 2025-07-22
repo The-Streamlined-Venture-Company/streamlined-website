@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        .container {
+            height: 400vh;
+        }
+
+        .content {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Initial centered state */
+        .intro {
+            position: absolute;
+            text-align: center;
+            z-index: 10;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 2rem;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-variation-settings: 'wdth' 40;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.6;
+            margin-top: 1rem;
+            max-width: 500px;
+            line-height: 1.5;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Grid layout */
+        .grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 1fr 400px 1fr;
+            grid-template-rows: 1fr 300px 1fr;
+            gap: 1px;
+            background: rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .grid-item {
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Center cell remains empty for logo */
+        .grid-item:nth-child(5) {
+            background: transparent;
+        }
+
+        /* Service cells */
+        .service {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1.5rem;
+            stroke-width: 1.5;
+        }
+
+        .service-name {
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            text-align: center;
+            max-width: 250px;
+            line-height: 1.5;
+        }
+
+        /* Scroll states */
+        .scrolled .intro {
+            transform: scale(0.6);
+        }
+
+        .scrolled .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .scrolled h1 {
+            font-size: 2rem;
+        }
+
+        .scrolled .subtitle {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .scrolled .grid {
+            opacity: 1;
+        }
+
+        /* Service delays */
+        .service:nth-child(2) { transition-delay: 0.1s; }
+        .service:nth-child(4) { transition-delay: 0.2s; }
+        .service:nth-child(6) { transition-delay: 0.3s; }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr 200px 1fr;
+                grid-template-rows: 1fr 200px 1fr;
+            }
+            
+            h1 {
+                font-size: 3rem;
+            }
+            
+            .scrolled h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="grid">
+                <div class="grid-item"></div>
+                <div class="grid-item service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="currentColor"/>
+                    </svg>
+                    <h2 class="service-name">Talent</h2>
+                    <p class="service-desc">Connecting exceptional minds with transformative opportunities</p>
+                </div>
+                <div class="grid-item"></div>
+                <div class="grid-item service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="currentColor"/>
+                    </svg>
+                    <h2 class="service-name">Interfaces</h2>
+                    <p class="service-desc">Crafting digital experiences that inspire</p>
+                </div>
+                <div class="grid-item"></div>
+                <div class="grid-item service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <rect x="30" y="30" width="60" height="60" fill="none" stroke="currentColor"/>
+                    </svg>
+                    <h2 class="service-name">Resources</h2>
+                    <p class="service-desc">Curated tools for modern professionals</p>
+                </div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+                <div class="grid-item"></div>
+            </div>
+            
+            <div class="intro">
+                <div class="logo">
+                    <img src="assets/logo.gif" alt="Streamlined" />
+                </div>
+                <h1>Streamlined</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const content = document.querySelector('.content');
+        const services = document.querySelectorAll('.service');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const threshold = window.innerHeight * 0.3;
+            
+            if (scrolled > threshold) {
+                content.classList.add('scrolled');
+                services.forEach(service => {
+                    service.classList.add('visible');
+                });
+            } else {
+                content.classList.remove('scrolled');
+                services.forEach(service => {
+                    service.classList.remove('visible');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

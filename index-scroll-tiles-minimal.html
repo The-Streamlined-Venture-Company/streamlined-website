@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            height: 300vh;
+        }
+
+        .fixed-stage {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Center logo */
+        .center {
+            position: absolute;
+            z-index: 10;
+            text-align: center;
+            transition: transform 0.6s ease;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-variation-settings: 'wdth' 50;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            opacity: 0.6;
+            margin-top: 0.5rem;
+            transition: opacity 0.6s ease;
+        }
+
+        /* Tile grid */
+        .tile-grid {
+            position: absolute;
+            width: 80vw;
+            height: 80vh;
+            max-width: 1200px;
+            max-height: 800px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .tile {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .tile.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Center tile is invisible (where logo sits) */
+        .tile:nth-child(5) {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        /* Service tiles */
+        .tile.service {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tile.service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.02) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tile.service:hover::before {
+            opacity: 1;
+        }
+
+        .tile.service:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.9;
+        }
+
+        /* Positions */
+        .tile:nth-child(2) { transition-delay: 0.1s; }
+        .tile:nth-child(4) { transition-delay: 0.2s; }
+        .tile:nth-child(6) { transition-delay: 0.3s; }
+        .tile:nth-child(8) { transition-delay: 0.4s; }
+
+        /* Scroll states */
+        .scrolled .center {
+            transform: scale(0.8);
+        }
+
+        .scrolled .tagline {
+            opacity: 0;
+        }
+
+        @media (max-width: 768px) {
+            .tile-grid {
+                width: 90vw;
+                height: 90vh;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="fixed-stage">
+            <div class="tile-grid">
+                <div class="tile"></div>
+                <div class="tile service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="white" stroke-width="2"/>
+                    </svg>
+                    <div class="service-title">Talent</div>
+                </div>
+                <div class="tile"></div>
+                <div class="tile service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="white" stroke-width="2"/>
+                    </svg>
+                    <div class="service-title">Interfaces</div>
+                </div>
+                <div class="tile"></div>
+                <div class="tile service">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <rect x="30" y="30" width="60" height="60" fill="none" stroke="white" stroke-width="2"/>
+                    </svg>
+                    <div class="service-title">Resources</div>
+                </div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+                <div class="tile"></div>
+            </div>
+            
+            <div class="center">
+                <div class="logo">
+                    <img src="assets/logo.gif" alt="Streamlined" />
+                </div>
+                <h1>Streamlined</h1>
+                <p class="tagline">We help design-conscious minds streamline how they work and live</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stage = document.querySelector('.fixed-stage');
+        const tiles = document.querySelectorAll('.tile');
+        
+        function updateScroll() {
+            const scrolled = window.pageYOffset;
+            const scrollProgress = scrolled / (document.documentElement.scrollHeight - window.innerHeight);
+            
+            if (scrollProgress > 0.1) {
+                stage.classList.add('scrolled');
+                tiles.forEach(tile => {
+                    tile.classList.add('visible');
+                });
+            } else {
+                stage.classList.remove('scrolled');
+                tiles.forEach(tile => {
+                    tile.classList.remove('visible');
+                });
+            }
+        }
+        
+        window.addEventListener('scroll', updateScroll);
+        updateScroll();
+    </script>
+</body>
+</html>

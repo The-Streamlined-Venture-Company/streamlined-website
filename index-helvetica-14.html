@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Grid overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .grid-line {
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Main content */
+        .main {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Header */
+        header {
+            padding: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+
+        .header-left {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .header-right {
+            font-size: 14px;
+            font-weight: 400;
+            opacity: 0.6;
+        }
+
+        /* Hero */
+        .hero {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: clamp(120px, 22vw, 360px);
+            font-weight: 700;
+            line-height: 0.75;
+            letter-spacing: -0.06em;
+            margin-bottom: 60px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1.4;
+            max-width: 600px;
+            color: #666;
+            margin-bottom: 80px;
+        }
+
+        /* Services */
+        .services {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+        }
+
+        .service {
+            padding: 60px;
+            border: 2px solid #000;
+            margin: -1px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service:hover::before {
+            transform: translateY(0);
+        }
+
+        .service:hover {
+            z-index: 10;
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-number {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-number {
+            color: #fff;
+        }
+
+        .service-name {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-name {
+            color: #fff;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.7;
+            transition: all 0.5s ease;
+        }
+
+        .service:hover .service-desc {
+            color: #fff;
+            opacity: 1;
+        }
+
+        /* Floating number background */
+        .bg-number {
+            position: fixed;
+            font-size: 800px;
+            font-weight: 700;
+            color: rgba(0,0,0,0.02);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @media (max-width: 968px) {
+            .services {
+                grid-template-columns: 1fr;
+            }
+            
+            .service {
+                padding: 40px;
+            }
+            
+            h1 {
+                margin-bottom: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-overlay">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+    </div>
+
+    <div class="bg-number">3</div>
+
+    <div class="main">
+        <header>
+            <div class="header-left">Streamlined</div>
+            <div class="header-right">Est. 2024</div>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>STREAM<br>LINED</h1>
+                <p class="subtitle">We help design-conscious minds streamline how they work and live.</p>
+                
+                <div class="services">
+                    <div class="service" onclick="window.location.href='#talent'">
+                        <div class="service-content">
+                            <div class="service-number">01</div>
+                            <h2 class="service-name">Talent</h2>
+                            <p class="service-desc">Expert professionals ready to transform your vision</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service" onclick="window.location.href='#interfaces'">
+                        <div class="service-content">
+                            <div class="service-number">02</div>
+                            <h2 class="service-name">Interfaces</h2>
+                            <p class="service-desc">Beautiful digital experiences that inspire</p>
+                        </div>
+                    </div>
+                    
+                    <div class="service" onclick="window.location.href='#platforms'">
+                        <div class="service-content">
+                            <div class="service-number">03</div>
+                            <h2 class="service-name">Platforms</h2>
+                            <p class="service-desc">Modern tools for efficient workflows</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

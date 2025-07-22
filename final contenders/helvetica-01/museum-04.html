@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #fff;
+            color: #000;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .nav-brand {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            color: #fff;
+        }
+
+        /* Main section */
+        .hero {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+        }
+
+        /* Typography layers */
+        .text-layer {
+            position: absolute;
+            font-size: clamp(100px, 20vw, 400px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            white-space: nowrap;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .text-1 {
+            top: 10%;
+            left: -10%;
+            color: #ff6b35;
+            animation-delay: 0.2s;
+        }
+
+        .text-2 {
+            top: 30%;
+            right: -20%;
+            color: #ffd93d;
+            animation-delay: 0.4s;
+        }
+
+        .text-3 {
+            bottom: 20%;
+            left: -15%;
+            color: #dc3545;
+            animation-delay: 0.6s;
+        }
+
+        /* Center content */
+        .center-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.8s forwards;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            line-height: 1.4;
+            color: #333;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1s forwards;
+        }
+
+        /* Service buttons */
+        .services {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 1.2s forwards;
+        }
+
+        .service-btn {
+            padding: 20px 40px;
+            font-size: 18px;
+            font-weight: 500;
+            border: 2px solid #000;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-btn:hover::before {
+            left: 0;
+        }
+
+        .service-btn:hover {
+            color: #fff;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to {
+                opacity: 0.1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .text-layer {
+                font-size: clamp(80px, 30vw, 200px);
+            }
+            
+            .services {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .service-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-brand">Streamlined</div>
+    </header>
+
+    <section class="hero">
+        <div class="text-layer text-1">MUSEUM</div>
+        <div class="text-layer text-2">DESIGN</div>
+        <div class="text-layer text-3">NATURAL</div>
+        
+        <div class="center-content">
+            <h1 class="main-title">Streamlined</h1>
+            <p class="subtitle">We help design-conscious minds streamline how they work and live</p>
+            
+            <div class="services">
+                <button class="service-btn" onclick="window.location.href='#talent'">Talent</button>
+                <button class="service-btn" onclick="window.location.href='#interfaces'">Interfaces</button>
+                <button class="service-btn" onclick="window.location.href='#platforms'">Platforms</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            height: 400vh;
+        }
+
+        /* Sticky sections */
+        .section {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        /* Section 1 - Title */
+        .section-1 {
+            z-index: 10;
+            background: #000;
+        }
+
+        .title-container {
+            text-align: center;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        h1 {
+            font-size: clamp(80px, 15vw, 240px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.04em;
+            margin-bottom: 30px;
+        }
+
+        .subtitle {
+            font-size: 20px;
+            font-weight: 300;
+            opacity: 0.6;
+            max-width: 500px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Section 2 - Talent */
+        .section-2 {
+            z-index: 9;
+            background: #111;
+        }
+
+        /* Section 3 - Interfaces */
+        .section-3 {
+            z-index: 8;
+            background: #222;
+        }
+
+        /* Section 4 - Platforms */
+        .section-4 {
+            z-index: 7;
+            background: #333;
+        }
+
+        /* Service content */
+        .service-content {
+            max-width: 1200px;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .service-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.8s ease forwards;
+        }
+
+        .service-right {
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 0.8s ease forwards;
+        }
+
+        .service-number {
+            font-size: 200px;
+            font-weight: 700;
+            opacity: 0.1;
+            margin-bottom: 40px;
+        }
+
+        .service-title {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            letter-spacing: -0.03em;
+        }
+
+        .service-description {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .service-link {
+            display: inline-block;
+            padding: 20px 40px;
+            border: 2px solid #fff;
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+
+        .service-link:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-2px);
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+        }
+
+        .indicator-line {
+            width: 2px;
+            height: 100px;
+            background: rgba(255,255,255,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .indicator-progress {
+            width: 100%;
+            background: #fff;
+            position: absolute;
+            top: 0;
+            transition: height 0.3s ease;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .service-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 48px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="indicator-line">
+            <div class="indicator-progress"></div>
+        </div>
+    </div>
+
+    <div class="section section-1">
+        <div class="title-container">
+            <h1>STREAMLINED</h1>
+            <p class="subtitle">We help design-conscious minds streamline how they work and live</p>
+        </div>
+    </div>
+
+    <div class="section section-2">
+        <div class="service-content">
+            <div class="service-left">
+                <div class="service-number">01</div>
+            </div>
+            <div class="service-right">
+                <h2 class="service-title">Talent</h2>
+                <p class="service-description">Connect with expert professionals who understand your vision and can bring it to life with precision and care.</p>
+                <a href="#talent" class="service-link">Explore Talent</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section section-3">
+        <div class="service-content">
+            <div class="service-left">
+                <div class="service-number">02</div>
+            </div>
+            <div class="service-right">
+                <h2 class="service-title">Interfaces</h2>
+                <p class="service-description">Beautiful, functional digital experiences that connect people with purpose and inspire action.</p>
+                <a href="#interfaces" class="service-link">Explore Interfaces</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section section-4">
+        <div class="service-content">
+            <div class="service-left">
+                <div class="service-number">03</div>
+            </div>
+            <div class="service-right">
+                <h2 class="service-title">Platforms</h2>
+                <p class="service-description">Modern tools and systems designed for efficient workflows and seamless collaboration.</p>
+                <a href="#platforms" class="service-link">Explore Platforms</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update scroll indicator
+        const indicatorProgress = document.querySelector('.indicator-progress');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            indicatorProgress.style.height = `${scrollProgress * 100}%`;
+            
+            // Fade out title on scroll
+            const titleContainer = document.querySelector('.title-container');
+            const fadeStart = 100;
+            const fadeEnd = 300;
+            
+            if (scrolled <= fadeStart) {
+                titleContainer.style.opacity = '1';
+                titleContainer.style.transform = 'scale(1)';
+            } else if (scrolled >= fadeEnd) {
+                titleContainer.style.opacity = '0';
+                titleContainer.style.transform = 'scale(0.9)';
+            } else {
+                const fadeProgress = (scrolled - fadeStart) / (fadeEnd - fadeStart);
+                titleContainer.style.opacity = 1 - fadeProgress;
+                titleContainer.style.transform = `scale(${1 - fadeProgress * 0.1})`;
+            }
+        });
+    </script>
+</body>
+</html>

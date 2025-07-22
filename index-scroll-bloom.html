@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Bloom Scroll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            height: 400vh;
+        }
+
+        .bloom-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Center logo */
+        .bloom-center {
+            position: absolute;
+            z-index: 10;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-text {
+            text-align: center;
+            margin-top: 2rem;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .company-name {
+            font-size: 4rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-variation-settings: 'wdth' 50;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            max-width: 500px;
+        }
+
+        /* Bloom petals */
+        .petal {
+            position: absolute;
+            width: 350px;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.08) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50% 0 50% 0;
+            transform-origin: bottom right;
+            opacity: 0;
+            transform: scale(0) rotate(0deg);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .petal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .petal:hover::before {
+            opacity: 1;
+        }
+
+        .petal:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.12) 100%);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05) rotate(var(--rotation)) translateX(var(--translate-x)) translateY(var(--translate-y));
+        }
+
+        .petal-content {
+            position: absolute;
+            bottom: 20%;
+            right: 20%;
+            text-align: right;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.6s ease 0.3s;
+        }
+
+        .petal.bloomed .petal-content {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .petal-icon {
+            width: 60px;
+            height: 60px;
+            margin-left: auto;
+            margin-bottom: 1rem;
+        }
+
+        .petal-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .petal-description {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            line-height: 1.4;
+            max-width: 200px;
+            margin-left: auto;
+        }
+
+        /* Petal positions and rotations */
+        .petal-talent {
+            --rotation: -60deg;
+            --translate-x: -120px;
+            --translate-y: -80px;
+        }
+
+        .petal-interfaces {
+            --rotation: 0deg;
+            --translate-x: 0px;
+            --translate-y: -140px;
+        }
+
+        .petal-resources {
+            --rotation: 60deg;
+            --translate-x: 120px;
+            --translate-y: -80px;
+        }
+
+        /* Bloom animation states */
+        .blooming .bloom-center {
+            transform: scale(0.8);
+        }
+
+        .blooming .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .blooming .company-name {
+            font-size: 2rem;
+        }
+
+        .blooming .tagline {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .blooming .petal {
+            opacity: 1;
+        }
+
+        .blooming .petal-talent {
+            transform: scale(1) rotate(-60deg) translateX(-120px) translateY(-80px);
+        }
+
+        .blooming .petal-interfaces {
+            transform: scale(1) rotate(0deg) translateX(0px) translateY(-140px);
+        }
+
+        .blooming .petal-resources {
+            transform: scale(1) rotate(60deg) translateX(120px) translateY(-80px);
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                opacity: 0; 
+                transform: translateY(0) scale(0);
+            }
+            10% {
+                opacity: 0.6;
+                transform: translateY(-20px) scale(1);
+            }
+            90% {
+                opacity: 0.6;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .petal {
+                width: 250px;
+                height: 180px;
+            }
+            
+            .petal-talent {
+                --translate-x: -80px;
+                --translate-y: -60px;
+            }
+            
+            .petal-interfaces {
+                --translate-y: -100px;
+            }
+            
+            .petal-resources {
+                --translate-x: 80px;
+                --translate-y: -60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="bloom-container">
+            <!-- Center -->
+            <div class="bloom-center">
+                <div class="logo">
+                    <img src="assets/logo.gif" alt="Streamlined Logo" />
+                </div>
+                <div class="company-text">
+                    <h1 class="company-name">Streamlined</h1>
+                    <p class="tagline">We help design-conscious minds streamline how they work and live</p>
+                </div>
+            </div>
+            
+            <!-- Petals -->
+            <div class="petal petal-talent">
+                <div class="petal-content">
+                    <svg class="petal-icon" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="white" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="20" fill="white"/>
+                    </svg>
+                    <h2 class="petal-title">Talent</h2>
+                    <p class="petal-description">Expert professionals transforming visions into reality</p>
+                </div>
+            </div>
+            
+            <div class="petal petal-interfaces">
+                <div class="petal-content">
+                    <svg class="petal-icon" viewBox="0 0 120 120">
+                        <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="white" stroke-width="2"/>
+                        <path d="M60 40 L80 80 L40 80 Z" fill="white"/>
+                    </svg>
+                    <h2 class="petal-title">Interfaces</h2>
+                    <p class="petal-description">Beautiful, intuitive digital experiences</p>
+                </div>
+            </div>
+            
+            <div class="petal petal-resources">
+                <div class="petal-content">
+                    <svg class="petal-icon" viewBox="0 0 120 120">
+                        <rect x="30" y="30" width="60" height="60" fill="none" stroke="white" stroke-width="2"/>
+                        <rect x="45" y="45" width="30" height="30" fill="white"/>
+                    </svg>
+                    <h2 class="petal-title">Resources</h2>
+                    <p class="petal-description">Curated tools for modern workflows</p>
+                </div>
+            </div>
+            
+            <!-- Floating particles -->
+            <div class="particle" style="left: 45%; bottom: 40%; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 50%; bottom: 45%; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 55%; bottom: 40%; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 48%; bottom: 42%; animation-delay: 3s;"></div>
+            <div class="particle" style="left: 52%; bottom: 43%; animation-delay: 4s;"></div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        const bloomContainer = document.querySelector('.bloom-container');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const petals = document.querySelectorAll('.petal');
+        const particles = document.querySelectorAll('.particle');
+        
+        function updateScroll() {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            // Hide scroll indicator
+            scrollIndicator.style.opacity = scrollProgress > 0.05 ? '0' : '0.6';
+            
+            // Start blooming animation
+            if (scrollProgress > 0.1) {
+                bloomContainer.classList.add('blooming');
+                
+                // Add bloomed class to petals with stagger
+                petals.forEach((petal, index) => {
+                    const petalProgress = (scrollProgress - 0.1) * 2;
+                    if (petalProgress > index * 0.2) {
+                        petal.classList.add('bloomed');
+                    } else {
+                        petal.classList.remove('bloomed');
+                    }
+                });
+                
+                // Rotate entire bloom slowly
+                const rotation = scrollProgress * 30;
+                bloomContainer.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+                
+                // Counter-rotate content
+                petals.forEach(petal => {
+                    const content = petal.querySelector('.petal-content');
+                    if (content) {
+                        content.style.transform = `rotate(${-rotation}deg) translateX(0)`;
+                    }
+                });
+                
+                // Activate particles
+                particles.forEach(particle => {
+                    particle.style.opacity = '1';
+                });
+            } else {
+                bloomContainer.classList.remove('blooming');
+                bloomContainer.style.transform = 'translate(-50%, -50%) rotate(0deg)';
+                petals.forEach(petal => petal.classList.remove('bloomed'));
+                particles.forEach(particle => {
+                    particle.style.opacity = '0';
+                });
+            }
+        }
+        
+        window.addEventListener('scroll', updateScroll);
+        updateScroll();
+        
+        // Petal interactions
+        petals.forEach(petal => {
+            petal.addEventListener('click', () => {
+                const title = petal.querySelector('.petal-title').textContent;
+                console.log(`Clicked on ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>

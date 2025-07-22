@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        .scroll-container {
+            height: 300vh;
+        }
+
+        .stage {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Logo and intro */
+        .hero {
+            position: absolute;
+            z-index: 20;
+            text-align: center;
+            transition: all 0.6s ease;
+        }
+
+        .logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 2rem;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand {
+            font-size: 3.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-variation-settings: 'wdth' 45;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.5;
+            max-width: 400px;
+            margin: 0 auto;
+            line-height: 1.4;
+        }
+
+        /* Mosaic layout */
+        .mosaic {
+            position: absolute;
+            width: 90vw;
+            height: 85vh;
+            max-width: 1400px;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .mosaic.visible {
+            opacity: 1;
+        }
+
+        .tile {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tile.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tile:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Large talent tile */
+        .tile.talent {
+            grid-row: span 2;
+            transition-delay: 0s;
+        }
+
+        /* Interfaces tile */
+        .tile.interfaces {
+            transition-delay: 0.1s;
+        }
+
+        /* Resources tile */
+        .tile.resources {
+            grid-column: span 2;
+            transition-delay: 0.2s;
+        }
+
+        /* Tile content */
+        .tile-content {
+            position: absolute;
+            bottom: 3rem;
+            left: 3rem;
+            right: 3rem;
+        }
+
+        .tile-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .tile-title {
+            font-size: 2rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .tile-description {
+            font-size: 0.95rem;
+            opacity: 0.6;
+            line-height: 1.5;
+            max-width: 300px;
+        }
+
+        /* Scroll states */
+        .scrolled .hero {
+            transform: scale(0.4) translateY(-100px);
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .mosaic {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(3, 1fr);
+                gap: 1px;
+            }
+            
+            .tile.talent {
+                grid-row: span 1;
+            }
+            
+            .tile.resources {
+                grid-column: span 1;
+            }
+            
+            .brand {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="stage">
+            <div class="hero">
+                <div class="logo">
+                    <img src="assets/logo.gif" alt="Streamlined" />
+                </div>
+                <h1 class="brand">Streamlined</h1>
+                <p class="tagline">We help design-conscious minds streamline how they work and live</p>
+            </div>
+            
+            <div class="mosaic">
+                <div class="tile talent">
+                    <div class="tile-content">
+                        <svg class="tile-icon" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="40" fill="none" stroke="white" stroke-width="1.5"/>
+                        </svg>
+                        <h2 class="tile-title">Talent</h2>
+                        <p class="tile-description">Expert professionals ready to transform your vision into reality</p>
+                    </div>
+                </div>
+                
+                <div class="tile interfaces">
+                    <div class="tile-content">
+                        <svg class="tile-icon" viewBox="0 0 120 120">
+                            <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="white" stroke-width="1.5"/>
+                        </svg>
+                        <h2 class="tile-title">Interfaces</h2>
+                        <p class="tile-description">Beautiful, functional design</p>
+                    </div>
+                </div>
+                
+                <div class="tile resources">
+                    <div class="tile-content">
+                        <svg class="tile-icon" viewBox="0 0 120 120">
+                            <rect x="30" y="30" width="60" height="60" fill="none" stroke="white" stroke-width="1.5"/>
+                        </svg>
+                        <h2 class="tile-title">Resources</h2>
+                        <p class="tile-description">Curated tools and insights for the modern professional</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stage = document.querySelector('.stage');
+        const mosaic = document.querySelector('.mosaic');
+        const tiles = document.querySelectorAll('.tile');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const scrollProgress = scrolled / (window.innerHeight * 0.5);
+            
+            if (scrollProgress > 0.3) {
+                stage.classList.add('scrolled');
+                mosaic.classList.add('visible');
+                tiles.forEach(tile => tile.classList.add('show'));
+            } else {
+                stage.classList.remove('scrolled');
+                mosaic.classList.remove('visible');
+                tiles.forEach(tile => tile.classList.remove('show'));
+            }
+        });
+    </script>
+</body>
+</html>

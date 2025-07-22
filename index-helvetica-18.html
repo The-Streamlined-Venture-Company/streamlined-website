@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            height: 300vh;
+            cursor: none;
+        }
+
+        /* Custom cursor */
+        .cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            mix-blend-mode: difference;
+        }
+
+        .cursor.hover {
+            transform: scale(1.5);
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Main container */
+        .container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Content wrapper */
+        .content {
+            width: 90%;
+            max-width: 1600px;
+            position: relative;
+        }
+
+        /* Title */
+        h1 {
+            font-size: clamp(100px, 20vw, 320px);
+            font-weight: 700;
+            line-height: 0.75;
+            letter-spacing: -0.06em;
+            text-align: center;
+            margin-bottom: 80px;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Service blocks */
+        .services {
+            position: relative;
+            height: 400px;
+        }
+
+        .service {
+            position: absolute;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 60px;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .service::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service:hover::before {
+            width: 150%;
+            height: 150%;
+        }
+
+        .service:hover {
+            transform: scale(1.05) rotate(-2deg);
+            z-index: 10;
+        }
+
+        .service-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-number {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0.3;
+            transition: all 0.5s ease;
+        }
+
+        .service:hover .service-number {
+            color: #000;
+            opacity: 1;
+        }
+
+        .service-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: -0.02em;
+            transition: color 0.5s ease;
+        }
+
+        .service:hover .service-name {
+            color: #000;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.7;
+            max-width: 300px;
+            transition: all 0.5s ease;
+        }
+
+        .service:hover .service-desc {
+            color: #000;
+            opacity: 1;
+        }
+
+        /* Service positions */
+        .service-1 {
+            top: 0;
+            left: 0;
+            width: 40%;
+            transform-origin: top left;
+        }
+
+        .service-2 {
+            top: 0;
+            right: 0;
+            width: 45%;
+            transform-origin: top right;
+        }
+
+        .service-3 {
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50%;
+            transform-origin: bottom center;
+        }
+
+        /* Scroll effects */
+        .scrolled h1 {
+            letter-spacing: 0.2em;
+            transform: scale(0.8);
+        }
+
+        .scrolled .service-1 {
+            transform: translateX(-100px) rotate(-5deg);
+        }
+
+        .scrolled .service-2 {
+            transform: translateX(100px) rotate(5deg);
+        }
+
+        .scrolled .service-3 {
+            transform: translateX(-50%) translateY(100px);
+        }
+
+        /* Background noise */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
+            z-index: 1;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgbnVtT2N0YXZlcz0iMTAiLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI2EpIiBvcGFjaXR5PSIxIi8+PC9zdmc+');
+        }
+
+        @media (max-width: 768px) {
+            .services {
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .service {
+                position: relative;
+                width: 100% !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor"></div>
+    <div class="noise"></div>
+
+    <div class="container">
+        <div class="content">
+            <h1>STREAMLINED</h1>
+            
+            <div class="services">
+                <div class="service service-1" onclick="window.location.href='#talent'">
+                    <div class="service-content">
+                        <div class="service-number">01</div>
+                        <h2 class="service-name">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision</p>
+                    </div>
+                </div>
+                
+                <div class="service service-2" onclick="window.location.href='#interfaces'">
+                    <div class="service-content">
+                        <div class="service-number">02</div>
+                        <h2 class="service-name">Interfaces</h2>
+                        <p class="service-desc">Beautiful digital experiences that inspire</p>
+                    </div>
+                </div>
+                
+                <div class="service service-3" onclick="window.location.href='#platforms'">
+                    <div class="service-content">
+                        <div class="service-number">03</div>
+                        <h2 class="service-name">Platforms</h2>
+                        <p class="service-desc">Modern tools for streamlined workflows</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Custom cursor
+        const cursor = document.querySelector('.cursor');
+        const services = document.querySelectorAll('.service');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 20 + 'px';
+            cursor.style.top = e.clientY - 20 + 'px';
+        });
+        
+        services.forEach(service => {
+            service.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            
+            service.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+        
+        // Scroll effects
+        const content = document.querySelector('.content');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const scrollProgress = scrolled / (document.documentElement.scrollHeight - window.innerHeight);
+            
+            if (scrollProgress > 0.1) {
+                content.classList.add('scrolled');
+            } else {
+                content.classList.remove('scrolled');
+            }
+            
+            // Rotate entire content
+            content.style.transform = `rotate(${scrollProgress * 360}deg)`;
+        });
+    </script>
+</body>
+</html>

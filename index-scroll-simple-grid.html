@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        .scroll-area {
+            height: 250vh;
+        }
+
+        .fixed-view {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Logo section */
+        .logo-section {
+            position: absolute;
+            text-align: center;
+            z-index: 10;
+            transition: transform 0.6s ease;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-variation-settings: 'wdth' 50;
+        }
+
+        /* Service blocks */
+        .services {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            max-width: 1000px;
+            max-height: 600px;
+        }
+
+        .service {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3rem;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.6s ease;
+        }
+
+        .service.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Positioning */
+        .service.talent {
+            width: 300px;
+            height: 180px;
+            top: 20%;
+            left: 10%;
+        }
+
+        .service.interfaces {
+            width: 280px;
+            height: 200px;
+            top: 15%;
+            right: 10%;
+        }
+
+        .service.resources {
+            width: 500px;
+            height: 150px;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+        }
+
+        .service.resources.visible {
+            transform: translateX(-50%) scale(1);
+        }
+
+        .service-icon {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-desc {
+            font-size: 0.9rem;
+            opacity: 0.6;
+            line-height: 1.4;
+        }
+
+        /* Transition delays */
+        .service.talent { transition-delay: 0.1s; }
+        .service.interfaces { transition-delay: 0.2s; }
+        .service.resources { transition-delay: 0.3s; }
+
+        @media (max-width: 768px) {
+            .service {
+                position: relative;
+                width: auto !important;
+                height: auto !important;
+                top: auto !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                transform: none !important;
+                margin: 1rem;
+            }
+            
+            .services {
+                display: flex;
+                flex-direction: column;
+                padding: 2rem;
+                position: relative;
+            }
+            
+            .service.resources.visible {
+                transform: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-area">
+        <div class="fixed-view">
+            <div class="logo-section">
+                <div class="logo">
+                    <img src="assets/logo.gif" alt="Streamlined" />
+                </div>
+                <h1 class="brand-name">Streamlined</h1>
+            </div>
+            
+            <div class="services">
+                <div class="service talent">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals</p>
+                </div>
+                
+                <div class="service interfaces">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Beautiful digital experiences</p>
+                </div>
+                
+                <div class="service resources">
+                    <svg class="service-icon" viewBox="0 0 120 120">
+                        <rect x="30" y="30" width="60" height="60" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                    </svg>
+                    <h2 class="service-title">Resources</h2>
+                    <p class="service-desc">Tools for modern workflows</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const services = document.querySelectorAll('.service');
+        const logoSection = document.querySelector('.logo-section');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const trigger = window.innerHeight * 0.2;
+            
+            if (scrolled > trigger) {
+                services.forEach(service => service.classList.add('visible'));
+                logoSection.style.transform = 'scale(0.8)';
+            } else {
+                services.forEach(service => service.classList.remove('visible'));
+                logoSection.style.transform = 'scale(1)';
+            }
+        });
+    </script>
+</body>
+</html>

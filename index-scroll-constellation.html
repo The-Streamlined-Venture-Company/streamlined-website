@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Constellation Scroll</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @font-face {
+            font-family: "Roboto Flex";
+            src: url("https://digitalupgrade.com/images/misc/RobotoFlex-VariableFont_GRADXTRAYOPQYTASYTDEYTFIYTLCYTUCopszslntwdthwght.woff2") format("woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Flex', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            height: 400vh;
+        }
+
+        .constellation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* SVG connections */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .connection-line {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 1;
+            fill: none;
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .connection-line.active {
+            stroke-dashoffset: 0;
+        }
+
+        /* Logo at center */
+        .center-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .company-name {
+            font-size: 3rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-variation-settings: 'wdth' 50;
+            margin-top: 1rem;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Constellation nodes */
+        .node {
+            position: absolute;
+            width: 200px;
+            padding: 2rem;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 5;
+        }
+
+        .node-dot {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        .node:hover .node-dot {
+            width: 20px;
+            height: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        .node-content {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .node:hover .node-content {
+            opacity: 1;
+            transform: scale(1);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .node-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+        }
+
+        .node-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .node-description {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            line-height: 1.4;
+        }
+
+        /* Node positions */
+        .node-talent {
+            top: 20%;
+            left: 20%;
+        }
+
+        .node-interfaces {
+            top: 20%;
+            right: 20%;
+        }
+
+        .node-resources {
+            bottom: 25%;
+            left: 50%;
+        }
+
+        /* Animation states */
+        .constellation-active .center-node {
+            transform: translate(-50%, -50%) scale(0.7);
+        }
+
+        .constellation-active .logo {
+            width: 80px;
+            height: 80px;
+        }
+
+        .constellation-active .company-name {
+            font-size: 1.8rem;
+        }
+
+        .constellation-active .tagline {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .constellation-active .node {
+            opacity: 1;
+        }
+
+        .constellation-active .connection-line {
+            stroke-dashoffset: 0;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        /* Sparkle effects */
+        .sparkle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 3s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .node {
+                width: 150px;
+            }
+            
+            .node-talent {
+                top: 25%;
+                left: 50%;
+            }
+            
+            .node-interfaces {
+                top: 50%;
+                right: 10%;
+            }
+            
+            .node-resources {
+                top: 50%;
+                left: 10%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="constellation">
+            <!-- SVG Connections -->
+            <svg class="connections">
+                <line class="connection-line" id="line-talent" x1="50%" y1="50%" x2="20%" y2="20%" />
+                <line class="connection-line" id="line-interfaces" x1="50%" y1="50%" x2="80%" y2="20%" />
+                <line class="connection-line" id="line-resources" x1="50%" y1="50%" x2="50%" y2="75%" />
+            </svg>
+            
+            <!-- Center Logo -->
+            <div class="center-node">
+                <div class="logo-container">
+                    <div class="logo">
+                        <img src="assets/logo.gif" alt="Streamlined Logo" />
+                    </div>
+                    <h1 class="company-name">Streamlined</h1>
+                    <p class="tagline">We help design-conscious minds streamline how they work and live</p>
+                </div>
+            </div>
+            
+            <!-- Constellation Nodes -->
+            <div class="node node-talent">
+                <div class="node-dot"></div>
+                <div class="node-content">
+                    <svg class="node-icon" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="40" fill="none" stroke="white" stroke-width="2"/>
+                        <circle cx="60" cy="60" r="20" fill="white"/>
+                    </svg>
+                    <h3 class="node-title">Talent</h3>
+                    <p class="node-description">Expert professionals ready to transform your vision</p>
+                </div>
+            </div>
+            
+            <div class="node node-interfaces">
+                <div class="node-dot"></div>
+                <div class="node-content">
+                    <svg class="node-icon" viewBox="0 0 120 120">
+                        <path d="M60 20 L100 90 L20 90 Z" fill="none" stroke="white" stroke-width="2"/>
+                        <path d="M60 40 L80 80 L40 80 Z" fill="white"/>
+                    </svg>
+                    <h3 class="node-title">Interfaces</h3>
+                    <p class="node-description">Beautiful, functional design that connects</p>
+                </div>
+            </div>
+            
+            <div class="node node-resources">
+                <div class="node-dot"></div>
+                <div class="node-content">
+                    <svg class="node-icon" viewBox="0 0 120 120">
+                        <rect x="30" y="30" width="60" height="60" fill="none" stroke="white" stroke-width="2"/>
+                        <rect x="45" y="45" width="30" height="30" fill="white"/>
+                    </svg>
+                    <h3 class="node-title">Resources</h3>
+                    <p class="node-description">Tools and insights for modern workflows</p>
+                </div>
+            </div>
+            
+            <!-- Sparkle effects -->
+            <div class="sparkle" style="top: 15%; left: 30%;"></div>
+            <div class="sparkle" style="top: 70%; left: 70%; animation-delay: 0.5s;"></div>
+            <div class="sparkle" style="top: 40%; left: 85%; animation-delay: 1s;"></div>
+            <div class="sparkle" style="top: 80%; left: 15%; animation-delay: 1.5s;"></div>
+            <div class="sparkle" style="top: 30%; left: 60%; animation-delay: 2s;"></div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14M19 12l-7 7-7-7"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        const constellation = document.querySelector('.constellation');
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        const connectionLines = document.querySelectorAll('.connection-line');
+        const nodes = document.querySelectorAll('.node');
+        
+        function updateScroll() {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            // Hide scroll indicator
+            scrollIndicator.style.opacity = scrollProgress > 0.05 ? '0' : '0.6';
+            
+            // Activate constellation
+            if (scrollProgress > 0.1) {
+                constellation.classList.add('constellation-active');
+                
+                // Animate nodes with stagger
+                nodes.forEach((node, index) => {
+                    const delay = index * 0.2;
+                    const nodeProgress = Math.max(0, Math.min(1, (scrollProgress - 0.1 - delay) * 3));
+                    
+                    // Add floating effect
+                    const float = Math.sin(scrolled * 0.001 + index) * 10;
+                    node.style.transform = `translate(-50%, calc(-50% + ${float}px))`;
+                });
+                
+                // Pulse effect on connection lines
+                connectionLines.forEach((line, index) => {
+                    const pulse = 0.1 + Math.abs(Math.sin(scrolled * 0.002 + index)) * 0.3;
+                    line.style.strokeOpacity = pulse;
+                });
+            } else {
+                constellation.classList.remove('constellation-active');
+            }
+        }
+        
+        window.addEventListener('scroll', updateScroll);
+        updateScroll();
+        
+        // Update SVG connection positions on resize
+        function updateConnections() {
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            
+            document.getElementById('line-talent').setAttribute('x1', centerX);
+            document.getElementById('line-talent').setAttribute('y1', centerY);
+            
+            document.getElementById('line-interfaces').setAttribute('x1', centerX);
+            document.getElementById('line-interfaces').setAttribute('y1', centerY);
+            
+            document.getElementById('line-resources').setAttribute('x1', centerX);
+            document.getElementById('line-resources').setAttribute('y1', centerY);
+        }
+        
+        window.addEventListener('resize', updateConnections);
+        updateConnections();
+        
+        // Node interactions
+        nodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const title = node.querySelector('.node-title').textContent;
+                console.log(`Clicked on ${title}`);
+            });
+        });
+    </script>
+</body>
+</html>

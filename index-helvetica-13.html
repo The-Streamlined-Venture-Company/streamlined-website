@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f9f9f9;
+            color: #000;
+            overflow-x: hidden;
+            height: 300vh;
+        }
+
+        /* Fixed viewport */
+        .viewport {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main title */
+        .title-container {
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: clamp(100px, 18vw, 300px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            mix-blend-mode: difference;
+            color: #fff;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Service panels */
+        .panel {
+            position: fixed;
+            background: #000;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .panel-content {
+            position: absolute;
+            padding: 60px;
+            color: #fff;
+            opacity: 0;
+            transition: opacity 0.5s ease 0.3s;
+        }
+
+        .panel.active .panel-content {
+            opacity: 1;
+        }
+
+        .panel-number {
+            font-size: 180px;
+            font-weight: 700;
+            opacity: 0.1;
+            position: absolute;
+            top: 40px;
+            right: 60px;
+        }
+
+        .panel-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .panel-desc {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 400px;
+        }
+
+        /* Panel positions - initial state */
+        .panel-left {
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100vh;
+        }
+
+        .panel-right {
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 100vh;
+        }
+
+        .panel-bottom {
+            bottom: 0;
+            left: 0;
+            width: 100vw;
+            height: 0;
+        }
+
+        /* Panel positions - active state */
+        .panel-left.active {
+            width: 33.333%;
+        }
+
+        .panel-right.active {
+            width: 33.333%;
+        }
+
+        .panel-bottom.active {
+            height: 33.333%;
+        }
+
+        /* Scroll progress indicator */
+        .progress-indicator {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            background: #000;
+            transform: scale(1.5);
+        }
+
+        /* Info text */
+        .info {
+            position: fixed;
+            top: 40px;
+            left: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.5;
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: clamp(60px, 15vw, 120px);
+            }
+            
+            .panel-content {
+                padding: 40px;
+            }
+            
+            .panel-title {
+                font-size: 32px;
+            }
+            
+            .panel-number {
+                font-size: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="info">Scroll to explore</div>
+
+    <div class="viewport">
+        <div class="title-container">
+            <h1>STREAMLINED</h1>
+        </div>
+    </div>
+
+    <div class="panel panel-left" onclick="window.location.href='#talent'">
+        <div class="panel-content">
+            <div class="panel-number">01</div>
+            <h2 class="panel-title">Talent</h2>
+            <p class="panel-desc">Expert professionals ready to transform your vision into reality with precision and care.</p>
+        </div>
+    </div>
+
+    <div class="panel panel-right" onclick="window.location.href='#interfaces'">
+        <div class="panel-content">
+            <div class="panel-number">02</div>
+            <h2 class="panel-title">Interfaces</h2>
+            <p class="panel-desc">Beautiful, functional digital experiences that connect people with purpose.</p>
+        </div>
+    </div>
+
+    <div class="panel panel-bottom" onclick="window.location.href='#platforms'">
+        <div class="panel-content">
+            <div class="panel-number">03</div>
+            <h2 class="panel-title">Platforms</h2>
+            <p class="panel-desc">Modern tools designed for efficient, streamlined workflows.</p>
+        </div>
+    </div>
+
+    <div class="progress-indicator">
+        <div class="progress-dot active"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+    </div>
+
+    <script>
+        const panels = document.querySelectorAll('.panel');
+        const dots = document.querySelectorAll('.progress-dot');
+        const title = document.querySelector('h1');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            // Update progress dots
+            dots.forEach((dot, index) => {
+                if (scrollProgress > index * 0.25) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            
+            // Activate panels based on scroll
+            if (scrollProgress > 0.2) {
+                panels[0].classList.add('active');
+            } else {
+                panels[0].classList.remove('active');
+            }
+            
+            if (scrollProgress > 0.4) {
+                panels[1].classList.add('active');
+            } else {
+                panels[1].classList.remove('active');
+            }
+            
+            if (scrollProgress > 0.6) {
+                panels[2].classList.add('active');
+            } else {
+                panels[2].classList.remove('active');
+            }
+            
+            // Scale title
+            const scale = 1 - (scrollProgress * 0.5);
+            title.style.transform = `scale(${Math.max(scale, 0.5)})`;
+            
+            // Rotate title slightly
+            const rotation = scrollProgress * 45;
+            title.style.transform += ` rotate(${rotation}deg)`;
+        });
+    </script>
+</body>
+</html>

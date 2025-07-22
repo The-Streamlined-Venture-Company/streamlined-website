@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            height: 400vh;
+        }
+
+        /* Sticky container */
+        .sticky-container {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Layers */
+        .layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Background layer */
+        .layer-bg {
+            background: #000;
+            z-index: 1;
+        }
+
+        /* Title layer */
+        .layer-title {
+            z-index: 10;
+            mix-blend-mode: difference;
+        }
+
+        .main-title {
+            font-size: clamp(100px, 20vw, 320px);
+            font-weight: 700;
+            line-height: 0.8;
+            letter-spacing: -0.06em;
+            text-align: center;
+        }
+
+        /* Services layer */
+        .layer-services {
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .services-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .service-block {
+            position: absolute;
+            background: #fff;
+            color: #000;
+            padding: 60px;
+            width: 400px;
+            cursor: pointer;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: auto;
+        }
+
+        .service-block.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service-block:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(255,255,255,0.3);
+        }
+
+        .service-number {
+            font-size: 72px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            opacity: 0.1;
+        }
+
+        .service-name {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            font-weight: 300;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        /* Service positions */
+        .service-talent {
+            top: 20%;
+            left: 10%;
+        }
+
+        .service-interfaces {
+            top: 50%;
+            right: 15%;
+        }
+
+        .service-platforms {
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+        }
+
+        .service-platforms.visible {
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Scroll progress */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            z-index: 100;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #fff;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* Info corners */
+        .info {
+            position: fixed;
+            font-size: 12px;
+            font-weight: 500;
+            opacity: 0.5;
+            z-index: 20;
+        }
+
+        .info-tl {
+            top: 20px;
+            left: 20px;
+        }
+
+        .info-tr {
+            top: 20px;
+            right: 20px;
+        }
+
+        .info-bl {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .info-br {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .service-block {
+                width: 300px;
+                padding: 40px;
+            }
+            
+            .service-talent {
+                top: 10%;
+                left: 50%;
+                transform: translateX(-50%) scale(0.8);
+            }
+            
+            .service-interfaces {
+                top: 40%;
+                left: 50%;
+                transform: translateX(-50%) scale(0.8);
+            }
+            
+            .service-platforms {
+                bottom: 10%;
+            }
+            
+            .service-block.visible {
+                transform: translateX(-50%) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar">
+        <div class="progress-fill"></div>
+    </div>
+
+    <div class="info info-tl">STREAMLINED</div>
+    <div class="info info-tr">2024</div>
+    <div class="info info-bl">SCROLL</div>
+    <div class="info info-br">NYC</div>
+
+    <div class="sticky-container">
+        <div class="layer layer-bg"></div>
+        
+        <div class="layer layer-services">
+            <div class="services-container">
+                <div class="service-block service-talent" onclick="window.location.href='#talent'">
+                    <div class="service-number">01</div>
+                    <h2 class="service-name">Talent</h2>
+                    <p class="service-desc">Expert professionals ready to transform your vision into reality with precision and care.</p>
+                </div>
+                
+                <div class="service-block service-interfaces" onclick="window.location.href='#interfaces'">
+                    <div class="service-number">02</div>
+                    <h2 class="service-name">Interfaces</h2>
+                    <p class="service-desc">Beautiful, functional digital experiences that inspire and connect.</p>
+                </div>
+                
+                <div class="service-block service-platforms" onclick="window.location.href='#platforms'">
+                    <div class="service-number">03</div>
+                    <h2 class="service-name">Platforms</h2>
+                    <p class="service-desc">Modern tools for efficient workflows and seamless collaboration.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="layer layer-title">
+            <h1 class="main-title">Stream<br>lined</h1>
+        </div>
+    </div>
+
+    <script>
+        const progressFill = document.querySelector('.progress-fill');
+        const serviceBlocks = document.querySelectorAll('.service-block');
+        const mainTitle = document.querySelector('.main-title');
+        
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollProgress = scrolled / maxScroll;
+            
+            // Update progress bar
+            progressFill.style.width = `${scrollProgress * 100}%`;
+            
+            // Show service blocks
+            if (scrollProgress > 0.1) {
+                serviceBlocks[0].classList.add('visible');
+            }
+            if (scrollProgress > 0.2) {
+                serviceBlocks[1].classList.add('visible');
+            }
+            if (scrollProgress > 0.3) {
+                serviceBlocks[2].classList.add('visible');
+            }
+            
+            // Scale and fade title
+            const titleScale = 1 - (scrollProgress * 0.5);
+            const titleOpacity = 1 - (scrollProgress * 2);
+            mainTitle.style.transform = `scale(${Math.max(titleScale, 0.5)})`;
+            mainTitle.style.opacity = Math.max(titleOpacity, 0);
+            
+            // Parallax for service blocks
+            serviceBlocks.forEach((block, index) => {
+                const speed = 0.5 + (index * 0.1);
+                const yPos = scrolled * speed * 0.1;
+                block.style.transform = `${block.classList.contains('service-platforms') ? 'translateX(-50%)' : ''} translateY(${yPos}px) ${block.classList.contains('visible') ? 'scale(1)' : 'scale(0.8)'}`;
+            });
+        });
+    </script>
+</body>
+</html>

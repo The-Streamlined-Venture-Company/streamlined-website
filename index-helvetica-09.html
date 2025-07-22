@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f0f0f0;
+            color: #000;
+            overflow-x: hidden;
+            height: 200vh;
+        }
+
+        /* Fixed elements */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: #f0f0f0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+            border-bottom: 2px solid #000;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Main hero */
+        .hero {
+            margin-top: 100px;
+            min-height: calc(100vh - 100px);
+            padding: 80px 60px;
+            position: relative;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-left h1 {
+            font-size: clamp(80px, 12vw, 180px);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: -0.05em;
+            margin-bottom: 40px;
+        }
+
+        .hero-left p {
+            font-size: 20px;
+            font-weight: 300;
+            line-height: 1.5;
+            max-width: 600px;
+            color: #666;
+        }
+
+        .hero-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Service links */
+        .service-link {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            text-decoration: none;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .service-link::after {
+            content: '→';
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .service-link:hover {
+            padding-left: 50px;
+        }
+
+        .service-link:hover::after {
+            opacity: 1;
+            right: 30px;
+        }
+
+        .service-number {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.5;
+            margin-bottom: 10px;
+        }
+
+        .service-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Scroll content */
+        .scroll-content {
+            padding: 120px 60px;
+            background: #fff;
+            position: relative;
+        }
+
+        .scroll-text {
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            max-width: 1200px;
+        }
+
+        .scroll-text span {
+            display: inline-block;
+            opacity: 0.2;
+            transition: opacity 0.5s ease;
+        }
+
+        .scroll-text span.visible {
+            opacity: 1;
+        }
+
+        /* Side indicators */
+        .side-indicator {
+            position: fixed;
+            writing-mode: vertical-rl;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            opacity: 0.3;
+        }
+
+        .indicator-left {
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .indicator-right {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        @media (max-width: 968px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+            
+            .hero-left h1 {
+                margin-bottom: 30px;
+            }
+            
+            .side-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="fixed-header">
+        <div class="logo">Streamlined</div>
+    </header>
+
+    <div class="side-indicator indicator-left">Scroll to explore</div>
+    <div class="side-indicator indicator-right">Design solutions</div>
+
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-left">
+                <h1>Stream<br>lined.</h1>
+                <p>We help design-conscious minds streamline how they work and live through carefully curated talent, interfaces, and platforms.</p>
+            </div>
+            
+            <div class="hero-right">
+                <a href="#talent" class="service-link">
+                    <div class="service-number">01</div>
+                    <div class="service-title">Talent</div>
+                </a>
+                
+                <a href="#interfaces" class="service-link">
+                    <div class="service-number">02</div>
+                    <div class="service-title">Interfaces</div>
+                </a>
+                
+                <a href="#platforms" class="service-link">
+                    <div class="service-number">03</div>
+                    <div class="service-title">Platforms</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="scroll-content">
+        <p class="scroll-text">
+            <span>We</span> <span>believe</span> <span>in</span> <span>the</span> <span>power</span> <span>of</span> <span>good</span> <span>design</span> <span>to</span> <span>transform</span> <span>how</span> <span>people</span> <span>work,</span> <span>create,</span> <span>and</span> <span>live.</span> <span>Through</span> <span>thoughtful</span> <span>curation</span> <span>and</span> <span>careful</span> <span>implementation,</span> <span>we</span> <span>help</span> <span>you</span> <span>achieve</span> <span>more</span> <span>with</span> <span>less.</span>
+        </p>
+    </section>
+
+    <script>
+        // Scroll reveal animation
+        const words = document.querySelectorAll('.scroll-text span');
+        
+        const revealWords = () => {
+            const windowHeight = window.innerHeight;
+            const scrollTop = window.scrollY;
+            
+            words.forEach((word, index) => {
+                const wordTop = word.getBoundingClientRect().top + scrollTop;
+                const wordVisible = wordTop - windowHeight + 100;
+                
+                if (scrollTop > wordVisible) {
+                    setTimeout(() => {
+                        word.classList.add('visible');
+                    }, index * 50);
+                }
+            });
+        };
+        
+        window.addEventListener('scroll', revealWords);
+        revealWords();
+    </script>
+</body>
+</html>
