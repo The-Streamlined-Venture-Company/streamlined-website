@@ -16,7 +16,6 @@
             background: #000;
             color: #fff;
             overflow-x: hidden;
-            cursor: default;
         }
 
         .container {
@@ -37,6 +36,28 @@
             background-size: 100px 100px;
             pointer-events: none;
             z-index: 1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 60px;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .nav-brand {
+            width: 40px;
+            height: auto;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* Main content */
@@ -77,7 +98,7 @@
             animation: fadeInUp 1s ease 0.2s forwards;
         }
 
-        /* Services grid */
+        /* Services grid - Swiss colors */
         .services {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -89,13 +110,17 @@
         }
 
         .service {
-            background: #000;
             padding: 60px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
+
+        /* Swiss color scheme */
+        .service:nth-child(1) { background: #FF0000; } /* Red */
+        .service:nth-child(2) { background: #FF6B35; } /* Orange */
+        .service:nth-child(3) { background: #FFD93D; } /* Yellow */
 
         .service::before {
             content: '';
@@ -104,13 +129,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: #fff;
-            transform: translateY(100%);
+            background: rgba(0,0,0,0.1);
+            transform: translateX(-100%);
             transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .service:hover::before {
-            transform: translateY(0);
+            transform: translateX(0);
+        }
+
+        .service:hover {
+            transform: scale(1.02);
         }
 
         .service-content {
@@ -122,36 +151,27 @@
             font-size: 140px;
             font-weight: 700;
             line-height: 1;
-            color: #222;
+            color: rgba(255,255,255,0.3);
             margin-bottom: 30px;
             transition: color 0.5s ease;
         }
 
         .service:hover .service-number {
-            color: #000;
+            color: rgba(255,255,255,0.5);
         }
 
         .service-title {
             font-size: 36px;
-            font-weight: 500;
+            font-weight: 700;
             margin-bottom: 20px;
-            transition: color 0.5s ease;
-        }
-
-        .service:hover .service-title {
             color: #000;
         }
 
         .service-desc {
             font-size: 18px;
-            font-weight: 300;
+            font-weight: 400;
             line-height: 1.4;
-            color: #666;
-            transition: color 0.5s ease;
-        }
-
-        .service:hover .service-desc {
-            color: #000;
+            color: rgba(0,0,0,0.8);
         }
 
         /* Animations */
@@ -160,28 +180,6 @@
                 opacity: 1;
                 transform: translateY(0);
             }
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            padding: 30px 60px;
-            z-index: 100;
-            mix-blend-mode: difference;
-        }
-
-        .nav-brand {
-            width: 40px;
-            height: auto;
-        }
-        
-        .nav-brand img {
-            width: 100%;
-            height: auto;
-            display: block;
         }
 
         @media (max-width: 768px) {
@@ -209,7 +207,7 @@
         
         <nav>
             <div class="nav-brand">
-                <img src="../../screenshots/s-logo-1.png" alt="Streamlined">
+                <img src="../screenshots/s-logo-1.png" alt="Streamlined">
             </div>
         </nav>
         
