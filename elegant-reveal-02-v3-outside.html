@@ -109,7 +109,7 @@
             font-weight: 700;
             line-height: 0.9;
             letter-spacing: -0.04em;
-            margin-bottom: 40px;
+            margin-bottom: 5px;
             opacity: 0;
             animation: fade-in 0.8s ease forwards;
             animation-delay: 1.8s;
@@ -121,7 +121,7 @@
 
         .header.slide-up h1 {
             font-size: clamp(100px, 15vw, 140px);
-            margin-bottom: 35px;
+            margin-bottom: 10px;
         }
         
         h1 {
@@ -212,28 +212,30 @@
         }
 
         .subtitle {
-            font-size: 28px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: 24px;
             line-height: 1.5;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 400;
             white-space: nowrap;
             transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform-origin: left center;
             transform: scale(1);
+            letter-spacing: 0.01em;
         }
 
         .header.slide-up .subtitle {
-            opacity: 0.9;
             font-size: 24px;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.6);
             transform: scale(0.95);
+            font-weight: 400;
         }
 
         .typewriter-text {
             display: inline-block;
             position: relative;
             color: transparent;
-            background: linear-gradient(90deg, #FFFFFF 50%, transparent 50%);
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.6) 50%, transparent 50%);
             background-size: 200% 100%;
             background-position: 100% 0;
             -webkit-background-clip: text;
@@ -252,8 +254,7 @@
         }
 
         .subtitle.finished {
-            font-weight: 300;
-            letter-spacing: 0.02em;
+            /* Keep consistent styling */
         }
 
         .subtitle.finished .cursor {
@@ -354,6 +355,7 @@
         }
 
         .service-title {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 48px;
             font-weight: 700;
             letter-spacing: -0.03em;
@@ -363,6 +365,7 @@
         }
 
         .service-desc {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             font-size: 16px;
             line-height: 1.4;
             color: #FFFFFF;
