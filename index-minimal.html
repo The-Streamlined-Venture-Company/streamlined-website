@@ -11,11 +11,44 @@
             box-sizing: border-box;
         }
 
+        /* CSS Variables for theming */
+        :root {
+            /* Light theme (default) */
+            --bg-primary: #e7e4df;
+            --text-primary: #241e20;
+            --text-secondary: rgba(36, 30, 32, 0.8);
+            --logo-filter: invert(1);
+            --service-border: rgba(255, 255, 255, 0.15);
+            --service-hover-bg: #e7e4df;
+            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
+            --theme-toggle-border: rgba(36, 30, 32, 0.2);
+            --theme-toggle-color: #241e20;
+            --divider-color: rgba(36, 30, 32, 0.3);
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            --bg-primary: #141414;
+            --text-primary: #e7e4df;
+            --text-secondary: #e7e4df;
+            --logo-filter: none;
+            --service-border: rgba(231, 228, 223, 0.08);
+            --service-hover-bg: #181818;
+            --theme-toggle-bg: rgba(231, 228, 223, 0.1);
+            --theme-toggle-border: rgba(231, 228, 223, 0.2);
+            --theme-toggle-color: #e7e4df;
+            --divider-color: rgba(231, 228, 223, 0.3);
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
-            background: #e7e4df;
-            color: #241e20;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* Icon container */
@@ -47,7 +80,7 @@
         .greeting-icon svg {
             width: 100%;
             height: 100%;
-            stroke: #241e20;
+            stroke: var(--text-primary);
             fill: none;
             stroke-width: 1.5;
         }
@@ -59,7 +92,7 @@
         .logo img {
             width: 100%;
             height: 100%;
-            filter: invert(1);
+            filter: var(--logo-filter);
             display: block;
         }
         
@@ -118,6 +151,9 @@
         .tagline-part {
             opacity: 0;
             animation: fadeIn 0.8s 2.2s forwards;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-secondary);
         }
 
         .with-part {
@@ -248,6 +284,29 @@
         .service-3:hover .service-number {
             color: #f27d18;
         }
+        
+        /* Dark theme service colors */
+        body.dark-theme .service-1 {
+            background-color: #0A0A0A;
+        }
+        
+        body.dark-theme .service-2 {
+            background-color: #1F1F1F;
+        }
+        
+        body.dark-theme .service-3 {
+            background-color: #2B2B2B;
+        }
+        
+        body.dark-theme .service:hover {
+            background-color: var(--service-hover-bg) !important;
+        }
+        
+        body.dark-theme .service:hover .service-title,
+        body.dark-theme .service:hover .service-desc,
+        body.dark-theme .service:hover .service-number {
+            color: var(--text-primary);
+        }
 
         @keyframes fadeIn {
             to { opacity: 1; }
@@ -269,7 +328,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background: #241e20;
+            background: var(--divider-color);
             transform: scaleX(0);
             transform-origin: left center;
             z-index: 1000;
@@ -303,12 +362,12 @@
             top: 20px;
             right: 20px;
             padding: 8px 16px;
-            background: rgba(36, 30, 32, 0.1);
-            border: 1px solid rgba(36, 30, 32, 0.2);
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--theme-toggle-border);
             border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
-            color: #241e20;
+            color: var(--theme-toggle-color);
             transition: all 0.3s ease;
             z-index: 100;
             display: flex;
@@ -573,6 +632,24 @@
                 toggle.style.pointerEvents = 'auto';
             }, 800); // 800ms matches the logo movement duration
         }, 3500);
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Set initial theme
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
     </script>
 </body>
 </html>
