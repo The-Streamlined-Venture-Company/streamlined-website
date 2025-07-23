@@ -73,9 +73,9 @@
         }
 
         /* Fly off animation */
+        /* Move up without fade */
         .animate .icon-container {
-            transform: translateY(-100px);
-            opacity: 0;
+            transform: translateY(-112px);
         }
 
         /* Mobile-first approach */
@@ -284,7 +284,7 @@
         .fixed-logo {
             position: fixed;
             top: 20px;
-            left: 20px;
+            left: 17px;
             width: 24px;
             height: 24px;
             z-index: 100;
@@ -419,7 +419,7 @@
             
             .fixed-logo {
                 top: 40px;
-                left: 80px;
+                left: 77px;
                 width: 48px;
                 height: 48px;
             }
@@ -432,11 +432,6 @@
     </style>
 </head>
 <body>
-    <!-- Fixed logo - hidden initially -->
-    <div class="fixed-logo" id="fixedLogo" style="opacity: 0;">
-        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
-    </div>
-    
     <!-- Animated divider line -->
     <div class="divider-line"></div>
     
@@ -571,14 +566,12 @@
         setTimeout(() => {
             document.body.classList.add('animate');
             
-            // Fade in fixed logo and theme toggle after logo flies off
+            // Fade in theme toggle after logo moves to position
             setTimeout(() => {
-                const fixedLogo = document.getElementById('fixedLogo');
                 const toggle = document.getElementById('themeToggle');
-                fixedLogo.style.opacity = '1';
                 toggle.style.opacity = '1';
                 toggle.style.pointerEvents = 'auto';
-            }, 800); // 800ms matches the fly-off animation duration
+            }, 800); // 800ms matches the logo movement duration
         }, 3500);
     </script>
 </body>
