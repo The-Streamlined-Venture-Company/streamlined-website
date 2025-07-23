@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined - Dark Greeting V8</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #141414;
+            color: #E8E8E8;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            padding: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #141414;
+        }
+
+        .header.slide-up {
+            min-height: 50vh;
+            padding: 60px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Icon container */
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 30px;
+            position: relative;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up .icon-container {
+            width: 90px;
+            margin-bottom: 35px;
+        }
+
+        /* Greeting icon */
+        .greeting-icon {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+        }
+
+        .greeting-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #e7e4df;
+            fill: none;
+            stroke-width: 1.5;
+        }
+
+        .greeting-icon.hide {
+            opacity: 0;
+        }
+
+        /* Logo */
+        .nav-brand {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        
+        .nav-brand.show {
+            opacity: 1;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Title line */
+        .title-line {
+            font-size: clamp(30px, 5vw, 60px);
+            margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .title-line span {
+            display: inline-block;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+        }
+
+        .greeting {
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #e7e4df;
+            animation-delay: 0.5s;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+        }
+
+        .comma {
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #e7e4df;
+            animation-delay: 0.7s;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+        }
+
+        .we-are {
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: #e7e4df;
+            animation-delay: 1.8s;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
+        }
+
+        h1 {
+            display: inline-block;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: clamp(30px, 5vw, 60px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            color: #e7e4df;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 1.8s;
+            transition: font-size 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-left 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-left: 10px;
+        }
+
+        /* Animation states */
+        .greeting.slide-out,
+        .comma.slide-out,
+        .we-are.slide-out {
+            transform: translateX(-100vw);
+            opacity: 0;
+        }
+
+        h1.final {
+            font-size: clamp(60px, 10vw, 120px);
+            margin-left: 0;
+        }
+
+        .header.slide-up h1.final {
+            font-size: clamp(100px, 15vw, 140px);
+        }
+
+        .header.slide-up .title-line {
+            margin-bottom: 35px;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Co. animation */
+        .co {
+            position: relative;
+        }
+        
+        .co::after {
+            content: 'Co.';
+            position: absolute;
+            left: 0.2em;
+            opacity: 0;
+            transform: translateY(-100px);
+            pointer-events: none;
+        }
+        
+        .header.slide-up .co.show-co::after {
+            animation: dropBounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        @keyframes dropBounce {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(0);
+            }
+            65% {
+                transform: translateY(-15px);
+            }
+            80% {
+                transform: translateY(0);
+            }
+            90% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Tagline */
+        .tagline-wrapper {
+            position: relative;
+            height: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            line-height: 1.5;
+            color: #e7e4df;
+            font-weight: 400;
+            white-space: nowrap;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left center;
+            transform: scale(1);
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.9;
+            font-size: 24px;
+            color: #e7e4df;
+            transform: scale(0.95);
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            position: relative;
+            color: transparent;
+            background: linear-gradient(90deg, #e7e4df 50%, transparent 50%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: maskWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) 2.6s forwards;
+        }
+
+        @keyframes maskWipe {
+            to {
+                background-position: 0% 0;
+            }
+        }
+
+        /* Services section */
+        .services {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+        
+        .services.expanded {
+            height: 50vh;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+        }
+        
+        /* Service backgrounds */
+        .service-1 {
+            background: #0A0A0A;
+        }
+        .service-2 {
+            background: #1F1F1F;
+        }
+        .service-3 {
+            background: #2B2B2B;
+        }
+
+        .service:nth-child(2) {
+            border-top: 1px solid rgba(231, 228, 223, 0.08);
+        }
+
+        .service:nth-child(3) {
+            border-top: 1px solid rgba(231, 228, 223, 0.08);
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+            max-width: 1400px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-inner {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+            color: #F0E6D2;
+            opacity: 0.8;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            color: #F0E6D2;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.4;
+            color: #F0E6D2;
+            max-width: 600px;
+            opacity: 0.7;
+        }
+
+        /* Hover effects */
+        .service:hover {
+            background: #181818 !important;
+        }
+
+        .service:hover .service-title,
+        .service:hover .service-desc,
+        .service:hover .service-number {
+            color: #F5ECDB !important;
+            opacity: 1;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            z-index: 1000;
+            background: rgba(231, 228, 223, 0.1);
+            border: 1px solid rgba(231, 228, 223, 0.2);
+            border-radius: 50px;
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            color: #e7e4df;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(231, 228, 223, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-toggle:hover svg {
+            transform: rotate(180deg);
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .title-line {
+                font-size: clamp(24px, 4vw, 40px);
+            }
+            
+            h1.final {
+                font-size: clamp(40px, 8vw, 60px);
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .service {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index-light.html" class="theme-toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span>Light</span>
+    </a>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="icon-container">
+                    <div class="greeting-icon" id="greetingIcon"></div>
+                    <div class="nav-brand" id="logo">
+                        <img src="screenshots/s logo white.png" alt="Streamlined">
+                    </div>
+                </div>
+                
+                <div class="title-line">
+                    <span class="greeting" id="greeting"></span>
+                    <span class="comma">,</span>
+                    <span class="we-are">we are</span>
+                    <h1 id="streamlined">Streamlined<span class="co"></span></h1>
+                </div>
+                
+                <div class="tagline-wrapper">
+                    <p class="subtitle" id="tagline">
+                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span>
+                    </p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="services" id="services">
+            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                <div class="service-inner">
+                    <div class="service-number">01</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-inner">
+                    <div class="service-number">02</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Interfaces</h2>
+                        <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                <div class="service-inner">
+                    <div class="service-number">03</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Platforms</h2>
+                        <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Time-based greeting
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) {
+                return {
+                    greeting: 'Good Morning',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>`
+                };
+            } else if (hour >= 12 && hour < 17) {
+                return {
+                    greeting: 'Good Afternoon',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="6"/>
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>`
+                };
+            } else {
+                return {
+                    greeting: 'Good Evening',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        <path d="M17 9L18 8M19 13L20 12M15 15L16 14" stroke-linecap="round"/>
+                    </svg>`
+                };
+            }
+        }
+
+        // Set greeting
+        const timeData = getTimeOfDay();
+        document.getElementById('greeting').textContent = timeData.greeting;
+        document.getElementById('greetingIcon').innerHTML = timeData.icon;
+
+        // Animation sequence
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Show services container
+                document.getElementById('services').classList.add('show');
+
+                // Main transition at 2800ms
+                setTimeout(() => {
+                    // Slide elements out and grow Streamlined
+                    document.querySelector('.greeting').classList.add('slide-out');
+                    document.querySelector('.comma').classList.add('slide-out');
+                    document.querySelector('.we-are').classList.add('slide-out');
+                    document.getElementById('streamlined').classList.add('final');
+                    
+                    // Hide greeting icon and show logo
+                    document.getElementById('greetingIcon').classList.add('hide');
+                    document.getElementById('logo').classList.add('show');
+                    
+                    // Show services
+                    document.getElementById('header').classList.add('slide-up');
+                    document.getElementById('services').classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                    
+                    // Add Co. after services appear
+                    setTimeout(() => {
+                        document.querySelector('.co').classList.add('show-co');
+                    }, 3300);
+                }, 2800);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

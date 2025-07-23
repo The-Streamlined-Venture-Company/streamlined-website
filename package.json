@@ -1,0 +1,12 @@
+{
+  "name": "streamlined",
+  "version": "1.0.0",
+  "description": "Streamlined Co. website",
+  "scripts": {
+    "dev": "npx serve -p 3000",
+    "dev-network": "npx serve -p 3000 -n"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

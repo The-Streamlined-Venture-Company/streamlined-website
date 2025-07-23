@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lined Animation 03 - Connecting Lines</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #030303;
+            color: #333333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #030303;
+        }
+
+        .header.slide-up {
+            min-height: 50vh;
+            padding: 60px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        h1 {
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            color: #FFFFFF;
+            position: relative;
+            white-space: nowrap;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 0.5s;
+            transition: font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(100px, 15vw, 140px);
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .we-are {
+            display: inline-block;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        /* Top and bottom lines that connect */
+        .we-are::before,
+        .we-are::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #FFFFFF;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .we-are::before {
+            top: 0;
+            left: 0;
+        }
+
+        .we-are::after {
+            bottom: 0;
+            right: 0;
+        }
+
+        .we-are.lined::before,
+        .we-are.lined::after {
+            width: 100%;
+        }
+
+        .we-are.fade {
+            opacity: 0;
+        }
+
+        .streamlined {
+            display: inline-block;
+            position: relative;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left center;
+        }
+
+        /* Connecting line from "We are" to "Streamlined" */
+        .connect-line {
+            position: absolute;
+            height: 2px;
+            background: #FFFFFF;
+            top: 50%;
+            left: 3.3em;
+            transform: translateY(-50%);
+            width: 0;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.6s,
+                        opacity 0.3s ease 1.2s;
+        }
+
+        .connect-line.animate {
+            width: 0.5em;
+        }
+
+        .connect-line.hide {
+            opacity: 0;
+        }
+
+        .streamlined.move {
+            transform: translateX(-3.3em);
+        }
+
+        .header.slide-up .streamlined {
+            transform: translateX(-3.3em) scale(1.2);
+        }
+
+        .co {
+            position: relative;
+        }
+
+        .co::after {
+            content: 'Co.';
+            position: absolute;
+            left: 0.2em;
+            opacity: 0;
+            transform: translateY(-100px);
+            pointer-events: none;
+        }
+
+        .header.slide-up .co.show-co::after {
+            animation: dropBounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+
+        @keyframes dropBounce {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(0);
+            }
+            65% {
+                transform: translateY(-15px);
+            }
+            80% {
+                transform: translateY(0);
+            }
+            90% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .services {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+
+        .services.expanded {
+            height: 50vh;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+        }
+
+        .service-1 { background: #2e64af; }
+        .service-2 { background: #fcac00; }
+        .service-3 { background: #d90203; }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 30px;
+            background: #FFFFFF;
+            color: #030303;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <h1>
+                    <span class="connect-line"></span>
+                    <span class="we-are">We are</span> 
+                    <span class="streamlined">Streamlined<span class="co"></span></span>
+                </h1>
+            </div>
+        </header>
+        
+        <div class="services" id="services">
+            <div class="service service-1" id="service-1"></div>
+            <div class="service service-2" id="service-2"></div>
+            <div class="service service-3" id="service-3"></div>
+        </div>
+    </div>
+
+    <button onclick="startAnimation()">Play Animation</button>
+
+    <script>
+        function resetAnimation() {
+            // Remove all animation classes
+            const connectLine = document.querySelector('.connect-line');
+            connectLine.classList.remove('animate', 'hide');
+            
+            document.querySelector('.we-are').classList.remove('lined', 'fade');
+            document.querySelector('.streamlined').classList.remove('move');
+            document.getElementById('header').classList.remove('slide-up');
+            document.getElementById('services').classList.remove('show', 'expanded');
+            document.getElementById('service-1').classList.remove('grow');
+            document.getElementById('service-2').classList.remove('grow');
+            document.getElementById('service-3').classList.remove('grow');
+            document.querySelector('.co').classList.remove('show-co');
+        }
+
+        function startAnimation() {
+            // Reset first
+            resetAnimation();
+            
+            const weAre = document.querySelector('.we-are');
+            const connectLine = document.querySelector('.connect-line');
+            const streamlined = document.querySelector('.streamlined');
+            const header = document.getElementById('header');
+            const services = document.getElementById('services');
+            
+            // Small delay to ensure reset takes effect
+            setTimeout(() => {
+                // Show services
+                services.classList.add('show');
+                
+                // Add lines to "We are"
+                setTimeout(() => {
+                    weAre.classList.add('lined');
+                }, 500);
+                
+                // Show connecting line
+                setTimeout(() => {
+                    connectLine.classList.add('animate');
+                }, 800);
+                
+                // Fade out "We are"
+                setTimeout(() => {
+                    weAre.classList.add('fade');
+                }, 1200);
+                
+                // Move Streamlined left and hide connecting line
+                setTimeout(() => {
+                    streamlined.classList.add('move');
+                    connectLine.classList.add('hide');
+                }, 1400);
+                
+                // Trigger full slide up
+                setTimeout(() => {
+                    header.classList.add('slide-up');
+                    services.classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                }, 1900);
+                
+                // Add Co.
+                setTimeout(() => {
+                    document.querySelector('.co').classList.add('show-co');
+                }, 3400);
+            }, 100);
+        }
+    </script>
+</body>
+</html>

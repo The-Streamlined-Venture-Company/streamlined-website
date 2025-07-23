@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #faf7f0;
+            color: #3e2723;
+            overflow-x: hidden;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        /* Container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header with dark background */
+        .header {
+            padding: 80px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #5d4037;
+        }
+
+        .header.slide-up {
+            min-height: 50vh;
+            padding: 60px 80px;
+        }
+
+        .header-content {
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .nav-brand {
+            width: 60px;
+            height: auto;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: logo-loader 2s ease forwards;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes logo-loader {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .header.slide-up .nav-brand {
+            width: 90px;
+            margin-bottom: 35px;
+        }
+        
+        .nav-brand img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-size: clamp(60px, 10vw, 120px);
+            font-weight: 700;
+            line-height: 0.9;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-in 0.8s ease forwards;
+            animation-delay: 1.8s;
+            transition: font-size 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: #FFFFFF;
+            text-shadow: none;
+        }
+
+        .header.slide-up h1 {
+            font-size: clamp(100px, 15vw, 140px);
+            margin-bottom: 35px;
+        }
+        
+        h1 {
+            position: relative;
+            white-space: nowrap;
+        }
+        
+        .we-are {
+            display: inline-block;
+            transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 1;
+            vertical-align: baseline;
+        }
+        
+        .streamlined {
+            display: inline-block;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.5s;
+            transform: translateX(0) scale(1);
+            transform-origin: left center;
+            vertical-align: baseline;
+        }
+        
+        .co {
+            position: relative;
+        }
+        
+        .co::after {
+            content: 'Co.';
+            position: absolute;
+            left: 0.2em;
+            opacity: 0;
+            transform: translateY(-100px);
+            pointer-events: none;
+        }
+        
+        .header.slide-up .co.show-co::after {
+            animation: dropBounce 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+        }
+        
+        @keyframes dropBounce {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            50% {
+                transform: translateY(0);
+            }
+            65% {
+                transform: translateY(-15px);
+            }
+            80% {
+                transform: translateY(0);
+            }
+            90% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .header.slide-up .we-are {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .header.slide-up .streamlined {
+            transform: translateX(-3.3em) scale(1.2);
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Tagline */
+        .tagline-wrapper {
+            position: relative;
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+
+        .subtitle {
+            font-size: 28px;
+            line-height: 1.5;
+            color: rgba(250, 247, 240, 0.95);
+            font-weight: 400;
+            white-space: nowrap;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: left center;
+            transform: scale(1);
+        }
+
+        .header.slide-up .subtitle {
+            opacity: 0.9;
+            font-size: 24px;
+            color: rgba(250, 247, 240, 0.95);
+            transform: scale(0.95);
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            position: relative;
+            color: transparent;
+            background: linear-gradient(90deg, #faf7f0 50%, transparent 50%);
+            background-size: 200% 100%;
+            background-position: 100% 0;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: maskWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) 2.6s forwards;
+        }
+
+        @keyframes maskWipe {
+            to {
+                background-position: 0% 0;
+            }
+        }
+
+        .cursor {
+            display: none;
+        }
+
+        .subtitle.finished {
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .subtitle.finished .cursor {
+            animation: none;
+            opacity: 0;
+        }
+
+        /* Services section - directly in container */
+        .services {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 0;
+            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+        }
+
+        .services.show {
+            opacity: 1;
+        }
+        
+        .services.expanded {
+            height: 50vh;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            padding: 0 80px;
+        }
+        
+        /* Service backgrounds */
+        .service-1 {
+            background: #8d6e63;
+        }
+        .service-2 {
+            background: #a1887f;
+        }
+        .service-3 {
+            background: #bf360c;
+        }
+
+        .service:nth-child(2) {
+            border-top: 1px solid rgba(250, 247, 240, 0.2);
+        }
+
+        .service:nth-child(3) {
+            border-top: 1px solid rgba(250, 247, 240, 0.2);
+        }
+
+        .service.grow {
+            flex: 1;
+            height: auto;
+        }
+
+        /* Service content */
+        .service-inner {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            width: 100%;
+            max-width: 1400px;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .service.grow .service-inner {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+
+        .service-number {
+            font-size: 120px;
+            font-weight: 700;
+            line-height: 1;
+            transition: all 0.5s ease;
+            color: #faf7f0;
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            color: #FFFFFF;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            line-height: 1.4;
+            color: #faf7f0;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        /* Hover effects */
+        .service:hover {
+            background: #faf7f0 !important;
+        }
+
+        .service-1:hover .service-title,
+        .service-1:hover .service-desc,
+        .service-1:hover .service-number {
+            color: #8d6e63;
+        }
+        
+        .service-2:hover .service-title,
+        .service-2:hover .service-desc,
+        .service-2:hover .service-number {
+            color: #a1887f;
+        }
+        
+        .service-3:hover .service-title,
+        .service-3:hover .service-desc,
+        .service-3:hover .service-number {
+            color: #bf360c;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px;
+                min-height: 50vh;
+            }
+            
+            .header.slide-up {
+                min-height: 20vh;
+            }
+            
+            .subtitle {
+                font-size: 20px;
+            }
+            
+            .service {
+                padding: 0 40px;
+            }
+            
+            .service-inner {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header" id="header">
+            <div class="header-content">
+                <div class="nav-brand">
+                    <img src="screenshots/s logo white.png" alt="Streamlined">
+                </div>
+                <h1><span class="we-are">We are</span> <span class="streamlined">Streamlined<span class="co"></span></span></h1>
+                <div class="tagline-wrapper">
+                    <p class="subtitle" id="tagline">
+                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span><span class="cursor"></span>
+                    </p>
+                </div>
+            </div>
+        </header>
+        
+        <div class="services" id="services">
+            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
+                <div class="service-inner">
+                    <div class="service-number">01</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Talent</h2>
+                        <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
+                <div class="service-inner">
+                    <div class="service-number">02</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Interfaces</h2>
+                        <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
+                <div class="service-inner">
+                    <div class="service-number">03</div>
+                    <div class="service-info">
+                        <h2 class="service-title">Platforms</h2>
+                        <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hide loader after page loads
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                // Show services
+                document.getElementById('services').classList.add('show');
+
+                // Finish typewriter effect
+                setTimeout(() => {
+                    document.getElementById('tagline').classList.add('finished');
+                }, 4100);
+
+                // Show services 0.5s after tagline reveals (tagline starts at 2.6s + 1.5s duration = 4.1s, then 0.5s delay)
+                setTimeout(() => {
+                    document.getElementById('header').classList.add('slide-up');
+                    document.getElementById('services').classList.add('expanded');
+                    document.getElementById('service-1').classList.add('grow');
+                    document.getElementById('service-2').classList.add('grow');
+                    document.getElementById('service-3').classList.add('grow');
+                    
+                    // Add Co. after Streamlined finishes sliding (3.3s later)
+                    setTimeout(() => {
+                        document.querySelector('.co').classList.add('show-co');
+                    }, 3300);
+                }, 4600);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

@@ -18,53 +18,38 @@
             --text-primary: #241e20;
             --text-secondary: rgba(36, 30, 32, 0.8);
             --logo-filter: invert(1);
-            --service-border: rgba(255, 255, 255, 0.15);
+            --service-1-bg: #e25323;
+            --service-2-bg: #5a8bad;
+            --service-3-bg: #f27d18;
+            --service-text: #FFFFFF;
             --service-hover-bg: #e7e4df;
+            --service-1-hover: #e25323;
+            --service-2-hover: #5a8bad;
+            --service-3-hover: #f27d18;
+            --service-border: rgba(255, 255, 255, 0.15);
             --theme-toggle-bg: rgba(36, 30, 32, 0.1);
             --theme-toggle-border: rgba(36, 30, 32, 0.2);
             --theme-toggle-color: #241e20;
         }
 
         /* Dark theme */
-        body.dark-theme {
+        [data-theme="dark"] {
             --bg-primary: #141414;
             --text-primary: #e7e4df;
             --text-secondary: #e7e4df;
             --logo-filter: none;
-            --service-border: rgba(231, 228, 223, 0.08);
+            --service-1-bg: #0A0A0A;
+            --service-2-bg: #1F1F1F;
+            --service-3-bg: #2B2B2B;
+            --service-text: #F0E6D2;
             --service-hover-bg: #181818;
+            --service-1-hover: #F5ECDB;
+            --service-2-hover: #F5ECDB;
+            --service-3-hover: #F5ECDB;
+            --service-border: rgba(231, 228, 223, 0.08);
             --theme-toggle-bg: rgba(231, 228, 223, 0.1);
             --theme-toggle-border: rgba(231, 228, 223, 0.2);
             --theme-toggle-color: #e7e4df;
-        }
-
-        /* Dark theme service backgrounds */
-        body.dark-theme .service-1 {
-            background: #0A0A0A !important;
-        }
-        body.dark-theme .service-2 {
-            background: #1F1F1F !important;
-        }
-        body.dark-theme .service-3 {
-            background: #2B2B2B !important;
-        }
-
-        body.dark-theme .service:hover {
-            background: #181818 !important;
-        }
-
-        body.dark-theme .service-title,
-        body.dark-theme .service-desc,
-        body.dark-theme .service-number {
-            color: #F0E6D2 !important;
-            opacity: 0.8;
-        }
-
-        body.dark-theme .service:hover .service-title,
-        body.dark-theme .service:hover .service-desc,
-        body.dark-theme .service:hover .service-number {
-            color: #F5ECDB !important;
-            opacity: 1;
         }
 
         body {
@@ -93,7 +78,8 @@
             display: flex;
             align-items: center;
             transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        background-color 0.3s ease;
             background: var(--bg-primary);
         }
 
@@ -121,7 +107,7 @@
         .header.slide-up .icon-container {
             width: 90px;
             height: 90px;
-            margin-bottom: 20px;
+            margin-bottom: 35px;
         }
 
         /* Greeting icon */
@@ -141,6 +127,7 @@
             stroke: var(--text-primary);
             fill: none;
             stroke-width: 1.5;
+            transition: stroke 0.3s ease;
         }
 
         .greeting-icon.hide {
@@ -155,7 +142,7 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transition: opacity 0.6s ease, transform 0.6s ease, filter 0.3s ease;
             transform: scaleX(0);
             filter: var(--logo-filter);
         }
@@ -182,18 +169,18 @@
         }
 
         .header.slide-up .title-wrapper {
-            margin-bottom: 50px;
-            padding-top: 10px;
+            margin-bottom: 35px;
+            padding-top: 40px;
         }
 
-        /* Text elements that disappear */
+        /* Text elements */
         .greeting, .comma, .we-are {
             font-size: clamp(30px, 5vw, 60px);
             color: var(--text-primary);
             opacity: 0;
             animation: fade-in 0.8s ease forwards;
             display: inline-block;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease, transform 0.8s ease, color 0.3s ease;
         }
 
         .greeting {
@@ -220,20 +207,11 @@
         .greeting.hide,
         .comma.hide,
         .we-are.hide {
+            transform: translateX(-100vw);
             opacity: 0 !important;
-            visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-        
-        @media (min-width: 769px) {
-            .greeting.hide,
-            .comma.hide,
-            .we-are.hide {
-                transform: translateX(-100vw);
-            }
         }
 
-        /* STREAMLINED - THE ACTUAL WORD THAT MOVES */
+        /* STREAMLINED */
         h1 {
             display: inline-block;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -299,10 +277,11 @@
             height: 30px;
             display: flex;
             align-items: center;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header.slide-up .tagline-wrapper {
-            /* No transform needed */
+            transform: translateY(-25px);
         }
 
         .subtitle {
@@ -311,13 +290,13 @@
             color: var(--text-secondary);
             font-weight: 400;
             white-space: nowrap;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
             transform-origin: left center;
             transform: scale(1);
         }
 
         .header.slide-up .subtitle {
-            opacity: 0.8;
+            opacity: 0.9;
             font-size: 24px;
             color: var(--text-secondary);
             transform: scale(0.95);
@@ -374,17 +353,17 @@
             padding: 0 80px;
         }
         
-        /* Service backgrounds - Light theme */
+        /* Service backgrounds */
         .service-1 {
-            background-color: #e25323;
+            background-color: var(--service-1-bg);
             background-image: url("egg-shell.png");
         }
         .service-2 {
-            background-color: #5a8bad;
+            background-color: var(--service-2-bg);
             background-image: url("egg-shell.png");
         }
         .service-3 {
-            background-color: #f27d18;
+            background-color: var(--service-3-bg);
             background-image: url("egg-shell.png");
         }
 
@@ -424,7 +403,8 @@
             font-weight: 700;
             line-height: 1;
             transition: all 0.5s ease;
-            color: #FFFFFF;
+            color: var(--service-text);
+            opacity: 0.8;
         }
 
         .service-info {
@@ -437,18 +417,18 @@
             letter-spacing: -0.03em;
             margin-bottom: 10px;
             transition: all 0.3s ease;
-            color: #FFFFFF;
+            color: var(--service-text);
         }
 
         .service-desc {
             font-size: 16px;
             line-height: 1.4;
-            color: #FFFFFF;
+            color: var(--service-text);
             max-width: 600px;
             opacity: 0.9;
         }
 
-        /* Hover effects - Light theme */
+        /* Hover effects */
         .service:hover {
             background: var(--service-hover-bg) !important;
         }
@@ -456,19 +436,25 @@
         .service-1:hover .service-title,
         .service-1:hover .service-desc,
         .service-1:hover .service-number {
-            color: #e25323;
+            color: var(--service-1-hover);
         }
         
         .service-2:hover .service-title,
         .service-2:hover .service-desc,
         .service-2:hover .service-number {
-            color: #5a8bad;
+            color: var(--service-2-hover);
         }
         
         .service-3:hover .service-title,
         .service-3:hover .service-desc,
         .service-3:hover .service-number {
-            color: #f27d18;
+            color: var(--service-3-hover);
+        }
+
+        [data-theme="dark"] .service:hover .service-title,
+        [data-theme="dark"] .service:hover .service-desc,
+        [data-theme="dark"] .service:hover .service-number {
+            opacity: 1;
         }
 
         /* Theme toggle */
@@ -482,13 +468,13 @@
             border-radius: 50px;
             padding: 8px 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 14px;
             font-weight: 500;
             color: var(--theme-toggle-color);
             display: flex;
             align-items: center;
             gap: 8px;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
 
         .theme-toggle:hover {
@@ -504,266 +490,6 @@
 
         .theme-toggle:hover svg {
             transform: rotate(180deg);
-        }
-
-        /* Responsive Design */
-        
-        /* Tablet (768px - 1024px) */
-        @media (max-width: 1024px) {
-            .header {
-                padding: 60px;
-            }
-            
-            .header.slide-up {
-                padding: 40px 60px;
-            }
-            
-            .service {
-                padding: 0 60px;
-            }
-            
-            .service-number {
-                font-size: 100px;
-            }
-            
-            .service-title {
-                font-size: 42px;
-            }
-        }
-
-        /* Mobile (max-width: 768px) */
-        @media (max-width: 768px) {
-            .header {
-                padding: 40px 20px;
-                min-height: 100vh;
-            }
-            
-            .header.slide-up {
-                min-height: 45vh;
-                padding: 30px 20px;
-            }
-            
-            .header-content {
-                overflow: visible;
-            }
-            
-            .icon-container {
-                width: 35px;
-                height: 35px;
-                margin-bottom: 20px;
-            }
-            
-            .header.slide-up .icon-container {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 10px;
-            }
-            
-            .title-wrapper {
-                padding-top: 0;
-                overflow: visible;
-                white-space: normal;
-                margin-bottom: 20px;
-            }
-            
-            .header.slide-up .title-wrapper {
-                margin-bottom: 25px;
-                padding-top: 0;
-            }
-            
-            /* Reset all margins on mobile */
-            .greeting, .comma, .we-are, h1 {
-                font-size: 22px;
-                margin: 0;
-            }
-            
-            /* Add specific spacing */
-            .comma {
-                margin: 0 3px;
-            }
-            
-            .we-are {
-                margin-left: 3px;
-                margin-right: 5px;
-            }
-            
-            h1 {
-                display: inline;
-            }
-            
-            /* After animation on mobile */
-            h1.move-final {
-                transform: none !important;
-                font-size: 36px;
-                display: block;
-                margin-top: 8px;
-                margin-bottom: 0;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 40px;
-            }
-            
-            .subtitle {
-                font-size: 15px;
-                white-space: normal;
-                line-height: 1.4;
-                padding-right: 10px;
-            }
-            
-            .tagline-wrapper {
-                margin-bottom: 20px;
-            }
-            
-            .header.slide-up .tagline-wrapper {
-                margin-bottom: 20px;
-            }
-            
-            .typewriter-text {
-                white-space: normal;
-            }
-            
-            /* Services height to prevent overlap */
-            .services.expanded {
-                height: 55vh;
-            }
-            
-            .service {
-                padding: 0 20px;
-            }
-            
-            .service-inner {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
-            }
-            
-            .service-number {
-                font-size: 40px;
-            }
-            
-            .service-title {
-                font-size: 24px;
-                margin-bottom: 5px;
-            }
-            
-            .service-desc {
-                font-size: 13px;
-                line-height: 1.4;
-            }
-            
-            .theme-toggle {
-                top: 20px;
-                right: 20px;
-                padding: 6px 16px;
-                font-size: 13px;
-            }
-        }
-
-        /* Small Mobile (max-width: 480px) */
-        @media (max-width: 480px) {
-            .header {
-                padding: 25px 15px;
-                min-height: 100vh;
-            }
-            
-            .header.slide-up {
-                min-height: 42vh;
-                padding: 20px 15px;
-            }
-            
-            .icon-container {
-                width: 30px;
-                height: 30px;
-                margin-bottom: 15px;
-            }
-            
-            .header.slide-up .icon-container {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .greeting, .comma, .we-are, h1 {
-                font-size: 18px;
-            }
-            
-            h1.move-final {
-                font-size: 32px;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 36px;
-            }
-            
-            .subtitle {
-                font-size: 13px;
-            }
-            
-            .services.expanded {
-                height: 58vh;
-            }
-            
-            .service {
-                padding: 0 15px;
-            }
-            
-            .service-number {
-                font-size: 36px;
-            }
-            
-            .service-title {
-                font-size: 22px;
-            }
-            
-            .service-desc {
-                font-size: 12px;
-            }
-        }
-
-
-        /* Very Small Mobile (max-width: 375px) */
-        @media (max-width: 375px) {
-            .header.slide-up {
-                min-height: 38vh;
-            }
-            
-            .greeting, .comma, .we-are, h1 {
-                font-size: 16px;
-            }
-            
-            h1.move-final {
-                font-size: 28px;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 32px;
-            }
-            
-            .subtitle {
-                font-size: 12px;
-            }
-            
-            .service-number {
-                font-size: 32px;
-            }
-            
-            .service-title {
-                font-size: 20px;
-            }
-            
-            .service-desc {
-                font-size: 11px;
-            }
-            
-            .theme-toggle {
-                padding: 5px 12px;
-                font-size: 12px;
-            }
-            
-            .theme-toggle svg {
-                width: 14px;
-                height: 14px;
-            }
         }
 
         /* Large Desktop (min-width: 1440px) */
@@ -846,39 +572,6 @@
                 font-size: 18px;
             }
         }
-
-        /* Landscape orientation adjustments */
-        @media (max-height: 600px) and (orientation: landscape) {
-            .header {
-                min-height: 100vh;
-            }
-            
-            .header.slide-up {
-                min-height: 40vh;
-            }
-            
-            
-            .service-inner {
-                gap: 30px;
-            }
-            
-            .service-number {
-                font-size: 80px;
-            }
-        }
-
-        /* Ensure smooth transitions on orientation change */
-        @media (orientation: portrait) {
-            .container {
-                transition: all 0.3s ease;
-            }
-        }
-
-        @media (orientation: landscape) {
-            .container {
-                transition: all 0.3s ease;
-            }
-        }
     </style>
 </head>
 <body>
@@ -959,9 +652,9 @@
     </div>
 
     <script>
-        // Theme management
+        // Theme management with instant switching
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
+        const html = document.documentElement;
         const sunIcon = themeToggle.querySelector('.sun-icon');
         const moonIcon = themeToggle.querySelector('.moon-icon');
         const themeLabel = themeToggle.querySelector('.theme-label');
@@ -969,24 +662,29 @@
         // Check for saved theme preference or default to light
         const savedTheme = localStorage.getItem('theme') || 'light';
         if (savedTheme === 'dark') {
-            body.classList.add('dark-theme');
+            html.setAttribute('data-theme', 'dark');
             sunIcon.style.display = 'block';
             moonIcon.style.display = 'none';
             themeLabel.textContent = 'Light';
         }
 
-        // Theme toggle handler
+        // Theme toggle handler - instant switching
         themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
-            const isDark = body.classList.contains('dark-theme');
+            const isDark = html.getAttribute('data-theme') === 'dark';
             
-            // Update icons
-            sunIcon.style.display = isDark ? 'block' : 'none';
-            moonIcon.style.display = isDark ? 'none' : 'block';
-            themeLabel.textContent = isDark ? 'Light' : 'Dark';
-            
-            // Save preference
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            if (isDark) {
+                html.setAttribute('data-theme', 'light');
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+                themeLabel.textContent = 'Dark';
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+                themeLabel.textContent = 'Light';
+                localStorage.setItem('theme', 'dark');
+            }
         });
 
         // Time-based greeting
@@ -1033,18 +731,6 @@
 
         // Animation sequence
         window.addEventListener('load', function() {
-            // Handle responsive font sizes on mobile
-            function adjustForMobile() {
-                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                if (vw < 768) {
-                    // Adjust animation timing for mobile
-                    return 1200;
-                }
-                return 1500;
-            }
-
-            const delay = adjustForMobile();
-
             setTimeout(function() {
                 // Show services container
                 document.getElementById('services').classList.add('show');
@@ -1057,36 +743,27 @@
 
                 // MOVE THE ACTUAL STREAMLINED ELEMENT
                 setTimeout(() => {
-                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+                    // Calculate exact distance
+                    const streamlined = document.getElementById('streamlined');
+                    const streamlinedRect = streamlined.getBoundingClientRect();
+                    const headerContent = document.querySelector('.header-content');
+                    const headerRect = headerContent.getBoundingClientRect();
+                    
+                    // Distance to move = current position - target position (start of container + padding)
+                    const targetX = headerRect.left;
+                    const currentX = streamlinedRect.left;
+                    const moveDistance = targetX - currentX;
+                    
+                    // Override the CSS transform with the exact calculation
+                    streamlined.style.transform = `translateX(${moveDistance}px)`;
                     
                     // Hide greeting elements
                     document.getElementById('greeting').classList.add('hide');
                     document.querySelector('.comma').classList.add('hide');
                     document.querySelector('.we-are').classList.add('hide');
                     
-                    // On mobile, don't calculate movement - CSS handles it
-                    if (vw > 768) {
-                        // Calculate exact distance for desktop only
-                        const streamlined = document.getElementById('streamlined');
-                        const streamlinedRect = streamlined.getBoundingClientRect();
-                        const headerContent = document.querySelector('.header-content');
-                        const headerRect = headerContent.getBoundingClientRect();
-                        
-                        // Get computed padding for accurate calculation
-                        const headerStyle = window.getComputedStyle(document.querySelector('.header'));
-                        const paddingLeft = parseInt(headerStyle.paddingLeft);
-                        
-                        // Distance to move = current position - target position
-                        const targetX = headerRect.left;
-                        const currentX = streamlinedRect.left;
-                        const moveDistance = targetX - currentX;
-                        
-                        // Override the CSS transform with the exact calculation
-                        streamlined.style.transform = `translateX(${moveDistance}px)`;
-                    }
-                    
                     // Add class for font size change
-                    document.getElementById('streamlined').classList.add('move-final');
+                    streamlined.classList.add('move-final');
                     
                     // Services appear
                     document.getElementById('header').classList.add('slide-up');
@@ -1095,27 +772,7 @@
                     document.getElementById('service-2').classList.add('grow');
                     document.getElementById('service-3').classList.add('grow');
                 }, 2800);
-                
-                // NO ACTIVITY AFTER THIS POINT
-            }, delay);
-        });
-
-        // Handle window resize for responsive adjustments
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                // Recalculate position if needed
-                const streamlined = document.getElementById('streamlined');
-                if (streamlined.classList.contains('move-final')) {
-                    const headerContent = document.querySelector('.header-content');
-                    const headerRect = headerContent.getBoundingClientRect();
-                    const headerStyle = window.getComputedStyle(document.querySelector('.header'));
-                    const paddingLeft = parseInt(headerStyle.paddingLeft);
-                    
-                    streamlined.style.transform = `translateX(calc(-100vw + ${paddingLeft}px))`;
-                }
-            }, 250);
+            }, 1500);
         });
     </script>
 </body>
