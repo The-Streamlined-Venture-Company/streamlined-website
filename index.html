@@ -959,6 +959,9 @@
     </div>
 
     <script>
+        // Store the final transform value to prevent recalculation
+        let finalTransform = null;
+        
         // Theme management
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
@@ -1081,8 +1084,9 @@
                         const currentX = streamlinedRect.left;
                         const moveDistance = targetX - currentX;
                         
-                        // Override the CSS transform with the exact calculation
-                        streamlined.style.transform = `translateX(${moveDistance}px)`;
+                        // Store and apply the transform
+                        finalTransform = `translateX(${moveDistance}px)`;
+                        streamlined.style.transform = finalTransform;
                     }
                     
                     // Add class for font size change
@@ -1105,15 +1109,10 @@
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                // Recalculate position if needed
                 const streamlined = document.getElementById('streamlined');
-                if (streamlined.classList.contains('move-final')) {
-                    const headerContent = document.querySelector('.header-content');
-                    const headerRect = headerContent.getBoundingClientRect();
-                    const headerStyle = window.getComputedStyle(document.querySelector('.header'));
-                    const paddingLeft = parseInt(headerStyle.paddingLeft);
-                    
-                    streamlined.style.transform = `translateX(calc(-100vw + ${paddingLeft}px))`;
+                // Only restore the saved transform if we have one and if Streamlined has moved
+                if (streamlined.classList.contains('move-final') && finalTransform) {
+                    streamlined.style.transform = finalTransform;
                 }
             }, 250);
         });
