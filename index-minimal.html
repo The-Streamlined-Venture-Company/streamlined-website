@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined Co.</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+            background: #e7e4df;
+            color: #241e20;
+            overflow-x: hidden;
+        }
+
+        /* Icon container */
+        .icon-container {
+            display: block;
+            width: 45px;
+            height: 45px;
+            margin-bottom: 15px;
+            position: relative;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            transform-style: preserve-3d;
+        }
+
+        .greeting-icon,
+        .logo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transition: transform 0.6s ease;
+        }
+        
+        .greeting-icon {
+            opacity: 0;
+            animation: fadeIn 0.8s 0.3s forwards;
+            transform: rotateY(0deg);
+        }
+
+        .greeting-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: #241e20;
+            fill: none;
+            stroke-width: 1.5;
+        }
+        
+        .logo {
+            transform: rotateY(180deg);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            filter: invert(1);
+            display: block;
+        }
+        
+        /* Flip animation */
+        .icon-container.flipped .greeting-icon {
+            transform: rotateY(-180deg);
+        }
+        
+        .icon-container.flipped .logo {
+            transform: rotateY(0deg);
+        }
+
+        /* Fly off animation */
+        .animate .icon-container {
+            transform: translateY(-100px);
+            opacity: 0;
+        }
+
+        /* Mobile-first approach */
+        .container {
+            min-height: 100vh;
+            padding: 60px 20px 20px;
+        }
+
+        /* Combined text container */
+        .main-text {
+            font-size: 32px;
+            line-height: 1.4;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .intro-part {
+            margin-bottom: 20px;
+        }
+
+        .greeting { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 0.5s forwards; 
+            font-weight: 300;
+            letter-spacing: -0.02em;
+        }
+        .we-are { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 1.0s forwards; 
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+        .streamlined { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 1.5s forwards; 
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .tagline-part {
+            opacity: 0;
+            animation: fadeIn 0.8s 2.2s forwards;
+        }
+
+        .with-part {
+            transition: opacity 0.5s ease;
+        }
+
+        .animate .with-part {
+            opacity: 0;
+        }
+
+        /* Hide intro part after animation */
+        .animate .intro-part {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* On mobile, main-text just stays in place */
+
+        /* Services - part of the flex layout */
+        .services {
+            display: flex;
+            flex-direction: column;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate .services {
+            height: 55vh;
+        }
+
+        .service {
+            flex: 0;
+            height: 0;
+            overflow: hidden;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            transition: flex 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .service:nth-child(2),
+        .service:nth-child(3) {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .service-1 { 
+            background-color: #e25323;
+            background-image: url('egg-shell.png');
+        }
+        .service-2 { 
+            background-color: #5a8bad;
+            background-image: url('egg-shell.png');
+        }
+        .service-3 { 
+            background-color: #f27d18;
+            background-image: url('egg-shell.png');
+        }
+        
+        .animate .service {
+            flex: 1;
+            height: auto;
+        }
+        
+        .service-inner {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+        
+        .animate .service-inner {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 0.3s;
+        }
+        
+        .service-number {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            color: #FFFFFF;
+            transition: all 0.5s ease;
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 5px;
+            color: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+        
+        .service-desc {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #FFFFFF;
+            opacity: 0.9;
+        }
+        
+        /* Service hover effects */
+        .service:hover {
+            background: #e7e4df !important;
+        }
+        
+        .service-1:hover .service-title,
+        .service-1:hover .service-desc,
+        .service-1:hover .service-number {
+            color: #e25323;
+        }
+        
+        .service-2:hover .service-title,
+        .service-2:hover .service-desc,
+        .service-2:hover .service-number {
+            color: #5a8bad;
+        }
+        
+        .service-3:hover .service-title,
+        .service-3:hover .service-desc,
+        .service-3:hover .service-number {
+            color: #f27d18;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        /* Fixed logo at top */
+        .fixed-logo {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 24px;
+            height: 24px;
+            z-index: 100;
+            transition: opacity 0.5s ease;
+        }
+        
+        .fixed-logo img {
+            width: 100%;
+            height: 100%;
+            filter: invert(1);
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 8px 16px;
+            background: rgba(36, 30, 32, 0.1);
+            border: 1px solid rgba(36, 30, 32, 0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #241e20;
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Desktop - different behavior */
+        @media (min-width: 768px) {
+            .fixed-icon {
+                top: 40px;
+                left: 80px;
+                width: 48px;
+                height: 48px;
+            }
+
+            .container {
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .header-wrapper {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                transition: all 1s ease;
+            }
+
+            .main-text {
+                font-size: 48px;
+                text-align: left;
+                max-width: 1200px;
+                padding: 0 80px;
+                transition: font-size 1s ease;
+            }
+
+            .intro-part {
+                margin-bottom: 40px;
+            }
+
+            .tagline-part {
+                transition: font-size 1s ease;
+            }
+
+            /* On desktop, move to 25vh from top (center of top 50vh) */
+            .animate .main-text {
+                position: absolute;
+                top: 25vh;
+                transform: translateY(-50%);
+                font-size: 60px;
+                padding: 0 80px;
+                width: 100%;
+            }
+
+            /* Tagline can have different size if needed */
+            .animate .tagline-part {
+                /* Inherits the 60px from main-text */
+            }
+
+            .animate .services {
+                height: 50vh;
+            }
+            
+            .services {
+                flex: 1;
+            }
+
+            .service {
+                padding: 0 80px;
+            }
+            
+            .service-inner {
+                gap: 50px;
+                max-width: 1400px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 48px;
+                margin-bottom: 10px;
+            }
+            
+            .service-desc {
+                font-size: 16px;
+                max-width: 600px;
+            }
+            
+            .fixed-logo {
+                top: 40px;
+                left: 80px;
+                width: 48px;
+                height: 48px;
+            }
+            
+            .theme-toggle {
+                top: 40px;
+                right: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed logo - hidden initially -->
+    <div class="fixed-logo" id="fixedLogo" style="opacity: 0;">
+        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
+    </div>
+    
+    <!-- Theme toggle - hidden initially -->
+    <button class="theme-toggle" id="themeToggle" style="opacity: 0; pointer-events: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span>Dark</span>
+    </button>
+
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header wrapper - will be 50vh after animation -->
+        <div class="header-wrapper">
+            <!-- Combined text -->
+            <div class="main-text">
+                <div class="icon-container" id="iconContainer">
+                    <div class="greeting-icon"></div>
+                    <div class="logo">
+                        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
+                    </div>
+                </div>
+                <div class="intro-part">
+                    <div>
+                        <span class="greeting">Good evening,</span>
+                        <span class="we-are"> we are </span>
+                        <span class="streamlined">Streamlined</span>
+                    </div>
+                </div>
+                <div class="tagline-part">
+                    We help design-conscious minds streamline how they work and live<span class="with-part"> with...</span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Services inside container -->
+        <div class="services">
+        <div class="service service-1">
+            <div class="service-inner">
+                <div class="service-number">01</div>
+                <div class="service-info">
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service service-2">
+            <div class="service-inner">
+                <div class="service-number">02</div>
+                <div class="service-info">
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service service-3">
+            <div class="service-inner">
+                <div class="service-number">03</div>
+                <div class="service-info">
+                    <h2 class="service-title">Platforms</h2>
+                    <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> <!-- Close container -->
+
+    <script>
+        // Set greeting based on time
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) {
+                return {
+                    greeting: 'Good morning,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>`
+                };
+            } else if (hour >= 12 && hour < 17) {
+                return {
+                    greeting: 'Good afternoon,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="6"/>
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>`
+                };
+            } else {
+                return {
+                    greeting: 'Good evening,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>`
+                };
+            }
+        }
+        
+        // Set greeting and icon
+        const timeData = getTimeOfDay();
+        document.querySelector('.greeting').textContent = timeData.greeting;
+        document.querySelector('.greeting-icon').innerHTML = timeData.icon;
+        
+        // Flip icon to logo when "we are Streamlined" appears
+        setTimeout(() => {
+            document.getElementById('iconContainer').classList.add('flipped');
+        }, 1500); // This timing matches when "Streamlined" appears
+
+        // Trigger main animation after intro completes
+        setTimeout(() => {
+            document.body.classList.add('animate');
+            
+            // Fade in fixed logo and theme toggle after logo flies off
+            setTimeout(() => {
+                const fixedLogo = document.getElementById('fixedLogo');
+                const toggle = document.getElementById('themeToggle');
+                fixedLogo.style.opacity = '1';
+                toggle.style.opacity = '1';
+                toggle.style.pointerEvents = 'auto';
+            }, 800); // 800ms matches the fly-off animation duration
+        }, 3500);
+    </script>
+</body>
+</html>

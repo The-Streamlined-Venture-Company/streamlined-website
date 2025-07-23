@@ -98,7 +98,7 @@
         }
 
         .header.slide-up {
-            min-height: 50vh;
+            min-height: auto;
             padding: 60px 80px;
         }
 
@@ -113,9 +113,7 @@
             height: 45px;
             margin-bottom: 15px;
             position: relative;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .header.slide-up .icon-container {
@@ -296,7 +294,6 @@
         /* Tagline */
         .tagline-wrapper {
             position: relative;
-            height: 30px;
             display: flex;
             align-items: center;
         }
@@ -311,16 +308,12 @@
             color: var(--text-secondary);
             font-weight: 400;
             white-space: nowrap;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            transform-origin: left center;
-            transform: scale(1);
+            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Don't change subtitle at all during slide-up */
         .header.slide-up .subtitle {
-            opacity: 0.8;
-            font-size: 24px;
-            color: var(--text-secondary);
-            transform: scale(0.95);
+            /* No changes - prevent any shift */
         }
 
         .typewriter-text {
@@ -342,17 +335,25 @@
         }
 
         /* Services section */
+        /* Container to prevent overlap */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            flex-shrink: 0;
+        }
+        
         .services {
             display: flex;
             flex-direction: column;
             opacity: 0;
             transition: opacity 0.8s ease;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 0;
-            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+            flex: 0;
+            overflow: hidden;
+            transition: flex 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
         }
 
         .services.show {
@@ -360,7 +361,7 @@
         }
         
         .services.expanded {
-            height: 50vh;
+            flex: 1;
         }
 
         .service {
@@ -546,117 +547,156 @@
         /* Mobile (max-width: 768px) */
         @media (max-width: 768px) {
             .header {
-                padding: 40px 20px;
+                padding: 30px 20px;
                 min-height: 100vh;
+                align-items: flex-start;
+                justify-content: flex-start;
+                transition: min-height 0.6s ease, padding 0.6s ease;
             }
             
             .header.slide-up {
-                min-height: 45vh;
-                padding: 30px 20px;
+                min-height: auto;
+                padding: 15px 20px 10px 20px;
             }
             
             .header-content {
                 overflow: visible;
             }
             
-            .icon-container {
-                width: 35px;
-                height: 35px;
-                margin-bottom: 20px;
+            .header.slide-up .header-content {
+                display: flex;
+                flex-direction: column;
+                height: 100%;
             }
             
-            .header.slide-up .icon-container {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 10px;
-            }
-            
-            .title-wrapper {
-                padding-top: 0;
-                overflow: visible;
-                white-space: normal;
-                margin-bottom: 20px;
-            }
-            
-            .header.slide-up .title-wrapper {
-                margin-bottom: 25px;
-                padding-top: 0;
-            }
-            
-            /* Reset all margins on mobile */
+            /* Make everything 32px from the start */
             .greeting, .comma, .we-are, h1 {
-                font-size: 22px;
-                margin: 0;
-            }
-            
-            /* Add specific spacing */
-            .comma {
-                margin: 0 3px;
-            }
-            
-            .we-are {
-                margin-left: 3px;
-                margin-right: 5px;
-            }
-            
-            h1 {
-                display: inline;
-            }
-            
-            /* After animation on mobile */
-            h1.move-final {
-                transform: none !important;
-                font-size: 36px;
-                display: block;
-                margin-top: 8px;
-                margin-bottom: 0;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 40px;
+                font-size: 32px;
             }
             
             .subtitle {
-                font-size: 16px;
+                font-size: 32px;
                 white-space: normal;
                 line-height: 1.5;
                 padding-right: 0;
                 max-width: 100%;
+                font-weight: 500;
             }
             
+            /* Hide Co. and prevent Streamlined flash on mobile */
+            .co::after {
+                display: none;
+            }
+            
+            /* Fade out greeting elements after slide-up */
+            .header.slide-up .greeting,
+            .header.slide-up .comma,
+            .header.slide-up .we-are,
+            .header.slide-up h1 {
+                opacity: 0;
+                visibility: hidden;
+                height: 0;
+                margin: 0;
+                transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease, margin 0.3s ease;
+            }
+            
+            /* Logo styling */
+            .icon-container {
+                width: 24px;
+                height: 24px;
+                margin-bottom: 15px;
+            }
+            
+            .header.slide-up .icon-container {
+                margin-bottom: 5px;
+            }
+            
+            .greeting-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .nav-brand {
+                width: 24px;
+                height: 24px;
+                opacity: 0;
+            }
+            
+            .header.slide-up .nav-brand {
+                opacity: 1;
+                transition: opacity 0.3s ease;
+            }
+            
+            .nav-brand img {
+                width: 100%;
+                height: 100%;
+            }
+            
+            /* Title wrapper */
+            .title-wrapper {
+                white-space: normal;
+                max-width: 100%;
+            }
+            
+            .header.slide-up .title-wrapper {
+                height: 0;
+                margin: 0;
+            }
+            
+            /* Block display for mobile */
+            h1 {
+                display: block;
+                margin-top: 10px;
+                margin-bottom: 20px;
+                font-size: 32px !important; /* Force initial size to prevent flash */
+            }
+            
+            h1.move-final {
+                transform: none;
+                font-size: 32px;
+                display: block;
+                margin-bottom: 20px;
+            }
+            
+            /* Tagline positioning */
             .tagline-wrapper {
                 margin-bottom: 20px;
+                margin-top: 0;
+                position: relative;
             }
             
             .header.slide-up .tagline-wrapper {
-                margin-bottom: 20px;
+                margin: 0;
             }
             
             .typewriter-text {
                 white-space: normal;
             }
             
-            /* Services height to prevent overlap */
-            .services.expanded {
-                height: 55vh;
-            }
+            /* Services inherit flexbox behavior on mobile too */
             
             .service {
                 padding: 0 20px;
             }
             
             .service-inner {
-                flex-direction: column;
-                text-align: center;
-                gap: 10px;
+                flex-direction: row;
+                text-align: left;
+                gap: 20px;
+                align-items: flex-start;
             }
             
             .service-number {
-                font-size: 40px;
+                font-size: 32px;
+                flex-shrink: 0;
+            }
+            
+            .service-content {
+                flex: 1;
             }
             
             .service-title {
-                font-size: 24px;
+                font-size: 20px;
                 margin-bottom: 5px;
             }
             
@@ -670,6 +710,17 @@
                 right: 20px;
                 padding: 6px 16px;
                 font-size: 13px;
+            }
+            
+            /* Adjust theme toggle to align with smaller logo */
+            .header.slide-up ~ .theme-toggle {
+                padding: 5px 12px;
+                font-size: 11px;
+            }
+            
+            .header.slide-up ~ .theme-toggle svg {
+                width: 14px;
+                height: 14px;
             }
         }
 
@@ -710,6 +761,11 @@
             
             .subtitle {
                 font-size: 13px;
+            }
+            
+            /* Even bigger tagline on smaller screens */
+            .header.slide-up .subtitle {
+                font-size: 22px;
             }
             
             .services.expanded {
@@ -989,7 +1045,7 @@
                 <div class="icon-container">
                     <div class="greeting-icon" id="greetingIcon"></div>
                     <div class="nav-brand" id="logo">
-                        <img src="screenshots/s logo white.png" alt="Streamlined">
+                        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
                     </div>
                 </div>
                 
