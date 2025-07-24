@@ -23,114 +23,58 @@
             --theme-toggle-bg: rgba(36, 30, 32, 0.1);
             --theme-toggle-border: rgba(36, 30, 32, 0.2);
             --theme-toggle-color: #241e20;
+            --divider-color: rgba(36, 30, 32, 0.3);
         }
 
         /* Dark theme */
         body.dark-theme {
             --bg-primary: #141414;
             --text-primary: #e7e4df;
-            --text-secondary: #e7e4df;
+            --text-secondary: rgba(231, 228, 223, 0.8);
             --logo-filter: none;
             --service-border: rgba(231, 228, 223, 0.08);
             --service-hover-bg: #181818;
             --theme-toggle-bg: rgba(231, 228, 223, 0.1);
             --theme-toggle-border: rgba(231, 228, 223, 0.2);
             --theme-toggle-color: #e7e4df;
-        }
-
-        /* Dark theme service backgrounds */
-        body.dark-theme .service-1 {
-            background: #0A0A0A !important;
-        }
-        body.dark-theme .service-2 {
-            background: #1F1F1F !important;
-        }
-        body.dark-theme .service-3 {
-            background: #2B2B2B !important;
-        }
-
-        body.dark-theme .service:hover {
-            background: #181818 !important;
-        }
-
-        body.dark-theme .service-title,
-        body.dark-theme .service-desc,
-        body.dark-theme .service-number {
-            color: #F0E6D2 !important;
-            opacity: 0.8;
-        }
-
-        body.dark-theme .service:hover .service-title,
-        body.dark-theme .service:hover .service-desc,
-        body.dark-theme .service:hover .service-number {
-            color: #F5ECDB !important;
-            opacity: 1;
+            --divider-color: rgba(231, 228, 223, 0.3);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow-x: hidden;
-            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             text-rendering: optimizeLegibility;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        /* Container */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        .header {
-            padding: 80px;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            background: var(--bg-primary);
-        }
-
-        .header.slide-up {
-            min-height: auto;
-            padding: 60px 80px;
-        }
-
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
         }
 
         /* Icon container */
         .icon-container {
+            display: block;
             width: 45px;
             height: 45px;
             margin-bottom: 15px;
             position: relative;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            transform-style: preserve-3d;
         }
 
-        .header.slide-up .icon-container {
-            width: 90px;
-            height: 90px;
-            margin-bottom: 20px;
-        }
-
-        /* Greeting icon */
-        .greeting-icon {
+        .greeting-icon,
+        .logo {
             position: absolute;
             width: 100%;
             height: 100%;
+            backface-visibility: hidden;
+            transition: transform 0.6s ease;
+        }
+        
+        .greeting-icon {
             opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            animation-delay: 0.5s;
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            animation: fadeIn 0.8s 0.3s forwards;
+            transform: rotateY(0deg);
         }
 
         .greeting-icon svg {
@@ -140,320 +84,330 @@
             fill: none;
             stroke-width: 1.5;
         }
-
-        .greeting-icon.hide {
-            opacity: 0 !important;
-            transform: scaleX(0);
-            visibility: hidden;
+        
+        .logo {
+            transform: rotateY(180deg);
         }
-
-        /* Logo */
-        .nav-brand {
-            position: absolute;
+        
+        .logo img {
             width: 100%;
             height: 100%;
-            opacity: 0;
-            transition: opacity 0.6s ease, transform 0.6s ease;
-            transform: scaleX(0);
             filter: var(--logo-filter);
-        }
-        
-        .nav-brand.show {
-            opacity: 1;
-            transform: scaleX(1);
-        }
-        
-        .nav-brand img {
-            width: 100%;
-            height: auto;
             display: block;
         }
-
-        /* Title wrapper */
-        .title-wrapper {
-            margin-bottom: 10px;
-            padding-top: 10px;
-            transition: margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        padding-top 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            overflow: visible;
-        }
-
-        .header.slide-up .title-wrapper {
-            margin-bottom: 10px;
-            padding-top: 40px;
-        }
-
-        /* Text elements that disappear */
-        .greeting, .comma, .we-are {
-            font-size: clamp(30px, 5vw, 60px);
-            color: var(--text-primary);
-            opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            display: inline-block;
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
-
-        .greeting {
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            animation-delay: 0.5s;
-        }
-
-        .comma {
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            animation-delay: 0.7s;
-            margin: 0 2px;
-        }
-
-        .we-are {
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            animation-delay: 1.8s;
-            margin-right: 8px;
-        }
-
-        .greeting.hide,
-        .comma.hide,
-        .we-are.hide {
-            opacity: 0 !important;
-            visibility: hidden;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
+        
+        /* Flip animation */
+        .icon-container.flipped .greeting-icon {
+            transform: rotateY(-180deg);
         }
         
-        @media (min-width: 769px) {
-            .greeting.hide,
-            .comma.hide,
-            .we-are.hide {
-                transform: translateX(-100vw);
-            }
+        .icon-container.flipped .logo {
+            transform: rotateY(0deg);
         }
 
-        /* STREAMLINED - THE ACTUAL WORD THAT MOVES */
-        h1 {
-            display: inline-block;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: clamp(30px, 5vw, 60px);
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            color: var(--text-primary);
-            opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            animation-delay: 1.8s;
-            margin: 0;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
-                        font-size 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        margin-left 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        color 0.3s ease;
-            text-shadow: none;
-        }
-
-        /* Move to final position */
-        h1.move-final {
-            transform: translateX(calc(-100vw + 80px));
-            font-size: clamp(60px, 10vw, 120px);
-            margin-left: 0;
-        }
-
-        .header.slide-up h1.move-final {
-            font-size: clamp(100px, 15vw, 140px);
-        }
-
-        /* Co. */
-        .co {
-            position: relative;
-        }
-        
-        .co::after {
-            content: 'Co.';
-            position: absolute;
-            left: 0.2em;
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        h1.move-final .co::after {
-            animation: fadeIn 0.6s ease 0.6s forwards;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fade-in {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Tagline */
-        .tagline-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .header.slide-up .tagline-wrapper {
-            /* No transform needed */
-        }
-
-        .subtitle {
-            font-size: 24px;
-            line-height: 1.5;
-            color: var(--text-secondary);
-            font-weight: 400;
-            white-space: nowrap;
-            transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* Don't change subtitle at all during slide-up */
-        .header.slide-up .subtitle {
-            /* No changes - prevent any shift */
-        }
-
-        .typewriter-text {
-            display: inline-block;
-            position: relative;
-            color: transparent;
-            background: linear-gradient(90deg, var(--text-primary) 50%, transparent 50%);
-            background-size: 200% 100%;
-            background-position: 100% 0;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: maskWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) 2.6s forwards;
-        }
-
-        @keyframes maskWipe {
-            to {
-                background-position: 0% 0;
-            }
-        }
-
-        /* Services section */
-        /* Container to prevent overlap */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .header {
-            flex-shrink: 0;
-        }
-        
-        .services {
-            display: flex;
-            flex-direction: column;
+        /* Fade out icon with intro */
+        .animate .icon-container {
             opacity: 0;
             transition: opacity 0.8s ease;
-            flex: 0;
-            overflow: hidden;
-            transition: flex 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
-        }
-
-        .services.show {
-            opacity: 1;
+            transition-delay: 0.5s; /* Same as intro fade */
         }
         
-        .services.expanded {
-            flex: 1;
+        /* Icon already faded out */
+        .services-complete .icon-container {
+            /* Already hidden */
+        }
+
+        /* Mobile-first approach */
+        .container {
+            min-height: 100vh;
+            min-height: -webkit-fill-available; /* Better for mobile Safari */
+            height: 100vh;
+            height: -webkit-fill-available;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent scrolling */
+            position: relative; /* For absolute positioning of services */
+        }
+        
+        .header-wrapper {
+            height: 100vh; /* Full height initially on mobile too */
+            display: flex;
+            align-items: center; /* START centered */
+            justify-content: center; /* Center horizontally too */
+            transition: height 0.8s ease, opacity 0.8s ease;
+        }
+
+        /* Combined text container */
+        .main-text {
+            font-size: 32px;
+            line-height: 1.4;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .intro-part {
+            margin-bottom: 20px;
+        }
+
+        .greeting { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 0.5s forwards; 
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        .we-are { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 1.0s forwards; 
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+        .streamlined { 
+            opacity: 0; 
+            animation: fadeIn 0.8s 1.5s forwards; 
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+        }
+
+        .tagline-part {
+            opacity: 0;
+            animation: fadeIn 0.8s 2.2s forwards;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: var(--text-primary);
+            line-height: 1.1;
+        }
+        
+        /* Dynamic tagline sizing based on available space */
+        @media (max-width: 768px) {
+            .tagline-part {
+                font-size: 24px; /* Base mobile size */
+                line-height: 1.2;
+            }
+            
+            /* When header has more space, increase font */
+            .animate .tagline-part {
+                /* Scale font based on header height */
+                font-size: clamp(24px, 5vw, 32px);
+            }
+        }
+        
+        /* Specific adjustments for header space */
+        @media (max-width: 768px) and (min-height: 600px) {
+            .animate .tagline-part {
+                font-size: 28px; /* 200px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 700px) {
+            .animate .tagline-part {
+                font-size: 30px; /* 295px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 850px) {
+            .animate .tagline-part {
+                font-size: 32px; /* 250px+ header space */
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .tagline-part {
+                line-height: 1.2; /* More breathing room */
+            }
+        }
+
+        .with-part {
+            transition: opacity 0.5s ease;
+        }
+
+        .animate .with-part {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transition-delay: 2.1s; /* Fade when services appear */
+        }
+
+        /* Fade out intro early in the animation */
+        .animate .intro-part {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            transition-delay: 0.5s; /* Start fading 0.5s after animate class */
+        }
+
+        /* Mobile header needs to shrink too */
+        .animate .header-wrapper {
+            height: calc(100vh - 300px); /* Match smaller services height */
+            height: calc(100dvh - 300px); /* Dynamic viewport height for mobile */
+            transition-delay: 2.1s;
+            min-height: 100px; /* Smaller minimum - prioritize services */
+        }
+        
+        /* If not enough space, hide header and let services take over */
+        @media (max-height: 500px) {
+            .animate .header-wrapper {
+                height: 0;
+                opacity: 0;
+                overflow: hidden;
+                min-height: 0;
+            }
+            
+            .animate .services {
+                height: 100vh; /* Services take full screen */
+            }
+        }
+
+        /* Services - anchored to bottom */
+        .services {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate .services {
+            height: 300px; /* Smaller height on mobile */
+            transition-delay: 2.1s;
+        }
+        
+        /* Prioritize services on all screens */
+        @media (min-height: 600px) {
+            .animate .services {
+                height: 400px; /* Bigger services */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 400px);
+                height: calc(100dvh - 400px);
+                min-height: 150px;
+            }
+        }
+        
+        /* Your iPhone 14 Pro Max range - maximize services */
+        @media (min-height: 700px) and (max-width: 768px) {
+            .animate .services {
+                height: 450px; /* Reduced from 500px to make rows shorter */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 450px);
+                height: calc(100dvh - 450px);
+                min-height: 150px;
+            }
+            
+            /* Tighter padding for this breakpoint */
+            .service {
+                padding: 12px 20px !important; /* Reasonable padding */
+            }
+            
+            .service-inner {
+                padding: 10px !important; /* Some inner padding */
+            }
+        }
+        
+        /* Very tall phones get even more */
+        @media (min-height: 850px) and (max-width: 768px) {
+            .animate .services {
+                height: 600px;
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 600px);
+                height: calc(100dvh - 600px);
+            }
         }
 
         .service {
-            flex: 0;
-            height: 0;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
-            padding: 0 80px;
+            padding: 15px; /* Less padding on mobile */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1 1 33.333%; /* Each service takes equal height */
+            min-height: 0; /* Allow shrinking */
         }
         
-        /* Service backgrounds - Light theme */
-        .service-1 {
+        /* Smaller screens get less padding */
+        @media (max-height: 600px) {
+            .service {
+                padding: 10px 15px;
+            }
+        }
+        
+        /* Remove borders - we'll use animated line instead */
+
+        .service-1 { 
             background-color: #e25323;
-            background-image: url("egg-shell.png");
+            background-image: url('assets/egg-shell.png');
         }
-        .service-2 {
+        .service-2 { 
             background-color: #5a8bad;
-            background-image: url("egg-shell.png");
+            background-image: url('assets/egg-shell.png');
         }
-        .service-3 {
+        .service-3 { 
             background-color: #f27d18;
-            background-image: url("egg-shell.png");
+            background-image: url('assets/egg-shell.png');
         }
-
-        .service:nth-child(2) {
-            border-top: 1px solid var(--service-border);
-        }
-
-        .service:nth-child(3) {
-            border-top: 1px solid var(--service-border);
-        }
-
-        .service.grow {
-            flex: 1;
-            height: auto;
-        }
-
-        /* Service content */
+        
+        /* Services already have their natural height */
+        
         .service-inner {
             display: flex;
+            gap: 20px; /* Reasonable gap */
             align-items: center;
-            gap: 50px;
             width: 100%;
-            max-width: 1400px;
+            padding: 15px; /* Better padding */
             opacity: 0;
             transform: scale(0.95);
-            transition: all 0.8s ease;
+            transition: all 0.4s ease;
         }
-
-        .service.grow .service-inner {
+        
+        .animate .service-inner {
             opacity: 1;
             transform: scale(1);
-            transition-delay: 0.3s;
+            transition-delay: 2.6s; /* After services start expanding */
         }
-
+        
         .service-number {
-            font-size: 120px;
+            font-size: 32px;
             font-weight: 700;
             line-height: 1;
+            color: #e7e4df;
             transition: all 0.5s ease;
-            color: #FFFFFF;
         }
-
+        
         .service-info {
             flex: 1;
         }
-
+        
         .service-title {
-            font-size: 48px;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.03em;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            color: #e7e4df;
             transition: all 0.3s ease;
-            color: #FFFFFF;
         }
-
+        
         .service-desc {
-            font-size: 16px;
+            font-size: 13px;
             line-height: 1.4;
-            color: #FFFFFF;
-            max-width: 600px;
-            opacity: 0.9;
+            color: #e7e4df;
+            opacity: 0.85;
         }
-
-        /* Hover effects - Light theme */
+        
+        /* Service hover effects */
         .service:hover {
-            background: var(--service-hover-bg) !important;
+            background: #e7e4df !important;
         }
-
+        
         .service-1:hover .service-title,
         .service-1:hover .service-desc,
         .service-1:hover .service-number {
@@ -471,558 +425,329 @@
         .service-3:hover .service-number {
             color: #f27d18;
         }
+        
+        /* Dark theme service colors */
+        body.dark-theme .service-1 {
+            background-color: #0A0A0A;
+        }
+        
+        body.dark-theme .service-2 {
+            background-color: #1F1F1F;
+        }
+        
+        body.dark-theme .service-3 {
+            background-color: #2B2B2B;
+        }
+        
+        body.dark-theme .service:hover {
+            background-color: var(--service-hover-bg) !important;
+        }
+        
+        body.dark-theme .service:hover .service-title,
+        body.dark-theme .service:hover .service-desc,
+        body.dark-theme .service:hover .service-number {
+            color: #e7e4df;
+        }
 
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @keyframes drawLine {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+        
+        /* Animated divider line */
+        .divider-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--divider-color);
+            transform: scaleX(0);
+            transform-origin: left center;
+            z-index: 1000;
+            transition: bottom 1s ease;
+        }
+        
+        .animate .divider-line {
+            /* Will be positioned by JavaScript based on services location */
+        }
+        
+        /* Fixed logo at top */
+        .fixed-logo {
+            position: fixed;
+            top: 48px; /* Align with toggle button */
+            left: 17px;
+            width: 45px;
+            height: 45px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .fixed-logo img {
+            width: 100%;
+            height: 100%;
+            filter: var(--logo-filter);
+        }
+        
+        .animate .fixed-logo {
+            opacity: 1;
+            transition-delay: 1.3s; /* Fade in after icon fades out (0.5s + 0.8s) */
+        }
+        
         /* Theme toggle */
         .theme-toggle {
             position: fixed;
-            top: 40px;
-            right: 40px;
-            z-index: 1000;
+            top: 48px;
+            right: 20px;
+            padding: 8px 16px;
             background: var(--theme-toggle-bg);
             border: 1px solid var(--theme-toggle-border);
-            border-radius: 50px;
-            padding: 8px 20px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-size: 14px;
-            font-weight: 500;
             color: var(--theme-toggle-color);
+            transition: all 0.3s ease;
+            z-index: 100;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-
-        .theme-toggle:hover {
-            background: var(--theme-toggle-border);
-            transform: translateY(-2px);
-        }
-
+        
         .theme-toggle svg {
             width: 16px;
             height: 16px;
-            transition: transform 0.3s ease;
         }
-
-        .theme-toggle:hover svg {
-            transform: rotate(180deg);
-        }
-
-        /* Responsive Design */
         
-        /* Tablet (768px - 1024px) */
-        @media (max-width: 1024px) {
-            .header {
-                padding: 60px;
-            }
-            
-            .header.slide-up {
-                padding: 40px 60px;
-            }
-            
-            .subtitle {
-                font-size: 20px;
-            }
-            
-            .service {
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Medium screens */
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .main-text {
+                font-size: 40px;
                 padding: 0 60px;
             }
             
-            .service-number {
-                font-size: 100px;
+            .animate .main-text {
+                font-size: 56px; /* Smaller than desktop */
             }
             
-            .service-title {
-                font-size: 42px;
-            }
-        }
-        
-        /* When tagline needs to wrap */
-        @media (max-width: 900px) {
-            .subtitle {
-                white-space: normal;
-                max-width: 600px;
-            }
-        }
-
-        /* Mobile (max-width: 768px) */
-        @media (max-width: 768px) {
-            .header {
-                padding: 30px 20px;
-                min-height: 100vh;
-                align-items: flex-start;
-                justify-content: flex-start;
-                transition: min-height 0.6s ease, padding 0.6s ease;
+            /* Tagline scales with available space */
+            .animate .tagline-part {
+                font-size: 48px; /* Larger for medium screens */
             }
             
-            .header.slide-up {
-                min-height: auto;
-                padding: 15px 20px 10px 20px;
+            .animate .services {
+                height: 450px; /* Slightly shorter */
             }
             
-            .header-content {
-                overflow: visible;
-            }
-            
-            .header.slide-up .header-content {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-            }
-            
-            /* Make everything 32px from the start */
-            .greeting, .comma, .we-are, h1 {
-                font-size: 32px;
-            }
-            
-            .subtitle {
-                font-size: 32px;
-                white-space: normal;
-                line-height: 1.5;
-                padding-right: 0;
-                max-width: 100%;
-                font-weight: 500;
-            }
-            
-            /* Hide Co. and prevent Streamlined flash on mobile */
-            .co::after {
-                display: none;
-            }
-            
-            /* Fade out greeting elements after slide-up */
-            .header.slide-up .greeting,
-            .header.slide-up .comma,
-            .header.slide-up .we-are,
-            .header.slide-up h1 {
-                opacity: 0;
-                visibility: hidden;
-                height: 0;
-                margin: 0;
-                transition: opacity 0.3s ease, visibility 0.3s ease, height 0.3s ease, margin 0.3s ease;
-            }
-            
-            /* Logo styling */
-            .icon-container {
-                width: 24px;
-                height: 24px;
-                margin-bottom: 15px;
-            }
-            
-            .header.slide-up .icon-container {
-                margin-bottom: 5px;
-            }
-            
-            .greeting-icon {
-                width: 24px;
-                height: 24px;
-            }
-            
-            .nav-brand {
-                width: 24px;
-                height: 24px;
-                opacity: 0;
-            }
-            
-            .header.slide-up .nav-brand {
-                opacity: 1;
-                transition: opacity 0.3s ease;
-            }
-            
-            .nav-brand img {
-                width: 100%;
-                height: 100%;
-            }
-            
-            /* Title wrapper */
-            .title-wrapper {
-                white-space: normal;
-                max-width: 100%;
-            }
-            
-            .header.slide-up .title-wrapper {
-                height: 0;
-                margin: 0;
-            }
-            
-            /* Block display for mobile */
-            h1 {
-                display: block;
-                margin-top: 10px;
-                margin-bottom: 20px;
-                font-size: 32px !important; /* Force initial size to prevent flash */
-            }
-            
-            h1.move-final {
-                transform: none;
-                font-size: 32px;
-                display: block;
-                margin-bottom: 20px;
-            }
-            
-            /* Tagline positioning */
-            .tagline-wrapper {
-                margin-bottom: 20px;
-                margin-top: 0;
-                position: relative;
-            }
-            
-            .header.slide-up .tagline-wrapper {
-                margin: 0;
-            }
-            
-            .typewriter-text {
-                white-space: normal;
-            }
-            
-            /* Services inherit flexbox behavior on mobile too */
-            
-            .service {
-                padding: 0 20px;
-            }
-            
-            .service-inner {
-                flex-direction: row;
-                text-align: left;
-                gap: 20px;
-                align-items: flex-start;
-            }
-            
-            .service-number {
-                font-size: 32px;
-                flex-shrink: 0;
-            }
-            
-            .service-content {
-                flex: 1;
-            }
-            
-            .service-title {
-                font-size: 20px;
-                margin-bottom: 5px;
-            }
-            
-            .service-desc {
-                font-size: 13px;
-                line-height: 1.4;
-            }
-            
-            .theme-toggle {
-                top: 20px;
-                right: 20px;
-                padding: 6px 16px;
-                font-size: 13px;
-            }
-            
-            /* Adjust theme toggle to align with smaller logo */
-            .header.slide-up ~ .theme-toggle {
-                padding: 5px 12px;
-                font-size: 11px;
-            }
-            
-            .header.slide-up ~ .theme-toggle svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        /* Small Mobile (max-width: 480px) */
-        @media (max-width: 480px) {
-            .header {
-                padding: 30px 20px;
-                min-height: 100vh;
-            }
-            
-            .header.slide-up {
-                min-height: 42vh;
-                padding: 25px 20px;
-            }
-            
-            .icon-container {
-                width: 30px;
-                height: 30px;
-                margin-bottom: 15px;
-            }
-            
-            .header.slide-up .icon-container {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .greeting, .comma, .we-are, h1 {
-                font-size: 18px;
-            }
-            
-            h1.move-final {
-                font-size: 32px;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 36px;
-            }
-            
-            .subtitle {
-                font-size: 13px;
-            }
-            
-            /* Even bigger tagline on smaller screens */
-            .header.slide-up .subtitle {
-                font-size: 22px;
-            }
-            
-            .services.expanded {
-                height: 58vh;
+            .animate .header-wrapper {
+                height: calc(100vh - 450px);
             }
             
             .service {
-                padding: 0 15px;
-            }
-            
-            .service-number {
-                font-size: 36px;
-            }
-            
-            .service-title {
-                font-size: 22px;
-            }
-            
-            .service-desc {
-                font-size: 12px;
-            }
-        }
-
-
-        /* Very Small Mobile (max-width: 375px) */
-        @media (max-width: 375px) {
-            .header.slide-up {
-                min-height: 38vh;
-            }
-            
-            .greeting, .comma, .we-are, h1 {
-                font-size: 16px;
-            }
-            
-            h1.move-final {
-                font-size: 28px;
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: 32px;
-            }
-            
-            .subtitle {
-                font-size: 12px;
-            }
-            
-            .service-number {
-                font-size: 32px;
-            }
-            
-            .service-title {
-                font-size: 20px;
-            }
-            
-            .service-desc {
-                font-size: 11px;
-            }
-            
-            .theme-toggle {
-                padding: 5px 12px;
-                font-size: 12px;
-            }
-            
-            .theme-toggle svg {
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        /* Large Desktop (min-width: 1440px) */
-        @media (min-width: 1440px) {
-            .header {
-                padding: 100px;
-            }
-            
-            .header.slide-up {
-                padding: 80px 100px;
-            }
-            
-            .header-content {
-                max-width: 1400px;
-            }
-            
-            .service {
-                padding: 0 100px;
-            }
-            
-            h1.move-final {
-                transform: translateX(calc(-100vw + 100px));
-            }
-        }
-
-        /* Very Large Desktop (min-width: 1920px) */
-        @media (min-width: 1920px) {
-            .header {
-                padding: 120px;
-            }
-            
-            .header.slide-up {
-                padding: 100px 120px;
-            }
-            
-            .header-content {
-                max-width: 1600px;
-            }
-            
-            .icon-container {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .header.slide-up .icon-container {
-                width: 110px;
-                height: 110px;
-            }
-            
-            h1 {
-                font-size: clamp(40px, 4vw, 80px);
-            }
-            
-            h1.move-final {
-                transform: translateX(calc(-100vw + 120px));
-                font-size: clamp(80px, 8vw, 160px);
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: clamp(120px, 10vw, 180px);
-            }
-            
-            .subtitle {
-                font-size: 28px;
-            }
-            
-            .service {
-                padding: 0 120px;
-            }
-            
-            .service-number {
-                font-size: 140px;
-            }
-            
-            .service-title {
-                font-size: 56px;
-            }
-            
-            .service-desc {
-                font-size: 18px;
-            }
-        }
-
-        /* Landscape orientation adjustments */
-        @media (max-height: 600px) and (orientation: landscape) {
-            .header {
-                min-height: 100vh;
-            }
-            
-            .header.slide-up {
-                min-height: 40vh;
-            }
-            
-            
-            .service-inner {
-                gap: 30px;
+                padding: 30px 60px;
+                min-height: 150px;
             }
             
             .service-number {
                 font-size: 80px;
             }
-        }
-        
-        /* Very short screens - hide header entirely */
-        @media (max-height: 700px) {
-            .header.slide-up {
-                display: none;
-            }
-            
-            .services.expanded {
-                height: 100vh;
-            }
-            
-            .service-inner {
-                gap: 30px;
-                align-items: center;
-            }
-            
-            .service-number {
-                font-size: 48px;
-                min-width: 80px;
-                text-align: center;
-            }
             
             .service-title {
-                font-size: 28px;
-                margin-bottom: 5px;
-            }
-            
-            .service-desc {
-                font-size: 13px;
-                line-height: 1.3;
-            }
-        }
-        
-        /* Wide but short screens */
-        @media (max-height: 700px) and (min-width: 1200px) {
-            .service-inner {
-                max-width: 800px;
-                margin: 0 auto;
-            }
-        }
-        
-        /* Even shorter screens */
-        @media (max-height: 550px) {
-            .service-inner {
-                gap: 20px;
-            }
-            
-            .service-number {
                 font-size: 36px;
-                min-width: 60px;
+            }
+        }
+        
+        /* Desktop - different behavior */
+        @media (min-width: 1200px) {
+            .fixed-icon {
+                top: 40px;
+                left: 80px;
+                width: 48px;
+                height: 48px;
+            }
+
+            .container {
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                position: relative;
+            }
+            
+            .header-wrapper {
+                height: 100vh; /* Full height initially */
+                display: flex;
+                align-items: center; /* START centered */
+                justify-content: flex-start;
+                transition: height 0.8s ease;
+                position: relative;
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 500px); /* Shrink to accommodate services */
+                transition-delay: 2.1s;
+            }
+            
+            .main-text {
+                font-size: 48px;
+                text-align: left;
+                max-width: 1200px;
+                padding: 0 80px;
+                transition: transform 0.8s ease; /* Remove font-size transition */
+            }
+            
+
+            .intro-part {
+                margin-bottom: 40px;
+            }
+
+            .tagline-part {
+                margin-bottom: 80px; /* Space below tagline */
+                font-size: inherit; /* Use parent font size */
+            }
+            
+            /* Scale tagline with main text */
+            .font-scale .tagline-part {
+                font-size: 60px; /* Proportional to 72px main text */
+                transition: font-size 0.8s ease;
+            }
+
+            /* On desktop, increase font size after intro fades */
+            .animate .main-text {
+                font-size: 48px; /* Keep initial size */
+                padding: 0 80px;
+            }
+            
+            /* Apply font size change with delay */
+            .font-scale .main-text {
+                font-size: 72px;
+                transition: font-size 0.8s ease;
+            }
+            
+            /* Prevent icon from inheriting the translateY */
+            .animate .icon-container {
+                transform-origin: center;
+            }
+
+            /* Keep tagline in place during services animation */
+            /* Keep tagline in place initially */
+            .animate .tagline-part {
+                /* Will be moved with transform */
+            }
+            
+            /* Tagline stays in natural flow */
+            .services-complete .tagline-part {
+                /* No special positioning needed */
+            }
+            
+            /* Keep intro space but invisible */
+            .services-complete .intro-part {
+                visibility: hidden;
+                /* Keep the space to prevent jump */
+            }
+
+            /* Services stay anchored */
+            .services {
+                /* Already positioned fixed from mobile */
+            }
+            
+            .animate .services {
+                height: 500px; /* Taller on desktop */
+            }
+            
+            /* Move line to match services position */
+            .animate .divider-line {
+                bottom: 50vh;
+            }
+
+            .service {
+                padding: 40px 80px; /* Add vertical padding on desktop */
+                min-height: 200px; /* Ensure minimum height */
+            }
+            
+            .service-inner {
+                gap: 50px;
+                max-width: 1400px;
+            }
+            
+            .service-number {
+                font-size: 120px;
             }
             
             .service-title {
-                font-size: 22px;
-                margin-bottom: 3px;
+                font-size: 48px;
+                margin-bottom: 10px;
             }
             
             .service-desc {
-                font-size: 11px;
-                line-height: 1.2;
+                font-size: 16px;
+                max-width: 600px;
+            }
+            
+            .fixed-logo {
+                top: 50px;
+                left: 77px;
+                width: 48px;
+                height: 48px;
+            }
+            
+            .theme-toggle {
+                top: 50px;
+                right: 40px;
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 1400px) {
+            .animate .services {
+                height: 600px; /* Even taller on XL screens */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 600px); /* Adjust for taller services */
             }
             
             .service {
-                padding: 0 30px;
-            }
-            
-            .service-info {
-                max-width: 500px;
+                padding: 60px 100px;
+                min-height: 200px;
             }
         }
-
-        /* Ensure smooth transitions on orientation change */
-        @media (orientation: portrait) {
-            .container {
-                transition: all 0.3s ease;
+        
+        /* Ultra-wide screens */
+        @media (min-height: 1000px) {
+            .animate .services {
+                height: 50vh; /* Use percentage on very tall screens */
             }
         }
-
-        @media (orientation: landscape) {
-            .container {
-                transition: all 0.3s ease;
-            }
-        }
+        
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Animated divider line -->
+    <div class="divider-line"></div>
+    
+    <!-- Fixed logo - hidden initially -->
+    <div class="fixed-logo">
+        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
+    </div>
+    
+    <!-- Theme toggle - hidden initially -->
+    <button class="theme-toggle" id="themeToggle" style="opacity: 0; pointer-events: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <line x1="12" y1="1" x2="12" y2="3"></line>
             <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -1033,110 +758,75 @@
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
             <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <span class="theme-label">Dark</span>
+        <span>Dark</span>
     </button>
 
+    <!-- Main container -->
     <div class="container">
-        <header class="header" id="header">
-            <div class="header-content">
-                <div class="icon-container">
-                    <div class="greeting-icon" id="greetingIcon"></div>
-                    <div class="nav-brand" id="logo">
+        <!-- Header wrapper - will be 50vh after animation -->
+        <div class="header-wrapper">
+            <!-- Combined text -->
+            <div class="main-text">
+                <div class="icon-container" id="iconContainer">
+                    <div class="greeting-icon"></div>
+                    <div class="logo">
                         <img src="logos/new beige streamlined logo.png" alt="Streamlined">
                     </div>
                 </div>
-                
-                <div class="title-wrapper">
-                    <span class="greeting" id="greeting"></span>
-                    <span class="comma">,</span>
-                    <span class="we-are">we are</span>
-                    <h1 id="streamlined">Streamlined<span class="co"></span></h1>
+                <div class="intro-part">
+                    <div>
+                        <span class="greeting">Good evening,</span>
+                        <span class="we-are"> we are </span>
+                        <span class="streamlined">Streamlined</span>
+                    </div>
                 </div>
-                
-                <div class="tagline-wrapper">
-                    <p class="subtitle" id="tagline">
-                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span>
-                    </p>
+                <div class="tagline-part">
+                    We help design-conscious minds streamline how they work and live<span class="with-part"> with...</span>
                 </div>
             </div>
-        </header>
+        </div>
+    
+        <!-- Services inside container -->
+        <div class="services">
+        <div class="service service-1">
+            <div class="service-inner">
+                <div class="service-number">01</div>
+                <div class="service-info">
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                </div>
+            </div>
+        </div>
         
-        <div class="services" id="services">
-            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
-                <div class="service-inner">
-                    <div class="service-number">01</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Talent</h2>
-                        <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
-                    </div>
+        <div class="service service-2">
+            <div class="service-inner">
+                <div class="service-number">02</div>
+                <div class="service-info">
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
                 </div>
             </div>
-            
-            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
-                <div class="service-inner">
-                    <div class="service-number">02</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Interfaces</h2>
-                        <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
-                <div class="service-inner">
-                    <div class="service-number">03</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Platforms</h2>
-                        <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
-                    </div>
+        </div>
+        
+        <div class="service service-3">
+            <div class="service-inner">
+                <div class="service-number">03</div>
+                <div class="service-info">
+                    <h2 class="service-title">Platforms</h2>
+                    <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
                 </div>
             </div>
         </div>
     </div>
+    </div> <!-- Close container -->
 
     <script>
-        // Store the final transform value to prevent recalculation
-        let finalTransform = null;
-        
-        // Theme management
-        const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const sunIcon = themeToggle.querySelector('.sun-icon');
-        const moonIcon = themeToggle.querySelector('.moon-icon');
-        const themeLabel = themeToggle.querySelector('.theme-label');
-
-        // Check for saved theme preference or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            body.classList.add('dark-theme');
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-            themeLabel.textContent = 'Light';
-        }
-
-        // Theme toggle handler
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
-            const isDark = body.classList.contains('dark-theme');
-            
-            // Update icons
-            sunIcon.style.display = isDark ? 'block' : 'none';
-            moonIcon.style.display = isDark ? 'none' : 'block';
-            themeLabel.textContent = isDark ? 'Light' : 'Dark';
-            
-            // Save preference
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
-
-        // Time-based greeting
+        // Set greeting based on time
         function getTimeOfDay() {
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 12) {
                 return {
-                    greeting: 'Good Morning',
+                    greeting: 'Good morning,',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"/>
                         <line x1="12" y1="1" x2="12" y2="3"/>
@@ -1151,7 +841,7 @@
                 };
             } else if (hour >= 12 && hour < 17) {
                 return {
-                    greeting: 'Good Afternoon',
+                    greeting: 'Good afternoon,',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="6"/>
                         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
@@ -1159,118 +849,228 @@
                 };
             } else {
                 return {
-                    greeting: 'Good Evening',
+                    greeting: 'Good evening,',
                     icon: `<svg viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        <path d="M17 9L18 8M19 13L20 12M15 15L16 14" stroke-linecap="round"/>
                     </svg>`
                 };
             }
         }
-
-        // Set greeting
+        
+        // Set greeting and icon
         const timeData = getTimeOfDay();
-        document.getElementById('greeting').textContent = timeData.greeting;
-        document.getElementById('greetingIcon').innerHTML = timeData.icon;
+        document.querySelector('.greeting').textContent = timeData.greeting;
+        document.querySelector('.greeting-icon').innerHTML = timeData.icon;
+        
+        // Flip icon to logo when "we are Streamlined" appears
+        setTimeout(() => {
+            document.getElementById('iconContainer').classList.add('flipped');
+        }, 1500); // This timing matches when "Streamlined" appears
 
-        // Animation sequence
-        window.addEventListener('load', function() {
-            // Handle responsive font sizes on mobile
-            function adjustForMobile() {
-                const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                if (vw < 768) {
-                    // Adjust animation timing for mobile
-                    return 1200;
-                }
-                return 1500;
+        // Start line animation early
+        setTimeout(() => {
+            // Position line at top of services container
+            const services = document.querySelector('.services');
+            if (services) {
+                const servicesRect = services.getBoundingClientRect();
+                const line = document.querySelector('.divider-line');
+                line.style.bottom = (window.innerHeight - servicesRect.top) + 'px';
             }
-
-            const delay = adjustForMobile();
-
-            setTimeout(function() {
-                // Show services container
-                document.getElementById('services').classList.add('show');
-
-                // Icon flip happens when "We are Streamlined" appears
-                setTimeout(() => {
-                    document.getElementById('greetingIcon').classList.add('hide');
-                    document.getElementById('logo').classList.add('show');
-                }, 300);
-
-                // MOVE THE ACTUAL STREAMLINED ELEMENT
-                setTimeout(() => {
-                    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-                    
-                    // Hide greeting elements
-                    document.getElementById('greeting').classList.add('hide');
-                    document.querySelector('.comma').classList.add('hide');
-                    document.querySelector('.we-are').classList.add('hide');
-                    
-                    // On mobile, don't calculate movement - CSS handles it
-                    if (vw > 768) {
-                        // Calculate exact distance for desktop only
-                        const streamlined = document.getElementById('streamlined');
-                        const streamlinedRect = streamlined.getBoundingClientRect();
-                        const headerContent = document.querySelector('.header-content');
-                        const headerRect = headerContent.getBoundingClientRect();
-                        
-                        // Get computed padding for accurate calculation
-                        const headerStyle = window.getComputedStyle(document.querySelector('.header'));
-                        const paddingLeft = parseInt(headerStyle.paddingLeft);
-                        
-                        // Distance to move = current position - target position
-                        const targetX = headerRect.left;
-                        const currentX = streamlinedRect.left;
-                        const moveDistance = targetX - currentX;
-                        
-                        // Store and apply the transform with important flag
-                        finalTransform = `translateX(${moveDistance}px)`;
-                        streamlined.style.setProperty('transform', finalTransform, 'important');
-                    }
-                    
-                    // Add class for font size change
-                    document.getElementById('streamlined').classList.add('move-final');
-                    
-                    // Services appear
-                    document.getElementById('header').classList.add('slide-up');
-                    document.getElementById('services').classList.add('expanded');
-                    document.getElementById('service-1').classList.add('grow');
-                    document.getElementById('service-2').classList.add('grow');
-                    document.getElementById('service-3').classList.add('grow');
-                    
-                    // Recalculate position after animation completes to ensure accuracy
-                    setTimeout(() => {
-                        if (vw > 768 && !finalTransform) {
-                            const streamlined = document.getElementById('streamlined');
-                            const streamlinedRect = streamlined.getBoundingClientRect();
-                            const headerContent = document.querySelector('.header-content');
-                            const headerRect = headerContent.getBoundingClientRect();
-                            
-                            const targetX = headerRect.left;
-                            const currentX = streamlinedRect.left;
-                            const moveDistance = targetX - currentX;
-                            
-                            finalTransform = `translateX(${moveDistance}px)`;
-                            streamlined.style.setProperty('transform', finalTransform, 'important');
-                        }
-                    }, 1500); // After transition completes
-                }, 2800);
+            document.querySelector('.divider-line').style.animation = 'drawLine 1.5s ease-out forwards';
+        }, 3500); // Start 1.3s after tagline appears (was 2500)
+        
+        // Trigger main animation after intro completes
+        setTimeout(() => {
+            document.body.classList.add('animate');
+            
+            // Add font scaling after intro fades
+            setTimeout(() => {
+                document.body.classList.add('font-scale');
+            }, 1300); // After intro fade completes
+            
+            // Track services and tagline
+            const trackPositions = () => {
+                const services = document.querySelector('.services');
+                const container = document.querySelector('.container');
+                const tagline = document.querySelector('.tagline-part');
+                const headerWrapper = document.querySelector('.header-wrapper');
+                const mainText = document.querySelector('.main-text');
                 
-                // NO ACTIVITY AFTER THIS POINT
-            }, delay);
-        });
-
-        // Handle window resize for responsive adjustments
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => {
-                const streamlined = document.getElementById('streamlined');
-                // Only restore the saved transform if we have one and if Streamlined has moved
-                if (streamlined.classList.contains('move-final') && finalTransform) {
-                    streamlined.style.setProperty('transform', finalTransform, 'important');
+                const timestamp = ((Date.now() - animationStartTime) / 1000).toFixed(2);
+                console.log(`\n=== TRACKING @ ${timestamp}s ===`);
+                console.log('Classes:', document.body.className);
+                
+                if (headerWrapper) {
+                    const headerRect = headerWrapper.getBoundingClientRect();
+                    const headerStyle = window.getComputedStyle(headerWrapper);
+                    console.log('Header wrapper:', {
+                        height: headerRect.height + 'px',
+                        top: headerRect.top,
+                        bottom: headerRect.bottom,
+                        alignItems: headerStyle.alignItems,
+                        paddingBottom: headerStyle.paddingBottom,
+                        transition: headerStyle.transition,
+                        transitionDelay: headerStyle.transitionDelay
+                    });
                 }
-            }, 250);
+                
+                if (tagline) {
+                    const taglineRect = tagline.getBoundingClientRect();
+                    const taglineStyle = window.getComputedStyle(tagline);
+                    console.log('Tagline:', {
+                        top: taglineRect.top,
+                        bottom: taglineRect.bottom,
+                        height: taglineRect.height,
+                        marginBottom: taglineStyle.marginBottom,
+                        opacity: taglineStyle.opacity,
+                        fontSize: taglineStyle.fontSize,
+                        distanceFromViewportBottom: window.innerHeight - taglineRect.bottom
+                    });
+                }
+                
+                if (mainText) {
+                    const mainTextRect = mainText.getBoundingClientRect();
+                    const mainTextStyle = window.getComputedStyle(mainText);
+                    console.log('Main text:', {
+                        top: mainTextRect.top,
+                        bottom: mainTextRect.bottom,
+                        fontSize: mainTextStyle.fontSize,
+                        transition: mainTextStyle.transition,
+                        transitionDelay: mainTextStyle.transitionDelay
+                    });
+                }
+                
+                if (services && container) {
+                    const servicesRect = services.getBoundingClientRect();
+                    const servicesStyle = window.getComputedStyle(services);
+                    
+                    console.log('Services:', {
+                        height: services.offsetHeight + 'px',
+                        computedHeight: servicesStyle.height,
+                        top: servicesRect.top,
+                        bottom: servicesRect.bottom,
+                        position: servicesStyle.position,
+                        transition: servicesStyle.transition,
+                        transitionDelay: servicesStyle.transitionDelay,
+                        overflow: servicesStyle.overflow
+                    });
+                    
+                    // Track service rows during expansion
+                    const serviceRows = document.querySelectorAll('.service');
+                    if (serviceRows.length > 0) {
+                        console.log('Service rows visibility:');
+                        serviceRows.forEach((row, i) => {
+                            const rect = row.getBoundingClientRect();
+                            const style = window.getComputedStyle(row);
+                            console.log(`  Row ${i+1}: top=${rect.top}, visible=${rect.top < window.innerHeight && rect.bottom > 0}`);
+                        });
+                    }
+                }
+                
+                // Track any jumps or sudden changes
+                if (window.lastTaglineTop && tagline) {
+                    const currentTop = tagline.getBoundingClientRect().top;
+                    const jump = Math.abs(currentTop - window.lastTaglineTop);
+                    if (jump > 50) {
+                        console.log(`⚠️ TAGLINE JUMP DETECTED: ${jump}px`);
+                    }
+                    window.lastTaglineTop = currentTop;
+                } else if (tagline) {
+                    window.lastTaglineTop = tagline.getBoundingClientRect().top;
+                }
+                
+                console.log('========================\n');
+            };
+            
+            // Add visual debug info on mobile
+            if (window.innerWidth <= 768) {
+                const debugDiv = document.createElement('div');
+                debugDiv.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    font-size: 12px;
+                    z-index: 9999;
+                    font-family: monospace;
+                `;
+                debugDiv.innerHTML = `
+                    vh: ${window.innerHeight}px<br>
+                    vw: ${window.innerWidth}px<br>
+                    <span id="debugInfo"></span>
+                `;
+                document.body.appendChild(debugDiv);
+                
+                // Update debug info
+                const updateDebug = () => {
+                    const services = document.querySelector('.services');
+                    const header = document.querySelector('.header-wrapper');
+                    const info = document.getElementById('debugInfo');
+                    if (services && header && info) {
+                        info.innerHTML = `
+                            header: ${header.offsetHeight}px<br>
+                            services: ${services.offsetHeight}px<br>
+                            total: ${header.offsetHeight + services.offsetHeight}px
+                        `;
+                    }
+                };
+                setInterval(updateDebug, 100);
+            }
+            
+            // Track animation start time
+            const animationStartTime = Date.now();
+            
+            // Track immediately and at intervals
+            trackPositions();
+            const interval = setInterval(trackPositions, 100); // More frequent tracking
+            
+            // Also track at key animation moments
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES STARTING TO EXPAND (2.1s)');
+                trackPositions();
+            }, 2100);
+            
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES-COMPLETE CLASS ADDED (3.5s)');
+                trackPositions();
+            }, 3500);
+            
+            // Stop tracking after animation completes
+            setTimeout(() => clearInterval(interval), 6000);
+            
+            
+            // Add services-complete class for final state
+            setTimeout(() => {
+                console.log('All animations complete');
+                document.body.classList.add('services-complete');
+            }, 3500); // Delay to let services fully expand first
+            
+            // Fade in theme toggle after logo moves to position
+            setTimeout(() => {
+                const toggle = document.getElementById('themeToggle');
+                toggle.style.opacity = '1';
+                toggle.style.pointerEvents = 'auto';
+            }, 3100); // After final animation starts
+        }, 5000); // Increased from 3500 to add more delay after tagline
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Set initial theme
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         });
     </script>
 </body>
