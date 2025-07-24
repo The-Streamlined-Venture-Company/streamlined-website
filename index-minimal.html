@@ -106,9 +106,9 @@
         }
 
         /* Fly off animation */
-        /* Move up without fade */
+        /* Move up without fade - distance calculated by JS */
         .animate .icon-container {
-            transform: translateY(-112px);
+            transition: transform 0.8s ease;
         }
 
         /* Mobile-first approach */
@@ -134,26 +134,29 @@
             animation: fadeIn 0.8s 0.5s forwards; 
             font-weight: 300;
             letter-spacing: -0.02em;
+            color: #241e20;
         }
         .we-are { 
             opacity: 0; 
             animation: fadeIn 0.8s 1.0s forwards; 
-            font-weight: 700;
-            letter-spacing: -0.04em;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #241e20;
         }
         .streamlined { 
             opacity: 0; 
             animation: fadeIn 0.8s 1.5s forwards; 
-            font-weight: 700;
-            letter-spacing: -0.04em;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: #241e20;
         }
 
         .tagline-part {
             opacity: 0;
             animation: fadeIn 0.8s 2.2s forwards;
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            color: var(--text-secondary);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: #241e20;
         }
 
         .with-part {
@@ -488,6 +491,15 @@
                 right: 40px;
             }
         }
+        
+        /* Extra large screens */
+        @media (min-width: 1400px) {
+            .animate .tagline-part {
+                font-size: clamp(48px, 4vw, 72px);
+                line-height: 1.1;
+            }
+        }
+        
     </style>
 </head>
 <body>
@@ -623,6 +635,33 @@
         
         // Trigger main animation after intro completes
         setTimeout(() => {
+            // Position logo 20px from top of viewport
+            const iconContainer = document.getElementById('iconContainer');
+            
+            if (iconContainer) {
+                const iconRect = iconContainer.getBoundingClientRect();
+                const iconHeight = iconRect.height;
+                const currentTop = iconRect.top;
+                const targetTop = 50; // 50px from top of viewport
+                
+                // Calculate move distance, but ensure final position keeps entire logo visible
+                let moveDistance = currentTop - targetTop;
+                
+                // Ensure we don't move so much that any part of the logo goes off screen
+                // The top of the logo should never be less than 0
+                if (currentTop - moveDistance < 0) {
+                    moveDistance = currentTop; // This will place top edge at 0
+                }
+                
+                // Only move if we need to move up
+                if (moveDistance > 0) {
+                    // Preserve the flip rotation while adding the vertical translation
+                    const isFlipped = iconContainer.classList.contains('flipped');
+                    const rotateY = isFlipped ? '0deg' : '180deg';
+                    iconContainer.style.transform = `translateY(-${moveDistance}px) rotateY(${rotateY})`;
+                }
+            }
+            
             document.body.classList.add('animate');
             
             // Fade in theme toggle after logo moves to position
