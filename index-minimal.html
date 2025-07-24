@@ -170,8 +170,7 @@
         /* Fade out intro elegantly with logo */
         .animate .intro-part {
             opacity: 0;
-            transform: translateY(-50px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transition: opacity 0.8s ease;
         }
 
         /* On mobile, main-text just stays in place */
@@ -187,7 +186,7 @@
 
         .animate .services {
             height: 55vh;
-            transition-delay: 0.8s; /* Wait for line to almost finish */
+            transition-delay: 1.5s; /* Increased delay for slower pacing */
         }
 
         .service {
@@ -228,13 +227,13 @@
             width: 100%;
             opacity: 0;
             transform: scale(0.95);
-            transition: all 0.8s ease;
+            transition: all 0.4s ease;
         }
         
         .animate .service-inner {
             opacity: 1;
             transform: scale(1);
-            transition-delay: 1.1s; /* After services slide up */
+            transition-delay: 0.5s; /* Appear much earlier, during service expansion */
         }
         
         .service-number {
@@ -433,7 +432,7 @@
                 position: absolute;
                 top: 25vh;
                 transform: translateY(-50%);
-                font-size: 60px;
+                font-size: 72px;
                 padding: 0 80px;
                 width: 100%;
             }
@@ -631,29 +630,22 @@
         // Start line animation early
         setTimeout(() => {
             document.querySelector('.divider-line').style.animation = 'drawLine 1.5s ease-out forwards';
-        }, 2500); // Start 1s before main animation
+        }, 3500); // Start 1.3s after tagline appears (was 2500)
         
         // Trigger main animation after intro completes
         setTimeout(() => {
-            // Position logo 20px from top of viewport
+            // Position logo 50px from top of viewport
             const iconContainer = document.getElementById('iconContainer');
             
             if (iconContainer) {
                 const iconRect = iconContainer.getBoundingClientRect();
-                const iconHeight = iconRect.height;
                 const currentTop = iconRect.top;
                 const targetTop = 50; // 50px from top of viewport
                 
-                // Calculate move distance, but ensure final position keeps entire logo visible
+                // Calculate how far to move
                 let moveDistance = currentTop - targetTop;
                 
-                // Ensure we don't move so much that any part of the logo goes off screen
-                // The top of the logo should never be less than 0
-                if (currentTop - moveDistance < 0) {
-                    moveDistance = currentTop; // This will place top edge at 0
-                }
-                
-                // Only move if we need to move up
+                // Only move if we're below the target
                 if (moveDistance > 0) {
                     // Preserve the flip rotation while adding the vertical translation
                     const isFlipped = iconContainer.classList.contains('flipped');
@@ -670,7 +662,7 @@
                 toggle.style.opacity = '1';
                 toggle.style.pointerEvents = 'auto';
             }, 800); // 800ms matches the logo movement duration
-        }, 3500);
+        }, 5000); // Increased from 3500 to add more delay after tagline
         
         // Theme toggle functionality
         const themeToggle = document.getElementById('themeToggle');
