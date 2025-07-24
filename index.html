@@ -181,6 +181,61 @@
             line-height: 1.1;
         }
         
+        /* Squiggle underline for design-conscious */
+        .annotate-design {
+            position: relative;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+        
+        .annotate-design::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 6px;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='6' viewBox='0 0 100 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 3C2.5 3 2.5 1 5 1C7.5 1 7.5 3 10 3C12.5 3 12.5 1 15 1C17.5 1 17.5 3 20 3C22.5 3 22.5 1 25 1C27.5 1 27.5 3 30 3C32.5 3 32.5 1 35 1C37.5 1 37.5 3 40 3C42.5 3 42.5 1 45 1C47.5 1 47.5 3 50 3C52.5 3 52.5 1 55 1C57.5 1 57.5 3 60 3C62.5 3 62.5 1 65 1C67.5 1 67.5 3 70 3C72.5 3 72.5 1 75 1C77.5 1 77.5 3 80 3C82.5 3 82.5 1 85 1C87.5 1 87.5 3 90 3C92.5 3 92.5 1 95 1C97.5 1 97.5 3 100 3' stroke='%23e25323' stroke-width='3'/%3E%3C/svg%3E");
+            background-repeat: repeat-x;
+            background-size: 20px 6px;
+            opacity: 0;
+            animation: fadeIn 0.6s 3.2s forwards;
+        }
+        
+        /* Highlight effect for work and live */
+        .annotate-work,
+        .annotate-live {
+            position: relative;
+            display: inline-block;
+            padding: 0 6px;
+        }
+        
+        .annotate-work::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px;
+            background: rgba(90, 139, 173, 0.2);
+            border-radius: 4px;
+            z-index: -1;
+            transform: scale(0);
+            animation: scaleIn 0.4s 3.4s forwards;
+        }
+        
+        .annotate-live::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px;
+            background: rgba(242, 125, 24, 0.2);
+            border-radius: 4px;
+            z-index: -1;
+            transform: scale(0);
+            animation: scaleIn 0.4s 3.6s forwards;
+        }
+        
+        @keyframes scaleIn {
+            to { transform: scale(1); }
+        }
+        
         /* Dynamic tagline sizing based on available space */
         @media (max-width: 768px) {
             .tagline-part {
@@ -725,6 +780,12 @@
                 padding: 60px 100px;
                 min-height: 200px;
             }
+            
+            /* Larger tagline for XL screens */
+            .font-scale .tagline-part {
+                font-size: 80px;
+            }
+            
         }
         
         /* Ultra-wide screens */
@@ -781,7 +842,7 @@
                     </div>
                 </div>
                 <div class="tagline-part">
-                    We help design-conscious minds streamline how they work and live<span class="with-part"> with...</span>
+                    We help <span class="annotate-design">design-conscious</span> minds streamline how they <span class="annotate-work">work</span> and <span class="annotate-live">live</span><span class="with-part"> with...</span>
                 </div>
             </div>
         </div>
