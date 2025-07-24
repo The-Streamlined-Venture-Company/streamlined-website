@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<!--
+SQUARESPACE SETUP INSTRUCTIONS:
+1. This version uses a temporary logo from Imgur
+2. Add this entire code to a Code Block on your page
+3. All CSS and JavaScript are included inline - no external dependencies
+4. If layout issues occur, add to Custom CSS: .sqs-block-code { padding: 0 !important; }
+5. To use your own logo later, replace the img src URL
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined Co.</title>
+    <style>
+        /* Squarespace-specific resets */
+        .sqs-block-code .sqs-block-content {
+            padding: 0 !important;
+        }
+        
+        /* Reset all elements within our component */
+        .streamlined-container,
+        .streamlined-container * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS Variables for theming */
+        :root {
+            /* Light theme (default) */
+            --bg-primary: #e7e4df;
+            --text-primary: #241e20;
+            --text-secondary: rgba(36, 30, 32, 0.8);
+            --logo-filter: invert(1);
+            --service-border: rgba(255, 255, 255, 0.15);
+            --service-hover-bg: #e7e4df;
+            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
+            --theme-toggle-border: rgba(36, 30, 32, 0.2);
+            --theme-toggle-color: #241e20;
+            --divider-color: rgba(36, 30, 32, 0.3);
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            --bg-primary: #141414;
+            --text-primary: #e7e4df;
+            --text-secondary: rgba(231, 228, 223, 0.8);
+            --logo-filter: none;
+            --service-border: rgba(231, 228, 223, 0.08);
+            --service-hover-bg: #181818;
+            --theme-toggle-bg: rgba(231, 228, 223, 0.1);
+            --theme-toggle-border: rgba(231, 228, 223, 0.2);
+            --theme-toggle-color: #e7e4df;
+            --divider-color: rgba(231, 228, 223, 0.3);
+            background-color: #141414 !important;
+        }
+        
+        /* Target all possible Squarespace containers in dark mode */
+        body.dark-theme,
+        body.dark-theme .sqs-block-code,
+        body.dark-theme .sqs-block-content,
+        body.dark-theme #page,
+        body.dark-theme #content,
+        body.dark-theme .content-wrapper,
+        body.dark-theme .main-content,
+        body.dark-theme section,
+        body.dark-theme article,
+        body.dark-theme header,
+        body.dark-theme footer,
+        body.dark-theme .container,
+        body.dark-theme .streamlined-container {
+            background-color: #141414 !important;
+            background: #141414 !important;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+            background: var(--bg-primary) !important;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+        
+        /* Ensure font is applied to all text elements */
+        .greeting, .we-are-streamlined, .tagline-text, .service-title, .service-desc {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif !important;
+        }
+
+        /* Icon container */
+        .icon-container {
+            display: block;
+            width: 45px;
+            height: 45px;
+            margin-bottom: 15px;
+            position: relative;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+            transform-style: preserve-3d;
+        }
+
+        .greeting-icon,
+        .logo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            transition: transform 0.6s ease;
+        }
+        
+        .greeting-icon {
+            opacity: 0;
+            animation: fadeIn 0.8s 0.3s forwards;
+            transform: rotateY(0deg);
+        }
+
+        .greeting-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--text-primary);
+            fill: none;
+            stroke-width: 1.5;
+        }
+        
+        .logo {
+            transform: rotateY(180deg);
+        }
+        
+        .logo img {
+            width: 100%;
+            height: 100%;
+            filter: var(--logo-filter);
+            display: block;
+        }
+        
+        /* Flip animation */
+        .icon-container.flipped .greeting-icon {
+            transform: rotateY(-180deg);
+        }
+        
+        .icon-container.flipped .logo {
+            transform: rotateY(0deg);
+        }
+
+        /* Fade out icon with intro */
+        .animate .icon-container {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            transition-delay: 0.5s; /* Same as intro fade */
+        }
+        
+        /* Icon already faded out */
+        .services-complete .icon-container {
+            /* Already hidden */
+        }
+
+        /* Ensure our container takes full space */
+        .streamlined-container {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: var(--bg-primary);
+            overflow: hidden;
+        }
+        
+        /* Mobile-first approach */
+        .container {
+            min-height: 100vh;
+            min-height: -webkit-fill-available; /* Better for mobile Safari */
+            height: 100vh;
+            height: -webkit-fill-available;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent scrolling */
+            position: relative; /* For absolute positioning of services */
+            background: var(--bg-primary);
+        }
+        
+        .header-wrapper {
+            height: 100vh; /* Full height initially on mobile too */
+            display: flex;
+            align-items: center; /* START centered */
+            justify-content: center; /* Center horizontally too */
+            transition: height 0.8s ease, opacity 0.8s ease;
+            padding: 40px 0; /* Add vertical padding */
+        }
+
+        /* Combined text container */
+        .main-text {
+            font-size: 32px;
+            line-height: 1.4;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .intro-part {
+            margin-bottom: 20px;
+        }
+
+        .greeting { 
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            opacity: 0;
+            animation: elegantFade 1s 0.5s forwards;
+        }
+        
+        .we-are-streamlined {
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            opacity: 0;
+            animation: elegantFade 1s 1.8s forwards;
+        }
+        
+        /* Elegant fade animation */
+        @keyframes elegantFade {
+            0% {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline-part {
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            color: var(--text-primary);
+            line-height: 1.1;
+            overflow: hidden;
+            margin-bottom: 60px; /* Add default spacing below tagline */
+        }
+        
+        .tagline-text {
+            display: inline;
+            opacity: 0;
+            animation: elegantFade 1.2s 3s forwards;
+        }
+        
+        /* Hand-drawn underline for design-conscious minds */
+        .annotate-design {
+            position: relative;
+            display: inline;
+            border-bottom: 3px solid #e25323;
+            padding-bottom: 2px;
+            opacity: 1;
+        }
+        
+        .annotate-design::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 100%;
+            height: 3px;
+            background: var(--bg-primary);
+            transform-origin: right;
+            animation: revealUnderline 0.8s 4.5s forwards;
+        }
+        
+        @keyframes revealUnderline {
+            to {
+                transform: scaleX(0);
+            }
+        }
+        
+        /* Highlight effect for work and live */
+        .annotate-work,
+        .annotate-live {
+            position: relative;
+            display: inline-block;
+            padding: 0 6px;
+        }
+        
+        .annotate-work::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px;
+            background: rgba(90, 139, 173, 0.2);
+            border-radius: 4px;
+            z-index: -1;
+            transform: scale(0);
+            animation: scaleIn 0.4s 4.7s forwards;
+        }
+        
+        .annotate-live::before {
+            content: '';
+            position: absolute;
+            inset: -2px -6px;
+            background: rgba(242, 125, 24, 0.2);
+            border-radius: 4px;
+            z-index: -1;
+            transform: scale(0);
+            animation: scaleIn 0.4s 4.9s forwards;
+        }
+        
+        @keyframes scaleIn {
+            to { transform: scale(1); }
+        }
+        
+        @keyframes underlineReveal {
+            to {
+                background-position: -100% 100%;
+            }
+        }
+        
+        /* Italic text for streamline */
+        .italic-text {
+            font-style: italic;
+        }
+        
+        /* Dynamic tagline sizing based on available space */
+        @media (max-width: 768px) {
+            .tagline-part {
+                font-size: 24px; /* Base mobile size */
+                line-height: 1.2;
+            }
+            
+            /* When header has more space, increase font */
+            .animate .tagline-part {
+                /* Scale font based on header height */
+                font-size: clamp(24px, 5vw, 32px);
+            }
+        }
+        
+        /* Specific adjustments for header space */
+        @media (max-width: 768px) and (min-height: 600px) {
+            .animate .tagline-part {
+                font-size: 28px; /* 200px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 700px) {
+            .animate .tagline-part {
+                font-size: 30px; /* 295px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 850px) {
+            .animate .tagline-part {
+                font-size: 32px; /* 250px+ header space */
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .tagline-part {
+                line-height: 1.2; /* More breathing room */
+            }
+        }
+
+        .with-part {
+            transition: opacity 0.5s ease;
+        }
+
+        .animate .with-part {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transition-delay: 2.1s; /* Fade when services appear */
+        }
+
+        /* Fade out intro early in the animation */
+        .animate .intro-part {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            transition-delay: 0.5s; /* Start fading 0.5s after animate class */
+        }
+
+        /* Mobile header needs to shrink too */
+        .animate .header-wrapper {
+            height: calc(100vh - 300px); /* Match smaller services height */
+            height: calc(100dvh - 300px); /* Dynamic viewport height for mobile */
+            transition-delay: 2.1s;
+            min-height: 100px; /* Smaller minimum - prioritize services */
+        }
+        
+        /* If not enough space, hide header and let services take over */
+        @media (max-height: 500px) {
+            .animate .header-wrapper {
+                height: 0;
+                opacity: 0;
+                overflow: hidden;
+                min-height: 0;
+            }
+            
+            .animate .services {
+                height: 100vh; /* Services take full screen */
+            }
+        }
+
+        /* Services - anchored to bottom */
+        .services {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            height: 0;
+            overflow: hidden;
+            transition: height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate .services {
+            height: 300px; /* Smaller height on mobile */
+            transition-delay: 2.1s;
+        }
+        
+        /* Prioritize services on all screens */
+        @media (min-height: 600px) {
+            .animate .services {
+                height: 400px; /* Bigger services */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 400px);
+                height: calc(100dvh - 400px);
+                min-height: 150px;
+            }
+        }
+        
+        /* Your iPhone 14 Pro Max range - balance header and services */
+        @media (min-height: 700px) and (max-width: 768px) {
+            .animate .services {
+                height: 380px; /* Reduced to give more space to header */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 380px);
+                height: calc(100dvh - 380px);
+                min-height: 300px; /* Ensure enough space for tagline */
+            }
+            
+            /* Adjust padding for smaller services */
+            .service {
+                padding: 12px 20px !important;
+            }
+            
+            .service-inner {
+                padding: 8px !important;
+            }
+            
+            /* Ensure tagline has breathing room */
+            .animate .tagline-part {
+                margin-bottom: 40px;
+            }
+        }
+        
+        /* Very tall phones get even more */
+        @media (min-height: 850px) and (max-width: 768px) {
+            .animate .services {
+                height: 500px; /* Reduced from 600px to prevent overflow */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 500px);
+                height: calc(100dvh - 500px);
+            }
+        }
+        
+        /* Extra tall viewports (like yours at 1310px) */
+        @media (min-height: 1200px) {
+            .animate .services {
+                height: 40vh; /* Use percentage for very tall screens */
+                max-height: 600px;
+            }
+            
+            .animate .header-wrapper {
+                height: 60vh;
+            }
+        }
+
+        .service {
+            display: flex;
+            align-items: center;
+            padding: 15px; /* Less padding on mobile */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1 1 33.333%; /* Each service takes equal height */
+            min-height: 0; /* Allow shrinking */
+        }
+        
+        /* Smaller screens get less padding */
+        @media (max-height: 600px) {
+            .service {
+                padding: 10px 15px;
+            }
+        }
+        
+        /* Remove borders - we'll use animated line instead */
+
+        .service-1 { 
+            background-color: #e25323;
+            /* background-image removed for Squarespace */
+        }
+        .service-2 { 
+            background-color: #5a8bad;
+            /* background-image removed for Squarespace */
+        }
+        .service-3 { 
+            background-color: #f27d18;
+            /* background-image removed for Squarespace */
+        }
+        
+        /* Services already have their natural height */
+        
+        .service-inner {
+            display: flex;
+            gap: 20px; /* Reasonable gap */
+            align-items: center;
+            width: 100%;
+            padding: 15px; /* Better padding */
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.4s ease;
+        }
+        
+        .animate .service-inner {
+            opacity: 1;
+            transform: scale(1);
+            transition-delay: 2.6s; /* After services start expanding */
+        }
+        
+        .service-number {
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1;
+            color: #e7e4df;
+            transition: all 0.5s ease;
+        }
+        
+        .service-info {
+            flex: 1;
+        }
+        
+        .service-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 5px;
+            color: #e7e4df;
+            transition: all 0.3s ease;
+        }
+        
+        .service-desc {
+            font-size: 13px;
+            line-height: 1.4;
+            color: #e7e4df;
+            opacity: 0.85;
+        }
+        
+        /* Service hover effects - Light mode */
+        .service:hover {
+            filter: brightness(0.9);
+            transform: scale(1.02);
+            transition: all 0.3s ease;
+        }
+        
+        .service:hover .service-number {
+            transform: translateX(-5px);
+            transition: transform 0.3s ease;
+        }
+        
+        .service:hover .service-title {
+            transform: translateX(5px);
+            transition: transform 0.3s ease;
+        }
+        
+        /* Dark theme service colors */
+        body.dark-theme .service-1 {
+            background-color: #0A0A0A;
+        }
+        
+        body.dark-theme .service-2 {
+            background-color: #1F1F1F;
+        }
+        
+        body.dark-theme .service-3 {
+            background-color: #2B2B2B;
+        }
+        
+        /* Dark theme keeps original hover effect */
+        body.dark-theme .service:hover {
+            background-color: var(--service-hover-bg) !important;
+            filter: none;
+            transform: none;
+        }
+        
+        body.dark-theme .service:hover .service-title,
+        body.dark-theme .service:hover .service-desc,
+        body.dark-theme .service:hover .service-number {
+            color: #e7e4df;
+            transform: none;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        
+        @keyframes drawLine {
+            from {
+                transform: scaleX(0);
+            }
+            to {
+                transform: scaleX(1);
+            }
+        }
+        
+        /* Animated divider line */
+        .divider-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--divider-color);
+            transform: scaleX(0);
+            transform-origin: left center;
+            z-index: 1000;
+            transition: bottom 1s ease;
+        }
+        
+        .animate .divider-line {
+            /* Will be positioned by JavaScript based on services location */
+        }
+        
+        /* Fixed logo at top */
+        .fixed-logo {
+            position: fixed;
+            top: 48px; /* Align with toggle button */
+            left: 17px;
+            width: 45px;
+            height: 45px;
+            z-index: 100;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        
+        .fixed-logo img {
+            width: 100%;
+            height: 100%;
+            filter: var(--logo-filter);
+        }
+        
+        .animate .fixed-logo {
+            opacity: 1;
+            transition-delay: 1.3s; /* Fade in after icon fades out (0.5s + 0.8s) */
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 48px;
+            right: 20px;
+            padding: 8px 16px;
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--theme-toggle-border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--theme-toggle-color);
+            transition: all 0.3s ease;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Medium screens */
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .main-text {
+                font-size: 40px;
+                padding: 0 60px;
+            }
+            
+            .animate .main-text {
+                font-size: 56px; /* Smaller than desktop */
+            }
+            
+            /* Tagline scales with available space */
+            .animate .tagline-part {
+                font-size: 48px; /* Larger for medium screens */
+            }
+            
+            .animate .services {
+                height: 450px; /* Slightly shorter */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 450px);
+            }
+            
+            .service {
+                padding: 30px 60px;
+                min-height: 150px;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+        
+        /* Desktop - different behavior */
+        @media (min-width: 1200px) {
+            .fixed-icon {
+                top: 40px;
+                left: 80px;
+                width: 48px;
+                height: 48px;
+            }
+
+            .container {
+                padding: 0;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                position: relative;
+            }
+            
+            .header-wrapper {
+                height: 100vh; /* Full height initially */
+                display: flex;
+                align-items: center; /* START centered */
+                justify-content: flex-start;
+                transition: height 0.8s ease;
+                position: relative;
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 500px); /* Shrink to accommodate services */
+                transition-delay: 2.1s;
+            }
+            
+            .main-text {
+                font-size: 48px;
+                text-align: left;
+                max-width: 1200px;
+                padding: 0 80px;
+                transition: transform 0.8s ease; /* Remove font-size transition */
+            }
+            
+
+            .intro-part {
+                margin-bottom: 40px;
+            }
+
+            .tagline-part {
+                margin-bottom: 80px; /* Space below tagline */
+                font-size: inherit; /* Use parent font size */
+            }
+            
+            /* Scale tagline with main text */
+            .font-scale .tagline-part {
+                font-size: 60px; /* Proportional to 72px main text */
+                transition: font-size 0.8s ease;
+            }
+
+            /* On desktop, increase font size after intro fades */
+            .animate .main-text {
+                font-size: 48px; /* Keep initial size */
+                padding: 0 80px;
+            }
+            
+            /* Apply font size change with delay */
+            .font-scale .main-text {
+                font-size: 72px;
+                transition: font-size 0.8s ease;
+            }
+            
+            /* Prevent icon from inheriting the translateY */
+            .animate .icon-container {
+                transform-origin: center;
+            }
+
+            /* Keep tagline in place during services animation */
+            /* Keep tagline in place initially */
+            .animate .tagline-part {
+                /* Will be moved with transform */
+            }
+            
+            /* Tagline stays in natural flow */
+            .services-complete .tagline-part {
+                /* No special positioning needed */
+            }
+            
+            /* Keep intro space but invisible */
+            .services-complete .intro-part {
+                visibility: hidden;
+                /* Keep the space to prevent jump */
+            }
+
+            /* Services stay anchored */
+            .services {
+                /* Already positioned fixed from mobile */
+            }
+            
+            .animate .services {
+                height: 500px; /* Taller on desktop */
+            }
+            
+            /* Move line to match services position */
+            .animate .divider-line {
+                bottom: 50vh;
+            }
+
+            .service {
+                padding: 40px 80px; /* Add vertical padding on desktop */
+                min-height: 200px; /* Ensure minimum height */
+            }
+            
+            .service-inner {
+                gap: 50px;
+                max-width: 1400px;
+            }
+            
+            .service-number {
+                font-size: 120px;
+            }
+            
+            .service-title {
+                font-size: 48px;
+                margin-bottom: 10px;
+            }
+            
+            .service-desc {
+                font-size: 16px;
+                max-width: 600px;
+            }
+            
+            .fixed-logo {
+                top: 50px;
+                left: 77px;
+                width: 48px;
+                height: 48px;
+            }
+            
+            .theme-toggle {
+                top: 50px;
+                right: 40px;
+            }
+        }
+        
+        /* Extra large screens */
+        @media (min-width: 1400px) {
+            .animate .services {
+                height: 600px; /* Even taller on XL screens */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 600px); /* Adjust for taller services */
+            }
+            
+            .service {
+                padding: 60px 100px;
+                min-height: 200px;
+            }
+            
+            /* Larger tagline for XL screens */
+            .font-scale .tagline-part {
+                font-size: 80px;
+            }
+            
+        }
+        
+        /* Ultra-wide screens */
+        @media (min-height: 1000px) {
+            .animate .services {
+                height: 50vh; /* Use percentage on very tall screens */
+            }
+        }
+        
+    </style>
+</head>
+<body>
+<div class="streamlined-container">
+    <!-- Animated divider line -->
+    <div class="divider-line"></div>
+    
+    <!-- Fixed logo - hidden initially -->
+    <div class="fixed-logo">
+        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" style="width: 100%; height: 100%; object-fit: contain;">
+    </div>
+    
+    <!-- Theme toggle - hidden initially -->
+    <button class="theme-toggle" id="themeToggle" style="opacity: 0; pointer-events: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span>Dark</span>
+    </button>
+
+    <!-- Main container -->
+    <div class="container">
+        <!-- Header wrapper - will be 50vh after animation -->
+        <div class="header-wrapper">
+            <!-- Combined text -->
+            <div class="main-text">
+                <div class="icon-container" id="iconContainer">
+                    <div class="greeting-icon"></div>
+                    <div class="logo">
+                        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                </div>
+                <div class="intro-part">
+                    <div>
+                        <span class="greeting">Good evening,</span>
+                        <span class="we-are-streamlined"> we are Streamlined</span>
+                    </div>
+                </div>
+                <div class="tagline-part">
+                    <span class="tagline-text">We help <span class="annotate-design">design-conscious</span> minds <span class="italic-text">streamline</span> how they <span class="annotate-work">work</span> and <span class="annotate-live">live</span><span class="with-part"> with...</span></span>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Services inside container -->
+        <div class="services">
+        <div class="service service-1">
+            <div class="service-inner">
+                <div class="service-number">01</div>
+                <div class="service-info">
+                    <h2 class="service-title">Talent</h2>
+                    <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service service-2">
+            <div class="service-inner">
+                <div class="service-number">02</div>
+                <div class="service-info">
+                    <h2 class="service-title">Interfaces</h2>
+                    <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service service-3">
+            <div class="service-inner">
+                <div class="service-number">03</div>
+                <div class="service-info">
+                    <h2 class="service-title">Platforms</h2>
+                    <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div> <!-- Close container -->
+
+    <script>
+        // Set greeting based on time
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) {
+                return {
+                    greeting: 'Good morning,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>`
+                };
+            } else if (hour >= 12 && hour < 17) {
+                return {
+                    greeting: 'Good afternoon,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="6"/>
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>`
+                };
+            } else {
+                return {
+                    greeting: 'Good evening,',
+                    icon: `<svg viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>`
+                };
+            }
+        }
+        
+        // Set greeting and icon
+        const timeData = getTimeOfDay();
+        document.querySelector('.greeting').textContent = timeData.greeting;
+        document.querySelector('.greeting-icon').innerHTML = timeData.icon;
+        
+        // Flip icon after "we are Streamlined" fades in
+        setTimeout(() => {
+            document.getElementById('iconContainer').classList.add('flipped');
+        }, 3000); // After intro animation completes
+        
+
+        // Start line animation early
+        setTimeout(() => {
+            // Position line at top of services container
+            const services = document.querySelector('.services');
+            if (services) {
+                const servicesRect = services.getBoundingClientRect();
+                const line = document.querySelector('.divider-line');
+                line.style.bottom = (window.innerHeight - servicesRect.top) + 'px';
+            }
+            document.querySelector('.divider-line').style.animation = 'drawLine 1.5s ease-out forwards';
+        }, 4500); // Start after tagline appears
+        
+        // Trigger main animation after intro completes
+        setTimeout(() => {
+            document.body.classList.add('animate');
+            
+            // Add font scaling after intro fades
+            setTimeout(() => {
+                document.body.classList.add('font-scale');
+            }, 1300); // After intro fade completes
+            
+            // Track services and tagline
+            const trackPositions = () => {
+                const services = document.querySelector('.services');
+                const container = document.querySelector('.container');
+                const tagline = document.querySelector('.tagline-part');
+                const headerWrapper = document.querySelector('.header-wrapper');
+                const mainText = document.querySelector('.main-text');
+                
+                const timestamp = ((Date.now() - animationStartTime) / 1000).toFixed(2);
+                console.log(`\n=== TRACKING @ ${timestamp}s ===`);
+                console.log('Classes:', document.body.className);
+                
+                if (headerWrapper) {
+                    const headerRect = headerWrapper.getBoundingClientRect();
+                    const headerStyle = window.getComputedStyle(headerWrapper);
+                    console.log('Header wrapper:', {
+                        height: headerRect.height + 'px',
+                        top: headerRect.top,
+                        bottom: headerRect.bottom,
+                        alignItems: headerStyle.alignItems,
+                        paddingBottom: headerStyle.paddingBottom,
+                        transition: headerStyle.transition,
+                        transitionDelay: headerStyle.transitionDelay
+                    });
+                }
+                
+                if (tagline) {
+                    const taglineRect = tagline.getBoundingClientRect();
+                    const taglineStyle = window.getComputedStyle(tagline);
+                    console.log('Tagline:', {
+                        top: taglineRect.top,
+                        bottom: taglineRect.bottom,
+                        height: taglineRect.height,
+                        marginBottom: taglineStyle.marginBottom,
+                        opacity: taglineStyle.opacity,
+                        fontSize: taglineStyle.fontSize,
+                        distanceFromViewportBottom: window.innerHeight - taglineRect.bottom
+                    });
+                }
+                
+                if (mainText) {
+                    const mainTextRect = mainText.getBoundingClientRect();
+                    const mainTextStyle = window.getComputedStyle(mainText);
+                    console.log('Main text:', {
+                        top: mainTextRect.top,
+                        bottom: mainTextRect.bottom,
+                        fontSize: mainTextStyle.fontSize,
+                        transition: mainTextStyle.transition,
+                        transitionDelay: mainTextStyle.transitionDelay
+                    });
+                }
+                
+                if (services && container) {
+                    const servicesRect = services.getBoundingClientRect();
+                    const servicesStyle = window.getComputedStyle(services);
+                    
+                    console.log('Services:', {
+                        height: services.offsetHeight + 'px',
+                        computedHeight: servicesStyle.height,
+                        top: servicesRect.top,
+                        bottom: servicesRect.bottom,
+                        position: servicesStyle.position,
+                        transition: servicesStyle.transition,
+                        transitionDelay: servicesStyle.transitionDelay,
+                        overflow: servicesStyle.overflow
+                    });
+                    
+                    // Track service rows during expansion
+                    const serviceRows = document.querySelectorAll('.service');
+                    if (serviceRows.length > 0) {
+                        console.log('Service rows visibility:');
+                        serviceRows.forEach((row, i) => {
+                            const rect = row.getBoundingClientRect();
+                            const style = window.getComputedStyle(row);
+                            console.log(`  Row ${i+1}: top=${rect.top}, visible=${rect.top < window.innerHeight && rect.bottom > 0}`);
+                        });
+                    }
+                }
+                
+                // Track any jumps or sudden changes
+                if (window.lastTaglineTop && tagline) {
+                    const currentTop = tagline.getBoundingClientRect().top;
+                    const jump = Math.abs(currentTop - window.lastTaglineTop);
+                    if (jump > 50) {
+                        console.log(`⚠️ TAGLINE JUMP DETECTED: ${jump}px`);
+                    }
+                    window.lastTaglineTop = currentTop;
+                } else if (tagline) {
+                    window.lastTaglineTop = tagline.getBoundingClientRect().top;
+                }
+                
+                console.log('========================\n');
+            };
+            
+            // Add visual debug info on mobile
+            if (window.innerWidth <= 768) {
+                const debugDiv = document.createElement('div');
+                debugDiv.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    font-size: 12px;
+                    z-index: 9999;
+                    font-family: monospace;
+                `;
+                debugDiv.innerHTML = `
+                    vh: ${window.innerHeight}px<br>
+                    vw: ${window.innerWidth}px<br>
+                    <span id="debugInfo"></span>
+                `;
+                document.body.appendChild(debugDiv);
+                
+                // Update debug info
+                const updateDebug = () => {
+                    const services = document.querySelector('.services');
+                    const header = document.querySelector('.header-wrapper');
+                    const info = document.getElementById('debugInfo');
+                    if (services && header && info) {
+                        info.innerHTML = `
+                            header: ${header.offsetHeight}px<br>
+                            services: ${services.offsetHeight}px<br>
+                            total: ${header.offsetHeight + services.offsetHeight}px
+                        `;
+                    }
+                };
+                setInterval(updateDebug, 100);
+            }
+            
+            // Track animation start time
+            const animationStartTime = Date.now();
+            
+            // Track immediately and at intervals
+            trackPositions();
+            const interval = setInterval(trackPositions, 100); // More frequent tracking
+            
+            // Also track at key animation moments
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES STARTING TO EXPAND (2.1s)');
+                trackPositions();
+            }, 2100);
+            
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES-COMPLETE CLASS ADDED (3.5s)');
+                trackPositions();
+            }, 3500);
+            
+            // Stop tracking after animation completes
+            setTimeout(() => clearInterval(interval), 6000);
+            
+            
+            // Add services-complete class for final state
+            setTimeout(() => {
+                console.log('All animations complete');
+                document.body.classList.add('services-complete');
+            }, 3500); // Delay to let services fully expand first
+            
+            // Fade in theme toggle after logo moves to position
+            setTimeout(() => {
+                const toggle = document.getElementById('themeToggle');
+                toggle.style.opacity = '1';
+                toggle.style.pointerEvents = 'auto';
+            }, 3100); // After final animation starts
+        }, 5000); // Increased from 3500 to add more delay after tagline
+        
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Function to apply theme to parents
+        const applyThemeToParents = (isDark) => {
+            const applyToParents = (element) => {
+                while (element && element !== document.documentElement) {
+                    if (isDark) {
+                        element.style.backgroundColor = '#141414';
+                        element.style.background = '#141414';
+                    } else {
+                        element.style.backgroundColor = '';
+                        element.style.background = '';
+                    }
+                    element = element.parentElement;
+                }
+            };
+            
+            const container = document.querySelector('.streamlined-container');
+            if (container) {
+                applyToParents(container.parentElement);
+            }
+        };
+        
+        // Set initial theme
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+            // Apply dark theme to parent elements
+            setTimeout(() => applyThemeToParents(true), 100);
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            
+            // Apply theme to parent elements
+            applyThemeToParents(isDark);
+        });
+    </script>
+</div>
+</body>
+</html>
