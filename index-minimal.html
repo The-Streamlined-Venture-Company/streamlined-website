@@ -106,9 +106,11 @@
         }
 
         /* Fly off animation */
-        /* Move up without fade - distance calculated by JS */
+        /* Fade up and out */
         .animate .icon-container {
-            transition: transform 0.8s ease;
+            transform: translateY(-100px);
+            opacity: 0;
+            transition: transform 0.8s ease, opacity 0.8s ease;
         }
 
         /* Mobile-first approach */
@@ -157,6 +159,7 @@
             font-weight: 700;
             letter-spacing: -0.04em;
             color: #241e20;
+            line-height: 1.1;
         }
 
         .with-part {
@@ -344,18 +347,24 @@
         /* Fixed logo at top */
         .fixed-logo {
             position: fixed;
-            top: 20px;
+            top: 50px;
             left: 17px;
-            width: 24px;
-            height: 24px;
+            width: 45px;
+            height: 45px;
             z-index: 100;
-            transition: opacity 0.5s ease;
+            opacity: 0;
+            transition: opacity 0.8s ease;
         }
         
         .fixed-logo img {
             width: 100%;
             height: 100%;
-            filter: invert(1);
+            filter: var(--logo-filter);
+        }
+        
+        .animate .fixed-logo {
+            opacity: 1;
+            transition-delay: 0.8s; /* Fade in after original logo fades out */
         }
         
         /* Theme toggle */
@@ -436,10 +445,15 @@
                 padding: 0 80px;
                 width: 100%;
             }
+            
+            /* Prevent icon from inheriting the translateY */
+            .animate .icon-container {
+                transform-origin: center;
+            }
 
             /* Tagline can have different size if needed */
             .animate .tagline-part {
-                /* Inherits the 60px from main-text */
+                /* Inherits the font size from main-text */
             }
 
             .animate .services {
@@ -479,7 +493,7 @@
             }
             
             .fixed-logo {
-                top: 40px;
+                top: 50px;
                 left: 77px;
                 width: 48px;
                 height: 48px;
@@ -495,7 +509,6 @@
         @media (min-width: 1400px) {
             .animate .tagline-part {
                 font-size: clamp(48px, 4vw, 72px);
-                line-height: 1.1;
             }
         }
         
@@ -504,6 +517,11 @@
 <body>
     <!-- Animated divider line -->
     <div class="divider-line"></div>
+    
+    <!-- Fixed logo - hidden initially -->
+    <div class="fixed-logo">
+        <img src="logos/new beige streamlined logo.png" alt="Streamlined">
+    </div>
     
     <!-- Theme toggle - hidden initially -->
     <button class="theme-toggle" id="themeToggle" style="opacity: 0; pointer-events: none;">
@@ -634,26 +652,6 @@
         
         // Trigger main animation after intro completes
         setTimeout(() => {
-            // Position logo 50px from top of viewport
-            const iconContainer = document.getElementById('iconContainer');
-            
-            if (iconContainer) {
-                const iconRect = iconContainer.getBoundingClientRect();
-                const currentTop = iconRect.top;
-                const targetTop = 50; // 50px from top of viewport
-                
-                // Calculate how far to move
-                let moveDistance = currentTop - targetTop;
-                
-                // Only move if we're below the target
-                if (moveDistance > 0) {
-                    // Preserve the flip rotation while adding the vertical translation
-                    const isFlipped = iconContainer.classList.contains('flipped');
-                    const rotateY = isFlipped ? '0deg' : '180deg';
-                    iconContainer.style.transform = `translateY(-${moveDistance}px) rotateY(${rotateY})`;
-                }
-            }
-            
             document.body.classList.add('animate');
             
             // Fade in theme toggle after logo moves to position
