@@ -105,18 +105,37 @@
             transform: rotateY(0deg);
         }
 
-        /* Fly off animation */
-        /* Fade up and out */
+        /* Fade out icon with intro */
         .animate .icon-container {
-            transform: translateY(-100px);
             opacity: 0;
-            transition: transform 0.8s ease, opacity 0.8s ease;
+            transition: opacity 0.8s ease;
+            transition-delay: 0.5s; /* Same as intro fade */
+        }
+        
+        /* Icon already faded out */
+        .services-complete .icon-container {
+            /* Already hidden */
         }
 
         /* Mobile-first approach */
         .container {
             min-height: 100vh;
-            padding: 60px 20px 20px;
+            min-height: -webkit-fill-available; /* Better for mobile Safari */
+            height: 100vh;
+            height: -webkit-fill-available;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden; /* Prevent scrolling */
+            position: relative; /* For absolute positioning of services */
+        }
+        
+        .header-wrapper {
+            height: 100vh; /* Full height initially on mobile too */
+            display: flex;
+            align-items: center; /* START centered */
+            justify-content: center; /* Center horizontally too */
+            transition: height 0.8s ease, opacity 0.8s ease;
         }
 
         /* Combined text container */
@@ -161,6 +180,45 @@
             color: #241e20;
             line-height: 1.1;
         }
+        
+        /* Dynamic tagline sizing based on available space */
+        @media (max-width: 768px) {
+            .tagline-part {
+                font-size: 24px; /* Base mobile size */
+                line-height: 1.2;
+            }
+            
+            /* When header has more space, increase font */
+            .animate .tagline-part {
+                /* Scale font based on header height */
+                font-size: clamp(24px, 5vw, 32px);
+            }
+        }
+        
+        /* Specific adjustments for header space */
+        @media (max-width: 768px) and (min-height: 600px) {
+            .animate .tagline-part {
+                font-size: 28px; /* 200px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 700px) {
+            .animate .tagline-part {
+                font-size: 30px; /* 295px header space */
+            }
+        }
+        
+        @media (max-width: 768px) and (min-height: 850px) {
+            .animate .tagline-part {
+                font-size: 32px; /* 250px+ header space */
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1199px) {
+            .tagline-part {
+                line-height: 1.2; /* More breathing room */
+            }
+        }
 
         .with-part {
             transition: opacity 0.5s ease;
@@ -168,18 +226,45 @@
 
         .animate .with-part {
             opacity: 0;
+            transition: opacity 0.5s ease;
+            transition-delay: 2.1s; /* Fade when services appear */
         }
 
-        /* Fade out intro elegantly with logo */
+        /* Fade out intro early in the animation */
         .animate .intro-part {
             opacity: 0;
             transition: opacity 0.8s ease;
+            transition-delay: 0.5s; /* Start fading 0.5s after animate class */
         }
 
-        /* On mobile, main-text just stays in place */
+        /* Mobile header needs to shrink too */
+        .animate .header-wrapper {
+            height: calc(100vh - 300px); /* Match smaller services height */
+            height: calc(100dvh - 300px); /* Dynamic viewport height for mobile */
+            transition-delay: 2.1s;
+            min-height: 100px; /* Smaller minimum - prioritize services */
+        }
+        
+        /* If not enough space, hide header and let services take over */
+        @media (max-height: 500px) {
+            .animate .header-wrapper {
+                height: 0;
+                opacity: 0;
+                overflow: hidden;
+                min-height: 0;
+            }
+            
+            .animate .services {
+                height: 100vh; /* Services take full screen */
+            }
+        }
 
-        /* Services - part of the flex layout */
+        /* Services - anchored to bottom */
         .services {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
             display: flex;
             flex-direction: column;
             height: 0;
@@ -188,19 +273,72 @@
         }
 
         .animate .services {
-            height: 55vh;
-            transition-delay: 1.5s; /* Increased delay for slower pacing */
+            height: 300px; /* Smaller height on mobile */
+            transition-delay: 2.1s;
+        }
+        
+        /* Prioritize services on all screens */
+        @media (min-height: 600px) {
+            .animate .services {
+                height: 400px; /* Bigger services */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 400px);
+                height: calc(100dvh - 400px);
+                min-height: 150px;
+            }
+        }
+        
+        /* Your iPhone 14 Pro Max range - maximize services */
+        @media (min-height: 700px) and (max-width: 768px) {
+            .animate .services {
+                height: 450px; /* Reduced from 500px to make rows shorter */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 450px);
+                height: calc(100dvh - 450px);
+                min-height: 150px;
+            }
+            
+            /* Tighter padding for this breakpoint */
+            .service {
+                padding: 12px 20px !important; /* Reasonable padding */
+            }
+            
+            .service-inner {
+                padding: 10px !important; /* Some inner padding */
+            }
+        }
+        
+        /* Very tall phones get even more */
+        @media (min-height: 850px) and (max-width: 768px) {
+            .animate .services {
+                height: 600px;
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 600px);
+                height: calc(100dvh - 600px);
+            }
         }
 
         .service {
-            flex: 0;
-            height: 0;
-            overflow: hidden;
-            padding: 0 20px;
             display: flex;
             align-items: center;
-            transition: flex 1s cubic-bezier(0.4, 0, 0.2, 1), height 1s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+            padding: 15px; /* Less padding on mobile */
             cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1 1 33.333%; /* Each service takes equal height */
+            min-height: 0; /* Allow shrinking */
+        }
+        
+        /* Smaller screens get less padding */
+        @media (max-height: 600px) {
+            .service {
+                padding: 10px 15px;
+            }
         }
         
         /* Remove borders - we'll use animated line instead */
@@ -218,16 +356,14 @@
             background-image: url('egg-shell.png');
         }
         
-        .animate .service {
-            flex: 1;
-            height: auto;
-        }
+        /* Services already have their natural height */
         
         .service-inner {
             display: flex;
-            gap: 20px;
+            gap: 20px; /* Reasonable gap */
             align-items: center;
             width: 100%;
+            padding: 15px; /* Better padding */
             opacity: 0;
             transform: scale(0.95);
             transition: all 0.4s ease;
@@ -236,7 +372,7 @@
         .animate .service-inner {
             opacity: 1;
             transform: scale(1);
-            transition-delay: 0.5s; /* Appear much earlier, during service expansion */
+            transition-delay: 2.6s; /* After services start expanding */
         }
         
         .service-number {
@@ -329,7 +465,7 @@
         /* Animated divider line */
         .divider-line {
             position: fixed;
-            top: 50%;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 2px;
@@ -337,17 +473,17 @@
             transform: scaleX(0);
             transform-origin: left center;
             z-index: 1000;
-            transition: top 1s ease;
+            transition: bottom 1s ease;
         }
         
         .animate .divider-line {
-            /* Animation controlled by JavaScript for earlier start */
+            /* Will be positioned by JavaScript based on services location */
         }
         
         /* Fixed logo at top */
         .fixed-logo {
             position: fixed;
-            top: 50px;
+            top: 48px; /* Align with toggle button */
             left: 17px;
             width: 45px;
             height: 45px;
@@ -364,13 +500,13 @@
         
         .animate .fixed-logo {
             opacity: 1;
-            transition-delay: 0.8s; /* Fade in after original logo fades out */
+            transition-delay: 1.3s; /* Fade in after icon fades out (0.5s + 0.8s) */
         }
         
         /* Theme toggle */
         .theme-toggle {
             position: fixed;
-            top: 20px;
+            top: 48px;
             right: 20px;
             padding: 8px 16px;
             background: var(--theme-toggle-bg);
@@ -396,8 +532,46 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        /* Medium screens */
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .main-text {
+                font-size: 40px;
+                padding: 0 60px;
+            }
+            
+            .animate .main-text {
+                font-size: 56px; /* Smaller than desktop */
+            }
+            
+            /* Tagline scales with available space */
+            .animate .tagline-part {
+                font-size: 48px; /* Larger for medium screens */
+            }
+            
+            .animate .services {
+                height: 450px; /* Slightly shorter */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 450px);
+            }
+            
+            .service {
+                padding: 30px 60px;
+                min-height: 150px;
+            }
+            
+            .service-number {
+                font-size: 80px;
+            }
+            
+            .service-title {
+                font-size: 36px;
+            }
+        }
+        
         /* Desktop - different behavior */
-        @media (min-width: 768px) {
+        @media (min-width: 1200px) {
             .fixed-icon {
                 top: 40px;
                 left: 80px;
@@ -410,40 +584,51 @@
                 height: 100vh;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
+                position: relative;
             }
             
             .header-wrapper {
-                flex: 1;
+                height: 100vh; /* Full height initially */
                 display: flex;
-                align-items: center;
+                align-items: center; /* START centered */
                 justify-content: flex-start;
-                transition: all 1s ease;
+                transition: height 0.8s ease;
+                position: relative;
             }
-
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 500px); /* Shrink to accommodate services */
+                transition-delay: 2.1s;
+            }
+            
             .main-text {
                 font-size: 48px;
                 text-align: left;
                 max-width: 1200px;
                 padding: 0 80px;
-                transition: font-size 1s ease;
+                transition: font-size 0.8s ease 1.3s, transform 0.8s ease; /* Combined transitions */
             }
+            
 
             .intro-part {
                 margin-bottom: 40px;
             }
 
             .tagline-part {
-                transition: font-size 1s ease;
+                margin-bottom: 80px; /* Space below tagline */
+                font-size: inherit; /* Use parent font size */
+            }
+            
+            /* Scale tagline with main text */
+            .animate .tagline-part {
+                font-size: 60px; /* Proportional to 72px main text */
             }
 
-            /* On desktop, move to 25vh from top (center of top 50vh) */
+            /* On desktop, increase font size after intro fades */
             .animate .main-text {
-                position: absolute;
-                top: 25vh;
-                transform: translateY(-50%);
                 font-size: 72px;
                 padding: 0 80px;
-                width: 100%;
             }
             
             /* Prevent icon from inheriting the translateY */
@@ -451,26 +636,40 @@
                 transform-origin: center;
             }
 
-            /* Tagline can have different size if needed */
+            /* Keep tagline in place during services animation */
+            /* Keep tagline in place initially */
             .animate .tagline-part {
-                /* Inherits the font size from main-text */
-            }
-
-            .animate .services {
-                height: 50vh;
+                /* Will be moved with transform */
             }
             
+            /* Tagline stays in natural flow */
+            .services-complete .tagline-part {
+                /* No special positioning needed */
+            }
+            
+            /* Keep intro space but invisible */
+            .services-complete .intro-part {
+                visibility: hidden;
+                /* Keep the space to prevent jump */
+            }
+
+            /* Services stay anchored */
             .services {
-                flex: 1;
+                /* Already positioned fixed from mobile */
+            }
+            
+            .animate .services {
+                height: 500px; /* Taller on desktop */
             }
             
             /* Move line to match services position */
             .animate .divider-line {
-                top: calc(100vh - 50vh);
+                bottom: 50vh;
             }
 
             .service {
-                padding: 0 80px;
+                padding: 40px 80px; /* Add vertical padding on desktop */
+                min-height: 200px; /* Ensure minimum height */
             }
             
             .service-inner {
@@ -500,15 +699,31 @@
             }
             
             .theme-toggle {
-                top: 40px;
+                top: 50px;
                 right: 40px;
             }
         }
         
         /* Extra large screens */
         @media (min-width: 1400px) {
-            .animate .tagline-part {
-                font-size: clamp(48px, 4vw, 72px);
+            .animate .services {
+                height: 600px; /* Even taller on XL screens */
+            }
+            
+            .animate .header-wrapper {
+                height: calc(100vh - 600px); /* Adjust for taller services */
+            }
+            
+            .service {
+                padding: 60px 100px;
+                min-height: 200px;
+            }
+        }
+        
+        /* Ultra-wide screens */
+        @media (min-height: 1000px) {
+            .animate .services {
+                height: 50vh; /* Use percentage on very tall screens */
             }
         }
         
@@ -647,6 +862,13 @@
 
         // Start line animation early
         setTimeout(() => {
+            // Position line at top of services container
+            const services = document.querySelector('.services');
+            if (services) {
+                const servicesRect = services.getBoundingClientRect();
+                const line = document.querySelector('.divider-line');
+                line.style.bottom = (window.innerHeight - servicesRect.top) + 'px';
+            }
             document.querySelector('.divider-line').style.animation = 'drawLine 1.5s ease-out forwards';
         }, 3500); // Start 1.3s after tagline appears (was 2500)
         
@@ -654,12 +876,171 @@
         setTimeout(() => {
             document.body.classList.add('animate');
             
+            // Track services and tagline
+            const trackPositions = () => {
+                const services = document.querySelector('.services');
+                const container = document.querySelector('.container');
+                const tagline = document.querySelector('.tagline-part');
+                const headerWrapper = document.querySelector('.header-wrapper');
+                const mainText = document.querySelector('.main-text');
+                
+                const timestamp = ((Date.now() - animationStartTime) / 1000).toFixed(2);
+                console.log(`\n=== TRACKING @ ${timestamp}s ===`);
+                console.log('Classes:', document.body.className);
+                
+                if (headerWrapper) {
+                    const headerRect = headerWrapper.getBoundingClientRect();
+                    const headerStyle = window.getComputedStyle(headerWrapper);
+                    console.log('Header wrapper:', {
+                        height: headerRect.height + 'px',
+                        top: headerRect.top,
+                        bottom: headerRect.bottom,
+                        alignItems: headerStyle.alignItems,
+                        paddingBottom: headerStyle.paddingBottom,
+                        transition: headerStyle.transition,
+                        transitionDelay: headerStyle.transitionDelay
+                    });
+                }
+                
+                if (tagline) {
+                    const taglineRect = tagline.getBoundingClientRect();
+                    const taglineStyle = window.getComputedStyle(tagline);
+                    console.log('Tagline:', {
+                        top: taglineRect.top,
+                        bottom: taglineRect.bottom,
+                        height: taglineRect.height,
+                        marginBottom: taglineStyle.marginBottom,
+                        opacity: taglineStyle.opacity,
+                        fontSize: taglineStyle.fontSize,
+                        distanceFromViewportBottom: window.innerHeight - taglineRect.bottom
+                    });
+                }
+                
+                if (mainText) {
+                    const mainTextRect = mainText.getBoundingClientRect();
+                    const mainTextStyle = window.getComputedStyle(mainText);
+                    console.log('Main text:', {
+                        top: mainTextRect.top,
+                        bottom: mainTextRect.bottom,
+                        fontSize: mainTextStyle.fontSize,
+                        transition: mainTextStyle.transition,
+                        transitionDelay: mainTextStyle.transitionDelay
+                    });
+                }
+                
+                if (services && container) {
+                    const servicesRect = services.getBoundingClientRect();
+                    const servicesStyle = window.getComputedStyle(services);
+                    
+                    console.log('Services:', {
+                        height: services.offsetHeight + 'px',
+                        computedHeight: servicesStyle.height,
+                        top: servicesRect.top,
+                        bottom: servicesRect.bottom,
+                        position: servicesStyle.position,
+                        transition: servicesStyle.transition,
+                        transitionDelay: servicesStyle.transitionDelay,
+                        overflow: servicesStyle.overflow
+                    });
+                    
+                    // Track service rows during expansion
+                    const serviceRows = document.querySelectorAll('.service');
+                    if (serviceRows.length > 0) {
+                        console.log('Service rows visibility:');
+                        serviceRows.forEach((row, i) => {
+                            const rect = row.getBoundingClientRect();
+                            const style = window.getComputedStyle(row);
+                            console.log(`  Row ${i+1}: top=${rect.top}, visible=${rect.top < window.innerHeight && rect.bottom > 0}`);
+                        });
+                    }
+                }
+                
+                // Track any jumps or sudden changes
+                if (window.lastTaglineTop && tagline) {
+                    const currentTop = tagline.getBoundingClientRect().top;
+                    const jump = Math.abs(currentTop - window.lastTaglineTop);
+                    if (jump > 50) {
+                        console.log(`⚠️ TAGLINE JUMP DETECTED: ${jump}px`);
+                    }
+                    window.lastTaglineTop = currentTop;
+                } else if (tagline) {
+                    window.lastTaglineTop = tagline.getBoundingClientRect().top;
+                }
+                
+                console.log('========================\n');
+            };
+            
+            // Add visual debug info on mobile
+            if (window.innerWidth <= 768) {
+                const debugDiv = document.createElement('div');
+                debugDiv.style.cssText = `
+                    position: fixed;
+                    top: 10px;
+                    right: 10px;
+                    background: rgba(0,0,0,0.8);
+                    color: white;
+                    padding: 10px;
+                    font-size: 12px;
+                    z-index: 9999;
+                    font-family: monospace;
+                `;
+                debugDiv.innerHTML = `
+                    vh: ${window.innerHeight}px<br>
+                    vw: ${window.innerWidth}px<br>
+                    <span id="debugInfo"></span>
+                `;
+                document.body.appendChild(debugDiv);
+                
+                // Update debug info
+                const updateDebug = () => {
+                    const services = document.querySelector('.services');
+                    const header = document.querySelector('.header-wrapper');
+                    const info = document.getElementById('debugInfo');
+                    if (services && header && info) {
+                        info.innerHTML = `
+                            header: ${header.offsetHeight}px<br>
+                            services: ${services.offsetHeight}px<br>
+                            total: ${header.offsetHeight + services.offsetHeight}px
+                        `;
+                    }
+                };
+                setInterval(updateDebug, 100);
+            }
+            
+            // Track animation start time
+            const animationStartTime = Date.now();
+            
+            // Track immediately and at intervals
+            trackPositions();
+            const interval = setInterval(trackPositions, 100); // More frequent tracking
+            
+            // Also track at key animation moments
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES STARTING TO EXPAND (2.1s)');
+                trackPositions();
+            }, 2100);
+            
+            setTimeout(() => {
+                console.log('\n🔍 SERVICES-COMPLETE CLASS ADDED (3.5s)');
+                trackPositions();
+            }, 3500);
+            
+            // Stop tracking after animation completes
+            setTimeout(() => clearInterval(interval), 6000);
+            
+            
+            // Add services-complete class for final state
+            setTimeout(() => {
+                console.log('All animations complete');
+                document.body.classList.add('services-complete');
+            }, 3500); // Delay to let services fully expand first
+            
             // Fade in theme toggle after logo moves to position
             setTimeout(() => {
                 const toggle = document.getElementById('themeToggle');
                 toggle.style.opacity = '1';
                 toggle.style.pointerEvents = 'auto';
-            }, 800); // 800ms matches the logo movement duration
+            }, 3100); // After final animation starts
         }, 5000); // Increased from 3500 to add more delay after tagline
         
         // Theme toggle functionality
