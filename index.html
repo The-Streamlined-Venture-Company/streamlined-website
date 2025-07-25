@@ -250,12 +250,12 @@
         }
 
         /* Letter wrapper for wave blur effect */
-        .loader-tagline span {
+        .loader-tagline.show span {
             display: inline-block;
             opacity: 0;
             filter: blur(10px);
             animation: letterReveal 0.6s ease-out forwards;
-            animation-delay: calc(4.5s + var(--letter-index) * 0.03s);
+            animation-delay: calc(var(--letter-index) * 0.03s);
         }
 
         @keyframes letterReveal {
@@ -1238,6 +1238,10 @@
                 
                 // Show tagline after text animation with letter-by-letter effect
                 setTimeout(() => {
+                    if (!tagline) {
+                        console.error('Tagline element not found');
+                        return;
+                    }
                     const taglineText = tagline.textContent;
                     tagline.innerHTML = '';
                     tagline.classList.add('show');
