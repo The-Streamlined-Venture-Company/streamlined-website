@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --gray: #999999;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Fixed Elements */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            z-index: 100;
+        }
+
+        .logo {
+            height: 35px;
+            width: auto;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.3s forwards;
+        }
+
+        .tagline {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            color: var(--gray);
+            text-align: right;
+            max-width: 400px;
+            line-height: 1.4;
+            opacity: 0;
+            animation: fadeIn 0.8s 0.6s forwards;
+        }
+
+        /* Main Layout */
+        .main-container {
+            height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        /* Left Side - STREAMLINED */
+        .left-side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding-left: 40px;
+            position: relative;
+        }
+
+        .brand-large {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            opacity: 0;
+            animation: fadeInLeft 1s 1s forwards;
+        }
+
+        /* Right Side - Services */
+        .right-side {
+            flex: 1.5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .services-list {
+            max-width: 600px;
+        }
+
+        .service-item {
+            margin-bottom: 60px;
+            opacity: 0;
+            animation: fadeInRight 0.8s forwards;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px 0;
+            border-bottom: 1px solid transparent;
+        }
+
+        .service-item:nth-child(1) { animation-delay: 1.3s; }
+        .service-item:nth-child(2) { animation-delay: 1.5s; }
+        .service-item:nth-child(3) { animation-delay: 1.7s; }
+
+        .service-item:hover {
+            padding-left: 20px;
+            border-bottom-color: var(--black);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: baseline;
+            gap: 30px;
+            margin-bottom: 15px;
+        }
+
+        .service-number {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            color: var(--gray);
+        }
+
+        .service-title {
+            font-size: 36px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .service-desc {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            color: var(--gray);
+            margin-left: 44px;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover .service-desc {
+            color: var(--black);
+        }
+
+        /* Vertical Line Divider */
+        .divider {
+            position: absolute;
+            left: 40%;
+            top: 20%;
+            bottom: 20%;
+            width: 1px;
+            background: var(--gray);
+            opacity: 0.2;
+            animation: growVertical 1s 0.8s forwards;
+            transform-origin: top;
+            transform: scaleY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: rotate(180deg) translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(180deg) translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes growVertical {
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .fixed-header {
+                padding: 30px;
+            }
+
+            .tagline {
+                display: none;
+            }
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            .left-side {
+                flex: none;
+                height: auto;
+                padding: 120px 30px 60px;
+            }
+
+            .brand-large {
+                writing-mode: horizontal-tb;
+                transform: none;
+                font-size: 48px;
+            }
+
+            .divider {
+                display: none;
+            }
+
+            .right-side {
+                flex: 1;
+                padding: 0 30px 30px;
+            }
+
+            .service-title {
+                font-size: 28px;
+            }
+
+            .service-desc {
+                margin-left: 0;
+                font-size: 14px;
+            }
+
+            .service-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="fixed-header">
+        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+        <p class="tagline">We help design-conscious minds streamline how they work and live</p>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Left Side -->
+        <div class="left-side">
+            <h1 class="brand-large">STREAMLINED</h1>
+        </div>
+
+        <!-- Divider -->
+        <div class="divider"></div>
+
+        <!-- Right Side -->
+        <div class="right-side">
+            <div class="services-list">
+                <div class="service-item">
+                    <div class="service-header">
+                        <span class="service-number">01</span>
+                        <h2 class="service-title">Talent</h2>
+                    </div>
+                    <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-header">
+                        <span class="service-number">02</span>
+                        <h2 class="service-title">Interfaces</h2>
+                    </div>
+                    <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
+                </div>
+
+                <div class="service-item">
+                    <div class="service-header">
+                        <span class="service-number">03</span>
+                        <h2 class="service-title">Platforms</h2>
+                    </div>
+                    <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

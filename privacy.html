@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Streamlined Co.</title>
+    <meta name="description" content="Privacy policy for Streamlined Co. - How we collect, use, and protect your information.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://streamlined.co/privacy">
+    <meta property="og:title" content="Privacy Policy - Streamlined Co.">
+    <meta property="og:description" content="How we collect, use, and protect your information.">
+    <meta property="og:image" content="https://streamlined.co/assets/social/og-image.png">
+    
+    <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #e7e4df;
+            --text-primary: #241e20;
+            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
+            --theme-toggle-border: rgba(36, 30, 32, 0.2);
+            --theme-toggle-color: #241e20;
+        }
+
+        body.dark-theme {
+            --bg-primary: #141414;
+            --text-primary: #E8E5E0;
+            --theme-toggle-bg: rgba(232, 229, 224, 0.1);
+            --theme-toggle-border: rgba(232, 229, 224, 0.2);
+            --theme-toggle-color: #E8E5E0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 40px;
+            border-bottom: 1px solid var(--text-primary);
+            opacity: 0.3;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .logo {
+            width: 30px;
+            height: 30px;
+            filter: brightness(0) saturate(100%);
+        }
+
+        body.dark-theme .logo {
+            filter: brightness(0) saturate(100%) invert(1);
+        }
+
+        /* Content */
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin: 40px 0 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        .last-updated {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--text-primary);
+            opacity: 0.5;
+            font-size: 14px;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--theme-toggle-border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--theme-toggle-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        a {
+            color: var(--text-primary);
+            opacity: 0.8;
+        }
+
+        a:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo-link">
+                <img src="assets/logo/logo.svg" alt="Streamlined logo" class="logo">
+                <span>Streamlined Co.</span>
+            </a>
+            <button class="theme-toggle" id="themeToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <span>Dark</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>Privacy Policy</h1>
+        
+        <p>At Streamlined Co., we respect your privacy and are committed to protecting your personal information. This privacy policy explains how we collect, use, and safeguard your data.</p>
+
+        <h2>Information We Collect</h2>
+        <p>We may collect the following information:</p>
+        <ul>
+            <li>Contact information (name, email, phone number) when you reach out to us</li>
+            <li>Usage data through analytics tools to improve our services</li>
+            <li>Information you provide when engaging with our services</li>
+        </ul>
+
+        <h2>How We Use Your Information</h2>
+        <p>We use your information to:</p>
+        <ul>
+            <li>Respond to your inquiries and provide our services</li>
+            <li>Improve our website and user experience</li>
+            <li>Send relevant communications about our services (with your consent)</li>
+        </ul>
+
+        <h2>Data Protection</h2>
+        <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+        <h2>Third-Party Services</h2>
+        <p>We may use third-party services for analytics and hosting. These services have their own privacy policies, and we encourage you to review them.</p>
+
+        <h2>Your Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Access your personal information</li>
+            <li>Request correction or deletion of your data</li>
+            <li>Opt-out of marketing communications</li>
+        </ul>
+
+        <h2>Contact Us</h2>
+        <p>If you have any questions about this privacy policy or our data practices, please contact us at:</p>
+        <p><a href="mailto:privacy@streamlined.co">privacy@streamlined.co</a></p>
+
+        <div class="last-updated">
+            Last updated: January 2025
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

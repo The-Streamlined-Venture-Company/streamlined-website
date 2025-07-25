@@ -65,7 +65,8 @@
         
         /* Use light logo in dark theme loader */
         body.dark-theme .logo-icon img {
-            content: url('assets/logo/logo-light.png');
+            /* Light logo on dark background */
+            filter: brightness(0) saturate(100%) invert(1);
         }
 
         body {
@@ -174,6 +175,8 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
+            /* Dark logo on light background */
+            filter: brightness(0) saturate(100%);
         }
 
         /* Text wrapper using the working approach */
@@ -345,30 +348,15 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-
-        /* Show appropriate logo based on theme */
-        /* Light mode - show dark logo */
-        .header-content .logo-light {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .header-content .logo-dark {
-            opacity: 1;
-            transition: opacity 0.3s ease;
+            /* Dark logo on light background */
+            filter: brightness(0) saturate(100%);
+            transition: filter 0.3s ease;
         }
 
         /* Dark mode - show light logo */
-        body.dark-theme .header-content .logo-light {
-            opacity: 1;
-        }
-
-        body.dark-theme .header-content .logo-dark {
-            opacity: 0;
+        body.dark-theme .header-content .logo-container img {
+            /* Light logo on dark background */
+            filter: brightness(0) saturate(100%) invert(1);
         }
 
         /* Vertical divider between logo and heading */
@@ -1011,7 +999,7 @@
             <div class="icon-container" id="iconContainer">
                 <div class="greeting-icon"></div>
                 <div class="logo-icon">
-                    <img src="assets/logo/logo-dark.png" alt="Streamlined">
+                    <img src="assets/logo/logo.svg" alt="Streamlined logo">
                 </div>
             </div>
             <div class="text-wrapper">
@@ -1052,8 +1040,7 @@
                 <div class="header-content">
                     <div class="logo-section">
                         <div class="logo-container">
-                            <img src="assets/logo/logo-light.png" alt="Streamlined" class="logo-light">
-                            <img src="assets/logo/logo-dark.png" alt="Streamlined" class="logo-dark">
+                            <img src="assets/logo/logo.svg" alt="Streamlined company logo" class="logo-svg">
                         </div>
                     </div>
                     <div class="heading-section">
@@ -1163,11 +1150,11 @@
             return false;
         }
         
-        // Set last visit time
-        localStorage.setItem('lastVisit', Date.now());
-        
-        // Check if returning visitor
+        // Check if returning visitor BEFORE setting the timestamp
         const returningVisitor = isReturningVisitor();
+        
+        // NOW set last visit time for next visit
+        localStorage.setItem('lastVisit', Date.now());
         
         // Time-based greeting and icon
         function getTimeData() {

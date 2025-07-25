@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - Streamlined Co.</title>
+    <meta name="description" content="The page you're looking for doesn't exist.">
+    <link rel="icon" type="image/png" href="/assets/favicon/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #e7e4df;
+            --text-primary: #241e20;
+            --blue: #004b8d;
+            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
+            --theme-toggle-border: rgba(36, 30, 32, 0.2);
+            --theme-toggle-color: #241e20;
+        }
+
+        body.dark-theme {
+            --bg-primary: #141414;
+            --text-primary: #E8E5E0;
+            --theme-toggle-bg: rgba(232, 229, 224, 0.1);
+            --theme-toggle-border: rgba(232, 229, 224, 0.2);
+            --theme-toggle-color: #E8E5E0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 600px;
+        }
+
+        .error-code {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            margin-bottom: 20px;
+            opacity: 0.2;
+        }
+
+        h1 {
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 16px 32px;
+            background: var(--blue);
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 40px;
+            filter: brightness(0) saturate(100%);
+            transition: filter 0.3s ease;
+        }
+
+        body.dark-theme .logo {
+            filter: brightness(0) saturate(100%) invert(1);
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 40px;
+            right: 40px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--theme-toggle-bg);
+            border: 1px solid var(--theme-toggle-border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--theme-toggle-color);
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+        <span>Dark</span>
+    </button>
+
+    <div class="container">
+        <img src="/assets/logo/logo.svg" alt="Streamlined logo" class="logo">
+        <div class="error-code">404</div>
+        <h1>Page Not Found</h1>
+        <p>The page you're looking for doesn't exist or has been moved.</p>
+        <a href="/" class="button">Return Home</a>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

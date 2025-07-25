@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined Co.</title>
+    <title>Streamlined</title>
     <style>
         * {
             margin: 0;
@@ -11,640 +11,528 @@
             box-sizing: border-box;
         }
 
-        /* CSS Variables for theming */
         :root {
-            /* Light theme (default) */
-            --bg-primary: #e7e4df;
-            --text-primary: #241e20;
-            --text-secondary: rgba(36, 30, 32, 0.8);
-            --logo-filter: invert(1);
-            --service-1-bg: #e25323;
-            --service-2-bg: #5a8bad;
-            --service-3-bg: #f27d18;
-            --service-text: #FFFFFF;
-            --service-hover-bg: #e7e4df;
-            --service-1-hover: #e25323;
-            --service-2-hover: #5a8bad;
-            --service-3-hover: #f27d18;
-            --service-border: rgba(255, 255, 255, 0.15);
-            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
-            --theme-toggle-border: rgba(36, 30, 32, 0.2);
-            --theme-toggle-color: #241e20;
-        }
-
-        /* Dark theme */
-        [data-theme="dark"] {
-            --bg-primary: #141414;
-            --text-primary: #e7e4df;
-            --text-secondary: #e7e4df;
-            --logo-filter: none;
-            --service-1-bg: #0A0A0A;
-            --service-2-bg: #1F1F1F;
-            --service-3-bg: #2B2B2B;
-            --service-text: #F0E6D2;
-            --service-hover-bg: #181818;
-            --service-1-hover: #F5ECDB;
-            --service-2-hover: #F5ECDB;
-            --service-3-hover: #F5ECDB;
-            --service-border: rgba(231, 228, 223, 0.08);
-            --theme-toggle-bg: rgba(231, 228, 223, 0.1);
-            --theme-toggle-border: rgba(231, 228, 223, 0.2);
-            --theme-toggle-color: #e7e4df;
+            --bg: #E8E5E0;
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #666666;
+            --light-gray: #CCCCCC;
+            --red: #FF0000;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            min-height: 100vh;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--black);
+            color: var(--bg);
+            overflow: hidden;
+            height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeLegibility;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        /* Container */
-        .container {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Header */
-        .header {
-            padding: 80px;
-            min-height: 100vh;
+        /* Loader Container */
+        .loader-container {
+            position: fixed;
+            inset: 0;
             display: flex;
             align-items: center;
-            transition: min-height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        padding 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        background-color 0.3s ease;
-            background: var(--bg-primary);
+            justify-content: center;
+            background: var(--black);
+            z-index: 9999;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .header.slide-up {
-            min-height: 50vh;
-            padding: 60px 80px;
+        .loader-container.slide-up {
+            transform: translateY(-100%);
         }
 
-        .header-content {
-            width: 100%;
-            max-width: 1200px;
+        /* Loader content */
+        .loader-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 40px;
         }
 
-        /* Icon container */
+        /* Icon container with flip animation */
         .icon-container {
-            width: 45px;
-            height: 45px;
-            margin-bottom: 15px;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 50px;
             position: relative;
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        height 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-style: preserve-3d;
+            transition: transform 0.8s ease;
         }
 
-        .header.slide-up .icon-container {
-            width: 90px;
-            height: 90px;
-            margin-bottom: 35px;
+        .icon-container.flipped {
+            transform: rotateY(180deg);
         }
 
-        /* Greeting icon */
-        .greeting-icon {
+        .greeting-icon,
+        .logo-icon {
             position: absolute;
             width: 100%;
             height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .greeting-icon {
             opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            animation-delay: 0.5s;
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            animation: fadeIn 0.5s 0.3s forwards;
         }
 
         .greeting-icon svg {
             width: 100%;
             height: 100%;
-            stroke: var(--text-primary);
+            stroke: var(--bg);
             fill: none;
             stroke-width: 1.5;
-            transition: stroke 0.3s ease;
         }
 
-        .greeting-icon.hide {
-            opacity: 0 !important;
-            transform: scaleX(0);
-            visibility: hidden;
+        .logo-icon {
+            transform: rotateY(180deg);
         }
 
-        /* Logo */
-        .nav-brand {
-            position: absolute;
+        .logo-icon img {
             width: 100%;
             height: 100%;
-            opacity: 0;
-            transition: opacity 0.6s ease, transform 0.6s ease, filter 0.3s ease;
-            transform: scaleX(0);
-            filter: var(--logo-filter);
-        }
-        
-        .nav-brand.show {
-            opacity: 1;
-            transform: scaleX(1);
-        }
-        
-        .nav-brand img {
-            width: 100%;
-            height: auto;
-            display: block;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
         }
 
-        /* Title wrapper */
-        .title-wrapper {
-            margin-bottom: 10px;
-            padding-top: 10px;
-            transition: margin-bottom 1.5s cubic-bezier(0.4, 0, 0.2, 1),
-                        padding-top 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            overflow: visible;
-        }
-
-        .header.slide-up .title-wrapper {
-            margin-bottom: 35px;
-            padding-top: 40px;
-        }
-
-        /* Text elements */
-        .greeting, .comma, .we-are {
-            font-size: clamp(30px, 5vw, 60px);
-            color: var(--text-primary);
-            opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            display: inline-block;
-            transition: opacity 0.8s ease, transform 0.8s ease, color 0.3s ease;
-        }
-
-        .greeting {
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            animation-delay: 0.5s;
-        }
-
-        .comma {
-            font-weight: 300;
-            letter-spacing: -0.02em;
-            animation-delay: 0.7s;
-            margin: 0 2px;
-        }
-
-        .we-are {
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            animation-delay: 1.8s;
-            margin-right: 8px;
-        }
-
-        .greeting.hide,
-        .comma.hide,
-        .we-are.hide {
-            transform: translateX(-100vw);
-            opacity: 0 !important;
-        }
-
-        /* STREAMLINED */
-        h1 {
-            display: inline-block;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            font-size: clamp(30px, 5vw, 60px);
-            font-weight: 700;
-            line-height: 0.9;
-            letter-spacing: -0.04em;
-            color: var(--text-primary);
-            opacity: 0;
-            animation: fade-in 0.8s ease forwards;
-            animation-delay: 1.8s;
-            margin: 0;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), 
-                        font-size 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        margin-left 1.2s cubic-bezier(0.4, 0, 0.2, 1),
-                        color 0.3s ease;
-            text-shadow: none;
-        }
-
-        /* Move to final position */
-        h1.move-final {
-            transform: translateX(calc(-100vw + 80px));
-            font-size: clamp(60px, 10vw, 120px);
-            margin-left: 0;
-        }
-
-        .header.slide-up h1.move-final {
-            font-size: clamp(100px, 15vw, 140px);
-        }
-
-        /* Co. */
-        .co {
-            position: relative;
-        }
-        
-        .co::after {
-            content: 'Co.';
-            position: absolute;
-            left: 0.2em;
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        h1.move-final .co::after {
-            animation: fadeIn 0.6s ease 0.6s forwards;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fade-in {
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Tagline */
-        .tagline-wrapper {
-            position: relative;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header.slide-up .tagline-wrapper {
-            transform: translateY(-25px);
-        }
-
-        .subtitle {
-            font-size: 24px;
-            line-height: 1.5;
-            color: var(--text-secondary);
-            font-weight: 400;
-            white-space: nowrap;
-            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s ease;
-            transform-origin: left center;
-            transform: scale(1);
-        }
-
-        .header.slide-up .subtitle {
-            opacity: 0.9;
-            font-size: 24px;
-            color: var(--text-secondary);
-            transform: scale(0.95);
-        }
-
+        /* Typewriter text */
         .typewriter-text {
-            display: inline-block;
-            position: relative;
-            color: transparent;
-            background: linear-gradient(90deg, var(--text-primary) 50%, transparent 50%);
-            background-size: 200% 100%;
-            background-position: 100% 0;
-            -webkit-background-clip: text;
-            background-clip: text;
-            animation: maskWipe 1.5s cubic-bezier(0.65, 0, 0.35, 1) 2.6s forwards;
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            margin-bottom: 40px;
         }
 
-        @keyframes maskWipe {
+        #typewriter {
+            display: inline-block;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--bg);
+            margin-left: 3px;
+            animation: blink 0.8s infinite;
+        }
+
+        .cursor.hide {
+            display: none;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            visibility: hidden;
+            background: var(--bg);
+            color: var(--black);
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .main-content.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Header - From cards2 style */
+        .header-section {
+            margin-bottom: 100px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
             to {
-                background-position: 0% 0;
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        /* Services section */
-        .services {
-            display: flex;
-            flex-direction: column;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 0;
-            transition: height 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
-        }
-
-        .services.show {
-            opacity: 1;
-        }
-        
-        .services.expanded {
-            height: 50vh;
-        }
-
-        .service {
-            flex: 0;
-            height: 0;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            padding: 0 80px;
-        }
-        
-        /* Service backgrounds */
-        .service-1 {
-            background-color: var(--service-1-bg);
-            background-image: url("egg-shell.png");
-        }
-        .service-2 {
-            background-color: var(--service-2-bg);
-            background-image: url("egg-shell.png");
-        }
-        .service-3 {
-            background-color: var(--service-3-bg);
-            background-image: url("egg-shell.png");
-        }
-
-        .service:nth-child(2) {
-            border-top: 1px solid var(--service-border);
-        }
-
-        .service:nth-child(3) {
-            border-top: 1px solid var(--service-border);
-        }
-
-        .service.grow {
-            flex: 1;
-            height: auto;
-        }
-
-        /* Service content */
-        .service-inner {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-            width: 100%;
+        .header-content {
             max-width: 1400px;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.8s ease;
+            margin: 0 auto;
         }
 
-        .service.grow .service-inner {
-            opacity: 1;
-            transform: scale(1);
-            transition-delay: 0.3s;
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
         }
 
-        .service-number {
-            font-size: 120px;
+        .logo {
+            height: 40px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--gray);
+            letter-spacing: 0.02em;
+        }
+
+        .intro-heading {
+            font-size: clamp(48px, 6vw, 84px);
             font-weight: 700;
-            line-height: 1;
-            transition: all 0.5s ease;
-            color: var(--service-text);
-            opacity: 0.8;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            max-width: 1200px;
         }
 
-        .service-info {
-            flex: 1;
+        /* Cards Container - From cards1 layout */
+        .cards-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
-        .service-title {
+        /* Card V2 - Swiss Grid Pattern */
+        .card {
+            background: var(--white);
+            padding: 40px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardReveal 0.6s forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 19px,
+                    var(--light-gray) 19px,
+                    var(--light-gray) 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 19px,
+                    var(--light-gray) 19px,
+                    var(--light-gray) 20px
+                );
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.6s; }
+        .card:nth-child(2) { animation-delay: 0.8s; }
+        .card:nth-child(3) { animation-delay: 1s; }
+        .card:nth-child(4) { animation-delay: 1.2s; }
+
+        @keyframes cardReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Card content with z-index */
+        .card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .card-date {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--gray);
+            letter-spacing: 0.05em;
+        }
+
+        /* Swiss Icon with Number */
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 48px;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
-            color: var(--service-text);
+            border: 3px solid var(--black);
+            position: relative;
         }
 
-        .service-desc {
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 100%;
+            height: 100%;
+            background: var(--red);
+            z-index: -1;
+        }
+
+        /* Card Content */
+        .card-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 15px;
+        }
+
+        .card-subtitle {
             font-size: 16px;
-            line-height: 1.4;
-            color: var(--service-text);
-            max-width: 600px;
-            opacity: 0.9;
-        }
-
-        /* Hover effects */
-        .service:hover {
-            background: var(--service-hover-bg) !important;
-        }
-
-        .service-1:hover .service-title,
-        .service-1:hover .service-desc,
-        .service-1:hover .service-number {
-            color: var(--service-1-hover);
-        }
-        
-        .service-2:hover .service-title,
-        .service-2:hover .service-desc,
-        .service-2:hover .service-number {
-            color: var(--service-2-hover);
-        }
-        
-        .service-3:hover .service-title,
-        .service-3:hover .service-desc,
-        .service-3:hover .service-number {
-            color: var(--service-3-hover);
-        }
-
-        [data-theme="dark"] .service:hover .service-title,
-        [data-theme="dark"] .service:hover .service-desc,
-        [data-theme="dark"] .service:hover .service-number {
-            opacity: 1;
-        }
-
-        /* Theme toggle */
-        .theme-toggle {
-            position: fixed;
-            top: 40px;
-            right: 40px;
-            z-index: 1000;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--theme-toggle-border);
-            border-radius: 50px;
-            padding: 8px 20px;
-            cursor: pointer;
-            font-size: 14px;
             font-weight: 500;
-            color: var(--theme-toggle-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.2s ease, border-color 0.2s ease;
+            color: var(--gray);
+            line-height: 1.5;
+            margin-bottom: 30px;
         }
 
-        .theme-toggle:hover {
-            background: var(--theme-toggle-border);
-            transform: translateY(-2px);
+        .card-tag {
+            display: inline-block;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 8px 16px;
+            background: transparent;
+            border: 2px solid var(--black);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .theme-toggle svg {
-            width: 16px;
-            height: 16px;
-            transition: transform 0.3s ease;
+        /* Contact Card Special Styling */
+        .card.contact-card {
+            background: var(--black);
+            color: var(--white);
         }
 
-        .theme-toggle:hover svg {
-            transform: rotate(180deg);
+        .contact-card::before {
+            background-image: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 19px,
+                    rgba(255,255,255,0.1) 19px,
+                    rgba(255,255,255,0.1) 20px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 19px,
+                    rgba(255,255,255,0.1) 19px,
+                    rgba(255,255,255,0.1) 20px
+                );
         }
 
-        /* Large Desktop (min-width: 1440px) */
-        @media (min-width: 1440px) {
-            .header {
-                padding: 100px;
-            }
-            
-            .header.slide-up {
-                padding: 80px 100px;
-            }
-            
-            .header-content {
-                max-width: 1400px;
-            }
-            
-            .service {
-                padding: 0 100px;
-            }
-            
-            h1.move-final {
-                transform: translateX(calc(-100vw + 100px));
-            }
+        .contact-card .service-icon {
+            border-color: var(--white);
+            color: var(--white);
         }
 
-        /* Very Large Desktop (min-width: 1920px) */
-        @media (min-width: 1920px) {
-            .header {
-                padding: 120px;
-            }
-            
-            .header.slide-up {
-                padding: 100px 120px;
-            }
-            
-            .header-content {
-                max-width: 1600px;
-            }
-            
-            .icon-container {
-                width: 60px;
-                height: 60px;
-            }
-            
-            .header.slide-up .icon-container {
-                width: 110px;
-                height: 110px;
-            }
-            
-            h1 {
-                font-size: clamp(40px, 4vw, 80px);
-            }
-            
-            h1.move-final {
-                transform: translateX(calc(-100vw + 120px));
-                font-size: clamp(80px, 8vw, 160px);
-            }
-            
-            .header.slide-up h1.move-final {
-                font-size: clamp(120px, 10vw, 180px);
-            }
-            
-            .subtitle {
+        .contact-card .service-icon::after {
+            background: var(--white);
+            opacity: 0.2;
+        }
+
+        .contact-card .card-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .contact-card .card-tag {
+            border-color: var(--white);
+            color: var(--white);
+        }
+
+        .contact-info {
+            margin-top: 30px;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .contact-item a {
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            border-bottom-color: var(--white);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .typewriter-text {
                 font-size: 28px;
             }
-            
-            .service {
-                padding: 0 120px;
+
+            .header-top {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
             }
-            
-            .service-number {
-                font-size: 140px;
+
+            .intro-heading {
+                font-size: 36px;
             }
-            
-            .service-title {
-                font-size: 56px;
+
+            .cards-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
-            
-            .service-desc {
-                font-size: 18px;
+
+            .card {
+                padding: 30px;
+            }
+
+            .service-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 32px;
+            }
+
+            .card-title {
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
-    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-        </svg>
-        <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-        <span class="theme-label">Dark</span>
-    </button>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <div class="icon-container" id="iconContainer">
+                <div class="greeting-icon"></div>
+                <div class="logo-icon">
+                    <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined">
+                </div>
+            </div>
+            <div class="typewriter-text">
+                <span id="typewriter"></span>
+                <span class="cursor" id="cursor"></span>
+            </div>
+        </div>
+    </div>
 
-    <div class="container">
-        <header class="header" id="header">
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header class="header-section">
             <div class="header-content">
-                <div class="icon-container">
-                    <div class="greeting-icon" id="greetingIcon"></div>
-                    <div class="nav-brand" id="logo">
-                        <img src="screenshots/s logo white.png" alt="Streamlined">
-                    </div>
+                <div class="header-top">
+                    <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+                    <p class="tagline">Design • Talent • Digital</p>
                 </div>
-                
-                <div class="title-wrapper">
-                    <span class="greeting" id="greeting"></span>
-                    <span class="comma">,</span>
-                    <span class="we-are">we are</span>
-                    <h1 id="streamlined">Streamlined<span class="co"></span></h1>
-                </div>
-                
-                <div class="tagline-wrapper">
-                    <p class="subtitle" id="tagline">
-                        <span class="typewriter-text">We help design-conscious minds streamline how they work and live, by providing:</span>
-                    </p>
-                </div>
+                <h1 class="intro-heading">
+                    We're Streamlined, a multidisciplinary agency.<br>
+                    Our mission is creating minimalist solutions<br>
+                    based on elegant principles.
+                </h1>
             </div>
         </header>
-        
-        <div class="services" id="services">
-            <div class="service service-1" id="service-1" onclick="window.location.href='#talent'">
-                <div class="service-inner">
-                    <div class="service-number">01</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Talent</h2>
-                        <p class="service-desc">Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions</p>
-                    </div>
+
+        <!-- Cards -->
+        <div class="cards-container">
+            <!-- Design & Branding Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-date">2024—Present</div>
                 </div>
+                <div class="service-icon">01</div>
+                <h2 class="card-title">Design & Branding</h2>
+                <p class="card-subtitle">
+                    We craft visual identities that capture essence and drive engagement. 
+                    From concept to execution, creating brands that resonate.
+                </p>
+                <div class="card-tag">Visual Identity</div>
             </div>
-            
-            <div class="service service-2" id="service-2" onclick="window.location.href='#interfaces'">
-                <div class="service-inner">
-                    <div class="service-number">02</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Interfaces</h2>
-                        <p class="service-desc">Beautiful, functional digital experiences that captivate users and drive meaningful engagement</p>
-                    </div>
+
+            <!-- Executive Search Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-date">2021—Present</div>
                 </div>
+                <div class="service-icon">02</div>
+                <h2 class="card-title">Executive Search</h2>
+                <p class="card-subtitle">
+                    Connecting visionary leaders with ambitious organizations. 
+                    We find the talent that transforms businesses.
+                </p>
+                <div class="card-tag">Talent Solutions</div>
             </div>
-            
-            <div class="service service-3" id="service-3" onclick="window.location.href='#platforms'">
-                <div class="service-inner">
-                    <div class="service-number">03</div>
-                    <div class="service-info">
-                        <h2 class="service-title">Platforms</h2>
-                        <p class="service-desc">Modern tools and systems for efficient workflows that scale with your growing business</p>
+
+            <!-- Digital Solutions Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-date">2020—Present</div>
+                </div>
+                <div class="service-icon">03</div>
+                <h2 class="card-title">Digital Solutions</h2>
+                <p class="card-subtitle">
+                    Building digital experiences that inspire and perform. 
+                    From web to mobile, we bring ideas to life.
+                </p>
+                <div class="card-tag">Development</div>
+            </div>
+
+            <!-- Contact Card -->
+            <div class="card contact-card">
+                <div class="card-header">
+                    <div class="card-date" style="color: rgba(255, 255, 255, 0.6);">Ready for work</div>
+                </div>
+                <div class="service-icon">→</div>
+                <h2 class="card-title">Let's Connect</h2>
+                <p class="card-subtitle">
+                    We're always interested in new projects and opportunities to help streamline your business.
+                </p>
+                <div class="card-tag">Get in Touch</div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <a href="mailto:hello@streamlined.com">hello@streamlined.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="tel:+14155551234">+1 (415) 555-1234</a>
                     </div>
                 </div>
             </div>
@@ -652,47 +540,12 @@
     </div>
 
     <script>
-        // Theme management with instant switching
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-        const sunIcon = themeToggle.querySelector('.sun-icon');
-        const moonIcon = themeToggle.querySelector('.moon-icon');
-        const themeLabel = themeToggle.querySelector('.theme-label');
-
-        // Check for saved theme preference or default to light
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        if (savedTheme === 'dark') {
-            html.setAttribute('data-theme', 'dark');
-            sunIcon.style.display = 'block';
-            moonIcon.style.display = 'none';
-            themeLabel.textContent = 'Light';
-        }
-
-        // Theme toggle handler - instant switching
-        themeToggle.addEventListener('click', () => {
-            const isDark = html.getAttribute('data-theme') === 'dark';
-            
-            if (isDark) {
-                html.setAttribute('data-theme', 'light');
-                sunIcon.style.display = 'none';
-                moonIcon.style.display = 'block';
-                themeLabel.textContent = 'Dark';
-                localStorage.setItem('theme', 'light');
-            } else {
-                html.setAttribute('data-theme', 'dark');
-                sunIcon.style.display = 'block';
-                moonIcon.style.display = 'none';
-                themeLabel.textContent = 'Light';
-                localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        // Time-based greeting
-        function getTimeOfDay() {
+        // Time-based greeting and icon
+        function getTimeData() {
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 12) {
                 return {
-                    greeting: 'Good Morning',
+                    greeting: 'Good morning',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"/>
                         <line x1="12" y1="1" x2="12" y2="3"/>
@@ -707,7 +560,7 @@
                 };
             } else if (hour >= 12 && hour < 17) {
                 return {
-                    greeting: 'Good Afternoon',
+                    greeting: 'Good afternoon',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="6"/>
                         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
@@ -715,65 +568,51 @@
                 };
             } else {
                 return {
-                    greeting: 'Good Evening',
+                    greeting: 'Good evening',
                     icon: `<svg viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                        <path d="M17 9L18 8M19 13L20 12M15 15L16 14" stroke-linecap="round"/>
                     </svg>`
                 };
             }
         }
 
-        // Set greeting
-        const timeData = getTimeOfDay();
-        document.getElementById('greeting').textContent = timeData.greeting;
-        document.getElementById('greetingIcon').innerHTML = timeData.icon;
+        // Set icon
+        const timeData = getTimeData();
+        document.querySelector('.greeting-icon').innerHTML = timeData.icon;
 
-        // Animation sequence
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                // Show services container
-                document.getElementById('services').classList.add('show');
+        // Typewriter effect
+        const fullText = `${timeData.greeting}, we are Streamlined`;
+        const typewriter = document.getElementById('typewriter');
+        const cursor = document.getElementById('cursor');
+        let charIndex = 0;
 
-                // Icon flip happens when "We are Streamlined" appears
+        function type() {
+            if (charIndex < fullText.length) {
+                typewriter.textContent += fullText.charAt(charIndex);
+                
+                // Flip icon when "we are Streamlined" starts
+                if (charIndex === timeData.greeting.length + 1) {
+                    document.getElementById('iconContainer').classList.add('flipped');
+                }
+                
+                charIndex++;
+                setTimeout(type, 60);
+            } else {
+                // Hide cursor
                 setTimeout(() => {
-                    document.getElementById('greetingIcon').classList.add('hide');
-                    document.getElementById('logo').classList.add('show');
-                }, 300);
+                    cursor.classList.add('hide');
+                }, 500);
+            }
+        }
 
-                // MOVE THE ACTUAL STREAMLINED ELEMENT
-                setTimeout(() => {
-                    // Calculate exact distance
-                    const streamlined = document.getElementById('streamlined');
-                    const streamlinedRect = streamlined.getBoundingClientRect();
-                    const headerContent = document.querySelector('.header-content');
-                    const headerRect = headerContent.getBoundingClientRect();
-                    
-                    // Distance to move = current position - target position (start of container + padding)
-                    const targetX = headerRect.left;
-                    const currentX = streamlinedRect.left;
-                    const moveDistance = targetX - currentX;
-                    
-                    // Override the CSS transform with the exact calculation
-                    streamlined.style.transform = `translateX(${moveDistance}px)`;
-                    
-                    // Hide greeting elements
-                    document.getElementById('greeting').classList.add('hide');
-                    document.querySelector('.comma').classList.add('hide');
-                    document.querySelector('.we-are').classList.add('hide');
-                    
-                    // Add class for font size change
-                    streamlined.classList.add('move-final');
-                    
-                    // Services appear
-                    document.getElementById('header').classList.add('slide-up');
-                    document.getElementById('services').classList.add('expanded');
-                    document.getElementById('service-1').classList.add('grow');
-                    document.getElementById('service-2').classList.add('grow');
-                    document.getElementById('service-3').classList.add('grow');
-                }, 2800);
-            }, 1500);
-        });
+        // Start typing after icon appears
+        setTimeout(type, 800);
+
+        // Transition to main content
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('slide-up');
+            document.getElementById('mainContent').classList.add('show');
+        }, 4500);
     </script>
 </body>
 </html>

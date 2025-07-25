@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamlined Talent - Executive Search & Consulting</title>
+    <meta name="description" content="Connecting visionary leaders with ambitious organizations. We specialize in executive search and talent consulting.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://streamlined.co/talent">
+    <meta property="og:title" content="Streamlined Talent - Executive Search & Consulting">
+    <meta property="og:description" content="Connecting visionary leaders with ambitious organizations. We specialize in executive search and talent consulting.">
+    <meta property="og:image" content="https://streamlined.co/assets/social/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://streamlined.co/talent">
+    <meta property="twitter:title" content="Streamlined Talent - Executive Search & Consulting">
+    <meta property="twitter:description" content="Connecting visionary leaders with ambitious organizations. We specialize in executive search and talent consulting.">
+    <meta property="twitter:image" content="https://streamlined.co/assets/social/og-image.png">
+    
     <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
     <style>
         * {
@@ -103,38 +119,19 @@
         .logo {
             height: 30px;
             width: auto;
-            transition: opacity 0.3s ease;
+            /* Initial state - light logo on blue header */
+            filter: brightness(0) saturate(100%) invert(1);
+            transition: filter 0.3s ease;
         }
 
-        /* Initial state - show light logo on blue header */
-        .logo-light {
-            opacity: 1;
+        /* When scrolled - dark logo on light background */
+        header.scrolled .logo {
+            filter: brightness(0) saturate(100%);
         }
 
-        .logo-dark {
-            opacity: 0;
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        /* When scrolled - show appropriate logo based on theme */
-        header.scrolled .logo-light {
-            opacity: 0;
-        }
-
-        header.scrolled .logo-dark {
-            opacity: 1;
-        }
-
-        /* Dark theme when scrolled */
-        body.dark-theme header.scrolled .logo-light {
-            opacity: 1;
-        }
-
-        body.dark-theme header.scrolled .logo-dark {
-            opacity: 0;
+        /* Dark theme when scrolled - light logo on dark background */
+        body.dark-theme header.scrolled .logo {
+            filter: brightness(0) saturate(100%) invert(1);
         }
 
         .brand-name {
@@ -542,8 +539,7 @@
             <nav class="header-nav">
                 <div class="nav-left">
                     <a href="index.html" class="logo-link">
-                        <img src="assets/logo/logo-dark.png" alt="Streamlined" class="logo logo-dark">
-                        <img src="assets/logo/logo-light.png" alt="Streamlined" class="logo logo-light">
+                        <img src="assets/logo/logo.svg" alt="Streamlined logo" class="logo">
                         <span class="brand-name">Streamlined</span>
                     </a>
                     <ul class="nav-links">
