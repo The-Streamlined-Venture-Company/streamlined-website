@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined Talent - Executive Search & Consulting</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #e7e4df;
+            --text-primary: #241e20;
+            --black: #151516;
+            --white: #FFFFFF;
+            --blue: #065299;
+            --blue-dark: #043d6e;
+            --grid-max-width: 1440px;
+            --grid-margin: 80px;
+            --grid-gutter: 30px;
+            --grid-columns: 12;
+            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
+            --theme-toggle-border: rgba(36, 30, 32, 0.2);
+            --theme-toggle-color: #241e20;
+        }
+
+        /* Dark theme */
+        body.dark-theme {
+            --bg-primary: #141414;
+            --text-primary: #E8E5E0;
+            --theme-toggle-bg: rgba(232, 229, 224, 0.1);
+            --theme-toggle-border: rgba(232, 229, 224, 0.2);
+            --theme-toggle-color: #E8E5E0;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.2;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Grid container */
+        .grid-container {
+            max-width: var(--grid-max-width);
+            margin: 0 auto;
+            padding: 0 var(--grid-margin);
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            transition: background 0.3s ease;
+        }
+
+        header.scrolled {
+            background: var(--bg-primary);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+        }
+
+        .header-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--white);
+            gap: 10px;
+            transition: color 0.3s ease;
+        }
+
+        header.scrolled .logo-link {
+            color: var(--text-primary);
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        header.scrolled .logo {
+            filter: invert(1) brightness(0.15);
+        }
+
+        body.dark-theme header.scrolled .logo {
+            filter: none;
+        }
+
+        .brand-name {
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: opacity 0.3s ease;
+        }
+
+        header.scrolled .nav-links a {
+            color: var(--text-primary);
+        }
+
+        .nav-links a:hover {
+            opacity: 0.6;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled .theme-toggle {
+            background: var(--theme-toggle-bg);
+            border-color: var(--theme-toggle-border);
+            color: var(--theme-toggle-color);
+        }
+
+        .theme-toggle svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--blue);
+            color: var(--white);
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            padding: 120px 0 80px;
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), 1fr);
+            gap: var(--grid-gutter);
+            align-items: start;
+        }
+
+        .hero-title {
+            grid-column: span 12;
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 500;
+            letter-spacing: -0.04em;
+            line-height: 0.95;
+            margin-bottom: 60px;
+        }
+
+        .hero-subtitle {
+            grid-column: span 8;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.4;
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            grid-column: span 12;
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 16px 32px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--white);
+            color: var(--blue);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--blue);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 120px 0;
+        }
+
+        .section-header {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), 1fr);
+            gap: var(--grid-gutter);
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            grid-column: span 6;
+            font-size: 48px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        .section-description {
+            grid-column: span 6;
+            font-size: 20px;
+            line-height: 1.5;
+            opacity: 0.7;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(var(--grid-columns), 1fr);
+            gap: var(--grid-gutter);
+        }
+
+        .service-card {
+            grid-column: span 4;
+            padding: 40px;
+            background: var(--white);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        body.dark-theme .service-card {
+            background: #1a1a1a;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .service-number {
+            font-size: 14px;
+            color: var(--blue);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .service-title {
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .service-description {
+            font-size: 16px;
+            line-height: 1.5;
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--text-primary);
+            padding: 40px 0;
+            opacity: 0.3;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer a:hover {
+            opacity: 0.7;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            :root {
+                --grid-margin: 40px;
+                --grid-gutter: 20px;
+            }
+
+            .hero-subtitle {
+                grid-column: span 10;
+            }
+
+            .service-card {
+                grid-column: span 6;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --grid-margin: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                grid-column: span 12;
+                font-size: 20px;
+            }
+
+            .section-title,
+            .section-description {
+                grid-column: span 12;
+                margin-bottom: 20px;
+            }
+
+            .service-card {
+                grid-column: span 12;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header id="header">
+        <div class="grid-container">
+            <nav class="header-nav">
+                <div class="nav-left">
+                    <a href="index.html" class="logo-link">
+                        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+                        <span class="brand-name">Streamlined</span>
+                    </a>
+                    <ul class="nav-links">
+                        <li><a href="talent-about.html">About</a></li>
+                        <li><a href="talent-how-we-work.html">How We Work</a></li>
+                        <li><a href="talent-team.html">Team</a></li>
+                        <li><a href="talent-contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <button class="theme-toggle" id="themeToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <span>Dark</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="grid-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Connecting visionary leaders with ambitious organizations
+                </h1>
+                <p class="hero-subtitle">
+                    We specialize in executive search and talent consulting, helping companies build exceptional teams that drive innovation and growth.
+                </p>
+                <div class="hero-cta">
+                    <a href="talent-contact.html" class="btn btn-primary">Start a Search</a>
+                    <a href="talent-about.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <div class="grid-container">
+            <div class="section-header">
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-description">
+                    We offer comprehensive talent solutions designed to meet the unique needs of modern organizations.
+                </p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-number">01</div>
+                    <h3 class="service-title">Executive Search</h3>
+                    <p class="service-description">
+                        Identifying and recruiting C-suite executives and senior leaders who align with your vision and values.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">02</div>
+                    <h3 class="service-title">Talent Advisory</h3>
+                    <p class="service-description">
+                        Strategic consulting on organizational design, succession planning, and talent development.
+                    </p>
+                </div>
+                <div class="service-card">
+                    <div class="service-number">03</div>
+                    <h3 class="service-title">Team Building</h3>
+                    <p class="service-description">
+                        Assembling high-performance teams with complementary skills and shared purpose.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="grid-container">
+            <div class="footer-content">
+                <p>© 2025 Streamlined Talent. All rights reserved.</p>
+                <p>
+                    <a href="mailto:talent@streamlined.com">talent@streamlined.com</a> • 
+                    <a href="tel:+14155551234">+1 (415) 555-1234</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Theme toggle
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-theme');
+            themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-theme');
+            const isDark = body.classList.contains('dark-theme');
+            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>
