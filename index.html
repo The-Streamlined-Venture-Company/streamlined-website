@@ -504,8 +504,8 @@
                 scroll-snap-type: x mandatory;
                 -webkit-overflow-scrolling: touch;
                 padding-bottom: 20px;
-                padding-left: var(--grid-margin);
-                padding-right: var(--grid-margin);
+                padding-left: 20px;
+                padding-right: 20px;
                 scroll-behavior: smooth;
             }
 
@@ -547,18 +547,6 @@
             .card {
                 flex: 0 0 340px;
                 scroll-snap-align: start;
-            }
-        }
-        
-        /* Only center cards on mobile/narrow screens */
-        @media (max-width: 768px) {
-            .cards-container {
-                padding-left: calc(50% - 170px); /* Half viewport minus half card width */
-                padding-right: calc(50% - 170px);
-            }
-            
-            .card {
-                scroll-snap-align: center;
             }
         }
 
