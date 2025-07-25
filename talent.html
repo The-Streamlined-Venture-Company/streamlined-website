@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamlined Talent - Executive Search & Consulting</title>
+    <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
     <style>
         * {
             margin: 0;
@@ -95,19 +96,45 @@
             color: var(--text-primary);
         }
 
+        .logo-link {
+            position: relative;
+        }
+
         .logo {
             height: 30px;
             width: auto;
-            filter: brightness(0) invert(1);
-            transition: filter 0.3s ease;
+            transition: opacity 0.3s ease;
         }
 
-        header.scrolled .logo {
-            filter: invert(1) brightness(0.15);
+        /* Initial state - show light logo on blue header */
+        .logo-light {
+            opacity: 1;
         }
 
-        body.dark-theme header.scrolled .logo {
-            filter: none;
+        .logo-dark {
+            opacity: 0;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* When scrolled - show appropriate logo based on theme */
+        header.scrolled .logo-light {
+            opacity: 0;
+        }
+
+        header.scrolled .logo-dark {
+            opacity: 1;
+        }
+
+        /* Dark theme when scrolled */
+        body.dark-theme header.scrolled .logo-light {
+            opacity: 1;
+        }
+
+        body.dark-theme header.scrolled .logo-dark {
+            opacity: 0;
         }
 
         .brand-name {
@@ -515,7 +542,8 @@
             <nav class="header-nav">
                 <div class="nav-left">
                     <a href="index.html" class="logo-link">
-                        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+                        <img src="assets/logo/logo-dark.png" alt="Streamlined" class="logo logo-dark">
+                        <img src="assets/logo/logo-light.png" alt="Streamlined" class="logo logo-light">
                         <span class="brand-name">Streamlined</span>
                     </a>
                     <ul class="nav-links">

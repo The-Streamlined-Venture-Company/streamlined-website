@@ -3,7 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Bordered Header Layout</title>
+    <title>Streamlined Co. - Streamlining Ambition</title>
+    <meta name="description" content="We help design-conscious minds streamline how they live and work through talent, interfaces, and platforms.">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://streamlined.co/">
+    <meta property="og:title" content="Streamlined Co. - Streamlining Ambition">
+    <meta property="og:description" content="We help design-conscious minds streamline how they live and work through talent, interfaces, and platforms.">
+    <meta property="og:image" content="https://streamlined.co/assets/social/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://streamlined.co/">
+    <meta property="twitter:title" content="Streamlined Co. - Streamlining Ambition">
+    <meta property="twitter:description" content="We help design-conscious minds streamline how they live and work through talent, interfaces, and platforms.">
+    <meta property="twitter:image" content="https://streamlined.co/assets/social/og-image.png">
+    
+    <link rel="icon" type="image/png" href="assets/favicon/favicon.png">
     <style>
         * {
             margin: 0;
@@ -44,6 +61,11 @@
         /* Dark theme loader background */
         body.dark-theme .loader-container {
             background: var(--black);
+        }
+        
+        /* Use light logo in dark theme loader */
+        body.dark-theme .logo-icon img {
+            content: url('assets/logo/logo-light.png');
         }
 
         body {
@@ -152,7 +174,6 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: invert(1) brightness(0.15);
         }
 
         /* Text wrapper using the working approach */
@@ -317,17 +338,37 @@
         .header-content .logo-container {
             width: 100px;
             height: 100px;
+            position: relative;
         }
 
         .header-content .logo-container img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: invert(1) brightness(0.15);
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        body.dark-theme .header-content .logo-container img {
-            filter: none;
+        /* Show appropriate logo based on theme */
+        /* Light mode - show dark logo */
+        .header-content .logo-light {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .header-content .logo-dark {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Dark mode - show light logo */
+        body.dark-theme .header-content .logo-light {
+            opacity: 1;
+        }
+
+        body.dark-theme .header-content .logo-dark {
+            opacity: 0;
         }
 
         /* Vertical divider between logo and heading */
@@ -415,9 +456,6 @@
             stroke: #E8E5E0;
         }
 
-        body.dark-theme .logo-icon img {
-            filter: none;
-        }
 
         .tagline {
             font-size: 16px;
@@ -900,10 +938,15 @@
                 margin: 60px 0 80px;
             }
 
-            .logo-container {
+            .logo-section {
+                display: block;
+                margin-bottom: 30px;
+            }
+
+            .header-content .logo-container {
                 width: 80px;
                 height: 80px;
-                margin-bottom: 30px;
+                margin: 0 auto;
             }
 
             .intro-heading {
@@ -968,7 +1011,7 @@
             <div class="icon-container" id="iconContainer">
                 <div class="greeting-icon"></div>
                 <div class="logo-icon">
-                    <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined">
+                    <img src="assets/logo/logo-dark.png" alt="Streamlined">
                 </div>
             </div>
             <div class="text-wrapper">
@@ -1009,7 +1052,8 @@
                 <div class="header-content">
                     <div class="logo-section">
                         <div class="logo-container">
-                            <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined">
+                            <img src="assets/logo/logo-light.png" alt="Streamlined" class="logo-light">
+                            <img src="assets/logo/logo-dark.png" alt="Streamlined" class="logo-dark">
                         </div>
                     </div>
                     <div class="heading-section">
