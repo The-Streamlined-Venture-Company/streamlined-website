@@ -51,9 +51,14 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             overflow: hidden;
-            height: 100vh;
+            min-height: 100vh;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+        }
+        
+        /* Allow scrolling when main content is shown */
+        body.content-loaded {
+            overflow: auto;
         }
 
         /* Loader Container */
@@ -65,11 +70,16 @@
             justify-content: center;
             background: var(--bg-primary);
             z-index: 9999;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease;
         }
 
         .loader-container.slide-up {
             transform: translateY(-100%);
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            transform: none;
         }
 
         /* Loader content */
@@ -92,6 +102,22 @@
 
         .icon-container.flipped {
             transform: rotateY(180deg);
+        }
+
+        /* Quick logo animation for returning visitors */
+        .icon-container.logo-only {
+            animation: logoFadeScale 0.8s ease-out forwards;
+        }
+
+        @keyframes logoFadeScale {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .greeting-icon,
@@ -439,7 +465,7 @@
         }
 
         /* Cards Wrapper for horizontal scroll */
-        @media (max-width: 1024px) {
+        @media (max-width: 1280px) {
             .grid-container:has(.cards-container) {
                 position: relative;
             }
@@ -512,9 +538,9 @@
             min-height: 360px;
         }
 
-        @media (max-width: 1024px) {
+        @media (max-width: 1280px) {
             .card {
-                flex: 0 0 320px;
+                flex: 0 0 340px;
                 scroll-snap-align: start;
             }
         }
@@ -948,7 +974,7 @@
             <div class="text-wrapper">
                 <div class="text-container" id="textContainer">
                     <span class="morning"><span id="greetingText">Good Morning</span><span class="comma">,</span></span>
-                    <span class="streamlined">we are Streamlined</span>
+                    <span class="streamlined">we're Streamlined.</span>
                 </div>
             </div>
             <div class="loader-tagline" id="tagline">We help design-conscious minds streamline how they live and work.</div>
@@ -961,7 +987,7 @@
         <header class="header-section">
             <div class="grid-container">
                 <div class="header-nav">
-                    <div class="brand-name">Streamlined</div>
+                    <div class="brand-name">Streamlined Co.</div>
                     <button class="theme-toggle" id="themeToggle">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="5"></circle>
@@ -1080,6 +1106,25 @@
     </div>
 
     <script>
+        // Check if user has visited in the last month
+        function isReturningVisitor() {
+            const lastVisit = localStorage.getItem('lastVisit');
+            const currentTime = Date.now();
+            const oneMonth = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
+            
+            if (lastVisit) {
+                const timeSinceLastVisit = currentTime - parseInt(lastVisit);
+                return timeSinceLastVisit < oneMonth;
+            }
+            return false;
+        }
+        
+        // Set last visit time
+        localStorage.setItem('lastVisit', Date.now());
+        
+        // Check if returning visitor
+        const returningVisitor = isReturningVisitor();
+        
         // Time-based greeting and icon
         function getTimeData() {
             const hour = new Date().getHours();
@@ -1126,32 +1171,95 @@
         const tagline = document.getElementById('tagline');
         const iconContainer = document.getElementById('iconContainer');
 
-        // Start animation sequence
-        setTimeout(() => {
-            textContainer.classList.add('animate');
-            iconContainer.classList.add('flipped');
+        // Different animations for returning vs new visitors
+        if (returningVisitor) {
+            // Quick logo-only animation for returning visitors
+            document.querySelector('.text-wrapper').style.display = 'none';
+            document.querySelector('.loader-tagline').style.display = 'none';
+            document.querySelector('.greeting-icon').style.display = 'none';
+            document.querySelector('.logo-icon').style.transform = 'rotateY(0deg)';
             
-            // Show tagline after text animation
+            // Add logo animation class
+            iconContainer.classList.add('logo-only');
+            
+            // Quick fade transition to main content
             setTimeout(() => {
-                tagline.classList.add('show');
-            }, 2200);
-        }, 2000);
+                document.getElementById('loader').classList.add('fade-out');
+                document.getElementById('mainContent').classList.add('show');
+                document.body.classList.add('content-loaded');
+                
+                // Remove loader after fade completes
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 600);
+            }, 1500);
+        } else {
+            // Full animation sequence for new visitors
+            setTimeout(() => {
+                textContainer.classList.add('animate');
+                iconContainer.classList.add('flipped');
+                
+                // Show tagline after text animation
+                setTimeout(() => {
+                    tagline.classList.add('show');
+                }, 2200);
+            }, 2000);
 
-        // Transition to main content
-        setTimeout(() => {
-            document.getElementById('loader').classList.add('slide-up');
-            document.getElementById('mainContent').classList.add('show');
-        }, 7500);
+            // Transition to main content
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('slide-up');
+                document.getElementById('mainContent').classList.add('show');
+                document.body.classList.add('content-loaded');
+            }, 7500);
+        }
 
         // Theme toggle functionality
         const body = document.body;
         const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        // Check for saved theme preference or use system preference
+        function getThemePreference() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                return savedTheme;
+            }
+            
+            // Check system preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                return 'dark';
+            }
+            
+            // Check time-based preference (dark mode after 7 PM and before 7 AM)
+            const hour = new Date().getHours();
+            if (hour >= 19 || hour < 7) {
+                return 'dark';
+            }
+            
+            return 'light';
+        }
+        
+        const currentTheme = getThemePreference();
         
         // Set initial theme
         if (currentTheme === 'dark') {
             body.classList.add('dark-theme');
             themeToggle.querySelector('span').textContent = 'Light';
+        }
+        
+        // Listen for system theme changes
+        if (window.matchMedia) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                // Only auto-switch if user hasn't manually set a preference
+                if (!localStorage.getItem('theme')) {
+                    if (e.matches) {
+                        body.classList.add('dark-theme');
+                        themeToggle.querySelector('span').textContent = 'Light';
+                    } else {
+                        body.classList.remove('dark-theme');
+                        themeToggle.querySelector('span').textContent = 'Dark';
+                    }
+                }
+            });
         }
         
         themeToggle.addEventListener('click', (e) => {
