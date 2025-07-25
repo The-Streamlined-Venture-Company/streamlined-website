@@ -534,16 +534,26 @@
                 width: 40px;
                 pointer-events: none;
                 z-index: 2;
+                transition: opacity 0.3s ease;
             }
 
             .cards-container::before {
                 left: 0;
                 background: linear-gradient(to right, var(--bg-primary), transparent);
+                opacity: 0; /* Start with left shadow hidden */
+            }
+
+            .cards-container.scrolled::before {
+                opacity: 1; /* Show left shadow when scrolled */
             }
 
             .cards-container::after {
                 right: 0;
                 background: linear-gradient(to left, var(--bg-primary), transparent);
+            }
+
+            .cards-container.at-end::after {
+                opacity: 0; /* Hide right shadow when at end */
             }
         }
 
@@ -1243,6 +1253,46 @@
                 document.body.classList.add('content-loaded');
             }, 7500);
         }
+
+        // Scroll indicator functionality for cards container
+        function updateScrollIndicators() {
+            const container = document.querySelector('.cards-container');
+            if (!container) return;
+            
+            // Check if container is scrollable
+            if (container.scrollWidth > container.clientWidth) {
+                const scrollLeft = container.scrollLeft;
+                const maxScroll = container.scrollWidth - container.clientWidth;
+                
+                // Add/remove classes based on scroll position
+                if (scrollLeft > 10) {
+                    container.classList.add('scrolled');
+                } else {
+                    container.classList.remove('scrolled');
+                }
+                
+                if (scrollLeft >= maxScroll - 10) {
+                    container.classList.add('at-end');
+                } else {
+                    container.classList.remove('at-end');
+                }
+            }
+        }
+
+        // Set up scroll listener
+        window.addEventListener('DOMContentLoaded', () => {
+            const container = document.querySelector('.cards-container');
+            if (container) {
+                container.addEventListener('scroll', updateScrollIndicators);
+                // Initial check
+                updateScrollIndicators();
+            }
+        });
+
+        // Also update on window resize
+        window.addEventListener('resize', () => {
+            setTimeout(updateScrollIndicators, 100);
+        });
 
         // Theme toggle functionality
         const body = document.body;
