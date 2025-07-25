@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Process - Streamlined Talent</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --accent: #FF6B35;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            line-height: 1.2;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px 40px;
+            mix-blend-mode: difference;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--cream);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            opacity: 0.6;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 200px 40px 120px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .page-header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .page-title {
+            font-size: clamp(80px, 12vw, 200px);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            line-height: 0.85;
+            margin-bottom: 60px;
+        }
+
+        .page-intro {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.3;
+            max-width: 800px;
+            opacity: 0.9;
+        }
+
+        /* Process Overview */
+        .process-overview {
+            padding: 120px 40px;
+            background: var(--cream);
+        }
+
+        .process-overview-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .overview-title {
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 60px;
+            max-width: 900px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 120px;
+            margin-top: 100px;
+        }
+
+        .overview-label {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+        }
+
+        .overview-text {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.4;
+            max-width: 700px;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            padding: 0;
+            background: var(--cream);
+        }
+
+        .process-step {
+            padding: 120px 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .process-step:nth-child(even) {
+            background: var(--black);
+            color: var(--cream);
+            border-color: rgba(245, 242, 237, 0.1);
+        }
+
+        .step-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 120px;
+            align-items: start;
+        }
+
+        .step-number {
+            font-size: clamp(120px, 10vw, 200px);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            line-height: 0.8;
+            opacity: 0.2;
+        }
+
+        .step-details h3 {
+            font-size: clamp(48px, 6vw, 80px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            line-height: 0.9;
+        }
+
+        .step-description {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 60px;
+            max-width: 700px;
+        }
+
+        .step-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px 80px;
+        }
+
+        .step-list li {
+            font-size: 18px;
+            font-weight: 500;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: '–';
+            position: absolute;
+            left: 0;
+            font-weight: 700;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            padding: 160px 40px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .philosophy-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .philosophy-title {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 80px;
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .philosophy-item {
+            padding: 60px 40px;
+            border: 1px solid rgba(245, 242, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .philosophy-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .philosophy-item h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .philosophy-item p {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 160px 40px;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            line-height: 1;
+        }
+
+        .cta-link {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            display: inline-block;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--black);
+            transition: all 0.3s ease;
+        }
+
+        .cta-link:hover {
+            padding-bottom: 8px;
+            border-bottom-width: 2px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 40px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .fade-in.visible {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .step-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .step-list {
+                grid-template-columns: 1fr;
+            }
+
+            .philosophy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header {
+                padding: 120px 20px 80px;
+            }
+
+            .page-title {
+                font-size: 60px;
+            }
+
+            .page-intro {
+                font-size: 20px;
+            }
+
+            .overview-title {
+                font-size: 40px;
+            }
+
+            .step-number {
+                font-size: 80px;
+            }
+
+            .step-details h3 {
+                font-size: 40px;
+            }
+
+            .step-description {
+                font-size: 18px;
+            }
+
+            .philosophy-title {
+                font-size: 48px;
+            }
+
+            .cta-title {
+                font-size: 40px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="talent.html">
+                <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="talent.html">Home</a></li>
+                <li><a href="talent-about.html">About</a></li>
+                <li><a href="talent-how-we-work.html" class="active">Process</a></li>
+                <li><a href="talent-team.html">Team</a></li>
+                <li><a href="talent-contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title fade-in">Our Process</h1>
+            <p class="page-intro fade-in">
+                A methodical approach to finding extraordinary talent. Every search is unique, 
+                but our proven methodology ensures consistent, exceptional results.
+            </p>
+        </div>
+    </section>
+
+    <!-- Process Overview -->
+    <section class="process-overview">
+        <div class="process-overview-content">
+            <h2 class="overview-title fade-in">
+                We don't just fill positions. We architect leadership teams that define industries.
+            </h2>
+            <div class="overview-grid">
+                <div class="overview-label fade-in">Our Method</div>
+                <div class="overview-text fade-in">
+                    Our four-stage process combines rigorous research, deep human insight, and sophisticated assessment 
+                    methodologies. Each phase builds upon the last, ensuring we identify leaders who don't just meet 
+                    requirements—they exceed expectations and transform organizations.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Steps -->
+    <section class="process-steps">
+        <!-- Step 1 -->
+        <div class="process-step fade-in">
+            <div class="step-content">
+                <div class="step-number">01</div>
+                <div class="step-details">
+                    <h3>Discovery</h3>
+                    <p class="step-description">
+                        We immerse ourselves in your organization, understanding not just what you need today, 
+                        but what you'll need tomorrow. This deep dive shapes every decision that follows.
+                    </p>
+                    <ul class="step-list">
+                        <li>Stakeholder interviews</li>
+                        <li>Cultural assessment</li>
+                        <li>Role definition</li>
+                        <li>Success metrics</li>
+                        <li>Market analysis</li>
+                        <li>Compensation benchmarking</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="process-step fade-in">
+            <div class="step-content">
+                <div class="step-number">02</div>
+                <div class="step-details">
+                    <h3>Search</h3>
+                    <p class="step-description">
+                        Leveraging our global network and proprietary research methods, we identify and engage 
+                        exceptional candidates—including those who aren't actively looking.
+                    </p>
+                    <ul class="step-list">
+                        <li>Market mapping</li>
+                        <li>Direct sourcing</li>
+                        <li>Network activation</li>
+                        <li>Competitive intelligence</li>
+                        <li>Preliminary screening</li>
+                        <li>Candidate engagement</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="process-step fade-in">
+            <div class="step-content">
+                <div class="step-number">03</div>
+                <div class="step-details">
+                    <h3>Assessment</h3>
+                    <p class="step-description">
+                        Our rigorous evaluation process goes beyond credentials, assessing leadership capability, 
+                        cultural fit, and potential for long-term success within your organization.
+                    </p>
+                    <ul class="step-list">
+                        <li>Behavioral interviews</li>
+                        <li>Competency mapping</li>
+                        <li>Psychometric testing</li>
+                        <li>Reference verification</li>
+                        <li>Case studies</li>
+                        <li>Cultural alignment</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="process-step fade-in">
+            <div class="step-content">
+                <div class="step-number">04</div>
+                <div class="step-details">
+                    <h3>Integration</h3>
+                    <p class="step-description">
+                        Our commitment extends beyond placement. We ensure successful onboarding and provide 
+                        ongoing support to maximize the impact of your new leader.
+                    </p>
+                    <ul class="step-list">
+                        <li>Onboarding strategy</li>
+                        <li>Stakeholder alignment</li>
+                        <li>90-day plan</li>
+                        <li>Regular check-ins</li>
+                        <li>Performance tracking</li>
+                        <li>Long-term success</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy">
+        <div class="philosophy-content">
+            <h2 class="philosophy-title fade-in">Our Philosophy</h2>
+            <div class="philosophy-grid">
+                <div class="philosophy-item fade-in">
+                    <h3>Human-Centered</h3>
+                    <p>Technology enhances our work, but human insight and relationships remain at the core of what we do.</p>
+                </div>
+                <div class="philosophy-item fade-in">
+                    <h3>Long-Term Vision</h3>
+                    <p>We focus on placements that will drive success not just today, but for years to come.</p>
+                </div>
+                <div class="philosophy-item fade-in">
+                    <h3>Transparent Process</h3>
+                    <p>Open communication and honest feedback at every stage of the search process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2 class="cta-title fade-in">Ready to find your next leader?</h2>
+            <a href="talent-contact.html" class="cta-link fade-in">Let's start a conversation →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2024 Streamlined Talent. All rights reserved.</p>
+            <p class="footer-text">Part of Streamlined Co.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

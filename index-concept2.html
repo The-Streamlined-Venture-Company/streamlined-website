@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --accent: #FF6B35;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px 40px;
+            background: var(--cream);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            background: rgba(245, 242, 237, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 40px;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-size: clamp(60px, 12vw, 180px);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            line-height: 0.9;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 500;
+            margin-top: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.6s forwards;
+        }
+
+        /* Services Section */
+        .services {
+            position: relative;
+        }
+
+        .service-block {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Alternating backgrounds */
+        .service-block:nth-child(odd) {
+            background: var(--cream);
+        }
+
+        .service-block:nth-child(even) {
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .service-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: center;
+        }
+
+        .service-block:nth-child(even) .service-content {
+            direction: rtl;
+        }
+
+        .service-block:nth-child(even) .service-content > * {
+            direction: ltr;
+        }
+
+        .service-number {
+            font-size: clamp(200px, 20vw, 400px);
+            font-weight: 700;
+            letter-spacing: -0.08em;
+            opacity: 0.05;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .service-block:nth-child(odd) .service-number {
+            right: -100px;
+        }
+
+        .service-block:nth-child(even) .service-number {
+            left: -100px;
+        }
+
+        .service-info {
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-title {
+            font-size: clamp(48px, 6vw, 96px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 30px;
+            line-height: 0.9;
+        }
+
+        .service-description {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 50px;
+            max-width: 500px;
+        }
+
+        .service-link {
+            display: inline-block;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            color: inherit;
+            padding: 20px 60px;
+            border: 2px solid currentColor;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .service-link:hover::before {
+            left: 0;
+        }
+
+        .service-link:hover {
+            color: var(--cream);
+        }
+
+        .service-block:nth-child(even) .service-link:hover {
+            color: var(--black);
+        }
+
+        /* Visual Elements */
+        .service-visual {
+            position: relative;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .visual-element {
+            width: 400px;
+            height: 400px;
+            position: relative;
+        }
+
+        /* Design Visual */
+        .design-visual {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        /* Talent Visual */
+        .talent-visual {
+            background: transparent;
+            border: 3px solid var(--cream);
+            transform: rotate(45deg);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Digital Visual */
+        .digital-visual {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Footer */
+        footer {
+            padding: 120px 40px 60px;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: rotate(45deg) scale(1); }
+            50% { transform: rotate(45deg) scale(1.1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Parallax on scroll */
+        .parallax {
+            transform: translateY(0);
+            transition: transform 0.5s ease-out;
+        }
+
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .service-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+                text-align: center;
+            }
+
+            .service-description {
+                margin: 0 auto 50px;
+            }
+
+            .service-visual {
+                height: 300px;
+            }
+
+            .visual-element {
+                width: 250px;
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 60px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .service-title {
+                font-size: 48px;
+            }
+
+            .service-description {
+                font-size: 18px;
+            }
+
+            .service-number {
+                font-size: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">We Are<br>Streamlined</h1>
+            <p class="hero-subtitle">Three distinct practices. One unified vision.</p>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services">
+        <!-- Design & Branding -->
+        <div class="service-block">
+            <div class="service-number">01</div>
+            <div class="service-content">
+                <div class="service-info">
+                    <h2 class="service-title">Design &<br>Branding</h2>
+                    <p class="service-description">
+                        We craft visual identities that capture essence and drive engagement. 
+                        From concept to execution, we create brands that resonate.
+                    </p>
+                    <a href="#" class="service-link">Explore Design</a>
+                </div>
+                <div class="service-visual">
+                    <div class="visual-element design-visual"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Search -->
+        <div class="service-block">
+            <div class="service-number">02</div>
+            <div class="service-content">
+                <div class="service-info">
+                    <h2 class="service-title">Executive<br>Search</h2>
+                    <p class="service-description">
+                        Connecting visionary leaders with ambitious organizations. 
+                        We find the talent that transforms businesses.
+                    </p>
+                    <a href="talent.html" class="service-link">Explore Talent</a>
+                </div>
+                <div class="service-visual">
+                    <div class="visual-element talent-visual"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Digital Solutions -->
+        <div class="service-block">
+            <div class="service-number">03</div>
+            <div class="service-content">
+                <div class="service-info">
+                    <h2 class="service-title">Digital<br>Solutions</h2>
+                    <p class="service-description">
+                        Building digital experiences that inspire and perform. 
+                        From web to mobile, we bring ideas to life.
+                    </p>
+                    <a href="#" class="service-link">Explore Digital</a>
+                </div>
+                <div class="service-visual">
+                    <div class="visual-element digital-visual"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="footer-text">© 2024 Streamlined Co. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.service-number');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = 0.5;
+                const yPos = -(scrolled * speed);
+                element.style.transform = `translateY(calc(-50% + ${yPos}px))`;
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(50px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 1s ease-out';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements
+        document.querySelectorAll('.service-info, .visual-element').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

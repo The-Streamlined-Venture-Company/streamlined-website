@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            overflow: hidden;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Loader Container */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            z-index: 9999;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .loader-container.slide-up {
+            transform: translateY(-100%) scale(0.95);
+            opacity: 0.8;
+        }
+
+        /* Loader content wrapper */
+        .loader-wrapper {
+            text-align: center;
+            position: relative;
+        }
+
+        /* Logo container with glow effect */
+        .logo-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 60px;
+        }
+
+        .loader-logo {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logoFadeScale 1s 0.3s forwards;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: -20px;
+            background: radial-gradient(circle, rgba(245, 242, 237, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            animation: glowPulse 2s 1.3s infinite;
+        }
+
+        @keyframes logoFadeScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Text container */
+        .text-container {
+            max-width: 900px;
+            padding: 0 40px;
+        }
+
+        /* Greeting with enhanced typewriter */
+        .greeting-line {
+            font-size: 38px;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 50px;
+            min-height: 50px;
+        }
+
+        .typewriter-text {
+            display: inline-block;
+            position: relative;
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--cream);
+            margin-left: 3px;
+            animation: cursorBlink 0.8s infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .typewriter-cursor.hide {
+            opacity: 0;
+        }
+
+        @keyframes cursorBlink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        /* Tagline with fade and slide */
+        .tagline-container {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: taglineFadeSlide 1s 3s forwards;
+        }
+
+        .highlight-design {
+            color: #e25323;
+            font-style: italic;
+        }
+
+        @keyframes taglineFadeSlide {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Skip button */
+        .skip-button {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: var(--cream);
+            opacity: 0.5;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            animation: fadeIn 1s 2s forwards;
+        }
+
+        .skip-button:hover {
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 0.5; }
+        }
+
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            background: var(--cream);
+            color: var(--black);
+            height: 100vh;
+        }
+
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px 40px;
+            mix-blend-mode: difference;
+            opacity: 0;
+            animation: headerFadeIn 0.8s 0.5s forwards;
+        }
+
+        @keyframes headerFadeIn {
+            to { opacity: 1; }
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Service Panels with wave animation */
+        .service-panel {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(100vh);
+        }
+
+        .service-panel:nth-child(1) { 
+            animation: panelWaveIn 0.8s 0.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .service-panel:nth-child(2) { 
+            animation: panelWaveIn 0.8s 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+        .service-panel:nth-child(3) { 
+            animation: panelWaveIn 0.8s 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes panelWaveIn {
+            to { transform: translateY(0); }
+        }
+
+        .service-panel:hover {
+            flex: 1.8;
+        }
+
+        /* Panel 1 - Design */
+        .service-panel:nth-child(1) {
+            background: var(--cream);
+        }
+
+        /* Panel 2 - Talent */
+        .service-panel:nth-child(2) {
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        /* Panel 3 - Digital */
+        .service-panel:nth-child(3) {
+            background: var(--white);
+        }
+
+        /* Content */
+        .panel-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 80%;
+            opacity: 0;
+            animation: contentFadeIn 0.5s 1s forwards;
+        }
+
+        @keyframes contentFadeIn {
+            to { opacity: 1; }
+        }
+
+        .panel-number {
+            font-size: 200px;
+            font-weight: 700;
+            opacity: 0.1;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            letter-spacing: -0.06em;
+        }
+
+        .panel-title {
+            font-size: clamp(48px, 4vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-panel:hover .panel-title {
+            transform: scale(1.05);
+        }
+
+        .panel-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-bottom: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-panel:hover .panel-subtitle {
+            opacity: 1;
+        }
+
+        .panel-link {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            color: inherit;
+            padding-bottom: 4px;
+            border-bottom: 2px solid currentColor;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .service-panel:hover .panel-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .panel-link:hover {
+            padding-bottom: 8px;
+        }
+
+        /* Vertical Dividers */
+        .divider {
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            transform: scaleY(0);
+            transform-origin: top;
+        }
+
+        .divider:nth-child(4) {
+            left: 33.33%;
+            animation: dividerGrow 0.5s 1.2s forwards;
+        }
+
+        .divider:nth-child(5) {
+            left: 66.66%;
+            animation: dividerGrow 0.5s 1.3s forwards;
+        }
+
+        @keyframes dividerGrow {
+            to { transform: scaleY(1); }
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+            opacity: 0;
+            animation: footerFadeIn 0.5s 1.5s forwards;
+        }
+
+        @keyframes footerFadeIn {
+            to { opacity: 1; }
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--black);
+            opacity: 0.6;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .greeting-line {
+                font-size: 28px;
+            }
+
+            .tagline-container {
+                font-size: 22px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .service-panel:hover {
+                flex: 1;
+            }
+
+            .panel-number {
+                font-size: 100px;
+                top: 20px;
+                right: 20px;
+            }
+
+            .panel-title {
+                font-size: 36px;
+            }
+
+            .panel-subtitle {
+                font-size: 16px;
+            }
+
+            .divider {
+                display: none;
+            }
+
+            .panel-link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-wrapper">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="loader-logo">
+            </div>
+            <div class="text-container">
+                <h1 class="greeting-line">
+                    <span class="typewriter-text" id="typewriterText"></span>
+                    <span class="typewriter-cursor" id="cursor"></span>
+                </h1>
+                <p class="tagline-container">
+                    We help <span class="highlight-design">design-conscious</span> minds<br>
+                    streamline how they work and live
+                </p>
+            </div>
+        </div>
+        <div class="skip-button" onclick="skipLoader()">Skip intro →</div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header>
+            <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+        </header>
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Design & Branding -->
+            <div class="service-panel">
+                <div class="panel-number">01</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Design &<br>Branding</h2>
+                    <p class="panel-subtitle">Creating iconic identities that resonate</p>
+                    <a href="#" class="panel-link">Explore Design →</a>
+                </div>
+            </div>
+
+            <!-- Talent Agency -->
+            <div class="service-panel">
+                <div class="panel-number">02</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Executive<br>Search</h2>
+                    <p class="panel-subtitle">Connecting leaders with opportunities</p>
+                    <a href="talent.html" class="panel-link">Explore Talent →</a>
+                </div>
+            </div>
+
+            <!-- Digital Solutions -->
+            <div class="service-panel">
+                <div class="panel-number">03</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Digital<br>Solutions</h2>
+                    <p class="panel-subtitle">Transforming ideas into experiences</p>
+                    <a href="#" class="panel-link">Explore Digital →</a>
+                </div>
+            </div>
+
+            <!-- Dividers -->
+            <div class="divider"></div>
+            <div class="divider"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-text">© 2024 Streamlined Co.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get time-based greeting
+        function getTimeGreeting() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) {
+                return 'Good morning, we are Streamlined';
+            } else if (hour >= 12 && hour < 17) {
+                return 'Good afternoon, we are Streamlined';
+            } else {
+                return 'Good evening, we are Streamlined';
+            }
+        }
+
+        // Enhanced typewriter effect
+        const text = getTimeGreeting();
+        const typewriterElement = document.getElementById('typewriterText');
+        const cursorElement = document.getElementById('cursor');
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (charIndex < text.length) {
+                typewriterElement.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeWriter, 60);
+            } else {
+                // Hide cursor after typing
+                setTimeout(() => {
+                    cursorElement.classList.add('hide');
+                }, 500);
+            }
+        }
+
+        // Start typewriter after logo animation
+        setTimeout(typeWriter, 1500);
+
+        // Main transition
+        let transitionTimeout = setTimeout(() => {
+            document.getElementById('loader').classList.add('slide-up');
+            document.getElementById('mainContent').classList.add('show');
+        }, 5000);
+
+        // Skip function
+        function skipLoader() {
+            clearTimeout(transitionTimeout);
+            document.getElementById('loader').classList.add('slide-up');
+            document.getElementById('mainContent').classList.add('show');
+        }
+
+        // Panel hover effects
+        const panels = document.querySelectorAll('.service-panel');
+        
+        panels.forEach(panel => {
+            panel.addEventListener('mouseenter', function() {
+                panels.forEach(p => {
+                    if (p !== panel) {
+                        p.style.opacity = '0.8';
+                    }
+                });
+            });
+            
+            panel.addEventListener('mouseleave', function() {
+                panels.forEach(p => {
+                    p.style.opacity = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

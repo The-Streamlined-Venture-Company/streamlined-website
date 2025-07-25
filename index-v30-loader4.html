@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Streamlined - Final Working Loader</title>
+    <title>Streamlined</title>
     <style>
         * {
             margin: 0;
@@ -22,34 +22,12 @@
             --red: #c33710;
             --yellow: #f4b400;
             --blue: #004b8d;
-            /* Theme specific */
-            --bg-primary: #e7e4df;
-            --text-primary: #241e20;
-            --theme-toggle-bg: rgba(36, 30, 32, 0.1);
-            --theme-toggle-border: rgba(36, 30, 32, 0.2);
-            --theme-toggle-color: #241e20;
-        }
-
-        /* Dark theme */
-        body.dark-theme {
-            --bg-primary: #141414;
-            --text-primary: #F5E6D3;
-            --bg: #E8E5E0;
-            --text-dark: #F5E6D3;
-            --theme-toggle-bg: rgba(245, 230, 211, 0.1);
-            --theme-toggle-border: rgba(245, 230, 211, 0.2);
-            --theme-toggle-color: #F5E6D3;
-        }
-        
-        /* Dark theme loader background */
-        body.dark-theme .loader-container {
-            background: var(--black);
         }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            background: var(--black);
+            color: var(--bg);
             overflow: hidden;
             height: 100vh;
             -webkit-font-smoothing: antialiased;
@@ -63,7 +41,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: var(--bg-primary);
+            background: var(--black);
             z-index: 9999;
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -107,13 +85,13 @@
 
         .greeting-icon {
             opacity: 0;
-            animation: fadeIn 0.8s 0.5s forwards;
+            animation: fadeIn 0.5s 0.3s forwards;
         }
 
         .greeting-icon svg {
             width: 100%;
             height: 100%;
-            stroke: var(--text-primary);
+            stroke: var(--bg);
             fill: none;
             stroke-width: 1.5;
         }
@@ -126,77 +104,78 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: invert(1) brightness(0.15);
+            filter: brightness(0) invert(1);
         }
 
-        /* Text wrapper using the working approach */
-        .text-wrapper {
-            position: relative;
-            height: 50px;
+        /* Version 4: Centered Flow with v1 Speed */
+        .typewriter-container {
+            text-align: center;
+            width: 100%;
+        }
+
+        .typewriter-line {
             font-size: 36px;
             font-weight: 500;
             letter-spacing: -0.02em;
+            line-height: 1.4;
             margin-bottom: 20px;
-            color: var(--text-primary);
-        }
-
-        .text-container {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
+            overflow: hidden;
+            position: relative;
+            height: 50px;
             display: flex;
             align-items: center;
-            gap: 0.3em;
-            white-space: nowrap;
+            justify-content: center;
         }
 
-        .morning {
-            transition: margin-right 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .typewriter-line.tagline {
+            font-size: 24px;
+            font-weight: 400;
+            opacity: 0.8;
+            height: 35px;
+        }
+
+        .text-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .char {
+            display: inline-block;
             opacity: 0;
-            animation: fadeIn 0.8s 1s forwards;
+            transform: translateX(-20px);
+            animation: glideIn 0.4s ease forwards;
         }
 
-        .comma {
+        @keyframes glideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1.2em;
+            background: var(--bg);
+            margin-left: 3px;
+            animation: blink 0.8s infinite;
+            vertical-align: text-bottom;
             opacity: 0;
-            transition: opacity 0.4s ease-in-out;
-            transition-delay: 0.2s;
         }
 
-        .streamlined {
-            max-width: 0;
-            overflow: hidden;
-            transition: max-width 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            transition-delay: 0.4s;
-        }
-
-        /* Animation states */
-        .animate .morning {
-            margin-right: 0;
-        }
-
-        .animate .comma {
+        .cursor.show {
             opacity: 1;
         }
 
-        .animate .streamlined {
-            max-width: 400px;
-        }
-
-        /* Second line - loader specific */
-        .loader-tagline {
-            font-size: 24px;
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            line-height: 1.4;
-            text-align: center;
+        .cursor.hide {
+            animation: none;
             opacity: 0;
-            transition: opacity 0.6s ease;
-            color: var(--text-primary);
         }
 
-        .loader-tagline.show {
-            opacity: 0.8;
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
         }
 
         @keyframes fadeIn {
@@ -207,11 +186,10 @@
         .main-content {
             opacity: 0;
             visibility: hidden;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            background: var(--bg);
+            color: var(--text-dark);
             min-height: 100vh;
             padding: 40px;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .main-content.show {
@@ -219,8 +197,9 @@
             visibility: visible;
         }
 
-        /* Header */
+        /* Header - Updated font weight */
         .header-section {
+            margin-bottom: 80px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 0.8s 0.3s forwards;
@@ -233,127 +212,22 @@
             }
         }
 
-        /* New bordered header */
-        .header-border {
-            border-top: 2px solid var(--text-primary);
-            padding: 20px 40px;
-            margin-bottom: 80px;
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
         }
 
-        .header-content {
+        .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 80px;
         }
 
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .brand-name {
-            font-size: 16px;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
-
-        .nav-items {
-            display: flex;
-            gap: 20px;
-            font-size: 16px;
-        }
-
-        .nav-items span {
-            opacity: 0.7;
-        }
-
-        .nav-items span:nth-child(2) {
-            opacity: 1;
-            font-weight: 500;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-        }
-
-        .gallery-link {
-            font-size: 16px;
-            letter-spacing: 0.02em;
-        }
-
-        .agency-credit {
-            font-size: 14px;
-            opacity: 0.7;
-        }
-
-        /* Contact card in dark mode */
-        body.dark-theme .card.contact-card {
-            background-color: #F5E6D3 !important;
-            background: #F5E6D3 !important;
-            color: #151516 !important;
-        }
-        
-        /* Extra specificity to ensure it applies */
-        body.dark-theme .cards-container .card.contact-card {
-            background-color: #F5E6D3 !important;
-            background: #F5E6D3 !important;
-        }
-        
-        /* Override the nth-child selector */
-        body.dark-theme .card:nth-child(4).contact-card {
-            background-color: #F5E6D3 !important;
-            background: #F5E6D3 !important;
-        }
-
-        body.dark-theme .contact-card .card-date,
-        body.dark-theme .contact-card .card-title,
-        body.dark-theme .contact-card .card-subtitle {
-            color: #151516 !important;
-        }
-
-        body.dark-theme .contact-card .card-tag {
-            background: rgba(21, 21, 22, 0.1) !important;
-            color: #151516 !important;
-        }
-
-        body.dark-theme .contact-card .card-tag:hover {
-            background: rgba(21, 21, 22, 0.15) !important;
-        }
-
-        body.dark-theme .contact-card .contact-item a {
-            color: #151516 !important;
-        }
-
-        body.dark-theme .contact-card .contact-item a::after {
-            background: #151516 !important;
-        }
-
-        body.dark-theme .contact-card .service-icon {
-            color: rgba(21, 21, 22, 0.05) !important;
-        }
-
-        body.dark-theme .contact-card:hover .service-icon {
-            color: rgba(21, 21, 22, 0.08) !important;
-        }
-
-        /* Loader text in dark mode */
-        body.dark-theme .loader-content,
-        body.dark-theme .text-wrapper,
-        body.dark-theme .morning,
-        body.dark-theme .streamlined,
-        body.dark-theme .loader-tagline {
-            color: #F5E6D3;
-        }
-
-        body.dark-theme .greeting-icon svg {
-            stroke: #F5E6D3;
-        }
-
-        body.dark-theme .logo-icon img {
-            filter: none;
+        .logo {
+            height: 40px;
+            width: auto;
+            filter: invert(1) brightness(0.15);
         }
 
         .tagline {
@@ -394,7 +268,7 @@
             opacity: 0.8;
         }
 
-        /* Cards Container */
+        /* Cards Container - From cards1 layout */
         .cards-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -403,7 +277,7 @@
             gap: 30px;
         }
 
-        /* Cards */
+        /* Card V30 - v27 Colors with v29 Layout */
         .card {
             padding: 40px;
             transition: all 0.3s ease;
@@ -414,11 +288,9 @@
             position: relative;
             overflow: hidden;
             color: var(--white);
-            display: flex;
-            flex-direction: column;
-            min-height: 320px;
         }
 
+        /* Bold vibrant backgrounds with gradient overlay */
         .card:nth-child(1) { 
             background: var(--red);
             animation-delay: 0.6s;
@@ -439,6 +311,7 @@
             animation-delay: 1.2s;
         }
 
+        /* Gradient overlay for depth */
         .card::before {
             content: '';
             position: absolute;
@@ -462,6 +335,7 @@
             box-shadow: 0 35px 70px rgba(0, 0, 0, 0.35);
         }
 
+        /* Card Header */
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -478,6 +352,7 @@
             opacity: 0.9;
         }
 
+        /* Big Background Number - Vertical arrangement */
         .service-icon {
             position: absolute;
             font-size: 480px;
@@ -491,6 +366,7 @@
             transform-origin: center;
         }
 
+        /* Vertical number positions */
         .card:nth-child(1) .service-icon,
         .card:nth-child(2) .service-icon,
         .card:nth-child(3) .service-icon {
@@ -525,6 +401,7 @@
             transform: translate(-50%, -50%) rotate(-45deg);
         }
 
+        /* Card Content */
         .card-title {
             font-size: 28px;
             font-weight: 700;
@@ -542,7 +419,6 @@
             opacity: 0.95;
             position: relative;
             z-index: 1;
-            flex: 1;
         }
 
         .card:nth-child(3) .card-title,
@@ -554,6 +430,7 @@
             opacity: 0.8;
         }
 
+        /* Tag Design - Bold block */
         .card-tag {
             display: inline-block;
             font-size: 14px;
@@ -566,8 +443,6 @@
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            align-self: flex-start;
-            margin-top: auto;
         }
 
         .card:nth-child(3) .card-tag {
@@ -584,6 +459,7 @@
             background: rgba(0, 0, 0, 0.15);
         }
 
+        /* Contact Card Special Styling */
         .contact-card .service-icon {
             font-size: 400px;
             top: 50%;
@@ -630,45 +506,16 @@
             width: 100%;
         }
 
-        /* Theme toggle button matching index.html */
-        .theme-toggle {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--theme-toggle-border);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            color: var(--theme-toggle-color);
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        .theme-toggle:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
+        /* Mobile */
         @media (max-width: 768px) {
-            .text-wrapper {
+            .typewriter-line {
                 font-size: 24px;
                 height: 35px;
             }
 
-            .tagline {
+            .typewriter-line.tagline {
                 font-size: 16px;
-            }
-
-            .icon-container {
-                width: 40px;
-                height: 40px;
-                margin-bottom: 40px;
+                height: 25px;
             }
 
             .header-top {
@@ -727,13 +574,20 @@
                     <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined">
                 </div>
             </div>
-            <div class="text-wrapper">
-                <div class="text-container" id="textContainer">
-                    <span class="morning"><span id="greetingText">Good Morning</span><span class="comma">,</span></span>
-                    <span class="streamlined">we are Streamlined</span>
+            <div class="typewriter-container">
+                <div class="typewriter-line">
+                    <div class="text-wrapper">
+                        <span id="line1"></span>
+                        <span class="cursor" id="cursor1"></span>
+                    </div>
+                </div>
+                <div class="typewriter-line tagline">
+                    <div class="text-wrapper">
+                        <span id="line2"></span>
+                        <span class="cursor" id="cursor2"></span>
+                    </div>
                 </div>
             </div>
-            <div class="loader-tagline" id="tagline">We help design-conscious minds streamline how they live and work.</div>
         </div>
     </div>
 
@@ -741,97 +595,73 @@
     <div class="main-content" id="mainContent">
         <!-- Header -->
         <header class="header-section">
-            <div class="header-border">
-                <div class="header-content">
-                    <div class="header-left">
-                        <div class="brand-name">Streamlined</div>
-                        <div class="nav-items">
-                            <span>/</span>
-                            <span>Streamlining Ambition</span>
-                            <span>/</span>
-                            <span>About</span>
-                        </div>
-                    </div>
-                    <div class="header-right">
-                        <div class="gallery-link">[Gallery]</div>
-                        <button class="theme-toggle" id="themeToggle">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="12" cy="12" r="5"></circle>
-                                <line x1="12" y1="1" x2="12" y2="3"></line>
-                                <line x1="12" y1="21" x2="12" y2="23"></line>
-                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-                                <line x1="1" y1="12" x2="3" y2="12"></line>
-                                <line x1="21" y1="12" x2="23" y2="12"></line>
-                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-                            </svg>
-                            <span>Dark</span>
-                        </button>
-                        <div class="agency-credit">Streamlined ©2025</div>
-                    </div>
+            <div class="header-content">
+                <div class="header-top">
+                    <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+                    <a href="#contact" class="tagline" style="text-decoration: none; color: var(--text-dark);">Contact</a>
                 </div>
-            </div>
-            <div style="max-width: 1400px; margin: 0 auto; padding: 0 40px;">
                 <h1 class="intro-heading">
                     Streamlining Ambition
                 </h1>
                 <div class="tagline-divider"></div>
-                <p class="tagline-text">We help design-conscious minds streamline how they live and work.</p>
+                <p class="tagline-text">We help design-conscious minds streamline how they work and live.</p>
             </div>
         </header>
 
         <!-- Cards -->
         <div class="cards-container">
-            <!-- Talent Card -->
+            <!-- Design & Branding Card -->
             <div class="card">
                 <div class="card-header">
-                    <div class="card-date">People First</div>
+                    <div class="card-date">2024—Present</div>
                 </div>
-                <h2 class="card-title">Talent</h2>
+                <h2 class="card-title">Design & Branding</h2>
                 <p class="card-subtitle">
-                    Expert professionals ready to transform your vision into reality with cutting-edge skills and creative solutions
+                    We craft visual identities that capture essence and drive engagement. 
+                    From concept to execution, creating brands that resonate.
                 </p>
-                <div class="card-tag">Enter</div>
+                <div class="card-tag">Visual Identity</div>
                 <div class="service-icon">01</div>
             </div>
 
-            <!-- Interfaces Card -->
+            <!-- Executive Search Card -->
             <div class="card">
                 <div class="card-header">
-                    <div class="card-date">Digital Design</div>
+                    <div class="card-date">2021—Present</div>
                 </div>
-                <h2 class="card-title">Interfaces</h2>
+                <h2 class="card-title">Executive Search</h2>
                 <p class="card-subtitle">
-                    Beautiful, functional digital experiences that captivate users and drive meaningful engagement
+                    Connecting visionary leaders with ambitious organizations. 
+                    We find the talent that transforms businesses.
                 </p>
-                <div class="card-tag">Enter</div>
+                <div class="card-tag">Talent Solutions</div>
                 <div class="service-icon">02</div>
             </div>
 
-            <!-- Platforms Card -->
+            <!-- Digital Solutions Card -->
             <div class="card">
                 <div class="card-header">
-                    <div class="card-date">Technology</div>
+                    <div class="card-date">2020—Present</div>
                 </div>
-                <h2 class="card-title">Platforms</h2>
+                <h2 class="card-title">Digital Solutions</h2>
                 <p class="card-subtitle">
-                    Modern tools and systems for efficient workflows that scale with your growing business
+                    Building digital experiences that inspire and perform. 
+                    From web to mobile, we bring ideas to life.
                 </p>
-                <div class="card-tag">Enter</div>
+                <div class="card-tag">Development</div>
                 <div class="service-icon">03</div>
             </div>
 
             <!-- Contact Card -->
             <div class="card contact-card">
                 <div class="card-header">
-                    <div class="card-date">Get in Touch</div>
+                    <div class="card-date">Ready for work</div>
                 </div>
                 <h2 class="card-title">Let's Connect</h2>
                 <p class="card-subtitle">
                     We're always interested in new projects and opportunities to help streamline your business.
                 </p>
-                <div class="card-tag">Enter</div>
+                <div class="card-tag">Get in Touch</div>
                 <div class="contact-info">
                     <div class="contact-item">
                         <a href="mailto:hello@streamlined.com">hello@streamlined.com</a>
@@ -851,7 +681,7 @@
             const hour = new Date().getHours();
             if (hour >= 5 && hour < 12) {
                 return {
-                    greeting: 'Good Morning',
+                    greeting: 'Good morning',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="5"/>
                         <line x1="12" y1="1" x2="12" y2="3"/>
@@ -866,7 +696,7 @@
                 };
             } else if (hour >= 12 && hour < 17) {
                 return {
-                    greeting: 'Good Afternoon',
+                    greeting: 'Good afternoon',
                     icon: `<svg viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="6"/>
                         <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
@@ -874,7 +704,7 @@
                 };
             } else {
                 return {
-                    greeting: 'Good Evening',
+                    greeting: 'Good evening',
                     icon: `<svg viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                     </svg>`
@@ -882,51 +712,57 @@
             }
         }
 
-        // Set icon and greeting
+        // Set icon
         const timeData = getTimeData();
         document.querySelector('.greeting-icon').innerHTML = timeData.icon;
-        document.getElementById('greetingText').textContent = timeData.greeting;
 
-        // Get elements
-        const textContainer = document.getElementById('textContainer');
-        const tagline = document.getElementById('tagline');
-        const iconContainer = document.getElementById('iconContainer');
+        // Version 4: Fast staggered flow like v1
+        const line1Text = `${timeData.greeting}, we are Streamlined`;
+        const line2Text = 'We help design-conscious minds streamline how they work and live.';
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const cursor1 = document.getElementById('cursor1');
+        const cursor2 = document.getElementById('cursor2');
+        
+        function typeCharacters(element, text, cursor, startDelay, charDelay = 30) {
+            return new Promise((resolve) => {
+                cursor.classList.add('show');
+                
+                text.split('').forEach((char, index) => {
+                    setTimeout(() => {
+                        const span = document.createElement('span');
+                        span.classList.add('char');
+                        span.textContent = char === ' ' ? '\u00A0' : char;
+                        span.style.animationDelay = `${index * 20}ms`;
+                        element.insertBefore(span, cursor);
+                        
+                        if (index === text.length - 1) {
+                            setTimeout(() => {
+                                cursor.classList.remove('show');
+                                cursor.classList.add('hide');
+                                resolve();
+                            }, 300);
+                        }
+                    }, startDelay + (index * charDelay));
+                });
+            });
+        }
 
-        // Start animation sequence
-        setTimeout(() => {
-            textContainer.classList.add('animate');
-            iconContainer.classList.add('flipped');
+        // Start typing with fast flow effect
+        setTimeout(async () => {
+            await typeCharacters(line1, line1Text, cursor1, 0);
             
-            // Show tagline after text animation
-            setTimeout(() => {
-                tagline.classList.add('show');
-            }, 2200);
-        }, 2000);
+            // Flip icon
+            document.getElementById('iconContainer').classList.add('flipped');
+            
+            await typeCharacters(line2, line2Text, cursor2, 200, 20);
+        }, 800);
 
         // Transition to main content
         setTimeout(() => {
             document.getElementById('loader').classList.add('slide-up');
             document.getElementById('mainContent').classList.add('show');
-        }, 7500);
-
-        // Theme toggle functionality
-        const body = document.body;
-        const themeToggle = document.getElementById('themeToggle');
-        const currentTheme = localStorage.getItem('theme') || 'light';
-        
-        // Set initial theme
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-theme');
-            themeToggle.querySelector('span').textContent = 'Light';
-        }
-        
-        themeToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevent card click
-            body.classList.toggle('dark-theme');
-            const isDark = body.classList.contains('dark-theme');
-            themeToggle.querySelector('span').textContent = isDark ? 'Light' : 'Dark';
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        });
+        }, 4500);
     </script>
 </body>
 </html>

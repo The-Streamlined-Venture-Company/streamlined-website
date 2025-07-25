@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Grid Container */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            height: 100vh;
+            position: relative;
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Grid Items */
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Center Logo Item */
+        .grid-item:nth-child(5) {
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .center-logo {
+            height: 40px;
+            width: auto;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: logoReveal 1s 0.5s forwards;
+        }
+
+        @keyframes logoReveal {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Service Items */
+        .grid-item:nth-child(2),
+        .grid-item:nth-child(4),
+        .grid-item:nth-child(6) {
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        /* Corner and Edge Items */
+        .grid-item:nth-child(1),
+        .grid-item:nth-child(3),
+        .grid-item:nth-child(7),
+        .grid-item:nth-child(8),
+        .grid-item:nth-child(9) {
+            background: var(--black);
+            opacity: 0;
+            animation: fadeIn 0.8s forwards;
+        }
+
+        .grid-item:nth-child(1) { animation-delay: 0.1s; }
+        .grid-item:nth-child(3) { animation-delay: 0.2s; }
+        .grid-item:nth-child(7) { animation-delay: 0.3s; }
+        .grid-item:nth-child(8) { animation-delay: 0.4s; }
+        .grid-item:nth-child(9) { animation-delay: 0.5s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Service Content */
+        .service-content {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .grid-item:hover .service-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .service-number {
+            font-size: 100px;
+            font-weight: 700;
+            opacity: 0.1;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            letter-spacing: -0.06em;
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        /* Design Icon - Circle */
+        .icon-design {
+            background: transparent;
+            border: 3px solid var(--cream);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        /* Talent Icon - Square */
+        .icon-talent {
+            background: transparent;
+            border: 3px solid var(--cream);
+            transform: rotate(45deg);
+        }
+
+        /* Digital Icon - Triangle */
+        .icon-digital {
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 80px solid var(--cream);
+            background: transparent;
+        }
+
+        .service-title {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        .service-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
+        .service-link {
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--cream);
+            padding-bottom: 4px;
+            border-bottom: 2px solid var(--cream);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .grid-item:hover .service-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .service-link:hover {
+            padding-bottom: 8px;
+        }
+
+        /* Transform States */
+        .grid-container.service-active {
+            grid-template-columns: 0 1fr 0;
+            grid-template-rows: 0 1fr 0;
+        }
+
+        .grid-container.service-active .grid-item:not(.active) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .grid-container.service-active .grid-item.active {
+            grid-column: 1 / -1;
+            grid-row: 1 / -1;
+        }
+
+        /* Full Service View */
+        .full-service {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+        }
+
+        .grid-item.active .full-service {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .full-service-content {
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .full-service-title {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+        }
+
+        .full-service-description {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .full-service-cta {
+            display: inline-block;
+            padding: 20px 60px;
+            background: var(--cream);
+            color: var(--black);
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .full-service-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 242, 237, 0.2);
+        }
+
+        /* Close Button */
+        .close-btn {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: transparent;
+            border: 2px solid var(--cream);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--cream);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .grid-item.active .close-btn {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .close-btn:hover {
+            background: var(--cream);
+            color: var(--black);
+            transform: rotate(90deg);
+        }
+
+        /* Animations */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .grid-item:nth-child(1),
+            .grid-item:nth-child(3),
+            .grid-item:nth-child(7),
+            .grid-item:nth-child(8),
+            .grid-item:nth-child(9) {
+                display: none;
+            }
+
+            .grid-item {
+                min-height: 33.33vh;
+            }
+
+            .grid-item:nth-child(5) {
+                order: -1;
+                min-height: 20vh;
+            }
+
+            .service-content {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            .service-link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .full-service {
+                padding: 40px;
+            }
+
+            .full-service-title {
+                font-size: 48px;
+            }
+
+            .full-service-description {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container" id="gridContainer">
+        <!-- Row 1 -->
+        <div class="grid-item"></div>
+        <div class="grid-item" data-service="design">
+            <div class="service-number">01</div>
+            <div class="service-content">
+                <div class="service-icon icon-design"></div>
+                <h2 class="service-title">Design</h2>
+                <p class="service-subtitle">Visual Identity & Branding</p>
+                <a href="#" class="service-link">Explore →</a>
+            </div>
+            <div class="full-service">
+                <div class="full-service-content">
+                    <h2 class="full-service-title">Design & Branding</h2>
+                    <p class="full-service-description">
+                        We create visual identities that capture essence and drive engagement. 
+                        From concept to execution, we craft brands that resonate.
+                    </p>
+                    <a href="#" class="full-service-cta">View Our Work</a>
+                </div>
+            </div>
+            <button class="close-btn">×</button>
+        </div>
+        <div class="grid-item"></div>
+
+        <!-- Row 2 -->
+        <div class="grid-item" data-service="talent">
+            <div class="service-number">02</div>
+            <div class="service-content">
+                <div class="service-icon icon-talent"></div>
+                <h2 class="service-title">Talent</h2>
+                <p class="service-subtitle">Executive Search</p>
+                <a href="talent.html" class="service-link">Explore →</a>
+            </div>
+            <div class="full-service">
+                <div class="full-service-content">
+                    <h2 class="full-service-title">Executive Search</h2>
+                    <p class="full-service-description">
+                        Connecting visionary leaders with ambitious organizations. 
+                        We find the talent that transforms businesses.
+                    </p>
+                    <a href="talent.html" class="full-service-cta">Discover Talent</a>
+                </div>
+            </div>
+            <button class="close-btn">×</button>
+        </div>
+        <div class="grid-item">
+            <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="center-logo">
+        </div>
+        <div class="grid-item" data-service="digital">
+            <div class="service-number">03</div>
+            <div class="service-content">
+                <div class="service-icon icon-digital"></div>
+                <h2 class="service-title">Digital</h2>
+                <p class="service-subtitle">Web & Mobile Solutions</p>
+                <a href="#" class="service-link">Explore →</a>
+            </div>
+            <div class="full-service">
+                <div class="full-service-content">
+                    <h2 class="full-service-title">Digital Solutions</h2>
+                    <p class="full-service-description">
+                        Building digital experiences that inspire and perform. 
+                        From web to mobile, we bring ideas to life.
+                    </p>
+                    <a href="#" class="full-service-cta">See Projects</a>
+                </div>
+            </div>
+            <button class="close-btn">×</button>
+        </div>
+
+        <!-- Row 3 -->
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+        <div class="grid-item"></div>
+    </div>
+
+    <script>
+        // Grid transformation
+        const gridContainer = document.getElementById('gridContainer');
+        const serviceItems = document.querySelectorAll('[data-service]');
+        const closeButtons = document.querySelectorAll('.close-btn');
+
+        serviceItems.forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Prevent click if already active
+                if (this.classList.contains('active')) return;
+                
+                // Don't trigger on link clicks
+                if (e.target.tagName === 'A') return;
+
+                // Activate service
+                gridContainer.classList.add('service-active');
+                this.classList.add('active');
+            });
+        });
+
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Deactivate service
+                gridContainer.classList.remove('service-active');
+                this.parentElement.classList.remove('active');
+            });
+        });
+
+        // Escape key to close
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                gridContainer.classList.remove('service-active');
+                document.querySelector('.grid-item.active')?.classList.remove('active');
+            }
+        });
+
+        // Hover effects
+        serviceItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                if (!gridContainer.classList.contains('service-active')) {
+                    serviceItems.forEach(other => {
+                        if (other !== this) {
+                            other.style.opacity = '0.6';
+                        }
+                    });
+                }
+            });
+
+            item.addEventListener('mouseleave', function() {
+                if (!gridContainer.classList.contains('service-active')) {
+                    serviceItems.forEach(other => {
+                        other.style.opacity = '1';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streamlined</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--black);
+            color: var(--cream);
+            overflow: hidden;
+            height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Loader Container */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--black);
+            z-index: 9999;
+            transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .loader-container.slide-up {
+            transform: translateY(-100%);
+        }
+
+        /* Content wrapper */
+        .loader-content {
+            text-align: center;
+            max-width: 900px;
+            padding: 0 40px;
+        }
+
+        /* Logo with scale animation */
+        .loader-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 60px;
+            opacity: 0;
+            transform: scale(0.5) rotate(-180deg);
+            animation: logoReveal 1s 0.3s forwards;
+        }
+
+        @keyframes logoReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        /* Greeting typewriter */
+        .greeting-wrapper {
+            margin-bottom: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .greeting-text {
+            font-size: 36px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            width: 0;
+            border-right: 3px solid var(--cream);
+            animation: typing 2s steps(30) 1.5s forwards, blinkCursor 0.8s 1.5s infinite;
+        }
+
+        @keyframes typing {
+            to { width: 100%; }
+        }
+
+        @keyframes blinkCursor {
+            0%, 49% { border-color: var(--cream); }
+            50%, 100% { border-color: transparent; }
+        }
+
+        /* Tagline with word-by-word reveal */
+        .tagline-wrapper {
+            font-size: 26px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0;
+            animation: fadeIn 0.5s 3.8s forwards;
+        }
+
+        .tagline-word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: wordReveal 0.4s forwards;
+        }
+
+        .tagline-word:nth-child(1) { animation-delay: 3.8s; }
+        .tagline-word:nth-child(2) { animation-delay: 3.9s; }
+        .tagline-word:nth-child(3) { animation-delay: 4s; }
+        .tagline-word:nth-child(4) { animation-delay: 4.1s; }
+        .tagline-word:nth-child(5) { animation-delay: 4.2s; }
+        .tagline-word:nth-child(6) { animation-delay: 4.3s; }
+        .tagline-word:nth-child(7) { animation-delay: 4.4s; }
+        .tagline-word:nth-child(8) { animation-delay: 4.5s; }
+        .tagline-word:nth-child(9) { animation-delay: 4.6s; }
+        .tagline-word:nth-child(10) { animation-delay: 4.7s; }
+
+        @keyframes wordReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Main Content */
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            background: var(--cream);
+            color: var(--black);
+            height: 100vh;
+        }
+
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px 40px;
+            mix-blend-mode: difference;
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Service Panels with stagger animation */
+        .service-panel {
+            flex: 1;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        .service-panel:nth-child(1) { 
+            animation: panelReveal 0.8s 0.2s forwards;
+        }
+        .service-panel:nth-child(2) { 
+            animation: panelReveal 0.8s 0.4s forwards;
+        }
+        .service-panel:nth-child(3) { 
+            animation: panelReveal 0.8s 0.6s forwards;
+        }
+
+        @keyframes panelReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .service-panel:hover {
+            flex: 1.8;
+        }
+
+        /* Panel 1 - Design */
+        .service-panel:nth-child(1) {
+            background: var(--cream);
+        }
+
+        /* Panel 2 - Talent */
+        .service-panel:nth-child(2) {
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        /* Panel 3 - Digital */
+        .service-panel:nth-child(3) {
+            background: var(--white);
+        }
+
+        /* Content */
+        .panel-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 80%;
+        }
+
+        .panel-number {
+            font-size: 200px;
+            font-weight: 700;
+            opacity: 0.1;
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            letter-spacing: -0.06em;
+        }
+
+        .panel-title {
+            font-size: clamp(48px, 4vw, 72px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .service-panel:hover .panel-title {
+            transform: scale(1.05);
+        }
+
+        .panel-subtitle {
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-bottom: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-panel:hover .panel-subtitle {
+            opacity: 1;
+        }
+
+        .panel-link {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            color: inherit;
+            padding-bottom: 4px;
+            border-bottom: 2px solid currentColor;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .service-panel:hover .panel-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .panel-link:hover {
+            padding-bottom: 8px;
+        }
+
+        /* Vertical Dividers */
+        .divider {
+            position: absolute;
+            top: 10%;
+            bottom: 10%;
+            width: 1px;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .divider:nth-child(4) {
+            left: 33.33%;
+        }
+
+        .divider:nth-child(5) {
+            left: 66.66%;
+        }
+
+        /* Footer */
+        footer {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            z-index: 100;
+            mix-blend-mode: difference;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--black);
+            opacity: 0.6;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .greeting-text {
+                font-size: 26px;
+            }
+
+            .tagline-wrapper {
+                font-size: 20px;
+            }
+
+            .container {
+                flex-direction: column;
+            }
+
+            .service-panel:hover {
+                flex: 1;
+            }
+
+            .panel-number {
+                font-size: 100px;
+                top: 20px;
+                right: 20px;
+            }
+
+            .panel-title {
+                font-size: 36px;
+            }
+
+            .panel-subtitle {
+                font-size: 16px;
+            }
+
+            .divider {
+                display: none;
+            }
+
+            .panel-link {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader-content">
+            <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="loader-logo">
+            <div class="greeting-wrapper">
+                <h1 class="greeting-text" id="greeting"></h1>
+            </div>
+            <p class="tagline-wrapper">
+                <span class="tagline-word">We</span>
+                <span class="tagline-word">help</span>
+                <span class="tagline-word">design-conscious</span>
+                <span class="tagline-word">minds</span>
+                <span class="tagline-word">streamline</span>
+                <span class="tagline-word">how</span>
+                <span class="tagline-word">they</span>
+                <span class="tagline-word">work</span>
+                <span class="tagline-word">and</span>
+                <span class="tagline-word">live</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <header>
+            <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+        </header>
+
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Design & Branding -->
+            <div class="service-panel">
+                <div class="panel-number">01</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Design &<br>Branding</h2>
+                    <p class="panel-subtitle">Creating iconic identities that resonate</p>
+                    <a href="#" class="panel-link">Explore Design →</a>
+                </div>
+            </div>
+
+            <!-- Talent Agency -->
+            <div class="service-panel">
+                <div class="panel-number">02</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Executive<br>Search</h2>
+                    <p class="panel-subtitle">Connecting leaders with opportunities</p>
+                    <a href="talent.html" class="panel-link">Explore Talent →</a>
+                </div>
+            </div>
+
+            <!-- Digital Solutions -->
+            <div class="service-panel">
+                <div class="panel-number">03</div>
+                <div class="panel-content">
+                    <h2 class="panel-title">Digital<br>Solutions</h2>
+                    <p class="panel-subtitle">Transforming ideas into experiences</p>
+                    <a href="#" class="panel-link">Explore Digital →</a>
+                </div>
+            </div>
+
+            <!-- Dividers -->
+            <div class="divider"></div>
+            <div class="divider"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer-text">© 2024 Streamlined Co.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get time-based greeting
+        function getTimeGreeting() {
+            const hour = new Date().getHours();
+            if (hour >= 5 && hour < 12) {
+                return 'Good morning, we are Streamlined';
+            } else if (hour >= 12 && hour < 17) {
+                return 'Good afternoon, we are Streamlined';
+            } else {
+                return 'Good evening, we are Streamlined';
+            }
+        }
+
+        // Set greeting text
+        document.getElementById('greeting').textContent = getTimeGreeting();
+
+        // Slide up loader after animations complete
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('slide-up');
+            document.getElementById('mainContent').classList.add('show');
+        }, 5500);
+
+        // Panel hover effects
+        const panels = document.querySelectorAll('.service-panel');
+        
+        panels.forEach(panel => {
+            panel.addEventListener('mouseenter', function() {
+                panels.forEach(p => {
+                    if (p !== panel) {
+                        p.style.opacity = '0.8';
+                    }
+                });
+            });
+            
+            panel.addEventListener('mouseleave', function() {
+                panels.forEach(p => {
+                    p.style.opacity = '1';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
