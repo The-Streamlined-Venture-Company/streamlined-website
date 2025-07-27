@@ -119,19 +119,6 @@
         .logo {
             height: 30px;
             width: auto;
-            /* Initial state - muted on blue header */
-            filter: saturate(0.9) opacity(0.95) brightness(1.2);
-            transition: filter 0.3s ease;
-        }
-
-        /* When scrolled - muted on light background */
-        header.scrolled .logo {
-            filter: saturate(0.8) opacity(0.9);
-        }
-
-        /* Dark theme when scrolled - adjusted muting */
-        body.dark-theme header.scrolled .logo {
-            filter: saturate(0.75) opacity(0.85) brightness(1.1);
         }
 
         .brand-name {

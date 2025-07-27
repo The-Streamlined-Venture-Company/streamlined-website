@@ -63,10 +63,6 @@
             background: var(--black);
         }
         
-        /* Dark theme loader - slightly adjusted muting */
-        body.dark-theme .logo-icon img {
-            filter: saturate(0.8) opacity(0.9) brightness(1.1);
-        }
 
         body {
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -174,9 +170,6 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            /* Slightly less muted for loader visibility */
-            filter: saturate(0.85) opacity(0.95);
-            transition: filter 0.3s ease;
         }
 
         /* Text wrapper using the working approach */
@@ -374,14 +367,6 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            /* Muted effect to match service cards */
-            filter: saturate(0.8) opacity(0.9);
-            transition: filter 0.3s ease;
-        }
-
-        /* Dark mode - slightly different muting */
-        body.dark-theme .header-content .logo-container img {
-            filter: saturate(0.75) opacity(0.85) brightness(1.1);
         }
 
         /* Vertical divider between logo and heading */
