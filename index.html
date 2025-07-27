@@ -126,6 +126,23 @@
         .icon-container.logo-only {
             animation: logoFadeScale 0.8s ease-out forwards;
         }
+        
+        /* Returning visitor GIF logo */
+        .loader-container .returning-logo {
+            display: none;
+            width: 100px;
+            height: 100px;
+            filter: saturate(0.7) opacity(0.85);
+        }
+        
+        .icon-container.logo-only .returning-logo {
+            display: block;
+        }
+        
+        .icon-container.logo-only .logo-icon,
+        .icon-container.logo-only .greeting-icon {
+            display: none;
+        }
 
         @keyframes logoFadeScale {
             0% {
@@ -992,6 +1009,7 @@
                 <div class="logo-icon">
                     <img src="assets/logo/streamlined-square-logo.png" alt="Streamlined logo">
                 </div>
+                <img src="logos/runWm3rQofLlqU-ar-58-video-1-c-unscreen.gif" alt="Streamlined animated logo" class="returning-logo">
             </div>
             <div class="text-wrapper">
                 <div class="text-container" id="textContainer">
@@ -1214,7 +1232,7 @@
                 setTimeout(() => {
                     document.getElementById('loader').style.display = 'none';
                 }, 600);
-            }, 1500);
+            }, 2500);
         } else {
             // Full animation sequence for new visitors
             setTimeout(() => {
