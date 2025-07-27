@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extracted Logo Preview</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: #f5f5f5;
+            padding: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .preview-card {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .preview-card h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .size-info {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* Different background colors for preview */
+        .bg-white { background: white; }
+        .bg-light { background: #e7e4df; }
+        .bg-dark { 
+            background: #141414; 
+            color: white;
+        }
+        .bg-dark .size-info { color: #ccc; }
+        .bg-blue { 
+            background: #065299; 
+            color: white;
+        }
+        .bg-blue .size-info { color: #ccc; }
+
+        /* Different sizes */
+        .size-small img { height: 50px; }
+        .size-medium img { height: 100px; }
+        .size-large img { height: 200px; }
+        .size-xlarge img { height: 300px; }
+
+        .details {
+            background: white;
+            border-radius: 8px;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .details h2 {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            font-size: 16px;
+        }
+
+        .details-label {
+            font-weight: 500;
+            color: #666;
+        }
+
+        .details-value {
+            color: #333;
+            font-family: monospace;
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            margin-right: 10px;
+            vertical-align: middle;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Extracted Logo Preview</h1>
+        
+        <div class="preview-grid">
+            <!-- Original Size on White -->
+            <div class="preview-card bg-white">
+                <h2>Original Size - White Background</h2>
+                <div class="logo-container">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">Natural dimensions</div>
+            </div>
+
+            <!-- Light Background -->
+            <div class="preview-card bg-light">
+                <h2>On Light Background</h2>
+                <div class="logo-container size-medium">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">100px height</div>
+            </div>
+
+            <!-- Dark Background -->
+            <div class="preview-card bg-dark">
+                <h2>On Dark Background</h2>
+                <div class="logo-container size-medium">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">100px height</div>
+            </div>
+
+            <!-- Blue Background -->
+            <div class="preview-card bg-blue">
+                <h2>On Blue Background</h2>
+                <div class="logo-container size-medium">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">100px height</div>
+            </div>
+        </div>
+
+        <h1>Size Variations</h1>
+        
+        <div class="preview-grid">
+            <!-- Small -->
+            <div class="preview-card">
+                <h2>Small (50px)</h2>
+                <div class="logo-container size-small">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">Navigation bar size</div>
+            </div>
+
+            <!-- Medium -->
+            <div class="preview-card">
+                <h2>Medium (100px)</h2>
+                <div class="logo-container size-medium">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">Card size</div>
+            </div>
+
+            <!-- Large -->
+            <div class="preview-card">
+                <h2>Large (200px)</h2>
+                <div class="logo-container size-large">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">Header size</div>
+            </div>
+
+            <!-- Extra Large -->
+            <div class="preview-card">
+                <h2>Extra Large (300px)</h2>
+                <div class="logo-container size-xlarge">
+                    <img src="logos/streamlined-extracted-logo.svg" alt="Extracted Logo">
+                </div>
+                <div class="size-info">Hero size</div>
+            </div>
+        </div>
+
+        <div class="details">
+            <h2>Logo Details</h2>
+            <div class="details-grid">
+                <div class="details-label">File:</div>
+                <div class="details-value">logos/streamlined-extracted-logo.svg</div>
+                
+                <div class="details-label">Format:</div>
+                <div class="details-value">SVG (Scalable Vector Graphics)</div>
+                
+                <div class="details-label">Dimensions:</div>
+                <div class="details-value">362.17 × 543.24 units</div>
+                
+                <div class="details-label">Aspect Ratio:</div>
+                <div class="details-value">1:1.5 (Portrait)</div>
+                
+                <div class="details-label">Main Color:</div>
+                <div class="details-value">
+                    <span class="color-swatch" style="background: #ed1c24;"></span>
+                    #ed1c24 (Red)
+                </div>
+                
+                <div class="details-label">Accent Color 1:</div>
+                <div class="details-value">
+                    <span class="color-swatch" style="background: #a5102c;"></span>
+                    #a5102c (Dark Red)
+                </div>
+                
+                <div class="details-label">Accent Color 2:</div>
+                <div class="details-value">
+                    <span class="color-swatch" style="background: #f47216;"></span>
+                    #f47216 (Orange)
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
