@@ -20,7 +20,7 @@
     <meta property="twitter:description" content="Connecting visionary leaders with ambitious organizations. We specialize in executive search and talent consulting.">
     <meta property="twitter:image" content="https://streamlined.co/assets/social/og-image.png">
     
-    <link rel="icon" type="image/svg+xml" href="assets/logo/streamlined-helix-logo.svg">
+    <link rel="icon" type="image/png" href="assets/logo/streamlined-square-logo.png">
     <style>
         * {
             margin: 0;
@@ -119,19 +119,19 @@
         .logo {
             height: 30px;
             width: auto;
-            /* Initial state - light logo on blue header */
-            filter: brightness(0) saturate(100%) invert(1);
+            /* Initial state - muted on blue header */
+            filter: saturate(0.9) opacity(0.95) brightness(1.2);
             transition: filter 0.3s ease;
         }
 
-        /* When scrolled - dark logo on light background */
+        /* When scrolled - muted on light background */
         header.scrolled .logo {
-            filter: brightness(0) saturate(100%);
+            filter: saturate(0.8) opacity(0.9);
         }
 
-        /* Dark theme when scrolled - light logo on dark background */
+        /* Dark theme when scrolled - adjusted muting */
         body.dark-theme header.scrolled .logo {
-            filter: brightness(0) saturate(100%) invert(1);
+            filter: saturate(0.75) opacity(0.85) brightness(1.1);
         }
 
         .brand-name {
@@ -539,7 +539,7 @@
             <nav class="header-nav">
                 <div class="nav-left">
                     <a href="index.html" class="logo-link">
-                        <img src="assets/logo/streamlined-helix-logo.svg" alt="Streamlined logo" class="logo">
+                        <img src="assets/logo/streamlined-square-logo.png" alt="Streamlined logo" class="logo">
                         <span class="brand-name">Streamlined</span>
                     </a>
                     <ul class="nav-links">
