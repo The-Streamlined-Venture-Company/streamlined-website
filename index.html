@@ -63,10 +63,9 @@
             background: var(--black);
         }
         
-        /* Use light logo in dark theme loader */
+        /* Dark theme loader - slightly adjusted muting */
         body.dark-theme .logo-icon img {
-            /* Light logo on dark background */
-            filter: brightness(0) saturate(100%) invert(1);
+            filter: saturate(0.8) opacity(0.9) brightness(1.1);
         }
 
         body {
@@ -175,8 +174,8 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            /* Muted effect */
-            filter: saturate(0.7) opacity(0.85);
+            /* Slightly less muted for loader visibility */
+            filter: saturate(0.85) opacity(0.95);
             transition: filter 0.3s ease;
         }
 
