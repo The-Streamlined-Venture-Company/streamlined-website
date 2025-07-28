@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   viewBox="0 0 362.17 543.24"
+   height="543.24"
+   width="362.17"
+   xml:space="preserve"
+   version="1.1">
+  <g transform="translate(-1436.24,-2622.19)">
+    <path
+       id="logo-main"
+       style="fill:#ed1c24;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 1436.24,2984.36 c -100.01,-100.01 -100.01,-262.15 -0.01,-362.16 l 0.01,-0.01 c 100.01,-100.01 262.15,-100 362.16,0.01 l -181.08,181.07 z m 362.17,0 c 100.01,100.01 100.01,262.15 0,362.17 l -0.01,-0.01 c -100.01,100.01 -262.15,100.01 -362.16,0 v 0.01 c -100.01,-100.02 -100.01,-262.16 0,-362.17 l 181.08,-181.09 181.09,-181.08 c 100,100.01 100,262.16 0,362.17" />
+    <path
+       id="logo-accent1"
+       style="fill:#a5102c;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 1617.31,2803.28 -181.07,181.08 c -16.21,-16.22 -29.8,-34.06 -40.76,-53 l 221.83,-128.08" />
+    <path
+       id="logo-accent2"
+       style="fill:#f47216;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       d="m 1617.32,3165.43 181.08,-181.07 c 16.21,16.21 29.8,34.05 40.75,53 l -221.83,128.07" />
+  </g>
+</svg>

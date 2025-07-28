@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - Streamlined Talent</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon/favicon.png">    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --cream: #F5F2ED;
+            --black: #000000;
+            --accent: #FF6B35;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--cream);
+            color: var(--black);
+            line-height: 1.2;
+            font-weight: 500;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 30px 40px;
+            mix-blend-mode: difference;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            height: 30px;
+            width: auto;
+            filter: invert(1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--cream);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            opacity: 0.6;
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 200px 40px 120px;
+            background: var(--cream);
+        }
+
+        .page-header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 120px;
+            align-items: end;
+        }
+
+        .page-title {
+            font-size: clamp(80px, 12vw, 200px);
+            font-weight: 700;
+            letter-spacing: -0.06em;
+            line-height: 0.85;
+        }
+
+        .page-intro {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 1.3;
+            max-width: 600px;
+        }
+
+        /* Team Stats */
+        .team-stats {
+            padding: 120px 40px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .stats-grid {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 40px 20px;
+            border-right: 1px solid rgba(245, 242, 237, 0.2);
+        }
+
+        .stat-item:last-child {
+            border-right: none;
+        }
+
+        .stat-value {
+            font-size: clamp(60px, 6vw, 80px);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            font-weight: 600;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Team Grid */
+        .team-section {
+            padding: 120px 40px;
+            background: var(--cream);
+        }
+
+        .team-container {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 100px;
+        }
+
+        .section-title {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px 40px;
+            margin-bottom: 160px;
+        }
+
+        .team-member {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+
+        .member-image {
+            height: 400px;
+            background: var(--black);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .member-initials {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--cream);
+            letter-spacing: -0.04em;
+        }
+
+        .member-info h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+
+        .member-info .role {
+            font-size: 18px;
+            font-weight: 500;
+            opacity: 0.7;
+            margin-bottom: 15px;
+        }
+
+        .member-info .bio {
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0.6;
+        }
+
+        /* Culture Section */
+        .culture {
+            padding: 160px 40px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .culture-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .culture-title {
+            font-size: clamp(60px, 8vw, 120px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 60px;
+        }
+
+        .culture-text {
+            font-size: 32px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 100px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .culture-values {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 60px;
+        }
+
+        .value-item {
+            padding: 60px 40px;
+            border: 1px solid rgba(245, 242, 237, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .value-item:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .value-item h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .value-item p {
+            font-size: 18px;
+            font-weight: 500;
+            line-height: 1.5;
+            opacity: 0.8;
+        }
+
+        /* Join Section */
+        .join {
+            padding: 160px 40px;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .join-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .join-title {
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            margin-bottom: 40px;
+            line-height: 1;
+        }
+
+        .join-text {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 60px;
+            opacity: 0.8;
+        }
+
+        .join-link {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--black);
+            text-decoration: none;
+            display: inline-block;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--black);
+            transition: all 0.3s ease;
+        }
+
+        .join-link:hover {
+            padding-bottom: 8px;
+            border-bottom-width: 2px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 40px;
+            background: var(--black);
+            color: var(--cream);
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .fade-in.visible {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .page-header-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .stat-item {
+                border-right: none;
+                border-bottom: 1px solid rgba(245, 242, 237, 0.2);
+            }
+
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .culture-values {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .page-header {
+                padding: 120px 20px 80px;
+            }
+
+            .page-title {
+                font-size: 60px;
+            }
+
+            .page-intro {
+                font-size: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 48px;
+            }
+
+            .culture-title {
+                font-size: 48px;
+            }
+
+            .culture-text {
+                font-size: 24px;
+            }
+
+            .join-title {
+                font-size: 40px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header>
+        <nav>
+            <a href="/">
+                <img src="https://i.imgur.com/eid0sqW.png" alt="Streamlined" class="logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/talent">Home</a></li>
+                <li><a href="/talent/about">About</a></li>
+                <li><a href="/talent/how-we-work">Process</a></li>
+                <li><a href="/talent/team" class="active">Team</a></li>
+                <li><a href="/talent/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="page-header-content">
+            <h1 class="page-title fade-in">Our Team</h1>
+            <p class="page-intro fade-in">
+                A diverse group of talent experts passionate about connecting exceptional 
+                people with extraordinary opportunities.
+            </p>
+        </div>
+    </section>
+
+    <!-- Team Stats -->
+    <section class="team-stats">
+        <div class="stats-grid">
+            <div class="stat-item fade-in">
+                <div class="stat-value">25+</div>
+                <div class="stat-label">Team Members</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Nationalities</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-value">300+</div>
+                <div class="stat-label">Years Combined</div>
+            </div>
+            <div class="stat-item fade-in">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Industries</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Grid -->
+    <section class="team-section">
+        <div class="team-container">
+            <div class="section-header">
+                <h2 class="section-title fade-in">Leadership</h2>
+            </div>
+            <div class="team-grid">
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">SC</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Sarah Chen</h3>
+                        <p class="role">CEO & Founder</p>
+                        <p class="bio">20+ years in executive search. Former McKinsey partner.</p>
+                    </div>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">MJ</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Marcus Johnson</h3>
+                        <p class="role">President</p>
+                        <p class="bio">Led talent acquisition at Fortune 500 companies.</p>
+                    </div>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">EP</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Elena Petrova</h3>
+                        <p class="role">Global Head of Search</p>
+                        <p class="bio">Deep networks across Europe and Asia.</p>
+                    </div>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">DW</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>David Williams</h3>
+                        <p class="role">Managing Partner</p>
+                        <p class="bio">Specializes in financial services leadership.</p>
+                    </div>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">AT</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Aisha Thompson</h3>
+                        <p class="role">Head of Research</p>
+                        <p class="bio">PhD in Organizational Psychology.</p>
+                    </div>
+                </div>
+                <div class="team-member fade-in">
+                    <div class="member-image">
+                        <div class="member-initials">RK</div>
+                    </div>
+                    <div class="member-info">
+                        <h3>Robert Kim</h3>
+                        <p class="role">Head of Client Success</p>
+                        <p class="bio">Ensures long-term placement success.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Culture Section -->
+    <section class="culture">
+        <div class="culture-content">
+            <h2 class="culture-title fade-in">Our Culture</h2>
+            <p class="culture-text fade-in">
+                We believe in creating an environment where talent thrives, innovation 
+                flourishes, and excellence is the standard.
+            </p>
+            <div class="culture-values">
+                <div class="value-item fade-in">
+                    <h3>Purpose-Driven</h3>
+                    <p>Every search is an opportunity to make a meaningful impact on organizations and careers.</p>
+                </div>
+                <div class="value-item fade-in">
+                    <h3>Collaborative</h3>
+                    <p>We work as one team, sharing insights to deliver exceptional results.</p>
+                </div>
+                <div class="value-item fade-in">
+                    <h3>Innovative</h3>
+                    <p>Constantly evolving our methods to stay ahead in a changing landscape.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Section -->
+    <section class="join">
+        <div class="join-content">
+            <h2 class="join-title fade-in">Join Our Team</h2>
+            <p class="join-text fade-in">
+                We're always looking for exceptional talent to help us shape the future of executive search.
+            </p>
+            <a href="#" class="join-link fade-in">View Open Positions →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">© 2024 Streamlined Talent. All rights reserved.</p>
+            <p class="footer-text">Part of Streamlined Co.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
