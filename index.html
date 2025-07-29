@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script>
+        // Immediate scroll to top
+        window.scrollTo(0, 0);
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Streamlined Co. - Streamlining Ambition</title>
@@ -110,8 +114,8 @@
 
         /* Icon container with flip animation */
         .icon-container {
-            width: 100px;
-            height: 100px;
+            width: 80px;
+            height: 80px;
             margin: 0 auto 40px;
             position: relative;
             transform-style: preserve-3d;
@@ -253,6 +257,8 @@
             opacity: 0;
             color: var(--text-primary);
             transition: opacity 0.3s ease;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         .loader-tagline.show {
@@ -921,10 +927,16 @@
             .tagline {
                 font-size: 16px;
             }
+            
+            .loader-tagline {
+                font-size: 18px;
+                white-space: normal;
+                word-break: break-word;
+            }
 
             .icon-container {
-                width: 70px;
-                height: 70px;
+                width: 50px;
+                height: 50px;
                 margin-bottom: 40px;
             }
 
@@ -935,14 +947,21 @@
 
             .logo-section {
                 display: block;
-                margin-bottom: 30px;
+                margin-bottom: 20px;
                 text-align: left;
+                margin-top: 0 !important; /* Remove negative margin on mobile */
             }
 
             .header-content .logo-container {
-                width: 300px;
-                height: 300px;
+                width: 140px;
+                height: 140px;
                 margin: 0;
+                margin-left: calc(-1 * var(--grid-margin)); /* Align with viewport edge */
+            }
+            
+            /* Hide vertical divider on mobile */
+            .logo-section::after {
+                display: none;
             }
 
             .intro-heading {
@@ -1007,7 +1026,7 @@
             <div class="icon-container" id="iconContainer">
                 <div class="greeting-icon"></div>
                 <div class="logo-icon">
-                    <img src="assets/logo/streamlined-square-logo.png" alt="Streamlined logo">
+                    <img src="logos/streamlined-logo-no-spacing.png" alt="Streamlined logo">
                 </div>
                 <img src="logos/streamlined-logo-animation.gif" alt="Streamlined animated logo" class="returning-logo">
             </div>
@@ -1049,7 +1068,7 @@
                 <div class="header-content">
                     <div class="logo-section">
                         <div class="logo-container">
-                            <img src="assets/logo/streamlined-square-logo.png" alt="Streamlined company logo" class="logo-svg">
+                            <img src="logos/streamlined-logo-no-spacing.png" alt="Streamlined company logo" class="logo-svg">
                         </div>
                     </div>
                     <div class="heading-section">
@@ -1146,6 +1165,12 @@
     </div>
 
     <script>
+        // Force scroll to top on page load/refresh
+        window.history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        
         // Check if user has visited in the last month
         function isReturningVisitor() {
             const lastVisit = localStorage.getItem('lastVisit');
