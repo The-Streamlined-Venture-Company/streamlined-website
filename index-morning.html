@@ -96,6 +96,10 @@
             width: 100%;
             max-width: 1200px;
             padding: 0 60px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         /* Icon container with flip animation */
@@ -211,8 +215,6 @@
             opacity: 0;
             color: var(--text-primary);
             transition: opacity 0.3s ease;
-            white-space: nowrap;
-            overflow: hidden;
         }
 
         .loader-tagline.show {
@@ -865,8 +867,6 @@
             
             .loader-tagline {
                 font-size: 18px;
-                white-space: normal;
-                word-break: break-word;
             }
 
             .icon-container {
@@ -989,11 +989,11 @@
                 <div class="morning-text" id="greetingText">good morning</div>
                 <div class="streamlined-text">
                     <div class="streamlined-inner">
-                        <span class="fade-part">We're The</span> Streamlined <span style="position: relative;">Co<span class="period">.</span></span><span class="fade-part">mpany</span>
+                        <span class="fade-part">The</span> Streamlined <span style="position: relative;">Co<span class="period">.</span></span><span class="fade-part">mpany</span>
                     </div>
                 </div>
             </div>
-            <div class="loader-tagline" id="tagline">We help design-conscious minds streamline how they live and work.</div>
+            <div class="loader-tagline" id="tagline">We help design-conscious minds<br>streamline how they live and work.</div>
         </div>
     </div>
 
@@ -1181,7 +1181,7 @@
         setTimeout(() => {
             // Trigger centering animation
             streamlinedText.classList.add('animate-center');
-        }, 4300);
+        }, 3500);
 
         // Show tagline with wave blur effect after logo flip
         setTimeout(() => {
@@ -1189,16 +1189,29 @@
             
             // Show tagline after flip
             setTimeout(() => {
-                const taglineText = tagline.textContent;
+                const taglineHTML = tagline.innerHTML;
                 tagline.innerHTML = '';
                 tagline.classList.add('show');
                 
-                // Wrap each character in a span with animation delay
-                taglineText.split('').forEach((char, index) => {
-                    const span = document.createElement('span');
-                    span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
-                    span.style.setProperty('--letter-index', index);
-                    tagline.appendChild(span);
+                // Split by <br> to handle line breaks
+                const lines = taglineHTML.split('<br>');
+                let charIndex = 0;
+                
+                lines.forEach((line, lineIndex) => {
+                    // Wrap each character in a span with animation delay
+                    line.split('').forEach((char) => {
+                        const span = document.createElement('span');
+                        span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
+                        span.style.setProperty('--letter-index', charIndex);
+                        tagline.appendChild(span);
+                        charIndex++;
+                    });
+                    
+                    // Add line break between lines
+                    if (lineIndex < lines.length - 1) {
+                        tagline.appendChild(document.createElement('br'));
+                        charIndex++; // Count the line break as a character for timing
+                    }
                 });
             }, 800);
         }, 5000);

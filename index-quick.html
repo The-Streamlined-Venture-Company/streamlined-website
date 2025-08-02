@@ -96,51 +96,30 @@
             width: 100%;
             max-width: 1200px;
             padding: 0 60px;
-            min-height: 300px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Icon container with flip animation */
-        .icon-container {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 40px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.8s ease;
-        }
-
-        .icon-container.flipped {
-            transform: rotateY(180deg);
-        }
-
-        .greeting-icon,
-        .logo-icon {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .greeting-icon {
+        /* Logo animation container */
+        .logo-animation {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .logo-animation img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            display: block;
             opacity: 0;
-            animation: fadeIn 0.8s 0.5s forwards;
+            animation: fadeIn 0.6s ease-out forwards;
         }
 
-        .greeting-icon svg {
-            width: 100%;
-            height: 100%;
-            stroke: var(--text-primary);
-            fill: none;
-            stroke-width: 1.5;
-        }
-
-        /* Good morning text animation */
+        /* Text animation */
         .text-wrapper {
             position: relative;
             height: 50px;
@@ -151,43 +130,40 @@
             color: var(--text-primary);
         }
 
-        .morning-text {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            animation: fadeInOut 2s ease-in-out;
-            white-space: nowrap;
-        }
-
         .streamlined-text {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 0;
-            animation: fadeIn 0.8s ease-in-out 1.8s forwards;
+            position: relative;
             white-space: nowrap;
+            opacity: 0;
+            animation: fadeIn 0.6s ease-out 0.3s forwards;
         }
 
         .streamlined-inner {
             display: inline-block;
-            animation: centerText 0.8s ease-in-out 3.5s forwards;
+            transition: transform 0.8s ease-in-out;
+        }
+
+        /* Center just the "Streamlined Co." part */
+        .streamlined-text.animate-center .streamlined-inner {
+            transform: translateX(25px) !important;
+        }
+        
+        /* Responsive centering adjustments */
+        @media (max-width: 768px) {
+            .streamlined-text.animate-center .streamlined-inner {
+                transform: translateX(15px) !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .streamlined-text.animate-center .streamlined-inner {
+                transform: translateX(10px) !important;
+            }
         }
 
         .fade-part {
             display: inline-block;
-            animation: fadeOut 0.8s ease-in-out 3.5s forwards;
-        }
-        
-        @keyframes centerText {
-            from {
-                transform: translateX(0);
-            }
-            to {
-                transform: translateX(20px);
-            }
+            opacity: 1;
+            animation: fadeOut 0.8s ease-in-out 1.4s forwards;
         }
 
         .period {
@@ -196,85 +172,9 @@
             top: 0;
             opacity: 0;
             transform: translateY(-10px);
-            animation: dropIn 0.5s ease-out 4.5s forwards;
+            animation: dropIn 0.4s ease-out 1.8s forwards;
         }
 
-
-        .logo-icon {
-            transform: rotateY(180deg);
-        }
-
-        .logo-icon img {
-            width: 120%;
-            height: 120%;
-            object-fit: contain;
-        }
-
-        /* Logo animation container for returning visitors */
-        .logo-animation {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 40px;
-            position: relative;
-        }
-
-        .logo-animation img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-            opacity: 0;
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        /* Second line with wave blur effect */
-        .loader-tagline {
-            font-size: 24px;
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            line-height: 1.4;
-            text-align: center;
-            opacity: 0;
-            color: var(--text-primary);
-            transition: opacity 0.3s ease;
-        }
-
-        .loader-tagline.show {
-            opacity: 1;
-        }
-
-        /* Letter wrapper for wave blur effect */
-        .loader-tagline.show span {
-            display: inline-block;
-            opacity: 0;
-            filter: blur(10px);
-            animation: letterReveal 0.6s ease-out forwards;
-            animation-delay: calc(var(--letter-index) * 0.03s);
-        }
-
-        @keyframes letterReveal {
-            0% {
-                opacity: 0;
-                filter: blur(10px);
-                transform: translateX(-5px);
-            }
-            50% {
-                opacity: 0.5;
-                filter: blur(5px);
-            }
-            100% {
-                opacity: 1;
-                filter: blur(0);
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            30% { opacity: 1; }
-            70% { opacity: 1; }
-            100% { opacity: 0; }
-        }
 
         @keyframes fadeIn {
             0% { opacity: 0; }
@@ -470,14 +370,8 @@
         /* Loader text in dark mode */
         body.dark-theme .loader-content,
         body.dark-theme .text-wrapper,
-        body.dark-theme .morning-text,
-        body.dark-theme .streamlined-text,
-        body.dark-theme .loader-tagline {
+        body.dark-theme .streamlined-text {
             color: #E8E5E0;
-        }
-
-        body.dark-theme .greeting-icon svg {
-            stroke: #E8E5E0;
         }
 
         .tagline {
@@ -881,19 +775,24 @@
                 font-size: 24px;
                 height: 35px;
             }
+            
+            .loader-content {
+                padding: 0 20px;
+            }
+            
+            .logo-animation {
+                width: 60px;
+                height: 60px;
+                margin-bottom: 30px;
+            }
+            
+            .logo-animation img {
+                width: 60px;
+                height: 60px;
+            }
 
             .tagline {
                 font-size: 16px;
-            }
-            
-            .loader-tagline {
-                font-size: 18px;
-            }
-
-            .icon-container {
-                width: 50px;
-                height: 50px;
-                margin-bottom: 40px;
             }
 
             .header-content {
@@ -970,27 +869,6 @@
                 font-size: 24px;
             }
         }
-
-        /* Reset button for easier testing */
-        .reset-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--theme-toggle-border);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            color: var(--theme-toggle-color);
-            transition: all 0.3s ease;
-            z-index: 10001;
-        }
-
-        .reset-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body>
@@ -1000,21 +878,16 @@
     <!-- Loader -->
     <div class="loader-container" id="loader">
         <div class="loader-content">
-            <div class="icon-container" id="iconContainer">
-                <div class="greeting-icon"></div>
-                <div class="logo-icon">
-                    <img src="logos/streamlined-logo-no-spacing.png" alt="Streamlined logo">
-                </div>
+            <div class="logo-animation">
+                <img src="logos/streamlined-logo-animation.gif" alt="Streamlined logo animation">
             </div>
             <div class="text-wrapper">
-                <div class="morning-text" id="greetingText">good morning</div>
                 <div class="streamlined-text">
                     <div class="streamlined-inner">
                         <span class="fade-part">The</span> Streamlined <span style="position: relative;">Co<span class="period">.</span></span><span class="fade-part">mpany</span>
                     </div>
                 </div>
             </div>
-            <div class="loader-tagline" id="tagline">We help design-conscious minds<br>streamline how they live and work.</div>
         </div>
     </div>
 
@@ -1142,9 +1015,6 @@
         </footer>
     </div>
 
-    <!-- Reset button for easier testing -->
-    <button class="reset-button" onclick="resetAnimation()">Reset Animation</button>
-
     <script>
         // Force scroll to top on page load/refresh
         window.history.scrollRestoration = 'manual';
@@ -1152,145 +1022,21 @@
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
         
-        // Check if returning visitor
-        const isReturningVisitor = localStorage.getItem('hasVisited') === 'true';
-        
-        // Time-based greeting and icon
-        function getTimeData() {
-            const hour = new Date().getHours();
-            if (hour >= 5 && hour < 12) {
-                return {
-                    greeting: 'Good Morning',
-                    icon: `<svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="5"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>`
-                };
-            } else if (hour >= 12 && hour < 17) {
-                return {
-                    greeting: 'Good Afternoon',
-                    icon: `<svg viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="6"/>
-                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                    </svg>`
-                };
-            } else {
-                return {
-                    greeting: 'Good Evening',
-                    icon: `<svg viewBox="0 0 24 24">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>`
-                };
-            }
-        }
-
-        // Set icon and greeting
-        const timeData = getTimeData();
-        document.querySelector('.greeting-icon').innerHTML = timeData.icon;
-        document.getElementById('greetingText').textContent = timeData.greeting;
-        
         // Get elements
-        const tagline = document.getElementById('tagline');
-        const iconContainer = document.getElementById('iconContainer');
-        const streamlinedText = document.querySelector('.streamlined-text');
-        const morningText = document.querySelector('.morning-text');
-        const greetingIcon = document.querySelector('.greeting-icon');
+        const streamlinedInner = document.querySelector('.streamlined-inner');
 
-        if (isReturningVisitor) {
-            // Quick loader for returning visitors
-            // Hide morning-specific elements
-            iconContainer.style.display = 'none';
-            morningText.style.display = 'none';
-            tagline.style.display = 'none';
-            
-            // Show animated GIF logo instead
-            const logoDiv = document.createElement('div');
-            logoDiv.className = 'logo-animation';
-            logoDiv.innerHTML = '<img src="logos/streamlined-logo-animation.gif" alt="Streamlined logo animation">';
-            iconContainer.parentElement.insertBefore(logoDiv, iconContainer);
-            
-            // Adjust text animation for quick loader
-            streamlinedText.style.opacity = '0';
-            streamlinedText.style.animation = 'fadeIn 0.6s ease-out 0.3s forwards';
-            
-            // Update animations for quick version
-            const fadeParts = document.querySelectorAll('.fade-part');
-            fadeParts.forEach(part => {
-                part.style.animation = 'fadeOut 0.6s ease-in-out 0.8s forwards';
-            });
-            
-            const period = document.querySelector('.period');
-            period.style.animation = 'dropIn 0.3s ease-out 1.6s forwards';
-            
-            // Override the centering animation for quick version
-            const streamlinedInner = document.querySelector('.streamlined-inner');
-            streamlinedInner.style.animation = 'centerText 0.6s ease-in-out 0.8s forwards';
-            
-            // Quick transition to main content
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('slide-up');
-                document.getElementById('mainContent').classList.add('show');
-                document.body.classList.add('content-loaded');
-            }, 2400);
-        } else {
-            // Full morning loader for first-time visitors
-            // Show tagline with wave blur effect after logo flip
-            setTimeout(() => {
-                iconContainer.classList.add('flipped');
-                
-                // Show tagline after flip
-                setTimeout(() => {
-                    const taglineHTML = tagline.innerHTML;
-                    tagline.innerHTML = '';
-                    tagline.classList.add('show');
-                    
-                    // Split by <br> to handle line breaks
-                    const lines = taglineHTML.split('<br>');
-                    let charIndex = 0;
-                    
-                    lines.forEach((line, lineIndex) => {
-                        // Wrap each character in a span with animation delay
-                        line.split('').forEach((char) => {
-                            const span = document.createElement('span');
-                            span.textContent = char === ' ' ? '\u00A0' : char; // Use non-breaking space
-                            span.style.setProperty('--letter-index', charIndex);
-                            tagline.appendChild(span);
-                            charIndex++;
-                        });
-                        
-                        // Add line break between lines
-                        if (lineIndex < lines.length - 1) {
-                            tagline.appendChild(document.createElement('br'));
-                            charIndex++; // Count the line break as a character for timing
-                        }
-                    });
-                }, 800);
-            }, 5000);
+        // Start animation sequence
+        setTimeout(() => {
+            // Trigger centering animation
+            streamlinedInner.parentElement.classList.add('animate-center');
+        }, 1400);
 
-            // Transition to main content
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('slide-up');
-                document.getElementById('mainContent').classList.add('show');
-                document.body.classList.add('content-loaded');
-            }, 9500);
-        }
-        
-        // Mark user as returning visitor for next time
-        localStorage.setItem('hasVisited', 'true');
-
-        // Reset animation function
-        function resetAnimation() {
-            // Clear visitor status to see first-time experience again
-            localStorage.removeItem('hasVisited');
-            location.reload();
-        }
+        // Transition to main content
+        setTimeout(() => {
+            document.getElementById('loader').classList.add('slide-up');
+            document.getElementById('mainContent').classList.add('show');
+            document.body.classList.add('content-loaded');
+        }, 2800);
 
         // Theme toggle functionality
         const body = document.body;
