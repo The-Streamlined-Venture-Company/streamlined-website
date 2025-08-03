@@ -129,7 +129,7 @@
 
         .greeting-icon {
             opacity: 0;
-            animation: fadeIn 0.8s 0.5s forwards;
+            animation: fadeIn 0.8s forwards;
         }
 
         .greeting-icon svg {
@@ -157,7 +157,7 @@
             top: 50%;
             transform: translate(-50%, -50%);
             opacity: 0;
-            animation: fadeInOut 2s ease-in-out;
+            animation: fadeInOut 1.2s ease-in-out;
             white-space: nowrap;
         }
 
@@ -167,18 +167,18 @@
             top: 50%;
             transform: translate(-50%, -50%);
             opacity: 0;
-            animation: fadeIn 0.8s ease-in-out 1.8s forwards;
+            animation: fadeIn 0.8s ease-in-out 1.2s forwards;
             white-space: nowrap;
         }
 
         .streamlined-inner {
             display: inline-block;
-            animation: centerText 0.8s ease-in-out 3.5s forwards;
+            animation: centerText 0.8s ease-in-out 2.5s forwards;
         }
 
         .fade-part {
             display: inline-block;
-            animation: fadeOut 0.8s ease-in-out 3.5s forwards;
+            animation: fadeOut 0.8s ease-in-out 2.5s forwards;
         }
         
         @keyframes centerText {
@@ -186,7 +186,7 @@
                 transform: translateX(0);
             }
             to {
-                transform: translateX(20px);
+                transform: translateX(-15px);
             }
         }
 
@@ -196,7 +196,7 @@
             top: 0;
             opacity: 0;
             transform: translateY(-10px);
-            animation: dropIn 0.5s ease-out 4.5s forwards;
+            animation: dropIn 0.4s ease-out 2.8s forwards;
         }
 
 
@@ -237,6 +237,7 @@
             opacity: 0;
             color: var(--text-primary);
             transition: opacity 0.3s ease;
+            transform: translateX(20px);
         }
 
         .loader-tagline.show {
@@ -271,8 +272,8 @@
 
         @keyframes fadeInOut {
             0% { opacity: 0; }
-            30% { opacity: 1; }
-            70% { opacity: 1; }
+            20% { opacity: 1; }
+            60% { opacity: 1; }
             100% { opacity: 0; }
         }
 
@@ -1010,7 +1011,7 @@
                 <div class="morning-text" id="greetingText">good morning</div>
                 <div class="streamlined-text">
                     <div class="streamlined-inner">
-                        <span class="fade-part">The</span> Streamlined <span style="position: relative;">Co<span class="period">.</span></span><span class="fade-part">mpany</span>
+                        <span class="fade-part">We're</span> <span class="fade-part">The</span> Streamlined <span style="position: relative;">Co<span class="period">.</span></span><span class="fade-part">mpany</span>
                     </div>
                 </div>
             </div>
@@ -1220,10 +1221,18 @@
             streamlinedText.style.opacity = '0';
             streamlinedText.style.animation = 'fadeIn 0.6s ease-out 0.3s forwards';
             
+            // Hide "We're" for quick version
+            const firstFadePart = document.querySelector('.fade-part');
+            if (firstFadePart && firstFadePart.textContent === "We're") {
+                firstFadePart.style.display = 'none';
+            }
+            
             // Update animations for quick version
             const fadeParts = document.querySelectorAll('.fade-part');
             fadeParts.forEach(part => {
-                part.style.animation = 'fadeOut 0.6s ease-in-out 0.8s forwards';
+                if (part.textContent !== "We're") {
+                    part.style.animation = 'fadeOut 0.6s ease-in-out 0.8s forwards';
+                }
             });
             
             const period = document.querySelector('.period');
@@ -1231,7 +1240,18 @@
             
             // Override the centering animation for quick version
             const streamlinedInner = document.querySelector('.streamlined-inner');
-            streamlinedInner.style.animation = 'centerText 0.6s ease-in-out 0.8s forwards';
+            // Use inline animation to center properly without "We're"
+            streamlinedInner.style.animation = 'centerTextQuick 0.6s ease-in-out 0.8s forwards';
+            
+            // Add the custom animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes centerTextQuick {
+                    from { transform: translateX(0); }
+                    to { transform: translateX(25px); }
+                }
+            `;
+            document.head.appendChild(style);
             
             // Quick transition to main content
             setTimeout(() => {
@@ -1271,15 +1291,15 @@
                             charIndex++; // Count the line break as a character for timing
                         }
                     });
-                }, 800);
-            }, 5000);
+                }, 2800);
+            }, 1200);
 
             // Transition to main content
             setTimeout(() => {
                 document.getElementById('loader').classList.add('slide-up');
                 document.getElementById('mainContent').classList.add('show');
                 document.body.classList.add('content-loaded');
-            }, 9500);
+            }, 7500);
         }
         
         // Mark user as returning visitor for next time
