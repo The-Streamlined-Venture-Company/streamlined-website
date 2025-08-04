@@ -1289,16 +1289,18 @@
                 firstFadePart.style.display = 'none';
             }
             
-            // Update animations for quick version - delay fade-out to 1.5s
+            // Update animations for quick version
             const fadeParts = document.querySelectorAll('.fade-part');
             fadeParts.forEach(part => {
                 if (part.textContent !== "We're") {
-                    part.style.animation = 'fadeOut 0.6s ease-in-out 1.5s forwards';
+                    // Set up transition for smooth fade
+                    part.style.transition = 'opacity 0.5s ease-in-out';
                 }
             });
             
             const period = document.querySelector('.period');
-            period.style.animation = 'dropIn 0.3s ease-out 2.1s forwards';
+            // Clear any default animation on period
+            period.style.animation = 'none';
             
             // Override the centering animation for quick version ONLY
             const streamlinedInner = document.querySelector('.streamlined-inner');
@@ -1306,20 +1308,35 @@
             // Clear any existing animations for quick version only
             streamlinedInner.style.cssText = 'display: inline-block; animation: none !important;';
             
-            // Apply movement at EXACTLY the same time as fade-out starts - ONLY for quick version
+            // Apply fade AND movement at EXACTLY the same time - ONLY for quick version
             setTimeout(() => {
                 if (streamlinedInner.classList.contains('quick-version')) {
-                    streamlinedInner.style.transition = 'transform 0.6s ease-in-out';
+                    // Start BOTH animations at the exact same moment
+                    streamlinedInner.style.transition = 'transform 0.5s ease-in-out';
                     streamlinedInner.style.transform = 'translateX(20px)';
+                    
+                    // Fade out "The" and "mpany" at the exact same moment
+                    fadeParts.forEach(part => {
+                        if (part.textContent !== "We're") {
+                            part.style.opacity = '0';
+                        }
+                    });
+                    
+                    // Drop the period after movement/fade completes
+                    setTimeout(() => {
+                        period.style.transition = 'opacity 0.3s ease-out, transform 0.3s ease-out';
+                        period.style.opacity = '1';
+                        period.style.transform = 'translateY(0)';
+                    }, 500);
                 }
-            }, 1500); // Start movement exactly when fade-out begins (1.5s)
+            }, 900); // Start both fade and movement at exactly 0.9s
             
-            // Quick transition to main content - add extra time for "Streamlined Co." to be visible
+            // Quick transition to main content - reduced by 1 second
             setTimeout(() => {
                 document.getElementById('loader').classList.add('slide-up');
                 document.getElementById('mainContent').classList.add('show');
                 document.body.classList.add('content-loaded');
-            }, 3000); // Extended from 2400ms to 3000ms
+            }, 2000); // Reduced from 3000ms to 2000ms
         } else {
             // Full morning loader for first-time visitors
             // Add class to identify this as full loader
