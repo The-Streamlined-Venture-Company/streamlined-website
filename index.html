@@ -1306,13 +1306,13 @@
             // Clear any existing animations for quick version only
             streamlinedInner.style.cssText = 'display: inline-block; animation: none !important;';
             
-            // Apply movement ONLY when "The" and "mpany" start fading - ONLY for quick version
+            // Apply movement at EXACTLY the same time as fade-out - ONLY for quick version
             setTimeout(() => {
                 if (streamlinedInner.classList.contains('quick-version')) {
                     streamlinedInner.style.transition = 'transform 0.6s ease-in-out';
                     streamlinedInner.style.transform = 'translateX(20px)';
                 }
-            }, 1200); // Start movement when fade-out begins
+            }, 1200); // Exactly synchronized with fade-out animation start
             
             // Quick transition to main content
             setTimeout(() => {
