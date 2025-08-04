@@ -1053,26 +1053,6 @@
             }
         }
 
-        /* Reset button for easier testing */
-        .reset-button {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background: var(--theme-toggle-bg);
-            border: 1px solid var(--theme-toggle-border);
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 14px;
-            color: var(--theme-toggle-color);
-            transition: all 0.3s ease;
-            z-index: 10001;
-        }
-
-        .reset-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
     </style>
 </head>
 <body>
@@ -1224,8 +1204,6 @@
         </footer>
     </div>
 
-    <!-- Reset button for easier testing -->
-    <button class="reset-button" onclick="resetAnimation()">Reset Animation</button>
 
     <script>
         // Force scroll to top on page load/refresh
@@ -1402,12 +1380,6 @@
         // Mark user as returning visitor for next time
         localStorage.setItem('hasVisited', 'true');
 
-        // Reset animation function
-        function resetAnimation() {
-            // Clear visitor status to see first-time experience again
-            localStorage.removeItem('hasVisited');
-            location.reload();
-        }
 
         // Theme toggle functionality
         const body = document.body;
